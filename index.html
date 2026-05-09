@@ -437,6 +437,79 @@
       min-height: 164px;
     }
 
+    .catalogue {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 2px solid var(--line);
+      border-left: 2px solid var(--line);
+      background: var(--white);
+    }
+
+    .catalogue-card {
+      min-height: 310px;
+      padding: 18px;
+      border-right: 2px solid var(--line);
+      border-bottom: 2px solid var(--line);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 18px;
+    }
+
+    .catalogue-card h3,
+    .test-card h3 {
+      overflow-wrap: anywhere;
+    }
+
+    .link-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: end;
+    }
+
+    .pill-link {
+      border: 2px solid var(--line);
+      background: var(--paper);
+      color: var(--ink);
+      padding: 8px 10px;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: .76rem;
+      letter-spacing: .04em;
+    }
+
+    .pill-link:hover,
+    .test-card:hover {
+      background: var(--soft);
+    }
+
+    .test-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      border-top: 2px solid var(--line);
+      border-left: 2px solid var(--line);
+      background: var(--white);
+    }
+
+    .test-card {
+      min-height: 360px;
+      padding: clamp(20px, 3vw, 36px);
+      border-right: 2px solid var(--line);
+      border-bottom: 2px solid var(--line);
+      color: inherit;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 22px;
+    }
+
+    .test-card .num {
+      font-size: clamp(5rem, 10vw, 10rem);
+      line-height: .8;
+      font-weight: 800;
+    }
+
     footer {
       padding: 24px clamp(28px, 5vw, 72px);
       background: var(--ink);
@@ -466,9 +539,11 @@
       .section-head,
       .forms,
       .resources,
-      .source-grid { grid-template-columns: 1fr; }
+      .source-grid,
+      .test-grid { grid-template-columns: 1fr; }
       .map,
-      .matrix { grid-template-columns: repeat(2, 1fr); }
+      .matrix,
+      .catalogue { grid-template-columns: repeat(2, 1fr); }
     }
 
     @media (max-width: 620px) {
@@ -479,6 +554,7 @@
       .nav,
       .map,
       .matrix,
+      .catalogue,
       .emergency { grid-template-columns: 1fr; }
       .emergency a { border-right: 0; border-bottom: 2px solid var(--line); }
       .emergency a:last-child { border-bottom: 0; }
@@ -500,11 +576,13 @@
       </div>
       <nav class="nav">
         <a href="#mappa"><b>1</b><span>Organizzare il quadro</span></a>
-        <a href="#forme"><b>2</b><span>Comprendere forme e dinamiche</span></a>
-        <a href="#rischio"><b>3</b><span>Valutare rischio e recidiva</span></a>
-        <a href="#strumenti"><b>4</b><span>Usare strumenti e fonti</span></a>
-        <a href="#comunita"><b>5</b><span>Attivare la rete</span></a>
-        <a href="#fonti"><b>6</b><span>Consultare le fonti</span></a>
+        <a href="#catalogo"><b>2</b><span>Tool di risk assessment</span></a>
+        <a href="#test"><b>3</b><span>Aprire ISA e SARA</span></a>
+        <a href="#forme"><b>4</b><span>Comprendere forme e dinamiche</span></a>
+        <a href="#rischio"><b>5</b><span>Valutare rischio e recidiva</span></a>
+        <a href="#strumenti"><b>6</b><span>Usare strumenti e fonti</span></a>
+        <a href="#comunita"><b>7</b><span>Attivare la rete</span></a>
+        <a href="#fonti"><b>8</b><span>Consultare le fonti</span></a>
       </nav>
       <p class="tiny">Sintesi informativa basata sui documenti nella cartella paper. Non sostituisce valutazione professionale o intervento di emergenza.</p>
     </aside>
@@ -567,6 +645,86 @@
               </ul>
             </div>
           </article>
+        </div>
+      </section>
+
+      <section id="catalogo">
+        <div class="section-head">
+          <div class="eyebrow">CSV / Toolbox</div>
+          <div>
+            <h2>Tool di risk assessment</h2>
+            <p class="lead">Il catalogo replica e rende navigabile il CSV locale <code>Tool di risk assessment.csv</code>. I link aprono i materiali disponibili in locale o le pagine esterne individuate per gli strumenti indicati.</p>
+          </div>
+        </div>
+        <div class="catalogue" aria-label="Catalogo dei tool di risk assessment">
+          <article class="catalogue-card">
+            <span class="source-tag">SPJ</span>
+            <div><h3>SARA</h3><p>Spousal Assault Risk Assessment, famiglia di strumenti per la valutazione strutturata del rischio di intimate partner violence.</p></div>
+            <div class="link-stack"><a class="pill-link" href="paper/HiltonPhamJungEnnisNunes2020PPRAdvancedonlinepub.pdf">Paper locale</a></div>
+          </article>
+          <article class="catalogue-card">
+            <span class="source-tag">Screening</span>
+            <div><h3>SARA-S</h3><p>Versione screening italiana presente tra i materiali locali e riproposta anche come pagina interattiva.</p></div>
+            <div class="link-stack"><a class="pill-link" href="paper/10_SARA-formulario_versione%2015%20item.pdf">Formulario</a><a class="pill-link" href="sara.html">Test web</a></div>
+          </article>
+          <article class="catalogue-card">
+            <span class="source-tag">SPJ</span>
+            <div><h3>SARA v3</h3><p>Terza versione della guida SARA per assessment e management del rischio di violenza nelle relazioni intime.</p></div>
+            <div class="link-stack"><a class="pill-link" href="https://www.rma.scot/wp-content/uploads/2023/01/Spousal-Assault-Risk-Assessment-Guide-Version-3-SARAv3.pdf">Scheda RATED</a><a class="pill-link" href="https://protect-international.com/product/spousal-assault-risk-assessment-guide-version-3-sara-v3/">Manuale</a></div>
+          </article>
+          <article class="catalogue-card">
+            <span class="source-tag">Criminal justice</span>
+            <div><h3>B-SAFER</h3><p>Brief Spousal Assault Form for the Evaluation of Risk, versione breve collegata alla famiglia SARA.</p></div>
+            <div class="link-stack"><a class="pill-link" href="https://www.justice.gc.ca/eng/rp-pr/fl-lf/famil/rr05_fv1-rr05_vf1/toc-tdm.html">Manuale</a><a class="pill-link" href="paper/HiltonPhamJungEnnisNunes2020PPRAdvancedonlinepub.pdf">Paper locale</a></div>
+          </article>
+          <article class="catalogue-card">
+            <span class="source-tag">Attuariale</span>
+            <div><h3>ODARA</h3><p>Ontario Domestic Assault Risk Assessment, strumento attuariale per stimare il rischio di nuova aggressione domestica.</p></div>
+            <div class="link-stack"><a class="pill-link" href="https://odara.waypointcentre.ca/">Link principale</a><a class="pill-link" href="paper/HiltonPhamJungEnnisNunes2020PPRAdvancedonlinepub.pdf">Paper locale</a></div>
+          </article>
+          <article class="catalogue-card">
+            <span class="source-tag">Autovalutazione</span>
+            <div><h3>ISA</h3><p>Increasing Self Awareness, questionario di autovalutazione del rischio aggiornato da Differenza Donna nel 2023.</p></div>
+            <div class="link-stack"><a class="pill-link" href="https://www.differenzadonna.org/manuale-isa-2023/">Manuale</a><a class="pill-link" href="isa.html">Test web</a></div>
+          </article>
+          <article class="catalogue-card">
+            <span class="source-tag">Economica</span>
+            <div><h3>SEA-12</h3><p>Scale of Economic Abuse-12, misura breve dell’esperienza di abuso economico nelle relazioni.</p></div>
+            <div class="link-stack"><a class="pill-link" href="https://emerge.ucsd.edu/r_1oingxcbnmuvyox/">EMERGE</a></div>
+          </article>
+          <article class="catalogue-card">
+            <span class="source-tag">Donne anziane</span>
+            <div><h3>MARVOW 2.0</h3><p>Metodologia e tool per risk assessment e risposta multi-agenzia alla violenza contro donne anziane.</p></div>
+            <div class="link-stack"><a class="pill-link" href="https://marvow.eu/risk-assessment-methodology-and-risk-assessment-development-tool/">Approfondimenti</a></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="test">
+        <div class="section-head">
+          <div class="eyebrow">Pagine interattive</div>
+          <div>
+            <h2>ISA e SARA in web</h2>
+            <p class="lead">Due percorsi separati traducono i PDF della cartella <code>tests</code> in interfacce compilabili. Le risposte restano nel browser e non vengono inviate a nessun servizio.</p>
+          </div>
+        </div>
+        <div class="test-grid">
+          <a class="test-card" href="isa.html">
+            <span class="num accent-red">ISA</span>
+            <div>
+              <h3>Questionario ISA 2023</h3>
+              <p>Autovalutazione con due parti, calcolo automatico dei totali e lettura del risultato A-E.</p>
+            </div>
+            <span class="pill-link">Apri il test</span>
+          </a>
+          <a class="test-card" href="sara.html">
+            <span class="num accent-blue">SARA</span>
+            <div>
+              <h3>SARA-S aggiornato</h3>
+              <p>Formulario professionale con fattori codificabili per ultimo mese e passato, resoconto, scenari e piano di gestione.</p>
+            </div>
+            <span class="pill-link">Apri il test</span>
+          </a>
         </div>
       </section>
 
@@ -662,23 +820,19 @@
         <div class="section-head">
           <div class="eyebrow">Toolbox</div>
           <div>
-            <h2>Strumenti operativi</h2>
+            <h2>Evidenze operative</h2>
             <p class="lead">Le fonti distinguono strumenti professionali, autovalutazione e lavoro di prossimità. Insieme formano una cassetta degli attrezzi da usare con cautela, competenza e rete.</p>
           </div>
         </div>
         <div class="forms">
           <article class="panel">
-            <h3>ISA 2023: autoconsapevolezza</h3>
-            <p>Questa mini-verifica è ispirata alle aree dell’ISA e serve solo a orientare la lettura. Le risposte non vengono salvate. Se emergono elementi di rischio o se hai paura, contatta un Centro Antiviolenza, il 1522 o il 112 in emergenza.</p>
-            <div class="checklist" id="isaCheck">
-              <label><input type="checkbox" data-score="1"> Mi limita nelle decisioni, nelle uscite o nelle persone che posso vedere.</label>
-              <label><input type="checkbox" data-score="1"> Mi svalorizza, mi umilia o mi fa sentire inadeguata.</label>
-              <label><input type="checkbox" data-score="1"> Controlla telefono, social, posizione, chiamate o messaggi.</label>
-              <label><input type="checkbox" data-score="2"> Mi minaccia, prova a impedirmi di allontanarmi o mi fa paura.</label>
-              <label><input type="checkbox" data-score="2"> Mi ha fatto male fisicamente o mi ha costretta sessualmente.</label>
-              <label><input type="checkbox" data-score="2"> So che possiede armi o ha violato ordini/misure del giudice.</label>
-            </div>
-            <div class="result" id="isaResult" aria-live="polite">Seleziona gli elementi presenti per leggere un’indicazione prudenziale.</div>
+            <h3>Uso prudente degli strumenti</h3>
+            <ul class="plain-list">
+              <li>I test web sono pagine di lavoro locali: non inviano dati e non sostituiscono una presa in carico.</li>
+              <li>L’ISA è pensato per sostenere autoconsapevolezza e orientamento al supporto.</li>
+              <li>Il SARA-S è professionale: richiede formazione specifica e va integrato con fonti multiple.</li>
+              <li>In emergenza la priorità resta la sicurezza immediata: 112; per supporto gratuito e anonimo: 1522.</li>
+            </ul>
           </article>
           <article class="panel">
             <h3>Evidenze sulla valutazione</h3>
@@ -813,24 +967,8 @@
       }
     }
 
-    function updateIsa() {
-      const score = [...document.querySelectorAll('#isaCheck input:checked')]
-        .reduce((sum, input) => sum + Number(input.dataset.score), 0);
-      const result = document.querySelector('#isaResult');
-      if (score === 0) {
-        result.textContent = 'Seleziona gli elementi presenti per leggere un’indicazione prudenziale.';
-      } else if (score <= 2) {
-        result.textContent = 'Emergono alcuni elementi da non sottovalutare. Parlane con una persona fidata o con un Centro Antiviolenza per orientarti con calma e riservatezza.';
-      } else if (score <= 5) {
-        result.textContent = 'Emergono più indicatori di controllo o violenza. È consigliabile contattare un Centro Antiviolenza o il 1522 per valutare sicurezza e passi possibili.';
-      } else {
-        result.textContent = 'Emergono indicatori importanti di rischio. Se sei in pericolo chiama il 112; appena puoi, contatta il 1522 o un Centro Antiviolenza per un piano di sicurezza.';
-      }
-    }
-
     riskSearch.addEventListener('input', renderRisks);
     riskFilter.addEventListener('change', renderRisks);
-    document.querySelector('#isaCheck').addEventListener('change', updateIsa);
     renderRisks();
   </script>
 </body>

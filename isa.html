@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Questionario ISA 2023 | Violenza di genere</title>
+  <style>
+    :root { --paper:#f7f4ed; --ink:#171717; --muted:#68635d; --line:#171717; --soft:#e7e1d6; --white:#fffdfa; --red:#b22b24; --blue:#12606d; }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--paper); color: var(--ink); }
+    body { margin:0; font-family: Arial, Helvetica, sans-serif; line-height:1.42; background: linear-gradient(90deg, rgba(23,23,23,.045) 1px, transparent 1px) 0 0/48px 48px, linear-gradient(0deg, rgba(23,23,23,.035) 1px, transparent 1px) 0 0/48px 48px, var(--paper); }
+    a { color: inherit; text-decoration-thickness:1px; text-underline-offset:4px; }
+    button, input, textarea, select { font: inherit; }
+    .layout { display:grid; grid-template-columns:minmax(230px,18vw) 1fr; min-height:100vh; }
+    aside { position:sticky; top:0; height:100vh; padding:18px; border-right:2px solid var(--line); background:rgba(247,244,237,.96); display:flex; flex-direction:column; gap:22px; }
+    .mark { width:44px; height:44px; border:2px solid var(--line); background:var(--white); display:grid; place-items:center; font-weight:800; }
+    .brand { display:grid; gap:10px; padding-bottom:18px; border-bottom:2px solid var(--line); }
+    .brand strong { font-size:clamp(1.4rem,2vw,2rem); line-height:.95; text-transform:uppercase; }
+    .tiny, .eyebrow { color:var(--muted); font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; }
+    nav { display:grid; gap:8px; }
+    nav a { display:grid; grid-template-columns:2rem 1fr; gap:10px; padding:8px 0; border-bottom:1px solid rgba(23,23,23,.28); text-decoration:none; }
+    main { min-width:0; }
+    section { padding:clamp(28px,5vw,72px); border-bottom:2px solid var(--line); }
+    .hero { background:var(--white); }
+    .topline { display:flex; justify-content:space-between; gap:14px; border-bottom:2px solid var(--line); padding-bottom:14px; margin-bottom:36px; }
+    h1, h2, h3, p { margin-top:0; }
+    h1 { max-width:12ch; font-size:clamp(4rem,12vw,11rem); line-height:.82; text-transform:uppercase; letter-spacing:0; }
+    h2 { font-size:clamp(2.6rem,6vw,6rem); line-height:.9; text-transform:uppercase; letter-spacing:0; }
+    h3 { font-size:clamp(1.25rem,2vw,1.8rem); line-height:1.05; }
+    .lead { max-width:960px; font-size:clamp(1.12rem,1.75vw,1.55rem); line-height:1.2; }
+    .panel { border:2px solid var(--line); background:var(--white); padding:clamp(18px,2.4vw,30px); }
+    .grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+    .question { border:2px solid var(--line); background:var(--white); display:grid; grid-template-columns:1fr auto; gap:16px; padding:16px; align-items:start; }
+    .question small { color:var(--muted); text-transform:uppercase; letter-spacing:.05em; }
+    .choices { display:flex; gap:8px; align-items:center; }
+    .choices label { min-width:58px; border:2px solid var(--line); background:var(--paper); padding:8px; text-align:center; cursor:pointer; }
+    .choices input { margin-right:4px; }
+    .scorebar { position:sticky; bottom:0; border-top:2px solid var(--line); background:var(--ink); color:var(--paper); padding:16px clamp(18px,5vw,72px); display:flex; justify-content:space-between; gap:18px; flex-wrap:wrap; z-index:2; }
+    .scorebar b { font-size:1.5rem; }
+    .result { border-left:10px solid var(--red); background:var(--white); padding:18px; font-size:1.1rem; }
+    .actions { display:flex; gap:10px; flex-wrap:wrap; }
+    .btn { border:2px solid var(--line); background:var(--paper); padding:10px 12px; text-decoration:none; cursor:pointer; }
+    .btn.dark { background:var(--ink); color:var(--paper); }
+    .fear { display:grid; grid-template-columns:repeat(2,1fr); border-top:2px solid var(--line); border-left:2px solid var(--line); background:var(--white); }
+    .fear label { padding:14px; border-right:2px solid var(--line); border-bottom:2px solid var(--line); cursor:pointer; display:flex; gap:8px; align-items:center; }
+    @media (max-width:900px) { .layout, .grid { grid-template-columns:1fr; } aside { position:relative; height:auto; border-right:0; border-bottom:2px solid var(--line); } }
+    @media (max-width:620px) { section { padding:24px 16px; } .question { grid-template-columns:1fr; } .topline, .scorebar { display:grid; } .fear { grid-template-columns:1fr; } h1 { font-size:clamp(3.4rem,20vw,5.4rem); } }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside>
+      <div class="brand"><div class="mark">ISA</div><strong>Questionario ISA 2023</strong><span class="tiny">Autovalutazione del rischio</span></div>
+      <nav>
+        <a href="index.html#test"><b>←</b><span>Torna alla mappa</span></a>
+        <a href="#parte1"><b>1</b><span>Parte 1</span></a>
+        <a href="#parte2"><b>2</b><span>Parte 2</span></a>
+        <a href="#risultato"><b>3</b><span>Risultato</span></a>
+      </nav>
+      <p class="tiny">Le risposte restano in questa pagina. Se sei in pericolo chiama il 112. Per supporto gratuito e anonimo: 1522.</p>
+    </aside>
+    <main>
+      <section class="hero">
+        <div class="topline"><span class="tiny">Increasing Self-Awareness</span><span class="tiny">tests / QUESTIONARIO ISA 2023.pdf</span></div>
+        <h1>ISA 2023</h1>
+        <p class="lead">Rispondi sulla base della tua esperienza. Non ci sono risposte giuste o sbagliate: il risultato serve a capire meglio cosa sta accadendo e quali passi di supporto considerare.</p>
+      </section>
+
+      <section>
+        <div class="panel">
+          <h2>Prima domanda</h2>
+          <p class="lead">Temi di subire ancora violenze da parte del tuo partner o ex partner?</p>
+          <div class="fear" id="fear">
+            <label><input type="radio" name="fear" value="Molto"> Molto</label>
+            <label><input type="radio" name="fear" value="Abbastanza"> Abbastanza</label>
+            <label><input type="radio" name="fear" value="Poco"> Poco</label>
+            <label><input type="radio" name="fear" value="Per niente"> Per niente</label>
+          </div>
+        </div>
+      </section>
+
+      <section id="parte1">
+        <h2>Parte 1</h2>
+        <p class="lead">Segna “Sì” se l’affermazione corrisponde alla tua esperienza.</p>
+        <div class="grid" id="part1"></div>
+      </section>
+
+      <section id="parte2">
+        <h2>Parte 2</h2>
+        <p class="lead">Anche qui, segna “Sì” quando l’affermazione è vera per te.</p>
+        <div class="grid" id="part2"></div>
+      </section>
+
+      <section id="risultato">
+        <h2>Risultato</h2>
+        <div class="grid">
+          <div class="panel">
+            <h3>Totali</h3>
+            <p>Parte 1: <b id="p1Total">0</b> / 20</p>
+            <p>Parte 2: <b id="p2Total">0</b> / 14</p>
+            <p>Paura dichiarata: <b id="fearOut">non indicata</b></p>
+            <div class="actions">
+              <button class="btn" id="resetBtn" type="button">Azzera risposte</button>
+              <a class="btn dark" href="tel:1522">Chiama 1522</a>
+              <a class="btn dark" href="tel:112">Chiama 112</a>
+            </div>
+          </div>
+          <div class="result" id="resultBox">Compila le domande per leggere il risultato.</div>
+        </div>
+      </section>
+      <div class="scorebar"><span>Parte 1: <b id="p1Sticky">0</b></span><span>Parte 2: <b id="p2Sticky">0</b></span><span>Esito: <b id="codeSticky">-</b></span></div>
+    </main>
+  </div>
+  <script>
+    const part1 = [
+      [1, 'A volte il mio (ex) partner mi limita nelle decisioni o nelle cose che voglio fare o circa le persone che voglio vedere.'],
+      [1, 'A volte il mio (ex) partner mi svalorizza nel mio ruolo di donna o di madre.'],
+      [1, 'Capita che il mio (ex) partner mi controlli o mi insegua, anche tramite telefono, app, dispositivi, profili social o interazioni online.'],
+      [1, 'Capita che il mio (ex) partner mi minacci di farmi del male o di uccidermi.'],
+      [2, 'Capita che il mio (ex) partner cerchi di impedirmi di allontanarmi da lui o da casa.'],
+      [2, 'Capita che il mio (ex) partner mi faccia del male fisicamente, ad esempio con schiaffi, spinte, pugni o mani intorno al collo.'],
+      [2, 'A volte mi sento costretta ad avere rapporti sessuali da parte del mio (ex) partner, anche quando non ne ho voglia.'],
+      [2, 'A volte mi sento umiliata dalle richieste o dai comportamenti del mio (ex) partner riguardo alla mia sfera intima.'],
+      [2, 'Il mio (ex) partner mi ha indotta a lasciare il lavoro.'],
+      [2, 'Non sono libera di fare le spese necessarie per la famiglia o di comprare le cose che desidero.'],
+      [2, 'Capita che i figli siano presenti quando il mio (ex) partner ha comportamenti violenti nei miei confronti. Se non hai figli, segna No.'],
+      [2, 'Capita che il mio (ex) partner sia violento fisicamente sui figli. Se non hai figli, segna No.']
+    ];
+    const part2 = [
+      [2, 'Non ho autonomia per potermi muovere o avere contatti col mondo esterno.'],
+      [1, 'Non ho mai parlato a nessuno delle mie preoccupazioni riguardo ai comportamenti violenti del mio (ex) partner.'],
+      [1, 'Ho parlato con qualcuno o mi sono rivolta ai servizi o alle Forze dell’Ordine, ma non sono stata creduta o mi è stato detto di lasciar perdere.'],
+      [2, 'Sono a conoscenza che il mio (ex) partner ha il porto d’armi e/o possiede un’arma.'],
+      [1, 'Sono a conoscenza che il mio (ex) partner fa uso di alcolici, altre sostanze o è dipendente dal gioco.'],
+      [1, 'Sono a conoscenza che il mio (ex) partner è stato violento nei confronti di altre partner o altre persone.'],
+      [1, 'Sono a conoscenza che il mio (ex) partner ha violato un ordine del giudice emesso in sede penale o civile.'],
+      [1, 'Sono a conoscenza che il mio (ex) partner ha precedenti penali o giudiziari.'],
+      [1, 'Mi capita di fare uso di farmaci o altre sostanze dopo quello che mi è successo.'],
+      [1, 'Mi capita di avere difficoltà a concentrarmi e/o pensieri fissi, ricordi intrusivi o sogni ricorrenti.'],
+      [1, 'Mi sento spesso in allerta, con palpitazioni, sudorazione o respiro affannato.'],
+      [1, 'A volte ho difficoltà ad addormentarmi o a mantenere il sonno a causa di quello che mi è successo.']
+    ];
+    const outcomes = {
+      A: 'Non sembrano emergere elementi riconducibili ad una situazione di violenza da parte del tuo (ex) partner. Qualora avvengano cambiamenti, puoi ripetere il questionario.',
+      B: 'Emergono alcuni elementi riconducibili ad una situazione di violenza. La violenza nelle relazioni intime tende a ripetersi e ad aggravarsi nel tempo: non sottovalutare la situazione.',
+      C: 'Emergono alcuni indicatori di violenza da parte del tuo (ex) partner. Non sottovalutare la situazione e considera un confronto con un Centro Antiviolenza o il 1522.',
+      D: 'Emergono molteplici indicatori di violenza da parte del tuo (ex) partner. È importante non sottovalutare la situazione e valutare supporto specializzato.',
+      E: 'Emergono molteplici indicatori di violenza e aspetti importanti per sicurezza, pericolosità o conseguenze sulla tua vita. Se sei in pericolo chiama il 112; per supporto gratuito e anonimo contatta il 1522.'
+    };
+    function render(container, items, prefix) {
+      document.querySelector(container).innerHTML = items.map((item, index) => `
+        <div class="question">
+          <div><small>${prefix} · ${index + 1} · Sì = ${item[0]}</small><p>${item[1]}</p></div>
+          <div class="choices">
+            <label><input type="radio" name="${prefix}${index}" value="${item[0]}"> Sì</label>
+            <label><input type="radio" name="${prefix}${index}" value="0"> No</label>
+          </div>
+        </div>
+      `).join('');
+    }
+    function total(prefix, length) {
+      let sum = 0;
+      for (let i = 0; i < length; i++) {
+        const checked = document.querySelector(`input[name="${prefix}${i}"]:checked`);
+        sum += checked ? Number(checked.value) : 0;
+      }
+      return sum;
+    }
+    function outcome(p1, p2) {
+      if (p1 === 0 && p2 === 0) return 'A';
+      if (p1 === 0 && p2 >= 1) return 'B';
+      if (p1 >= 1 && p1 <= 4) return 'C';
+      if (p1 >= 5 && p2 <= 4) return 'D';
+      if (p1 >= 5 && p2 >= 5) return 'E';
+      return '-';
+    }
+    function update() {
+      const p1 = total('p1_', part1.length);
+      const p2 = total('p2_', part2.length);
+      const code = outcome(p1, p2);
+      const fear = document.querySelector('input[name="fear"]:checked')?.value || 'non indicata';
+      document.querySelector('#p1Total').textContent = p1;
+      document.querySelector('#p2Total').textContent = p2;
+      document.querySelector('#p1Sticky').textContent = p1;
+      document.querySelector('#p2Sticky').textContent = p2;
+      document.querySelector('#codeSticky').textContent = code;
+      document.querySelector('#fearOut').textContent = fear;
+      document.querySelector('#resultBox').innerHTML = code === '-' ? 'Compila le domande per leggere il risultato.' : `<h3>Esito ${code}</h3><p>${outcomes[code]}</p>`;
+    }
+    render('#part1', part1, 'p1_');
+    render('#part2', part2, 'p2_');
+    document.addEventListener('change', update);
+    document.querySelector('#resetBtn').addEventListener('click', () => {
+      document.querySelectorAll('input[type="radio"]').forEach(input => { input.checked = false; });
+      update();
+    });
+    update();
+  </script>
+</body>
+</html>
