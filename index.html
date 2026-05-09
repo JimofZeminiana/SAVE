@@ -1,0 +1,837 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Violenza di genere | mappa operativa</title>
+  <style>
+    :root {
+      --paper: #f7f4ed;
+      --ink: #171717;
+      --muted: #68635d;
+      --line: #171717;
+      --soft: #e7e1d6;
+      --white: #fffdfa;
+      --red: #b22b24;
+      --blue: #12606d;
+      --green: #506d2f;
+      --violet: #60436f;
+      --yellow: #d49b24;
+      --radius: 6px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 16px;
+      line-height: 1.42;
+      letter-spacing: 0;
+      background:
+        linear-gradient(90deg, rgba(23,23,23,.045) 1px, transparent 1px) 0 0 / 48px 48px,
+        linear-gradient(0deg, rgba(23,23,23,.035) 1px, transparent 1px) 0 0 / 48px 48px,
+        var(--paper);
+    }
+
+    a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+    button, input, select, textarea { font: inherit; }
+
+    .shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: minmax(230px, 18vw) 1fr;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      padding: 18px;
+      border-right: 2px solid var(--line);
+      background: rgba(247,244,237,.96);
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .brand {
+      display: grid;
+      gap: 10px;
+      border-bottom: 2px solid var(--line);
+      padding-bottom: 18px;
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      border: 2px solid var(--line);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      background: var(--white);
+    }
+
+    .brand strong {
+      font-size: clamp(1.35rem, 2vw, 2rem);
+      line-height: .96;
+      text-transform: uppercase;
+    }
+
+    .brand span,
+    .tiny {
+      color: var(--muted);
+      font-size: .78rem;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    .nav {
+      display: grid;
+      gap: 8px;
+    }
+
+    .nav a {
+      display: grid;
+      grid-template-columns: 2.2rem 1fr;
+      align-items: start;
+      gap: 10px;
+      padding: 8px 0;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(23,23,23,.28);
+    }
+
+    .nav b {
+      font-size: 1.25rem;
+      line-height: 1;
+    }
+
+    .nav span {
+      font-size: .95rem;
+      line-height: 1.18;
+    }
+
+    main { min-width: 0; }
+
+    section {
+      border-bottom: 2px solid var(--line);
+      padding: clamp(28px, 5vw, 72px);
+    }
+
+    .hero {
+      min-height: 92vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 28px;
+      padding-top: 28px;
+      background: var(--white);
+    }
+
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      border-bottom: 2px solid var(--line);
+      padding-bottom: 14px;
+      color: var(--muted);
+      text-transform: uppercase;
+      font-size: .78rem;
+      letter-spacing: .06em;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      max-width: 13ch;
+      align-self: center;
+      font-size: clamp(4.6rem, 13vw, 13.5rem);
+      line-height: .82;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .hero-bottom {
+      display: grid;
+      grid-template-columns: minmax(220px, .8fr) 1.3fr;
+      gap: clamp(18px, 5vw, 80px);
+      align-items: end;
+    }
+
+    .intro {
+      font-size: clamp(1.2rem, 2.3vw, 2.15rem);
+      line-height: 1.1;
+      max-width: 920px;
+    }
+
+    .emergency {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      border: 2px solid var(--line);
+      background: var(--paper);
+    }
+
+    .emergency a {
+      min-height: 104px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-decoration: none;
+      border-right: 2px solid var(--line);
+    }
+
+    .emergency a:last-child { border-right: 0; }
+    .emergency b { font-size: clamp(2.2rem, 5vw, 4rem); line-height: .9; }
+    .emergency span { color: var(--muted); max-width: 16ch; }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(120px, 18vw) minmax(0, 1fr);
+      gap: clamp(18px, 4vw, 64px);
+      align-items: start;
+      margin-bottom: clamp(24px, 4vw, 48px);
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      color: var(--muted);
+      font-size: .82rem;
+      letter-spacing: .06em;
+      border-top: 2px solid var(--line);
+      padding-top: 10px;
+    }
+
+    h2 {
+      font-size: clamp(2.6rem, 6.4vw, 6.8rem);
+      line-height: .9;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    h3 {
+      font-size: clamp(1.25rem, 2vw, 2rem);
+      line-height: 1.05;
+      margin-bottom: 12px;
+    }
+
+    .lead {
+      max-width: 980px;
+      font-size: clamp(1.12rem, 1.75vw, 1.55rem);
+      line-height: 1.2;
+    }
+
+    .map {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 2px solid var(--line);
+      border-left: 2px solid var(--line);
+      background: var(--white);
+    }
+
+    .map-card {
+      min-height: 420px;
+      padding: clamp(18px, 2.6vw, 32px);
+      border-right: 2px solid var(--line);
+      border-bottom: 2px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .map-card .num {
+      font-size: clamp(4rem, 8vw, 8rem);
+      line-height: .8;
+    }
+
+    .map-card ul,
+    .plain-list {
+      padding-left: 1.1em;
+      margin: 0;
+    }
+
+    .map-card li,
+    .plain-list li {
+      margin-bottom: 8px;
+    }
+
+    .matrix {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 2px solid var(--line);
+      border-left: 2px solid var(--line);
+      background: var(--white);
+    }
+
+    .tile {
+      min-height: 280px;
+      padding: 18px;
+      border-right: 2px solid var(--line);
+      border-bottom: 2px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .tile .tag,
+    .source-tag {
+      width: fit-content;
+      border: 1px solid var(--line);
+      padding: 3px 7px;
+      font-size: .72rem;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      background: var(--paper);
+    }
+
+    .forms {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .panel {
+      border: 2px solid var(--line);
+      background: var(--white);
+      padding: clamp(18px, 2vw, 26px);
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .filters input,
+    .filters select {
+      min-height: 44px;
+      border: 2px solid var(--line);
+      background: var(--white);
+      padding: 8px 10px;
+      border-radius: 0;
+    }
+
+    .filters input {
+      flex: 1 1 260px;
+    }
+
+    .toolbox {
+      display: grid;
+      gap: 10px;
+    }
+
+    details {
+      border: 2px solid var(--line);
+      background: var(--white);
+    }
+
+    details[hidden] { display: none; }
+
+    summary {
+      cursor: pointer;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 14px;
+      align-items: center;
+      padding: 14px 16px;
+      list-style: none;
+    }
+
+    summary::-webkit-details-marker { display: none; }
+
+    .risk-num {
+      min-width: 38px;
+      height: 38px;
+      border: 2px solid var(--line);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      background: var(--paper);
+    }
+
+    .category {
+      color: var(--muted);
+      font-size: .82rem;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    .detail-body {
+      padding: 0 16px 16px 68px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .rating {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+
+    .rating span {
+      padding: 8px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      font-size: .86rem;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 10px;
+      margin: 16px 0;
+    }
+
+    .checklist label {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 10px;
+      align-items: start;
+      padding: 10px;
+      border: 1px solid rgba(23,23,23,.35);
+      background: var(--paper);
+    }
+
+    .result {
+      min-height: 88px;
+      border: 2px solid var(--line);
+      padding: 14px;
+      background: #fdf8ef;
+    }
+
+    .callout {
+      border-left: 10px solid var(--red);
+      background: var(--white);
+      padding: clamp(18px, 2.4vw, 28px);
+      max-width: 980px;
+      font-size: clamp(1.1rem, 1.6vw, 1.45rem);
+      line-height: 1.2;
+    }
+
+    .resources {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .source-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .source {
+      border: 2px solid var(--line);
+      background: var(--white);
+      padding: 14px;
+      display: grid;
+      gap: 12px;
+      min-height: 164px;
+    }
+
+    footer {
+      padding: 24px clamp(28px, 5vw, 72px);
+      background: var(--ink);
+      color: var(--paper);
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .accent-red { color: var(--red); }
+    .accent-blue { color: var(--blue); }
+    .accent-green { color: var(--green); }
+    .accent-violet { color: var(--violet); }
+
+    @media (max-width: 980px) {
+      .shell { grid-template-columns: 1fr; }
+      .sidebar {
+        position: relative;
+        height: auto;
+        border-right: 0;
+        border-bottom: 2px solid var(--line);
+      }
+      .nav { grid-template-columns: repeat(2, 1fr); }
+      .hero { min-height: auto; }
+      .hero-bottom,
+      .section-head,
+      .forms,
+      .resources,
+      .source-grid { grid-template-columns: 1fr; }
+      .map,
+      .matrix { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 620px) {
+      section { padding: 24px 16px; }
+      h1 { font-size: clamp(3.5rem, 20vw, 5.5rem); }
+      .topline,
+      footer { display: grid; }
+      .nav,
+      .map,
+      .matrix,
+      .emergency { grid-template-columns: 1fr; }
+      .emergency a { border-right: 0; border-bottom: 2px solid var(--line); }
+      .emergency a:last-child { border-bottom: 0; }
+      .map-card { min-height: 300px; }
+      summary { grid-template-columns: auto 1fr; }
+      summary .category { grid-column: 2; }
+      .detail-body { padding-left: 16px; }
+      .rating { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar" aria-label="Navigazione principale">
+      <div class="brand">
+        <div class="brand-mark">VG</div>
+        <strong>Violenza di genere</strong>
+        <span>Mappa operativa in italiano</span>
+      </div>
+      <nav class="nav">
+        <a href="#mappa"><b>1</b><span>Organizzare il quadro</span></a>
+        <a href="#forme"><b>2</b><span>Comprendere forme e dinamiche</span></a>
+        <a href="#rischio"><b>3</b><span>Valutare rischio e recidiva</span></a>
+        <a href="#strumenti"><b>4</b><span>Usare strumenti e fonti</span></a>
+        <a href="#comunita"><b>5</b><span>Attivare la rete</span></a>
+        <a href="#fonti"><b>6</b><span>Consultare le fonti</span></a>
+      </nav>
+      <p class="tiny">Sintesi informativa basata sui documenti nella cartella paper. Non sostituisce valutazione professionale o intervento di emergenza.</p>
+    </aside>
+
+    <main>
+      <section class="hero" id="inizio">
+        <div class="topline">
+          <span>Toolkit / prevenzione / supporto</span>
+          <span>Italia · 2026</span>
+        </div>
+        <h1>Violenza di genere</h1>
+        <div class="hero-bottom">
+          <div class="emergency" aria-label="Contatti urgenti">
+            <a href="tel:1522"><span>Antiviolenza e stalking</span><b>1522</b></a>
+            <a href="tel:112"><span>Pericolo immediato</span><b>112</b></a>
+          </div>
+          <p class="intro">Una mappa navigabile per riconoscere le forme della violenza, leggere i fattori di rischio, orientare il lavoro di rete e rendere visibili le risorse di supporto. L’impianto riprende la logica di una toolbox: concetti, evidenze, strumenti, azioni.</p>
+        </div>
+      </section>
+
+      <section id="mappa">
+        <div class="section-head">
+          <div class="eyebrow">Webmap</div>
+          <div>
+            <h2>Dal quadro all’azione</h2>
+            <p class="lead">Il percorso è organizzato in tre movimenti: ordinare le informazioni, comprendere il fenomeno, progettare risposte proporzionate. La sequenza aiuta a non ridurre la violenza a singoli episodi isolati.</p>
+          </div>
+        </div>
+        <div class="map">
+          <article class="map-card">
+            <div class="num accent-red">1</div>
+            <div>
+              <h3>Organizzare</h3>
+              <ul>
+                <li>Identificare soggetti, contesto e fonti disponibili.</li>
+                <li>Raccogliere narrazioni, documenti, segnalazioni, precedenti e segnali osservabili.</li>
+                <li>Separare urgenza, bisogno di protezione e lavoro di medio periodo.</li>
+              </ul>
+            </div>
+          </article>
+          <article class="map-card">
+            <div class="num accent-blue">2</div>
+            <div>
+              <h3>Comprendere</h3>
+              <ul>
+                <li>Leggere la relazione tra controllo, isolamento, minaccia, escalation e false riappacificazioni.</li>
+                <li>Riconoscere discriminazioni multiple, violenza digitale e vulnerabilità specifiche.</li>
+                <li>Considerare bambini e bambine come soggetti coinvolti nella sicurezza.</li>
+              </ul>
+            </div>
+          </article>
+          <article class="map-card">
+            <div class="num accent-green">3</div>
+            <div>
+              <h3>Progettare</h3>
+              <ul>
+                <li>Definire priorità e piano di gestione del rischio.</li>
+                <li>Attivare centri antiviolenza, servizi, forze dell’ordine e rete informale.</li>
+                <li>Documentare decisioni, limiti informativi e passaggi successivi.</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="forme">
+        <div class="section-head">
+          <div class="eyebrow">Comprendere</div>
+          <div>
+            <h2>Forme e dinamiche</h2>
+            <p class="lead">Nelle relazioni di intimità la violenza può combinare aggressione fisica, sessuale, psicologica, economica, digitale e stalking. Il tratto comune è il controllo: limitare autonomia, relazioni, libertà, sicurezza e capacità di scelta.</p>
+          </div>
+        </div>
+        <div class="matrix" aria-label="Principali forme di violenza">
+          <article class="tile">
+            <span class="tag">Corpo</span>
+            <div>
+              <h3>Fisica</h3>
+              <p>Graffi, spinte, schiaffi, pugni, costrizioni, lesioni o uso di oggetti e armi. Conta anche il tentativo, non solo l’esito visibile.</p>
+            </div>
+          </article>
+          <article class="tile">
+            <span class="tag">Intimità</span>
+            <div>
+              <h3>Sessuale</h3>
+              <p>Atti sessuali imposti, coercizione, umiliazione della sfera intima, pressioni, materiale intimo non consensuale o violenza mediata da tecnologie.</p>
+            </div>
+          </article>
+          <article class="tile">
+            <span class="tag">Relazione</span>
+            <div>
+              <h3>Psicologica</h3>
+              <p>Svalutazione, minacce, isolamento, intimidazione, colpevolizzazione, umiliazione pubblica o privata, manipolazione e paura continua.</p>
+            </div>
+          </article>
+          <article class="tile">
+            <span class="tag">Autonomia</span>
+            <div>
+              <h3>Economica</h3>
+              <p>Controllo del denaro, obbligo a lasciare il lavoro, impedimento all’indipendenza, debiti o documenti firmati contro volontà.</p>
+            </div>
+          </article>
+          <article class="tile">
+            <span class="tag">Tecnologia</span>
+            <div>
+              <h3>Digitale</h3>
+              <p>Controllo di telefono, profili social, tracciamento della posizione, sorveglianza, messaggi pressanti o diffusione non consensuale di contenuti.</p>
+            </div>
+          </article>
+          <article class="tile">
+            <span class="tag">Persecuzione</span>
+            <div>
+              <h3>Stalking</h3>
+              <p>Pedinamenti, appostamenti, chiamate ripetute, contatti indesiderati o presenza dell’ex partner nelle vicinanze di casa e lavoro.</p>
+            </div>
+          </article>
+          <article class="tile">
+            <span class="tag">Ciclo</span>
+            <div>
+              <h3>Escalation</h3>
+              <p>Il passaggio da segnali meno visibili a violenze più esplicite può alternarsi a fasi di falsa calma o pentimento apparente.</p>
+            </div>
+          </article>
+          <article class="tile">
+            <span class="tag">Intersezioni</span>
+            <div>
+              <h3>Discriminazioni</h3>
+              <p>Povertà, razzismo, disabilità, migrazione, omofobia, transfobia e dipendenza amministrativa o economica possono intrecciarsi con la violenza.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="rischio">
+        <div class="section-head">
+          <div class="eyebrow">Valutare</div>
+          <div>
+            <h2>SARA-S e recidiva</h2>
+            <p class="lead">Il SARA-S organizza 15 fattori collegati alla recidiva. La compilazione richiede formazione specifica: qui la struttura è proposta come mappa concettuale, non come diagnosi automatica.</p>
+          </div>
+        </div>
+        <div class="filters">
+          <input id="riskSearch" type="search" placeholder="Cerca nei fattori SARA-S" aria-label="Cerca nei fattori SARA-S">
+          <select id="riskFilter" aria-label="Filtra per categoria">
+            <option value="tutte">Tutte le categorie</option>
+            <option value="violenza">Violenze verso partner o ex partner</option>
+            <option value="psicosociale">Adattamento psicosociale</option>
+            <option value="vittima">Vulnerabilità della vittima</option>
+          </select>
+        </div>
+        <div class="toolbox" id="riskList"></div>
+      </section>
+
+      <section id="strumenti">
+        <div class="section-head">
+          <div class="eyebrow">Toolbox</div>
+          <div>
+            <h2>Strumenti operativi</h2>
+            <p class="lead">Le fonti distinguono strumenti professionali, autovalutazione e lavoro di prossimità. Insieme formano una cassetta degli attrezzi da usare con cautela, competenza e rete.</p>
+          </div>
+        </div>
+        <div class="forms">
+          <article class="panel">
+            <h3>ISA 2023: autoconsapevolezza</h3>
+            <p>Questa mini-verifica è ispirata alle aree dell’ISA e serve solo a orientare la lettura. Le risposte non vengono salvate. Se emergono elementi di rischio o se hai paura, contatta un Centro Antiviolenza, il 1522 o il 112 in emergenza.</p>
+            <div class="checklist" id="isaCheck">
+              <label><input type="checkbox" data-score="1"> Mi limita nelle decisioni, nelle uscite o nelle persone che posso vedere.</label>
+              <label><input type="checkbox" data-score="1"> Mi svalorizza, mi umilia o mi fa sentire inadeguata.</label>
+              <label><input type="checkbox" data-score="1"> Controlla telefono, social, posizione, chiamate o messaggi.</label>
+              <label><input type="checkbox" data-score="2"> Mi minaccia, prova a impedirmi di allontanarmi o mi fa paura.</label>
+              <label><input type="checkbox" data-score="2"> Mi ha fatto male fisicamente o mi ha costretta sessualmente.</label>
+              <label><input type="checkbox" data-score="2"> So che possiede armi o ha violato ordini/misure del giudice.</label>
+            </div>
+            <div class="result" id="isaResult" aria-live="polite">Seleziona gli elementi presenti per leggere un’indicazione prudenziale.</div>
+          </article>
+          <article class="panel">
+            <h3>Evidenze sulla valutazione</h3>
+            <ul class="plain-list">
+              <li>Le valutazioni strutturate aiutano a raccogliere informazioni in modo sistematico e a motivare le decisioni.</li>
+              <li>La letteratura segnala accuratezza predittiva moderata: gli strumenti non sono oracoli, ma supporti a giudizio professionale e gestione del rischio.</li>
+              <li>La valutazione deve includere fattori statici e dinamici, contesto, fonti multiple, sicurezza della vittima e monitoraggio nel tempo.</li>
+              <li>Il resoconto conclusivo dovrebbe esplicitare fattori presenti, interazioni, livello di rischio, priorità e misure protettive.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="comunita">
+        <div class="section-head">
+          <div class="eyebrow">Rete</div>
+          <div>
+            <h2>Una comunità che sostiene</h2>
+            <p class="lead">La guida del Centro Antiviolenza del Comune di Venezia traduce il supporto in gesti di vicinato: osservare senza invadere, avvicinarsi gradualmente, ascoltare, non giudicare, indicare risorse.</p>
+          </div>
+        </div>
+        <div class="resources">
+          <article class="panel">
+            <h3>Campanelli d’allarme</h3>
+            <ul class="plain-list">
+              <li>Urla, litigi ripetuti, paura o tristezza osservabile.</li>
+              <li>Segni fisici, dolore, agitazione o controllo da parte del partner.</li>
+              <li>Dipendenza economica forzata, isolamento, divieto di lavorare.</li>
+              <li>Ex partner che si aggira vicino a casa, chiamate o messaggi insistenti e indesiderati.</li>
+            </ul>
+          </article>
+          <article class="panel">
+            <h3>Cosa fare</h3>
+            <ul class="plain-list">
+              <li>Stabilire un rapporto graduale e rispettare i tempi della donna.</li>
+              <li>Dire che la violenza non è colpa sua e che non è sola.</li>
+              <li>Evitare frasi giudicanti o domande invasive.</li>
+              <li>Parlare dei Centri Antiviolenza come luoghi gratuiti, riservati, non obbliganti.</li>
+              <li>In emergenza, chiamare le Forze dell’Ordine al 112.</li>
+            </ul>
+          </article>
+        </div>
+        <div class="callout" style="margin-top:18px">
+          A Venezia il Centro Antiviolenza del Comune è indicato nella guida con sede a Mestre, Viale Garibaldi 155/A, sportelli a Venezia e Lido, telefono 041 274 4222, email centro.antiviolenza@comune.venezia.it.
+        </div>
+      </section>
+
+      <section id="fonti">
+        <div class="section-head">
+          <div class="eyebrow">Fonti locali</div>
+          <div>
+            <h2>Documenti usati</h2>
+            <p class="lead">La pagina sintetizza e riorganizza contenuti dai PDF presenti nella cartella <code>paper</code>, integrando l’idea di toolbox concettuale e filtrabile vista nel riferimento MPIB.</p>
+          </div>
+        </div>
+        <div class="source-grid">
+          <article class="source"><span class="source-tag">Linee guida</span><h3>FuTuRE D2.3</h3><p>Valutazione e autovalutazione del rischio di recidiva, SARA-S aggiornato, ISA 2023, intersezionalità.</p></article>
+          <article class="source"><span class="source-tag">Formulario</span><h3>SARA-S</h3><p>Schema a 15 fattori per violenze verso partner/ex partner, adattamento psicosociale e vulnerabilità della vittima.</p></article>
+          <article class="source"><span class="source-tag">Comunità</span><h3>Guida al vicinato</h3><p>Segnali d’allarme, primo approccio, ascolto, frasi utili e contatti del Centro Antiviolenza Venezia.</p></article>
+          <article class="source"><span class="source-tag">Inclusione</span><h3>Look Wide</h3><p>Prospettiva LGBTQIA+, servizi inclusivi, competenze professionali e approccio intersezionale.</p></article>
+          <article class="source"><span class="source-tag">Ricerca</span><h3>van der Put et al.</h3><p>Meta-analisi sull’accuratezza predittiva degli strumenti di valutazione del rischio nella violenza domestica.</p></article>
+          <article class="source"><span class="source-tag">Ricerca</span><h3>Hilton et al.</h3><p>Studio su SARA, SARA-V3, B-SAFER e ODARA in casi IPV segnalati a servizi di threat assessment.</p></article>
+        </div>
+      </section>
+
+      <footer>
+        <span>Violenza di genere · mappa operativa</span>
+        <span>Static site · contenuti da paper locali</span>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    const saraFactors = [
+      { n: 1, c: 'violenza', title: 'Violenze fisiche o sessuali', body: 'Qualsiasi forma di violenza fisica consumata o tentata, inclusa violenza sessuale e uso di armi.' },
+      { n: 2, c: 'violenza', title: 'Gravi minacce, ideazione o intenzione', body: 'Frasi, atteggiamenti intimidatori, stalking, minacce di usare armi, pensieri o piani per fare del male.' },
+      { n: 3, c: 'violenza', title: 'Escalation', body: 'Incremento nel tempo della frequenza o gravità di violenze fisiche, sessuali, minacce o intenzioni.' },
+      { n: 4, c: 'violenza', title: 'Violazione di misure cautelari o interdittive', body: 'Violazioni di divieti, obblighi, allontanamento, ordini di protezione o altre misure penali/civili.' },
+      { n: 5, c: 'violenza', title: 'Atteggiamenti negativi verso le violenze', body: 'Giustificazione, minimizzazione, credenze che scagionano l’abuso, gelosia, possesso, negazione di responsabilità.' },
+      { n: 6, c: 'psicosociale', title: 'Precedenti penali o condotte antisociali', body: 'Comportamenti antisociali persistenti, reati contro persona, patrimonio, ordine pubblico o connessi a sostanze.' },
+      { n: 7, c: 'psicosociale', title: 'Problemi relazionali', body: 'Separazione in corso o passata, elevata conflittualità nella relazione attuale o precedente.' },
+      { n: 8, c: 'psicosociale', title: 'Problemi di lavoro o finanziari', body: 'Disoccupazione cronica, instabilità lavorativa, gravi problemi economici o cambi frequenti di lavoro.' },
+      { n: 9, c: 'psicosociale', title: 'Abuso di sostanze', body: 'Uso di alcol, droghe o medicinali con compromissione di salute, relazioni, lavoro o problemi con la giustizia.' },
+      { n: 10, c: 'psicosociale', title: 'Disturbi mentali o rischio suicidario', body: 'Segnali di grave sofferenza mentale, disturbi di personalità, minacce o ideazione suicidaria/autolesiva.' },
+      { n: 11, c: 'vittima', title: 'Condotta incoerente verso il reo', body: 'Contatti mantenuti dopo separazione, sensi di colpa, ritorni nella relazione o ritiro di querela.' },
+      { n: 12, c: 'vittima', title: 'Estremo terrore', body: 'Paura intensa della vittima rispetto a possibili nuove violenze, minacce o conseguenze.' },
+      { n: 13, c: 'vittima', title: 'Sostegno inadeguato', body: 'Isolamento, rete familiare o sociale fragile, accesso insufficiente a servizi e protezioni.' },
+      { n: 14, c: 'vittima', title: 'Scarsa sicurezza', body: 'Esposizione continua al contatto con il reo, dipendenze pratiche, abitative, economiche o organizzative.' },
+      { n: 15, c: 'vittima', title: 'Problemi di salute psicofisica', body: 'Stress, conseguenze psicofisiche, dipendenze o condizioni che possono incidere sulla protezione.' }
+    ];
+
+    const labels = {
+      violenza: 'Violenze verso partner o ex partner',
+      psicosociale: 'Adattamento psicosociale',
+      vittima: 'Vulnerabilità della vittima'
+    };
+
+    const riskList = document.querySelector('#riskList');
+    const riskSearch = document.querySelector('#riskSearch');
+    const riskFilter = document.querySelector('#riskFilter');
+
+    function renderRisks() {
+      const query = riskSearch.value.trim().toLowerCase();
+      const filter = riskFilter.value;
+      riskList.innerHTML = '';
+      saraFactors
+        .filter(item => filter === 'tutte' || item.c === filter)
+        .filter(item => `${item.title} ${item.body} ${labels[item.c]}`.toLowerCase().includes(query))
+        .forEach(item => {
+          const node = document.createElement('details');
+          node.innerHTML = `
+            <summary>
+              <span class="risk-num">${item.n}</span>
+              <strong>${item.title}</strong>
+              <span class="category">${labels[item.c]}</span>
+            </summary>
+            <div class="detail-body">
+              <p>${item.body}</p>
+              <div class="rating" aria-label="Scala di codifica">
+                <span><b>S</b> presente</span>
+                <span><b>?</b> probabilmente/parzialmente presente</span>
+                <span><b>N</b> non presente</span>
+                <span><b>-</b> informazioni insufficienti</span>
+              </div>
+            </div>
+          `;
+          riskList.appendChild(node);
+        });
+
+      if (!riskList.children.length) {
+        riskList.innerHTML = '<p class="panel">Nessun fattore corrisponde alla ricerca.</p>';
+      }
+    }
+
+    function updateIsa() {
+      const score = [...document.querySelectorAll('#isaCheck input:checked')]
+        .reduce((sum, input) => sum + Number(input.dataset.score), 0);
+      const result = document.querySelector('#isaResult');
+      if (score === 0) {
+        result.textContent = 'Seleziona gli elementi presenti per leggere un’indicazione prudenziale.';
+      } else if (score <= 2) {
+        result.textContent = 'Emergono alcuni elementi da non sottovalutare. Parlane con una persona fidata o con un Centro Antiviolenza per orientarti con calma e riservatezza.';
+      } else if (score <= 5) {
+        result.textContent = 'Emergono più indicatori di controllo o violenza. È consigliabile contattare un Centro Antiviolenza o il 1522 per valutare sicurezza e passi possibili.';
+      } else {
+        result.textContent = 'Emergono indicatori importanti di rischio. Se sei in pericolo chiama il 112; appena puoi, contatta il 1522 o un Centro Antiviolenza per un piano di sicurezza.';
+      }
+    }
+
+    riskSearch.addEventListener('input', renderRisks);
+    riskFilter.addEventListener('change', renderRisks);
+    document.querySelector('#isaCheck').addEventListener('change', updateIsa);
+    renderRisks();
+  </script>
+</body>
+</html>
