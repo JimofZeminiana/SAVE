@@ -18,7 +18,7 @@
       --violet: #60436f;
       --yellow: #d49b24;
       --radius: 6px;
-      --title-hero: clamp(3.6rem, 9vw, 9.2rem);
+      --title-hero: clamp(3.6rem, 7vw, 7.2rem);
       --title-section: clamp(2.1rem, 4.6vw, 4.9rem);
       --title-card: clamp(1.15rem, 1.65vw, 1.7rem);
     }
@@ -629,14 +629,14 @@
         <span>Mappa operativa in italiano</span>
       </div>
       <nav class="nav">
-        <a href="#forme" target="_blank"><b>1</b><span>Forme e dinamiche</span></a>
-        <a href="#test" target="_blank"><b>2</b><span>Questionario ISA</span></a>
-        <a href="#comunita" target="_blank"><b>3</b><span>Una comunità che sostiene</span></a>
-        <a data-audience="operator" href="#mappa" target="_blank"><b>4</b><span>Organizzare il quadro</span></a>
-        <a data-audience="operator" href="#catalogo" target="_blank"><b>5</b><span>Tool di risk assessment</span></a>
-        <a data-audience="operator" href="#rischio" target="_blank"><b>6</b><span>Valutare rischio e recidiva</span></a>
-        <a data-audience="operator" href="#strumenti" target="_blank"><b>7</b><span>Usare strumenti e fonti</span></a>
-        <a data-audience="operator" href="#fonti" target="_blank"><b>8</b><span>Consultare le fonti</span></a>
+        <a href="#forme" ><b>1</b><span>Forme e dinamiche</span></a>
+        <a href="#test" ><b>2</b><span>Questionario ISA</span></a>
+        <a href="#comunita" ><b>3</b><span>Una comunità che sostiene</span></a>
+        <a data-audience="operator" href="#mappa" ><b>4</b><span>Organizzare il quadro</span></a>
+        <a data-audience="operator" href="#catalogo" ><b>5</b><span>Tool di risk assessment</span></a>
+        <a data-audience="operator" href="#rischio" ><b>6</b><span>Valutare rischio e recidiva</span></a>
+        <a data-audience="operator" href="#strumenti" ><b>7</b><span>Usare strumenti e fonti</span></a>
+        <a data-audience="operator" href="#fonti"><b>8</b><span>Consultare le fonti</span></a>
       </nav>
     </aside>
 
@@ -649,8 +649,8 @@
         <h1>Violenza di genere</h1>
         <div class="hero-bottom">
           <div class="emergency" aria-label="Contatti urgenti">
-            <a href="tel:1522" target="_blank"><span>Antiviolenza e stalking</span><b>1522</b></a>
-            <a href="tel:112" target="_blank"><span>Pericolo immediato</span><b>112</b></a>
+            <a href="tel:1522" ><span>Antiviolenza e stalking</span><b>1522</b></a>
+            <a href="tel:112" ><span>Pericolo immediato</span><b>112</b></a>
           </div>
           <p class="intro">Una mappa navigabile per riconoscere le forme della violenza, leggere i fattori di rischio, orientare il lavoro di rete e rendere visibili le risorse di supporto. L’impianto riprende la logica di una toolbox: concetti, evidenze, strumenti, azioni.</p>
         </div>
@@ -812,7 +812,7 @@
           </div>
         </div>
         <div class="test-grid">
-          <a class="test-card" href="isa.html" target="_blank">
+          <a class="test-card" href="isa.html">
             <span class="num accent-red">ISA</span>
             <div>
               <h3>Questionario sull'autoconsapevolezza 2023</h3>
@@ -820,7 +820,7 @@
             </div>
             <span class="pill-link">Apri il test</span>
           </a>
-          <a class="test-card" href="economic-abuse.html" target="_blank">
+          <a class="test-card" href="economic-abuse.html">
             <span class="num accent-green">SEA-12</span>
             <div>
               <h3>Questionario sull'abuso economico</h3>
@@ -828,7 +828,7 @@
             </div>
             <span class="pill-link">Apri il test</span>
           </a>
-          <a class="test-card" data-audience="operator" href="sara.html" target="_blank">
+          <a class="test-card" data-audience="operator" href="sara.html">
             <span class="num accent-blue">SARA</span>
             <div>
               <h3>SARA-S aggiornato</h3>
@@ -1054,6 +1054,7 @@
       modeToggle.textContent = isOperator ? 'Per i cittadini' : 'Per gli operatori';
       modeLabel.textContent = isOperator ? 'per gli operatori' : ' per i cittadini';
       modeToggle.setAttribute('aria-pressed', String(isOperator));
+      window.scrollTo(0, 0);
     }
 
     modeToggle.addEventListener('click', () => {

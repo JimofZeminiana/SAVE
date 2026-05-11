@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Abuso economico | Violenza di genere</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <style>
     :root { --paper:#f7f4ed; --ink:#171717; --muted:#68635d; --line:#171717; --soft:#e7e1d6; --white:#fffdfa; --red:#b22b24; --blue:#12606d; }
     * { box-sizing: border-box; }
@@ -81,6 +82,7 @@
             <p>Domande risposte: <b id="answeredCount">0</b> / 12</p>
             <div class="actions">
               <button class="btn" id="resetBtn" type="button">Azzera risposte</button>
+              <button class="btn" id="exportBtn" type="button">Scarica PDF</button>
               <a class="btn dark" href="tel:1522" target="_blank">Chiama 1522</a>
               <a class="btn dark" href="https://www.1522.eu/mappatura-1522/" target="_blank">Cerca un centro antiviolenza</a>
             </div>
@@ -166,6 +168,38 @@
     document.querySelector('#resetBtn').addEventListener('click', () => {
       document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
       update();
+    });
+    document.querySelector('#exportBtn').addEventListener('click', () => {
+      const { score, answered } = computeScore();
+      const outcome = evaluate(score, answered);
+      const now = new Date().toLocaleDateString('it-IT') + ' ' + new Date().toLocaleTimeString('it-IT');
+      let pdfContent = `QUESTIONARIO ABUSO ECONOMICO - RISPOSTE\n\n`;
+      pdfContent += `Data: ${now}\n\n`;
+      pdfContent += `DOMANDE E RISPOSTE\n`;
+      pdfContent += `${'─'.repeat(50)}\n`;
+      items.forEach((item, index) => {
+        const checked = document.querySelector(`input[name="q${index}"]:checked`);
+        const optionLabels = { '1': 'Mai', '2': 'Quasi mai', '3': 'Qualche volta', '4': 'Spesso', '5': 'Molto spesso' };
+        const answer = checked ? optionLabels[checked.value] : '-';
+        pdfContent += `${index + 1}. Quanto spesso il tuo partner ${item}?\n   Risposta: ${answer}\n\n`;
+      });
+      pdfContent += `\nRISULTATI\n`;
+      pdfContent += `${'─'.repeat(50)}\n`;
+      pdfContent += `Valore totale: ${score} / 60\n`;
+      pdfContent += `Domande risposte: ${answered} / ${items.length}\n`;
+      if (answered === items.length) {
+        pdfContent += `\nValutazione: ${outcome.label}\n`;
+        pdfContent += `${outcome.text}\n`;
+      } else {
+        pdfContent += `\n${outcome.text}\n`;
+      }
+      const element = document.createElement('div');
+      element.style.whiteSpace = 'pre-wrap';
+      element.style.fontFamily = 'monospace';
+      element.style.padding = '20px';
+      element.textContent = pdfContent;
+      const opt = { margin: 10, filename: 'Abuso_Economico_risposte.pdf', image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 }, jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' } };
+      html2pdf().set(opt).from(element).save();
     });
   </script>
 </body>

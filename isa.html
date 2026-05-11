@@ -1,54 +1,334 @@
 <!doctype html>
 <html lang="it">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Questionario ISA 2023 | Violenza di genere</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
-    :root { --paper:#f7f4ed; --ink:#171717; --muted:#68635d; --line:#171717; --soft:#e7e1d6; --white:#fffdfa; --red:#b22b24; --blue:#12606d; }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; background: var(--paper); color: var(--ink); }
-    body { margin:0; font-family: Arial, Helvetica, sans-serif; line-height:1.42; background: linear-gradient(90deg, rgba(23,23,23,.045) 1px, transparent 1px) 0 0/48px 48px, linear-gradient(0deg, rgba(23,23,23,.035) 1px, transparent 1px) 0 0/48px 48px, var(--paper); }
-    a { color: inherit; text-decoration-thickness:1px; text-underline-offset:4px; }
-    button, input, textarea, select { font: inherit; }
-    .layout { display:grid; grid-template-columns:minmax(230px,18vw) 1fr; min-height:100vh; }
-    aside { position:sticky; top:62px; height:calc(100vh - 62px); padding:18px; border-right:2px solid var(--line); background:rgba(247,244,237,.96); display:flex; flex-direction:column; gap:22px; }
-    .mark { width:44px; height:44px; border:2px solid var(--line); background:var(--white); display:grid; place-items:center; font-weight:800; }
-    .brand { display:grid; gap:10px; padding-bottom:18px; border-bottom:2px solid var(--line); }
-    .brand strong { font-size:clamp(1.4rem,2vw,2rem); line-height:.95; text-transform:uppercase; }
-    .tiny, .eyebrow { color:var(--muted); font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; }
-    nav { display:grid; gap:8px; }
-    nav a { display:grid; grid-template-columns:2rem 1fr; gap:10px; padding:8px 0; border-bottom:1px solid rgba(23,23,23,.28); text-decoration:none; }
-    main { min-width:0; }
-    .site-header { position:sticky; top:0; z-index:10; display:flex; justify-content:space-between; align-items:center; gap:14px; padding:12px clamp(18px,5vw,72px); border-bottom:2px solid var(--line); background:rgba(247,244,237,.98); }
-    .header-btn { border:2px solid var(--line); background:var(--white); color:var(--ink); padding:9px 12px; text-decoration:none; text-transform:uppercase; font-size:.78rem; letter-spacing:.05em; }
-    .exit-btn { border-color:var(--red); background:#f20d0d; color:#fff; font-weight:800; }
-    section { padding:clamp(28px,5vw,72px); border-bottom:2px solid var(--line); }
-    .hero { background:var(--white); }
-    .topline { display:flex; justify-content:space-between; gap:14px; border-bottom:2px solid var(--line); padding-bottom:14px; margin-bottom:36px; }
-    h1, h2, h3, p { margin-top:0; }
-    h1 { max-width:12ch; font-size:clamp(3.3rem,8.4vw,8.4rem); line-height:.82; text-transform:uppercase; letter-spacing:0; }
-    h2 { font-size:clamp(2rem,4.4vw,4.5rem); line-height:.9; text-transform:uppercase; letter-spacing:0; }
-    h3 { font-size:clamp(1.15rem,1.65vw,1.55rem); line-height:1.05; }
-    .lead { max-width:960px; font-size:clamp(1.12rem,1.75vw,1.55rem); line-height:1.2; }
-    .panel { border:2px solid var(--line); background:var(--white); padding:clamp(18px,2.4vw,30px); }
-    .grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
-    .question { border:2px solid var(--line); background:var(--white); display:grid; grid-template-columns:1fr auto; gap:16px; padding:16px; align-items:start; }
-    .question small { color:var(--muted); text-transform:uppercase; letter-spacing:.05em; }
-    .choices { display:flex; gap:8px; align-items:center; }
-    .choices label { min-width:58px; border:2px solid var(--line); background:var(--paper); padding:8px; text-align:center; cursor:pointer; }
-    .choices input { margin-right:4px; }
+    :root {
+      --paper: #f7f4ed;
+      --ink: #171717;
+      --muted: #68635d;
+      --line: #171717;
+      --soft: #e7e1d6;
+      --white: #fffdfa;
+      --red: #b22b24;
+      --blue: #12606d;
+    }
 
-    .result { border-left:10px solid var(--red); background:var(--white); padding:18px; font-size:1.1rem; }
-    .actions { display:flex; gap:10px; flex-wrap:wrap; }
-    .btn { border:2px solid var(--line); background:var(--paper); padding:10px 12px; text-decoration:none; cursor:pointer; }
-    .btn.dark { background:var(--ink); color:var(--paper); }
-    .fear { display:grid; grid-template-columns:repeat(2,1fr); border-top:2px solid var(--line); border-left:2px solid var(--line); background:var(--white); }
-    .fear label { padding:14px; border-right:2px solid var(--line); border-bottom:2px solid var(--line); cursor:pointer; display:flex; gap:8px; align-items:center; }
-    @media (max-width:900px) { .layout, .grid { grid-template-columns:1fr; } aside { position:relative; top:0; height:auto; border-right:0; border-bottom:2px solid var(--line); } }
-    @media (max-width:620px) { section { padding:24px 16px; } .question { grid-template-columns:1fr; } .topline, .site-header { display:grid; } .fear { grid-template-columns:1fr; } h1 { font-size:clamp(3rem,16vw,4.8rem); } }
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.42;
+      background: linear-gradient(90deg, rgba(23, 23, 23, .045) 1px, transparent 1px) 0 0/48px 48px, linear-gradient(0deg, rgba(23, 23, 23, .035) 1px, transparent 1px) 0 0/48px 48px, var(--paper);
+    }
+
+    a {
+      color: inherit;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 4px;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(230px, 18vw) 1fr;
+      min-height: 100vh;
+    }
+
+    aside {
+      position: sticky;
+      top: 62px;
+      height: calc(100vh - 62px);
+      padding: 18px;
+      border-right: 2px solid var(--line);
+      background: rgba(247, 244, 237, .96);
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .mark {
+      width: 44px;
+      height: 44px;
+      border: 2px solid var(--line);
+      background: var(--white);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+    }
+
+    .brand {
+      display: grid;
+      gap: 10px;
+      padding-bottom: 18px;
+      border-bottom: 2px solid var(--line);
+    }
+
+    .brand strong {
+      font-size: clamp(1.4rem, 2vw, 2rem);
+      line-height: .95;
+      text-transform: uppercase;
+    }
+
+    .tiny,
+    .eyebrow {
+      color: var(--muted);
+      font-size: .78rem;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    nav {
+      display: grid;
+      gap: 8px;
+    }
+
+    nav a {
+      display: grid;
+      grid-template-columns: 2rem 1fr;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(23, 23, 23, .28);
+      text-decoration: none;
+    }
+
+    main {
+      min-width: 0;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      padding: 12px clamp(18px, 5vw, 72px);
+      border-bottom: 2px solid var(--line);
+      background: rgba(247, 244, 237, .98);
+    }
+
+    .header-btn {
+      border: 2px solid var(--line);
+      background: var(--white);
+      color: var(--ink);
+      padding: 9px 12px;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: .78rem;
+      letter-spacing: .05em;
+    }
+
+    .exit-btn {
+      border-color: var(--red);
+      background: #f20d0d;
+      color: #fff;
+      font-weight: 800;
+    }
+
+    section {
+      padding: clamp(28px, 5vw, 72px);
+      border-bottom: 2px solid var(--line);
+    }
+
+    .hero {
+      background: var(--white);
+    }
+
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      border-bottom: 2px solid var(--line);
+      padding-bottom: 14px;
+      margin-bottom: 36px;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 12ch;
+      font-size: clamp(3.3rem, 8.4vw, 8.4rem);
+      line-height: .82;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 4.4vw, 4.5rem);
+      line-height: .9;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      font-size: clamp(1.15rem, 1.65vw, 1.55rem);
+      line-height: 1.05;
+    }
+
+    .lead {
+      max-width: 960px;
+      font-size: clamp(1.12rem, 1.75vw, 1.55rem);
+      line-height: 1.2;
+    }
+
+    .panel {
+      border: 2px solid var(--line);
+      background: var(--white);
+      padding: clamp(18px, 2.4vw, 30px);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .question {
+      border: 2px solid var(--line);
+      background: var(--white);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      padding: 16px;
+      align-items: start;
+    }
+
+    .question small {
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    .choices {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .choices label {
+      min-width: 58px;
+      border: 2px solid var(--line);
+      background: var(--paper);
+      padding: 8px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .choices input {
+      margin-right: 4px;
+    }
+
+    .result {
+      border-left: 10px solid var(--red);
+      background: var(--white);
+      padding: 18px;
+      font-size: 1.1rem;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: 2px solid var(--line);
+      background: var(--paper);
+      padding: 10px 12px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .btn.dark {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .fear {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      border-top: 2px solid var(--line);
+      border-left: 2px solid var(--line);
+      background: var(--white);
+    }
+
+    .fear label {
+      padding: 14px;
+      border-right: 2px solid var(--line);
+      border-bottom: 2px solid var(--line);
+      cursor: pointer;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    @media (max-width:900px) {
+
+      .layout,
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      aside {
+        position: relative;
+        top: 0;
+        height: auto;
+        border-right: 0;
+        border-bottom: 2px solid var(--line);
+      }
+    }
+
+    @media (max-width:620px) {
+      section {
+        padding: 24px 16px;
+      }
+
+      .question {
+        grid-template-columns: 1fr;
+      }
+
+      .topline,
+      .site-header {
+        display: grid;
+      }
+
+      .fear {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: clamp(3rem, 16vw, 4.8rem);
+      }
+    }
   </style>
 </head>
+
 <body>
   <header class="site-header" aria-label="Azioni principali">
     <span class="tiny">Questionario ISA</span>
@@ -56,20 +336,26 @@
   </header>
   <div class="layout">
     <aside>
-      <div class="brand"><div class="mark">ISA</div><strong>Questionario ISA 2023</strong><span class="tiny">Autovalutazione del rischio</span></div>
+      <div class="brand">
+        <div class="mark">ISA</div><strong>Questionario ISA 2023</strong><span class="tiny">Autovalutazione del
+          rischio</span>
+      </div>
       <nav>
         <a href="index.html#test" target="_blank"><b>←</b><span>Torna alla mappa</span></a>
         <a href="#parte1" target="_blank"><b>1</b><span>Parte 1</span></a>
         <a href="#parte2" target="_blank"><b>2</b><span>Parte 2</span></a>
         <a href="#risultato" target="_blank"><b>3</b><span>Risultato</span></a>
       </nav>
-      <p class="tiny">Le risposte restano in questa pagina. Se sei in pericolo chiama il 112. Per supporto gratuito e anonimo: 1522.</p>
+      <p class="tiny">Le risposte restano in questa pagina. Se sei in pericolo chiama il 112. Per supporto gratuito e
+        anonimo: 1522.</p>
     </aside>
     <main>
       <section class="hero">
-        <div class="topline"><span class="tiny">Increasing Self-Awareness</span><span class="tiny">tests / QUESTIONARIO ISA 2023.pdf</span></div>
+        <div class="topline"><span class="tiny">Increasing Self-Awareness</span><span class="tiny">tests / QUESTIONARIO
+            ISA 2023.pdf</span></div>
         <h1>ISA 2023</h1>
-        <p class="lead">Rispondi sulla base della tua esperienza. Non ci sono risposte giuste o sbagliate: il risultato serve a capire meglio cosa sta accadendo e quali passi di supporto considerare.</p>
+        <p class="lead">Rispondi sulla base della tua esperienza. Non ci sono risposte giuste o sbagliate: il risultato
+          serve a capire meglio cosa sta accadendo e quali passi di supporto considerare.</p>
       </section>
 
       <section>
@@ -107,8 +393,10 @@
             <p>Paura dichiarata: <b id="fearOut">non indicata</b></p>
             <div class="actions">
               <button class="btn" id="resetBtn" type="button">Azzera risposte</button>
+              <button class="btn" id="exportBtn" type="button">Scarica PDF</button>
               <a class="btn dark" href="tel:1522" target="_blank">Chiama 1522</a>
-              <a class="btn dark" href="https://www.1522.eu/mappatura-1522/" target="_blank">Cerca un centro antiviolenza nelle vicinanze</a>
+              <a class="btn dark" href="https://www.1522.eu/mappatura-1522/" target="_blank">Cerca un centro
+                antiviolenza nelle vicinanze</a>
             </div>
           </div>
           <div class="result" id="resultBox">Compila le domande per leggere il risultato.</div>
@@ -197,7 +485,75 @@
       document.querySelectorAll('input[type="radio"]').forEach(input => { input.checked = false; });
       update();
     });
-    update();
+    document.querySelector('#exportBtn').addEventListener('click', () => {
+      const p1 = total('p1_', part1.length);
+      const p2 = total('p2_', part2.length);
+      const code = outcome(p1, p2);
+      const fear = document.querySelector('input[name="fear"]:checked')?.value || 'non indicata';
+      const now = new Date().toLocaleDateString('it-IT') + ' ' + new Date().toLocaleTimeString('it-IT');
+
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+      const margin = 15;
+      const pageW = 210 - margin * 2;
+      const lineH = 6;
+      let y = margin;
+
+      function addLine(text, bold = false, size = 10) {
+        doc.setFontSize(size);
+        doc.setFont('helvetica', bold ? 'bold' : 'normal');
+        const lines = doc.splitTextToSize(text, pageW);
+        lines.forEach(line => {
+          if (y > 280) { doc.addPage(); y = margin; }
+          doc.text(line, margin, y);
+          y += lineH;
+        });
+      }
+
+      function addSpacer() { y += 3; }
+      function addSeparator() { doc.setDrawColor(100); doc.line(margin, y, 210 - margin, y); y += 5; }
+
+      addLine('QUESTIONARIO ISA 2023 - RISPOSTE', true, 14);
+      addSpacer();
+      addLine(`Data: ${now}`);
+      addSpacer();
+      addSeparator();
+
+      addLine('PARTE 1', true, 12);
+      addSpacer();
+      part1.forEach((item, index) => {
+        const checked = document.querySelector(`input[name="p1_${index}"]:checked`);
+        const answer = checked ? (checked.value !== '0' ? 'Sì' : 'No') : '-';
+        addLine(`${index + 1}. ${item[1]}`);
+        addLine(`   Risposta: ${answer}`, true);
+        addSpacer();
+      });
+
+      addSeparator();
+      addLine('PARTE 2', true, 12);
+      addSpacer();
+      part2.forEach((item, index) => {
+        const checked = document.querySelector(`input[name="p2_${index}"]:checked`);
+        const answer = checked ? (checked.value !== '0' ? 'Sì' : 'No') : '-';
+        addLine(`${index + 1}. ${item[1]}`);
+        addLine(`   Risposta: ${answer}`, true);
+        addSpacer();
+      });
+
+      addSeparator();
+      addLine('RISULTATI', true, 12);
+      addSpacer();
+      addLine(`Parte 1: ${p1} / 20`);
+      addLine(`Parte 2: ${p2} / 14`);
+      addLine(`Paura dichiarata: ${fear}`);
+      addSpacer();
+      addLine(`Esito: ${code}`, true);
+      if (code !== '-') addLine(outcomes[code]);
+
+      doc.save('ISA_2023_risposte.pdf');
+    });
   </script>
 </body>
+
 </html>

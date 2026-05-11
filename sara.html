@@ -1,60 +1,392 @@
 <!doctype html>
 <html lang="it">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <title>SARA-S aggiornato | Violenza di genere</title>
   <style>
-    :root { --paper:#f7f4ed; --ink:#171717; --muted:#68635d; --line:#171717; --soft:#e7e1d6; --white:#fffdfa; --red:#b22b24; --blue:#12606d; --green:#506d2f; }
-    * { box-sizing:border-box; }
-    html { scroll-behavior:smooth; background:var(--paper); color:var(--ink); }
-    body { margin:0; font-family:Arial, Helvetica, sans-serif; line-height:1.42; background:linear-gradient(90deg, rgba(23,23,23,.045) 1px, transparent 1px) 0 0/48px 48px, linear-gradient(0deg, rgba(23,23,23,.035) 1px, transparent 1px) 0 0/48px 48px, var(--paper); }
-    a { color:inherit; text-decoration-thickness:1px; text-underline-offset:4px; }
-    button, input, textarea, select { font:inherit; }
-    .layout { display:grid; grid-template-columns:minmax(230px,18vw) 1fr; min-height:100vh; }
-    aside { position:sticky; top:62px; height:calc(100vh - 62px); padding:18px; border-right:2px solid var(--line); background:rgba(247,244,237,.96); display:flex; flex-direction:column; gap:22px; }
-    .brand { display:grid; gap:10px; padding-bottom:18px; border-bottom:2px solid var(--line); }
-    .mark { width:44px; height:44px; border:2px solid var(--line); background:var(--white); display:grid; place-items:center; font-weight:800; }
-    .brand strong { font-size:clamp(1.4rem,2vw,2rem); line-height:.95; text-transform:uppercase; }
-    .tiny, .eyebrow { color:var(--muted); font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; }
-    nav { display:grid; gap:8px; }
-    nav a { display:grid; grid-template-columns:2rem 1fr; gap:10px; padding:8px 0; border-bottom:1px solid rgba(23,23,23,.28); text-decoration:none; }
-    main { min-width:0; }
-    .site-header { position:sticky; top:0; z-index:10; display:flex; justify-content:space-between; align-items:center; gap:14px; padding:12px clamp(18px,5vw,72px); border-bottom:2px solid var(--line); background:rgba(247,244,237,.98); }
-    .header-btn { border:2px solid var(--line); background:var(--white); color:var(--ink); padding:9px 12px; text-decoration:none; text-transform:uppercase; font-size:.78rem; letter-spacing:.05em; }
-    .exit-btn { border-color:var(--red); background:#f20d0d; color:#fff; font-weight:800; }
-    section { padding:clamp(28px,5vw,72px); border-bottom:2px solid var(--line); }
-    .hero { background:var(--white); }
-    .topline { display:flex; justify-content:space-between; gap:14px; border-bottom:2px solid var(--line); padding-bottom:14px; margin-bottom:36px; }
-    h1, h2, h3, p { margin-top:0; }
-    h1 { max-width:12ch; font-size:clamp(3.3rem,8.4vw,8.4rem); line-height:.82; text-transform:uppercase; letter-spacing:0; }
-    h2 { font-size:clamp(2rem,4.4vw,4.5rem); line-height:.9; text-transform:uppercase; letter-spacing:0; }
-    h3 { font-size:clamp(1.15rem,1.65vw,1.55rem); line-height:1.05; }
-    .lead { max-width:960px; font-size:clamp(1.12rem,1.75vw,1.55rem); line-height:1.2; }
-    .panel, .factor { border:2px solid var(--line); background:var(--white); padding:clamp(16px,2vw,24px); }
-    .meta { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
-    label span { display:block; color:var(--muted); font-size:.78rem; text-transform:uppercase; letter-spacing:.05em; margin-bottom:4px; }
-    input[type="text"], input[type="date"], textarea, select { width:100%; border:2px solid var(--line); background:var(--paper); padding:10px; border-radius:0; }
-    textarea { min-height:120px; resize:vertical; }
-    .sources { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:14px; }
-    .sources label, .radio-grid label { border:1px solid rgba(23,23,23,.35); background:var(--paper); padding:10px; cursor:pointer; }
-    .factors { display:grid; gap:12px; }
-    .factor { display:grid; gap:14px; }
-    .factor-head { display:grid; grid-template-columns:auto 1fr; gap:14px; align-items:start; }
-    .num { min-width:44px; height:44px; border:2px solid var(--line); background:var(--paper); display:grid; place-items:center; font-weight:800; }
-    .category { color:var(--muted); font-size:.78rem; text-transform:uppercase; letter-spacing:.05em; }
-    .coding { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-    .radio-grid { display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid var(--line); border-left:1px solid var(--line); }
-    .radio-grid label { border-top:0; border-left:0; text-align:center; }
-    .risk-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
-    .summary { position:sticky; bottom:0; border-top:2px solid var(--line); background:var(--ink); color:var(--paper); padding:16px clamp(18px,5vw,72px); display:flex; justify-content:space-between; gap:18px; flex-wrap:wrap; z-index:2; }
-    .summary b { font-size:1.5rem; }
-    .btn { border:2px solid var(--line); background:var(--paper); padding:10px 12px; cursor:pointer; text-decoration:none; }
-    .actions { display:flex; gap:10px; flex-wrap:wrap; }
-    @media (max-width:900px) { .layout, .meta, .coding, .risk-grid { grid-template-columns:1fr; } aside { position:relative; top:0; height:auto; border-right:0; border-bottom:2px solid var(--line); } .sources { grid-template-columns:1fr; } }
-    @media (max-width:620px) { section { padding:24px 16px; } .topline, .site-header, .summary { display:grid; } .factor-head, .radio-grid { grid-template-columns:1fr; } h1 { font-size:clamp(3rem,16vw,4.8rem); } }
+    :root {
+      --paper: #f7f4ed;
+      --ink: #171717;
+      --muted: #68635d;
+      --line: #171717;
+      --soft: #e7e1d6;
+      --white: #fffdfa;
+      --red: #b22b24;
+      --blue: #12606d;
+      --green: #506d2f;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.42;
+      background: linear-gradient(90deg, rgba(23, 23, 23, .045) 1px, transparent 1px) 0 0/48px 48px, linear-gradient(0deg, rgba(23, 23, 23, .035) 1px, transparent 1px) 0 0/48px 48px, var(--paper);
+    }
+
+    a {
+      color: inherit;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 4px;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(230px, 18vw) 1fr;
+      min-height: 100vh;
+    }
+
+    aside {
+      position: sticky;
+      top: 62px;
+      height: calc(100vh - 62px);
+      padding: 18px;
+      border-right: 2px solid var(--line);
+      background: rgba(247, 244, 237, .96);
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .brand {
+      display: grid;
+      gap: 10px;
+      padding-bottom: 18px;
+      border-bottom: 2px solid var(--line);
+    }
+
+    .mark {
+      width: 44px;
+      height: 44px;
+      border: 2px solid var(--line);
+      background: var(--white);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+    }
+
+    .brand strong {
+      font-size: clamp(1.4rem, 2vw, 2rem);
+      line-height: .95;
+      text-transform: uppercase;
+    }
+
+    .tiny,
+    .eyebrow {
+      color: var(--muted);
+      font-size: .78rem;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    nav {
+      display: grid;
+      gap: 8px;
+    }
+
+    nav a {
+      display: grid;
+      grid-template-columns: 2rem 1fr;
+      gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(23, 23, 23, .28);
+      text-decoration: none;
+    }
+
+    main {
+      min-width: 0;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      padding: 12px clamp(18px, 5vw, 72px);
+      border-bottom: 2px solid var(--line);
+      background: rgba(247, 244, 237, .98);
+    }
+
+    .header-btn {
+      border: 2px solid var(--line);
+      background: var(--white);
+      color: var(--ink);
+      padding: 9px 12px;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: .78rem;
+      letter-spacing: .05em;
+    }
+
+    .exit-btn {
+      border-color: var(--red);
+      background: #f20d0d;
+      color: #fff;
+      font-weight: 800;
+    }
+
+    section {
+      padding: clamp(28px, 5vw, 72px);
+      border-bottom: 2px solid var(--line);
+    }
+
+    .hero {
+      background: var(--white);
+    }
+
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      border-bottom: 2px solid var(--line);
+      padding-bottom: 14px;
+      margin-bottom: 36px;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 12ch;
+      font-size: clamp(3.3rem, 8.4vw, 8.4rem);
+      line-height: .82;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 4.4vw, 4.5rem);
+      line-height: .9;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      font-size: clamp(1.15rem, 1.65vw, 1.55rem);
+      line-height: 1.05;
+    }
+
+    .lead {
+      max-width: 960px;
+      font-size: clamp(1.12rem, 1.75vw, 1.55rem);
+      line-height: 1.2;
+    }
+
+    .panel,
+    .factor {
+      border: 2px solid var(--line);
+      background: var(--white);
+      padding: clamp(16px, 2vw, 24px);
+    }
+
+    .meta {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    label span {
+      display: block;
+      color: var(--muted);
+      font-size: .78rem;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      margin-bottom: 4px;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    textarea,
+    select {
+      width: 100%;
+      border: 2px solid var(--line);
+      background: var(--paper);
+      padding: 10px;
+      border-radius: 0;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .sources {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .sources label,
+    .radio-grid label {
+      border: 1px solid rgba(23, 23, 23, .35);
+      background: var(--paper);
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .factors {
+      display: grid;
+      gap: 12px;
+    }
+
+    .factor {
+      display: grid;
+      gap: 14px;
+    }
+
+    .factor-head {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+
+    .num {
+      min-width: 44px;
+      height: 44px;
+      border: 2px solid var(--line);
+      background: var(--paper);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+    }
+
+    .category {
+      color: var(--muted);
+      font-size: .78rem;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    .coding {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .radio-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+
+    .radio-grid label {
+      border-top: 0;
+      border-left: 0;
+      text-align: center;
+    }
+
+    .risk-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .summary {
+      position: sticky;
+      bottom: 0;
+      border-top: 2px solid var(--line);
+      background: var(--ink);
+      color: var(--paper);
+      padding: 16px clamp(18px, 5vw, 72px);
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+      z-index: 2;
+    }
+
+    .summary b {
+      font-size: 1.5rem;
+    }
+
+    .btn {
+      border: 2px solid var(--line);
+      background: var(--paper);
+      padding: 10px 12px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width:900px) {
+
+      .layout,
+      .meta,
+      .coding,
+      .risk-grid {
+        grid-template-columns: 1fr;
+      }
+
+      aside {
+        position: relative;
+        top: 0;
+        height: auto;
+        border-right: 0;
+        border-bottom: 2px solid var(--line);
+      }
+
+      .sources {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width:620px) {
+      section {
+        padding: 24px 16px;
+      }
+
+      .topline,
+      .site-header,
+      .summary {
+        display: grid;
+      }
+
+      .factor-head,
+      .radio-grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: clamp(3rem, 16vw, 4.8rem);
+      }
+    }
   </style>
 </head>
+
 <body>
   <header class="site-header" aria-label="Azioni principali">
     <span class="tiny">Formulario SARA-S</span>
@@ -62,7 +394,10 @@
   </header>
   <div class="layout">
     <aside>
-      <div class="brand"><div class="mark">S</div><strong>SARA-S aggiornato</strong><span class="tiny">Valutazione del rischio di recidiva</span></div>
+      <div class="brand">
+        <div class="mark">S</div><strong>SARA-S aggiornato</strong><span class="tiny">Valutazione del rischio di
+          recidiva</span>
+      </div>
       <nav>
         <a href="index.html#test"><b>←</b><span>Torna alla mappa</span></a>
         <a href="#info"><b>1</b><span>Informazioni e fonti</span></a>
@@ -70,13 +405,16 @@
         <a href="#valutazione"><b>3</b><span>Valutazione</span></a>
         <a href="#piano"><b>4</b><span>Piano e scenari</span></a>
       </nav>
-      <p class="tiny">Strumento informativo, non diagnostico. L’uso appropriato del SARA-S prevede formazione specifica.</p>
+      <p class="tiny">Strumento informativo, non diagnostico. L’uso appropriato del SARA-S prevede formazione specifica.
+      </p>
     </aside>
     <main>
       <section class="hero">
-        <div class="topline"><span class="tiny">Spousal Assault Risk Assessment</span><span class="tiny">tests / SARA - S aggiornata.pdf</span></div>
+        <div class="topline"><span class="tiny">Spousal Assault Risk Assessment</span><span class="tiny">tests / SARA -
+            S aggiornata.pdf</span></div>
         <h1>SARA-S</h1>
-        <p class="lead">Formulario web per organizzare le informazioni raccolte sui fattori collegati alla recidiva. Le risposte restano nel browser e non vengono salvate.</p>
+        <p class="lead">Formulario web per organizzare le informazioni raccolte sui fattori collegati alla recidiva. Le
+          risposte restano nel browser e non vengono salvate.</p>
       </section>
 
       <section id="info">
@@ -100,22 +438,49 @@
 
       <section id="fattori">
         <h2>Fattori</h2>
-        <p class="lead">Procedura di codifica: S = sì, presente; N = no, non presente; - = informazioni insufficienti; ? = probabilmente o parzialmente presente.</p>
+        <p class="lead">Procedura di codifica: S = sì, presente; N = no, non presente; - = informazioni insufficienti; ?
+          = probabilmente o parzialmente presente.</p>
         <div class="factors" id="factorList"></div>
       </section>
 
       <section id="valutazione">
         <h2>Valutazione</h2>
         <div class="risk-grid">
-          <label><span>Rischio immediato, nei 2 mesi successivi</span><select><option>Non indicato</option><option>Basso</option><option>Medio</option><option>Elevato</option></select></label>
-          <label><span>Rischio a lungo termine, oltre i 2 mesi</span><select><option>Non indicato</option><option>Basso</option><option>Medio</option><option>Elevato</option></select></label>
-          <label><span>Rischio di violenza molto grave o letale</span><select><option>Non indicato</option><option>Basso</option><option>Medio</option><option>Elevato</option></select></label>
-          <label><span>Rischio di escalation della violenza</span><select><option>Non indicato</option><option>Basso</option><option>Medio</option><option>Elevato</option></select></label>
-          <label><span>Rischio violenza sui minori</span><select><option>Non indicato</option><option>Basso</option><option>Medio</option><option>Elevato</option></select></label>
+          <label><span>Rischio immediato, nei 2 mesi successivi</span><select>
+              <option>Non indicato</option>
+              <option>Basso</option>
+              <option>Medio</option>
+              <option>Elevato</option>
+            </select></label>
+          <label><span>Rischio a lungo termine, oltre i 2 mesi</span><select>
+              <option>Non indicato</option>
+              <option>Basso</option>
+              <option>Medio</option>
+              <option>Elevato</option>
+            </select></label>
+          <label><span>Rischio di violenza molto grave o letale</span><select>
+              <option>Non indicato</option>
+              <option>Basso</option>
+              <option>Medio</option>
+              <option>Elevato</option>
+            </select></label>
+          <label><span>Rischio di escalation della violenza</span><select>
+              <option>Non indicato</option>
+              <option>Basso</option>
+              <option>Medio</option>
+              <option>Elevato</option>
+            </select></label>
+          <label><span>Rischio violenza sui minori</span><select>
+              <option>Non indicato</option>
+              <option>Basso</option>
+              <option>Medio</option>
+              <option>Elevato</option>
+            </select></label>
         </div>
         <div class="panel" style="margin-top:16px">
           <h3>Resoconto conclusivo</h3>
-          <textarea placeholder="Descrivere quando, come e da chi è avvenuta la valutazione; i principali contenuti emersi; la percezione del rischio espressa dalle persone intervistate."></textarea>
+          <textarea
+            placeholder="Descrivere quando, come e da chi è avvenuta la valutazione; i principali contenuti emersi; la percezione del rischio espressa dalle persone intervistate."></textarea>
         </div>
       </section>
 
@@ -124,24 +489,29 @@
         <div class="risk-grid">
           <div class="panel">
             <h3>Piano di gestione e di intervento</h3>
-            <textarea placeholder="Misure preventive e cautelari, percorsi di supporto e protezione per la vittima, azioni di monitoraggio."></textarea>
+            <textarea
+              placeholder="Misure preventive e cautelari, percorsi di supporto e protezione per la vittima, azioni di monitoraggio."></textarea>
           </div>
           <div class="panel">
             <h3>Possibili scenari senza misure preventive</h3>
-            <textarea placeholder="Probabilità, natura, gravità, immediatezza, frequenza o durata della violenza."></textarea>
+            <textarea
+              placeholder="Probabilità, natura, gravità, immediatezza, frequenza o durata della violenza."></textarea>
           </div>
           <div class="panel">
             <h3>Eventi critici che potrebbero aumentare il rischio</h3>
-            <textarea placeholder="Ad esempio separazione, affidamento dei figli, revoca di misure cautelari o altri eventi rilevanti."></textarea>
+            <textarea
+              placeholder="Ad esempio separazione, affidamento dei figli, revoca di misure cautelari o altri eventi rilevanti."></textarea>
           </div>
           <div class="panel">
             <h3>Nota d’uso</h3>
-            <p>Questa guida SARA-S è da intendersi solo per scopi informativi non diagnostici. Il suo uso appropriato prevede una formazione specifica.</p>
-            <div class="actions"><button class="btn" id="resetBtn" type="button">Azzera codifiche</button><a class="btn" href="tests/SARA%20-%20S%20aggiornata.pdf">Apri PDF originale</a></div>
+            <p>Questa guida SARA-S è da intendersi solo per scopi informativi non diagnostici. Il suo uso appropriato
+              prevede una formazione specifica.</p>
+            <div class="actions">
+              <button class="btn" id="exportBtn" type="button">Scarica PDF</button>
+            </div>
           </div>
         </div>
       </section>
-      <div class="summary"><span>Fattori S ultimo mese: <b id="nowCount">0</b></span><span>Fattori S passato: <b id="pastCount">0</b></span><span>Codificati: <b id="codedCount">0</b></span></div>
     </main>
   </div>
   <script>
@@ -184,18 +554,116 @@
         <label><span>Ulteriori informazioni</span><textarea placeholder="Annotare elementi oggettivi, fonti, eventi o comportamenti specifici."></textarea></label>
       </article>
     `).join('');
-    function update() {
-      const checked = [...document.querySelectorAll('input[type="radio"]:checked')];
-      document.querySelector('#nowCount').textContent = checked.filter(i => i.name.startsWith('now_') && i.value === 'S').length;
-      document.querySelector('#pastCount').textContent = checked.filter(i => i.name.startsWith('past_') && i.value === 'S').length;
-      document.querySelector('#codedCount').textContent = checked.length;
-    }
+    function update() { }
     document.addEventListener('change', update);
-    document.querySelector('#resetBtn').addEventListener('click', () => {
-      document.querySelectorAll('input[type="radio"]').forEach(input => { input.checked = false; });
-      update();
-    });
     update();
+    document.querySelector('#exportBtn').addEventListener('click', () => {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+      const margin = 15;
+      const pageW = 210 - margin * 2;
+      const lineH = 6;
+      let y = margin;
+
+      function addLine(text, bold = false, size = 10) {
+        doc.setFontSize(size);
+        doc.setFont('helvetica', bold ? 'bold' : 'normal');
+        const lines = doc.splitTextToSize(text, pageW);
+        lines.forEach(line => {
+          if (y > 280) { doc.addPage(); y = margin; }
+          doc.text(line, margin, y);
+          y += lineH;
+        });
+      }
+      function addSpacer() { y += 3; }
+      function addSeparator() { doc.setDrawColor(100); doc.line(margin, y, 210 - margin, y); y += 5; }
+
+      const now = new Date().toLocaleDateString('it-IT') + ' ' + new Date().toLocaleTimeString('it-IT');
+
+      addLine('FORMULARIO SARA-S - VALUTAZIONE DEL RISCHIO', true, 14);
+      addSpacer();
+      addLine(`Data: ${now}`);
+      addSeparator();
+
+      // Metadati
+      const metaInputs = document.querySelectorAll('#info input[type="text"], #info input[type="date"]');
+      const metaLabels = ['Vittima', 'Autore', 'Compilato da', 'Data compilazione'];
+      metaLabels.forEach((label, i) => {
+        const val = metaInputs[i]?.value || '—';
+        addLine(`${label}: ${val}`);
+      });
+      addSpacer();
+
+      // Fonti
+      const fonti = [...document.querySelectorAll('.sources input[type="checkbox"]:checked')]
+        .map(cb => cb.parentElement.textContent.trim()).join(', ') || '—';
+      addLine(`Fonti: ${fonti}`);
+      addSeparator();
+
+      // Fattori
+      addLine('FATTORI', true, 12);
+      addSpacer();
+      let currentCategory = '';
+      factors.forEach((f, i) => {
+        if (f[0] !== currentCategory) {
+          currentCategory = f[0];
+          addSpacer();
+          addLine(currentCategory, true, 9);
+        }
+        const nowVal = document.querySelector(`input[name="now_${i}"]:checked`)?.value || '—';
+        const pastVal = document.querySelector(`input[name="past_${i}"]:checked`)?.value || '—';
+        const notes = document.querySelectorAll('.factor')[i]?.querySelector('textarea')?.value || '';
+        addLine(`${f[1]}. ${f[2]}`);
+        addLine(`   Ultimo mese: ${nowVal}   |   In passato: ${pastVal}`, false, 9);
+        if (notes.trim()) addLine(`   Note: ${notes.trim()}`, false, 9);
+        addSpacer();
+      });
+
+      addSeparator();
+
+      // Valutazione
+      addLine('VALUTAZIONE', true, 12);
+      addSpacer();
+      const riskLabels = [
+        'Rischio immediato (entro 2 mesi)',
+        'Rischio a lungo termine (oltre 2 mesi)',
+        'Rischio di violenza grave o letale',
+        'Rischio di escalation',
+        'Rischio violenza sui minori'
+      ];
+      document.querySelectorAll('#valutazione select').forEach((sel, i) => {
+        addLine(`${riskLabels[i]}: ${sel.value}`);
+      });
+      addSpacer();
+      const resoconto = document.querySelector('#valutazione textarea')?.value || '';
+      if (resoconto.trim()) { addLine('Resoconto conclusivo:'); addLine(resoconto.trim(), false, 9); }
+
+      addSeparator();
+
+      // Piano
+      addLine('PIANO', true, 12);
+      addSpacer();
+      const pianoLabels = ['Piano di gestione e intervento', 'Possibili scenari senza misure preventive', 'Eventi critici che potrebbero aumentare il rischio'];
+      document.querySelectorAll('#piano textarea').forEach((ta, i) => {
+        if (pianoLabels[i] && ta.value.trim()) {
+          addLine(pianoLabels[i], true, 10);
+          addLine(ta.value.trim(), false, 9);
+          addSpacer();
+        }
+      });
+
+      addSeparator();
+
+      // Conteggi
+      const checked = [...document.querySelectorAll('input[type="radio"]:checked')];
+      addLine(`Fattori S ultimo mese: ${checked.filter(i => i.name.startsWith('now_') && i.value === 'S').length}`, false, 9);
+      addLine(`Fattori S passato: ${checked.filter(i => i.name.startsWith('past_') && i.value === 'S').length}`, false, 9);
+      addLine(`Totale codificati: ${checked.length}`, false, 9);
+
+      doc.save('SARA-S_valutazione.pdf');
+    });
   </script>
 </body>
+
 </html>
