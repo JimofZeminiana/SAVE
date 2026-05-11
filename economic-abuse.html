@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Abuso economico | Violenza di genere</title>
+  <style>
+    :root { --paper:#f7f4ed; --ink:#171717; --muted:#68635d; --line:#171717; --soft:#e7e1d6; --white:#fffdfa; --red:#b22b24; --blue:#12606d; }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--paper); color: var(--ink); }
+    body { margin:0; font-family: Arial, Helvetica, sans-serif; line-height:1.42; background: linear-gradient(90deg, rgba(23,23,23,.045) 1px, transparent 1px) 0 0/48px 48px, linear-gradient(0deg, rgba(23,23,23,.035) 1px, transparent 1px) 0 0/48px 48px, var(--paper); }
+    a { color: inherit; text-decoration-thickness:1px; text-underline-offset:4px; }
+    button, input, textarea, select { font: inherit; }
+    .layout { display:grid; grid-template-columns:minmax(230px,18vw) 1fr; min-height:100vh; }
+    aside { position:sticky; top:62px; height:calc(100vh - 62px); padding:18px; border-right:2px solid var(--line); background:rgba(247,244,237,.96); display:flex; flex-direction:column; gap:22px; }
+    .mark { width:44px; height:44px; border:2px solid var(--line); background:var(--white); display:grid; place-items:center; font-weight:800; }
+    .brand { display:grid; gap:10px; padding-bottom:18px; border-bottom:2px solid var(--line); }
+    .brand strong { font-size:clamp(1.4rem,2vw,2rem); line-height:.95; text-transform:uppercase; }
+    .tiny, .eyebrow { color:var(--muted); font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; }
+    nav { display:grid; gap:8px; }
+    nav a { display:grid; grid-template-columns:2rem 1fr; gap:10px; padding:8px 0; border-bottom:1px solid rgba(23,23,23,.28); text-decoration:none; }
+    main { min-width:0; }
+    .site-header { position:sticky; top:0; z-index:10; display:flex; justify-content:space-between; align-items:center; gap:14px; padding:12px clamp(18px,5vw,72px); border-bottom:2px solid var(--line); background:rgba(247,244,237,.98); }
+    .header-btn { border:2px solid var(--line); background:var(--white); color:var(--ink); padding:9px 12px; text-decoration:none; text-transform:uppercase; font-size:.78rem; letter-spacing:.05em; }
+    .exit-btn { border-color:var(--red); background:#f20d0d; color:#fff; font-weight:800; }
+    section { padding:clamp(28px,5vw,72px); border-bottom:2px solid var(--line); }
+    .hero { background:var(--white); }
+    .topline { display:flex; justify-content:space-between; gap:14px; border-bottom:2px solid var(--line); padding-bottom:14px; margin-bottom:36px; }
+    h1, h2, h3, p { margin-top:0; }
+    h1 { max-width:12ch; font-size:clamp(3.3rem,8.4vw,8.4rem); line-height:.82; text-transform:uppercase; letter-spacing:0; }
+    h2 { font-size:clamp(2rem,4.4vw,4.5rem); line-height:.9; text-transform:uppercase; letter-spacing:0; }
+    h3 { font-size:clamp(1.15rem,1.65vw,1.55rem); line-height:1.05; }
+    .lead { max-width:960px; font-size:clamp(1.12rem,1.75vw,1.55rem); line-height:1.2; }
+    .panel { border:2px solid var(--line); background:var(--white); padding:clamp(18px,2.4vw,30px); }
+    .grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+    .question { border:2px solid var(--line); background:var(--white); display:grid; grid-template-columns:1fr; gap:16px; padding:16px; align-items:start; }
+    .question small { color:var(--muted); text-transform:uppercase; letter-spacing:.05em; }
+    .choices { display:grid; gap:10px; align-items:start; }
+    .choices label { border:2px solid var(--line); background:var(--paper); padding:10px 12px; cursor:pointer; }
+    .choices input { margin-right:8px; }
+    .result { border-left:10px solid var(--red); background:var(--white); padding:18px; font-size:1.1rem; }
+    .actions { display:flex; gap:10px; flex-wrap:wrap; }
+    @media (max-width:900px) { .layout, .grid { grid-template-columns:1fr; } aside { position:relative; top:0; height:auto; border-right:0; border-bottom:2px solid var(--line); } }
+    @media (max-width:620px) { section { padding:24px 16px; } .question { grid-template-columns:1fr; } .topline, .site-header { display:grid; } h1 { font-size:clamp(3rem,16vw,4.8rem); } }
+  </style>
+</head>
+<body>
+  <header class="site-header" aria-label="Azioni principali">
+    <span class="tiny">Abuso economico</span>
+    <a class="header-btn exit-btn" href="https://news.google.com/" target="_blank">Esci subito dal sito</a>
+  </header>
+  <div class="layout">
+    <aside>
+      <div class="brand"><div class="mark">AE</div><strong>Abuso economico</strong><span class="tiny">Controllo e denaro</span></div>
+      <nav>
+        <a href="index.html#test" target="_blank"><b>←</b><span>Torna alla mappa</span></a>
+        <a href="#domande" target="_blank"><b>1</b><span>Questionario</span></a>
+        <a href="#risultato" target="_blank"><b>2</b><span>Risultato</span></a>
+      </nav>
+      <p class="tiny">Le risposte restano in questa pagina. Non ci sono risposte giuste o sbagliate: il risultato serve a orientare sull'abuso economico.</p>
+    </aside>
+    <main>
+      <section class="hero">
+        <div class="topline"><span class="tiny">Abuso economico</span><span class="tiny">Questionario interattivo</span></div>
+        <h1>Abuso economico</h1>
+        <p class="lead">Rispondi in base alla tua esperienza. Questo questionario aiuta a individuare comportamenti di controllo finanziario e coercizione economica.</p>
+      </section>
+
+      <section id="domande">
+        <h2>Questionario</h2>
+        <p class="lead">Seleziona la frequenza con cui si verificano questi comportamenti.</p>
+        <div class="grid" id="questions"></div>
+      </section>
+
+      <section id="risultato">
+        <h2>Risultato</h2>
+        <div class="grid">
+          <div class="panel">
+            <h3>Totale</h3>
+            <p>Valore totale: <b id="totalScore">0</b> / 60</p>
+            <p>Domande risposte: <b id="answeredCount">0</b> / 12</p>
+            <div class="actions">
+              <button class="btn" id="resetBtn" type="button">Azzera risposte</button>
+              <a class="btn dark" href="tel:1522" target="_blank">Chiama 1522</a>
+              <a class="btn dark" href="https://www.1522.eu/mappatura-1522/" target="_blank">Cerca un centro antiviolenza</a>
+            </div>
+          </div>
+          <div class="result" id="resultBox">Rispondi a tutte le domande per leggere il risultato.</div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script>
+    const items = [
+      'ti chiede di chiedergli dei soldi',
+      'pretende di sapere come hai speso il denaro',
+      'pretende che tu gli dia ricevute e/o il resto quando spendi soldi',
+      'ti nasconde informazioni finanziarie',
+      'prende decisioni finanziarie importanti senza parlartene prima',
+      'ti minaccia per farti lasciare il lavoro',
+      'pretende che lasci il tuo lavoro',
+      'ti picchia se dici che devi andare a lavorare',
+      'fa cose per impedirti di andare al lavoro',
+      'spende i soldi che ti servono per l’affitto o altre bollette',
+      'paga le bollette in ritardo o non paga quelle a tuo nome o a nome di entrambi',
+      'accumula debiti a tuo nome facendo cose come usare la tua carta di credito o far salire la bolletta del telefono'
+    ];
+
+    const options = [
+      ['Mai', 1],
+      ['Quasi mai', 2],
+      ['Qualche volta', 3],
+      ['Spesso', 4],
+      ['Molto spesso', 5]
+    ];
+
+    function renderQuestions() {
+      document.querySelector('#questions').innerHTML = items.map((item, index) => `
+        <div class="question">
+          <div><small>Domanda ${index + 1}</small><p>Quanto spesso il tuo partner ${item}?</p></div>
+          <div class="choices">
+            ${options.map(option => `
+              <label><input type="radio" name="q${index}" value="${option[1]}"> ${option[0]}</label>
+            `).join('')}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function computeScore() {
+      let score = 0;
+      let answered = 0;
+      items.forEach((_, index) => {
+        const checked = document.querySelector(`input[name="q${index}"]:checked`);
+        if (checked) {
+          answered += 1;
+          score += Number(checked.value);
+        }
+      });
+      return { score, answered };
+    }
+
+    function evaluate(score, answered) {
+      if (answered < items.length) {
+        return { label: '-', text: 'Rispondi a tutte le domande per leggere il risultato.' };
+      }
+      if (score <= 18) {
+        return { label: 'Bassa', text: 'Bassa frequenza di comportamenti di controllo economico. Mantieni attenzione e cerca supporto se la situazione evolve.' };
+      }
+      if (score <= 35) {
+        return { label: 'Moderata', text: 'Sono presenti comportamenti di controllo finanziario che meritano attenzione. Valuta di parlarne con una persona di fiducia o un servizio specialistico.' };
+      }
+      return { label: 'Alta', text: 'Segnali forti di abuso economico e coercizione. Considera di contattare un Centro Antiviolenza o il 1522 per supporto.' };
+    }
+
+    function update() {
+      const { score, answered } = computeScore();
+      const outcome = evaluate(score, answered);
+      document.querySelector('#totalScore').textContent = score;
+      document.querySelector('#answeredCount').textContent = answered;
+      document.querySelector('#resultBox').innerHTML = answered < items.length ? outcome.text : `<h3>${outcome.label}</h3><p>${outcome.text}</p>`;
+    }
+
+    renderQuestions();
+    document.addEventListener('change', update);
+    document.querySelector('#resetBtn').addEventListener('click', () => {
+      document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
+      update();
+    });
+  </script>
+</body>
+</html>

@@ -12,7 +12,7 @@
     a { color:inherit; text-decoration-thickness:1px; text-underline-offset:4px; }
     button, input, textarea, select { font:inherit; }
     .layout { display:grid; grid-template-columns:minmax(230px,18vw) 1fr; min-height:100vh; }
-    aside { position:sticky; top:0; height:100vh; padding:18px; border-right:2px solid var(--line); background:rgba(247,244,237,.96); display:flex; flex-direction:column; gap:22px; }
+    aside { position:sticky; top:62px; height:calc(100vh - 62px); padding:18px; border-right:2px solid var(--line); background:rgba(247,244,237,.96); display:flex; flex-direction:column; gap:22px; }
     .brand { display:grid; gap:10px; padding-bottom:18px; border-bottom:2px solid var(--line); }
     .mark { width:44px; height:44px; border:2px solid var(--line); background:var(--white); display:grid; place-items:center; font-weight:800; }
     .brand strong { font-size:clamp(1.4rem,2vw,2rem); line-height:.95; text-transform:uppercase; }
@@ -20,13 +20,16 @@
     nav { display:grid; gap:8px; }
     nav a { display:grid; grid-template-columns:2rem 1fr; gap:10px; padding:8px 0; border-bottom:1px solid rgba(23,23,23,.28); text-decoration:none; }
     main { min-width:0; }
+    .site-header { position:sticky; top:0; z-index:10; display:flex; justify-content:space-between; align-items:center; gap:14px; padding:12px clamp(18px,5vw,72px); border-bottom:2px solid var(--line); background:rgba(247,244,237,.98); }
+    .header-btn { border:2px solid var(--line); background:var(--white); color:var(--ink); padding:9px 12px; text-decoration:none; text-transform:uppercase; font-size:.78rem; letter-spacing:.05em; }
+    .exit-btn { border-color:var(--red); background:#f20d0d; color:#fff; font-weight:800; }
     section { padding:clamp(28px,5vw,72px); border-bottom:2px solid var(--line); }
     .hero { background:var(--white); }
     .topline { display:flex; justify-content:space-between; gap:14px; border-bottom:2px solid var(--line); padding-bottom:14px; margin-bottom:36px; }
     h1, h2, h3, p { margin-top:0; }
-    h1 { max-width:12ch; font-size:clamp(4rem,12vw,11rem); line-height:.82; text-transform:uppercase; letter-spacing:0; }
-    h2 { font-size:clamp(2.4rem,5.7vw,5.8rem); line-height:.9; text-transform:uppercase; letter-spacing:0; }
-    h3 { font-size:clamp(1.25rem,2vw,1.8rem); line-height:1.05; }
+    h1 { max-width:12ch; font-size:clamp(3.3rem,8.4vw,8.4rem); line-height:.82; text-transform:uppercase; letter-spacing:0; }
+    h2 { font-size:clamp(2rem,4.4vw,4.5rem); line-height:.9; text-transform:uppercase; letter-spacing:0; }
+    h3 { font-size:clamp(1.15rem,1.65vw,1.55rem); line-height:1.05; }
     .lead { max-width:960px; font-size:clamp(1.12rem,1.75vw,1.55rem); line-height:1.2; }
     .panel, .factor { border:2px solid var(--line); background:var(--white); padding:clamp(16px,2vw,24px); }
     .meta { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; }
@@ -48,11 +51,15 @@
     .summary b { font-size:1.5rem; }
     .btn { border:2px solid var(--line); background:var(--paper); padding:10px 12px; cursor:pointer; text-decoration:none; }
     .actions { display:flex; gap:10px; flex-wrap:wrap; }
-    @media (max-width:900px) { .layout, .meta, .coding, .risk-grid { grid-template-columns:1fr; } aside { position:relative; height:auto; border-right:0; border-bottom:2px solid var(--line); } .sources { grid-template-columns:1fr; } }
-    @media (max-width:620px) { section { padding:24px 16px; } .topline, .summary { display:grid; } .factor-head, .radio-grid { grid-template-columns:1fr; } h1 { font-size:clamp(3.4rem,20vw,5.4rem); } }
+    @media (max-width:900px) { .layout, .meta, .coding, .risk-grid { grid-template-columns:1fr; } aside { position:relative; top:0; height:auto; border-right:0; border-bottom:2px solid var(--line); } .sources { grid-template-columns:1fr; } }
+    @media (max-width:620px) { section { padding:24px 16px; } .topline, .site-header, .summary { display:grid; } .factor-head, .radio-grid { grid-template-columns:1fr; } h1 { font-size:clamp(3rem,16vw,4.8rem); } }
   </style>
 </head>
 <body>
+  <header class="site-header" aria-label="Azioni principali">
+    <span class="tiny">Formulario SARA-S</span>
+    <a class="header-btn exit-btn" href="https://news.google.com/">Esci subito dal sito</a>
+  </header>
   <div class="layout">
     <aside>
       <div class="brand"><div class="mark">S</div><strong>SARA-S aggiornato</strong><span class="tiny">Valutazione del rischio di recidiva</span></div>

@@ -18,6 +18,9 @@
       --violet: #60436f;
       --yellow: #d49b24;
       --radius: 6px;
+      --title-hero: clamp(3.6rem, 9vw, 9.2rem);
+      --title-section: clamp(2.1rem, 4.6vw, 4.9rem);
+      --title-card: clamp(1.15rem, 1.65vw, 1.7rem);
     }
 
     * { box-sizing: border-box; }
@@ -43,6 +46,10 @@
     a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 4px; }
     button, input, select, textarea { font: inherit; }
 
+    body.citizen [data-audience="operator"] {
+      display: none !important;
+    }
+
     .shell {
       min-height: 100vh;
       display: grid;
@@ -51,8 +58,8 @@
 
     .sidebar {
       position: sticky;
-      top: 0;
-      height: 100vh;
+      top: 62px;
+      height: calc(100vh - 62px);
       padding: 18px;
       border-right: 2px solid var(--line);
       background: rgba(247,244,237,.96);
@@ -79,7 +86,7 @@
     }
 
     .brand strong {
-      font-size: clamp(1.35rem, 2vw, 2rem);
+      font-size: clamp(0.5rem, 1vw, 1rem);
       line-height: .96;
       text-transform: uppercase;
     }
@@ -119,6 +126,45 @@
 
     main { min-width: 0; }
 
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      padding: 12px clamp(18px, 5vw, 72px);
+      border-bottom: 2px solid var(--line);
+      background: rgba(247,244,237,.98);
+    }
+
+    .mode-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .header-btn {
+      border: 2px solid var(--line);
+      background: var(--white);
+      color: var(--ink);
+      padding: 9px 12px;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: .78rem;
+      letter-spacing: .05em;
+      cursor: pointer;
+    }
+
+    .exit-btn {
+      border-color: var(--red);
+      background: #f20d0d;
+      color: #fff;
+      font-weight: 800;
+    }
+
     section {
       border-bottom: 2px solid var(--line);
       padding: clamp(28px, 5vw, 72px);
@@ -150,7 +196,7 @@
     h1 {
       max-width: 13ch;
       align-self: center;
-      font-size: clamp(4.6rem, 13vw, 13.5rem);
+      font-size: var(--title-hero);
       line-height: .82;
       letter-spacing: 0;
       text-transform: uppercase;
@@ -208,14 +254,14 @@
     }
 
     h2 {
-      font-size: clamp(2.6rem, 6.4vw, 6.8rem);
+      font-size: var(--title-section);
       line-height: .9;
       letter-spacing: 0;
       text-transform: uppercase;
     }
 
     h3 {
-      font-size: clamp(1.25rem, 2vw, 2rem);
+      font-size: var(--title-card);
       line-height: 1.05;
       margin-bottom: 12px;
     }
@@ -548,8 +594,9 @@
 
     @media (max-width: 620px) {
       section { padding: 24px 16px; }
-      h1 { font-size: clamp(3.5rem, 20vw, 5.5rem); }
+      h1 { font-size: clamp(3rem, 16vw, 4.8rem); }
       .topline,
+      .site-header,
       footer { display: grid; }
       .nav,
       .map,
@@ -566,7 +613,14 @@
     }
   </style>
 </head>
-<body>
+<body class="citizen">
+  <header class="site-header" aria-label="Azioni principali">
+    <span class="tiny" id="modeLabel">per i cittadini</span>
+    <div class="mode-actions">
+      <button class="header-btn" id="modeToggle" type="button">Per gli operatori</button>
+      <a class="header-btn exit-btn" href="https://news.google.com/">Esci subito dal sito</a>
+    </div>
+  </header>
   <div class="shell">
     <aside class="sidebar" aria-label="Navigazione principale">
       <div class="brand">
@@ -575,16 +629,15 @@
         <span>Mappa operativa in italiano</span>
       </div>
       <nav class="nav">
-        <a href="#mappa"><b>1</b><span>Organizzare il quadro</span></a>
-        <a href="#catalogo"><b>2</b><span>Tool di risk assessment</span></a>
-        <a href="#test"><b>3</b><span>Aprire ISA e SARA</span></a>
-        <a href="#forme"><b>4</b><span>Comprendere forme e dinamiche</span></a>
-        <a href="#rischio"><b>5</b><span>Valutare rischio e recidiva</span></a>
-        <a href="#strumenti"><b>6</b><span>Usare strumenti e fonti</span></a>
-        <a href="#comunita"><b>7</b><span>Attivare la rete</span></a>
-        <a href="#fonti"><b>8</b><span>Consultare le fonti</span></a>
+        <a href="#forme" target="_blank"><b>1</b><span>Forme e dinamiche</span></a>
+        <a href="#test" target="_blank"><b>2</b><span>Questionario ISA</span></a>
+        <a href="#comunita" target="_blank"><b>3</b><span>Una comunità che sostiene</span></a>
+        <a data-audience="operator" href="#mappa" target="_blank"><b>4</b><span>Organizzare il quadro</span></a>
+        <a data-audience="operator" href="#catalogo" target="_blank"><b>5</b><span>Tool di risk assessment</span></a>
+        <a data-audience="operator" href="#rischio" target="_blank"><b>6</b><span>Valutare rischio e recidiva</span></a>
+        <a data-audience="operator" href="#strumenti" target="_blank"><b>7</b><span>Usare strumenti e fonti</span></a>
+        <a data-audience="operator" href="#fonti" target="_blank"><b>8</b><span>Consultare le fonti</span></a>
       </nav>
-      <p class="tiny">Sintesi informativa basata sui documenti nella cartella paper. Non sostituisce valutazione professionale o intervento di emergenza.</p>
     </aside>
 
     <main>
@@ -596,14 +649,14 @@
         <h1>Violenza di genere</h1>
         <div class="hero-bottom">
           <div class="emergency" aria-label="Contatti urgenti">
-            <a href="tel:1522"><span>Antiviolenza e stalking</span><b>1522</b></a>
-            <a href="tel:112"><span>Pericolo immediato</span><b>112</b></a>
+            <a href="tel:1522" target="_blank"><span>Antiviolenza e stalking</span><b>1522</b></a>
+            <a href="tel:112" target="_blank"><span>Pericolo immediato</span><b>112</b></a>
           </div>
           <p class="intro">Una mappa navigabile per riconoscere le forme della violenza, leggere i fattori di rischio, orientare il lavoro di rete e rendere visibili le risorse di supporto. L’impianto riprende la logica di una toolbox: concetti, evidenze, strumenti, azioni.</p>
         </div>
       </section>
 
-      <section id="mappa">
+      <section id="mappa" data-audience="operator">
         <div class="section-head">
           <div class="eyebrow">Webmap</div>
           <div>
@@ -648,7 +701,7 @@
         </div>
       </section>
 
-      <section id="catalogo">
+      <section id="catalogo" data-audience="operator">
         <div class="section-head">
           <div class="eyebrow">CSV / Toolbox</div>
           <div>
@@ -660,42 +713,92 @@
           <article class="catalogue-card">
             <span class="source-tag">SPJ</span>
             <div><h3>SARA</h3><p>Spousal Assault Risk Assessment, famiglia di strumenti per la valutazione strutturata del rischio di intimate partner violence.</p></div>
-            <div class="link-stack"><a class="pill-link" href="paper/HiltonPhamJungEnnisNunes2020PPRAdvancedonlinepub.pdf">Paper locale</a></div>
+            <div class="link-stack"><a class="pill-link" href="paper/HiltonPhamJungEnnisNunes2020PPRAdvancedonlinepub.pdf" target="_blank">Paper locale</a></div>
           </article>
           <article class="catalogue-card">
             <span class="source-tag">Screening</span>
             <div><h3>SARA-S</h3><p>Versione screening italiana presente tra i materiali locali e riproposta anche come pagina interattiva.</p></div>
-            <div class="link-stack"><a class="pill-link" href="paper/10_SARA-formulario_versione%2015%20item.pdf">Formulario</a><a class="pill-link" href="sara.html">Test web</a></div>
+            <div class="link-stack"><a class="pill-link" href="paper/10_SARA-formulario_versione%2015%20item.pdf" target="_blank">Formulario</a><a class="pill-link" href="sara.html" target="_blank">Test web</a></div>
           </article>
           <article class="catalogue-card">
             <span class="source-tag">SPJ</span>
             <div><h3>SARA v3</h3><p>Terza versione della guida SARA per assessment e management del rischio di violenza nelle relazioni intime.</p></div>
-            <div class="link-stack"><a class="pill-link" href="https://www.rma.scot/wp-content/uploads/2023/01/Spousal-Assault-Risk-Assessment-Guide-Version-3-SARAv3.pdf">Scheda RATED</a><a class="pill-link" href="https://protect-international.com/product/spousal-assault-risk-assessment-guide-version-3-sara-v3/">Manuale</a></div>
+            <div class="link-stack"><a class="pill-link" href="https://www.rma.scot/wp-content/uploads/2023/01/Spousal-Assault-Risk-Assessment-Guide-Version-3-SARAv3.pdf" target="_blank">Scheda RATED</a><a class="pill-link" href="https://protect-international.com/product/spousal-assault-risk-assessment-guide-version-3-sara-v3/" target="_blank">Manuale</a></div>
           </article>
           <article class="catalogue-card">
             <span class="source-tag">Criminal justice</span>
             <div><h3>B-SAFER</h3><p>Brief Spousal Assault Form for the Evaluation of Risk, versione breve collegata alla famiglia SARA.</p></div>
-            <div class="link-stack"><a class="pill-link" href="https://www.justice.gc.ca/eng/rp-pr/fl-lf/famil/rr05_fv1-rr05_vf1/toc-tdm.html">Manuale</a><a class="pill-link" href="paper/HiltonPhamJungEnnisNunes2020PPRAdvancedonlinepub.pdf">Paper locale</a></div>
+            <div class="link-stack"><a class="pill-link" href="https://www.justice.gc.ca/eng/rp-pr/fl-lf/famil/rr05_fv1-rr05_vf1/toc-tdm.html" target="_blank">Manuale</a><a class="pill-link" href="paper/HiltonPhamJungEnnisNunes2020PPRAdvancedonlinepub.pdf" target="_blank">Paper locale</a></div>
           </article>
           <article class="catalogue-card">
             <span class="source-tag">Attuariale</span>
             <div><h3>ODARA</h3><p>Ontario Domestic Assault Risk Assessment, strumento attuariale per stimare il rischio di nuova aggressione domestica.</p></div>
-            <div class="link-stack"><a class="pill-link" href="https://odara.waypointcentre.ca/">Link principale</a><a class="pill-link" href="paper/HiltonPhamJungEnnisNunes2020PPRAdvancedonlinepub.pdf">Paper locale</a></div>
+            <div class="link-stack"><a class="pill-link" href="https://odara.waypointcentre.ca/" target="_blank">Link principale</a><a class="pill-link" href="paper/HiltonPhamJungEnnisNunes2020PPRAdvancedonlinepub.pdf" target="_blank">Paper locale</a></div>
           </article>
           <article class="catalogue-card">
             <span class="source-tag">Autovalutazione</span>
             <div><h3>ISA</h3><p>Increasing Self Awareness, questionario di autovalutazione del rischio aggiornato da Differenza Donna nel 2023.</p></div>
-            <div class="link-stack"><a class="pill-link" href="https://www.differenzadonna.org/manuale-isa-2023/">Manuale</a><a class="pill-link" href="isa.html">Test web</a></div>
+            <div class="link-stack"><a class="pill-link" href="https://www.differenzadonna.org/manuale-isa-2023/" target="_blank">Manuale</a><a class="pill-link" href="isa.html" target="_blank">Test web</a></div>
           </article>
           <article class="catalogue-card">
             <span class="source-tag">Economica</span>
             <div><h3>SEA-12</h3><p>Scale of Economic Abuse-12, misura breve dell’esperienza di abuso economico nelle relazioni.</p></div>
-            <div class="link-stack"><a class="pill-link" href="https://emerge.ucsd.edu/r_1oingxcbnmuvyox/">EMERGE</a></div>
+            <div class="link-stack"><a class="pill-link" href="https://emerge.ucsd.edu/r_1oingxcbnmuvyox/" target="_blank">EMERGE</a></div>
           </article>
           <article class="catalogue-card">
             <span class="source-tag">Donne anziane</span>
             <div><h3>MARVOW 2.0</h3><p>Metodologia e tool per risk assessment e risposta multi-agenzia alla violenza contro donne anziane.</p></div>
-            <div class="link-stack"><a class="pill-link" href="https://marvow.eu/risk-assessment-methodology-and-risk-assessment-development-tool/">Approfondimenti</a></div>
+            <div class="link-stack"><a class="pill-link" href="https://marvow.eu/risk-assessment-methodology-and-risk-assessment-development-tool/" target="_blank">Approfondimenti</a></div>
+          </article>
+          <article class="catalogue-card">
+            <span class="source-tag">Pericolo immediato</span>
+            <div><h3>DA</h3><p>Danger Assessment, strumento per valutare il rischio immediato di femminicidio e violenza grave nelle relazioni intime.</p></div>
+            <div class="link-stack"><a class="pill-link" href="paper/DA_NewScoring_2019.pdf" target="_blank">Scoring</a><a class="pill-link" href="https://www.dangerassessment.org/DA.aspx" target="_blank">Calculator</a></div>
+          </article>
+          <article class="catalogue-card">
+            <span class="source-tag">Ricerca</span>
+            <div><h3>ECS-36</h3><p>Economic Coercion Scale-36, scala per misurare la coercizione economica nelle relazioni intime.</p></div>
+            <div class="link-stack"><a class="pill-link" href="paper/Development and Validation of the Economic Coercion Scale 36 (ECS-36) in Rural Bangladesh.pdf" target="_blank">Paper</a></div>
+          </article>
+          <article class="catalogue-card">
+            <span class="source-tag">Autovalutazione</span>
+            <div><h3>EAPA-P</h3><p>Esperienza dell'abuso psicologico, strumento per autovalutare il livello di abuso psicologico nei confronti del partner.</p></div>
+            <div class="link-stack"><a class="pill-link" href="paper/EAPA - P.pdf" target="_blank">Strumento</a></div>
+          </article>
+          <article class="catalogue-card">
+            <span class="source-tag">Impatto</span>
+            <div><h3>WWP EN - Impact</h3><p>Impact Toolkit per gli autori di violenza, focalizzato su consapevolezza e cambiamento comportamentale.</p></div>
+            <div class="link-stack"><a class="pill-link" href="paper/WWP_ImpactToolkit_A5_publication_web (1).pdf" target="_blank">Toolkit</a></div>
+          </article>
+          <article class="catalogue-card">
+            <span class="source-tag">Ricerca</span>
+            <div><h3>PMWI</h3><p>Psychological Maltreatment of Women Inventory, strumento di ricerca per misurare l'abuso psicologico verso le donne.</p></div>
+            <div class="link-stack"><a class="pill-link" href="paper/Psychological Maltreatment of Women Inventory (PMWI)_ Tolman_combined with instrument.pdf" target="_blank">Paper</a></div>
+          </article>
+          <article class="catalogue-card">
+            <span class="source-tag">Ricerca</span>
+            <div><h3>PPPAS</h3><p>Perception of Partner Psychological Abuse Scale, scala di ricerca per la percezione dell'abuso psicologico del partner.</p></div>
+            <div class="link-stack"><a class="pill-link" href="paper/PPPAS.pdf" target="_blank">Paper</a></div>
+          </article>
+          <article class="catalogue-card">
+            <span class="source-tag">Ricerca</span>
+            <div><h3>WHO VAW</h3><p>World Health Organization's Violence Against Women study instrument, strumento standardizzato internazionale per ricerca su violenza di genere.</p></div>
+            <div class="link-stack"><a class="pill-link" href="paper/WHO VAW.pdf" target="_blank">Paper</a></div>
+          </article>
+          <article class="catalogue-card">
+            <span class="source-tag">Ricerca</span>
+            <div><h3>WEB Scale</h3><p>Women's Experience with Battering Scale, strumento di ricerca per misurare l'esperienza di battesimo e violenza.</p></div>
+            <div class="link-stack"><a class="pill-link" href="https://emerge.ucsd.edu/resource/women-experience-battering-web-scale/" target="_blank">EMERGE</a></div>
+          </article>
+          <article class="catalogue-card">
+            <span class="source-tag">Ricerca</span>
+            <div><h3>SAS</h3><p>Sexual Assertiveness Scale, scala di ricerca per misurare l'assertività sessuale e il consenso nelle relazioni.</p></div>
+            <div class="link-stack"><a class="pill-link" href="https://emerge.ucsd.edu/resource/sexual-assertiveness-scale-sas/" target="_blank">EMERGE</a></div>
+          </article>
+          <article class="catalogue-card">
+            <span class="source-tag">Ricerca</span>
+            <div><h3>IPVAS-R</h3><p>Intimate Partner Violence Attitude Scale-Revised, strumento per misurare atteggiamenti verso la violenza nelle relazioni intime.</p></div>
+            <div class="link-stack"><a class="pill-link" href="https://emerge.ucsd.edu/resource/intimate-partner-violence-attitude-scale-ipvas-revised/" target="_blank">EMERGE</a></div>
           </article>
         </div>
       </section>
@@ -704,20 +807,28 @@
         <div class="section-head">
           <div class="eyebrow">Pagine interattive</div>
           <div>
-            <h2>ISA e SARA in web</h2>
-            <p class="lead">Due percorsi separati traducono i PDF della cartella <code>tests</code> in interfacce compilabili. Le risposte restano nel browser e non vengono inviate a nessun servizio.</p>
+            <h2>Test</h2>
+            <p class="lead">Puoi valutare lo stato della tua relazione tramite i protocolli presenti di seguito. Le risposte restano nel browser e non vengono inviate a nessun servizio.</p>
           </div>
         </div>
         <div class="test-grid">
-          <a class="test-card" href="isa.html">
+          <a class="test-card" href="isa.html" target="_blank">
             <span class="num accent-red">ISA</span>
             <div>
-              <h3>Questionario ISA 2023</h3>
+              <h3>Questionario sull'autoconsapevolezza 2023</h3>
               <p>Autovalutazione con due parti, calcolo automatico dei totali e lettura del risultato A-E.</p>
             </div>
             <span class="pill-link">Apri il test</span>
           </a>
-          <a class="test-card" href="sara.html">
+          <a class="test-card" href="economic-abuse.html" target="_blank">
+            <span class="num accent-green">SEA-12</span>
+            <div>
+              <h3>Questionario sull'abuso economico</h3>
+              <p>Questionario interattivo sui comportamenti di controllo finanziario e abuso economico.</p>
+            </div>
+            <span class="pill-link">Apri il test</span>
+          </a>
+          <a class="test-card" data-audience="operator" href="sara.html" target="_blank">
             <span class="num accent-blue">SARA</span>
             <div>
               <h3>SARA-S aggiornato</h3>
@@ -796,7 +907,7 @@
         </div>
       </section>
 
-      <section id="rischio">
+      <section id="rischio" data-audience="operator">
         <div class="section-head">
           <div class="eyebrow">Valutare</div>
           <div>
@@ -816,7 +927,7 @@
         <div class="toolbox" id="riskList"></div>
       </section>
 
-      <section id="strumenti">
+      <section id="strumenti" data-audience="operator">
         <div class="section-head">
           <div class="eyebrow">Toolbox</div>
           <div>
@@ -880,7 +991,7 @@
         </div>
       </section>
 
-      <section id="fonti">
+      <section id="fonti" data-audience="operator">
         <div class="section-head">
           <div class="eyebrow">Fonti locali</div>
           <div>
@@ -933,6 +1044,21 @@
     const riskList = document.querySelector('#riskList');
     const riskSearch = document.querySelector('#riskSearch');
     const riskFilter = document.querySelector('#riskFilter');
+    const modeToggle = document.querySelector('#modeToggle');
+    const modeLabel = document.querySelector('#modeLabel');
+
+    function setAudience(mode) {
+      const isOperator = mode === 'operator';
+      document.body.classList.toggle('citizen', !isOperator);
+      document.body.classList.toggle('operator', isOperator);
+      modeToggle.textContent = isOperator ? 'Per i cittadini' : 'Per gli operatori';
+      modeLabel.textContent = isOperator ? 'per gli operatori' : ' per i cittadini';
+      modeToggle.setAttribute('aria-pressed', String(isOperator));
+    }
+
+    modeToggle.addEventListener('click', () => {
+      setAudience(document.body.classList.contains('citizen') ? 'operator' : 'citizen');
+    });
 
     function renderRisks() {
       const query = riskSearch.value.trim().toLowerCase();
@@ -969,6 +1095,7 @@
 
     riskSearch.addEventListener('input', renderRisks);
     riskFilter.addEventListener('change', renderRisks);
+    setAudience('citizen');
     renderRisks();
   </script>
 </body>
