@@ -1,0 +1,4011 @@
+[
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Centro studi e trattamento dell'agire violento",
+  "comune": "Torino",
+  "provincia": "TO",
+  "regione": "Piemonte",
+  "lat": 45.072538,
+  "lng": 7.641542,
+  "indirizzo": "Corso Trapani 25 (Centro Studi Agire Violento – Settimo cerchio)",
+  "contatti": "351 8654004",
+  "email": "centrostudiagireviolento@gmail.com",
+  "altreSedi": "Via Piave 2, Ivrea",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti da registro regionale CUAV della Regione Piemonte (regione.piemonte.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "SAM – Spazio di Ascolto Maltrattanti",
+  "comune": "Grosseto",
+  "provincia": "GR",
+  "regione": "Toscana",
+  "lat": 42.7722,
+  "lng": 11.1089,
+  "indirizzo": "Piazza Marconi n.11 (piazzale Stazione Ferroviaria)",
+  "contatti": "+39 3371395542",
+  "email": "samcoeso@gmail.com",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Ri-Lego",
+  "comune": "Napoli",
+  "provincia": "NA",
+  "regione": "Campania",
+  "lat": 40.8358,
+  "lng": 14.2486,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Associazione Lui",
+  "comune": "Livorno",
+  "provincia": "LI",
+  "regione": "Toscana",
+  "lat": 43.546476,
+  "lng": 10.308938,
+  "indirizzo": "Via Adua 2",
+  "contatti": "334 3296864",
+  "email": "lui@associazionelui.it",
+  "sito": "https://www.associazionelui.it/it/attivita-associative-servizi/gruppi-per-autori-di-comportamenti-violenti/",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti da Associazione LUI (associazionelui.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Codice Uomo Cambia-menti",
+  "comune": "Palermo",
+  "provincia": "PA",
+  "regione": "Sicilia",
+  "lat": 38.187211,
+  "lng": 13.295734,
+  "indirizzo": "Via Calcante, 9",
+  "email": "codiceuomo.cuav@gmail.com",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "I Girasoli",
+  "comune": "Avezzano",
+  "provincia": "AQ",
+  "regione": "Abruzzo",
+  "lat": 42.031,
+  "lng": 13.4264,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.I.P.M. Valle D'Aosta",
+  "comune": "Donnas",
+  "provincia": "AO",
+  "regione": "Valle d'Aosta/Vallée d'Aoste",
+  "lat": 45.603705,
+  "lng": 7.767589,
+  "indirizzo": "Viale Selve, 8",
+  "email": "cipmvda@gmail.com",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Centro Amae",
+  "comune": "Sarzana",
+  "provincia": "SP",
+  "regione": "Liguria",
+  "lat": 44.116607,
+  "lng": 9.948815,
+  "indirizzo": "Via Pallodola, 23",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.I.P.M. Liguria Ponente",
+  "comune": "Albenga",
+  "provincia": "SV",
+  "regione": "Liguria",
+  "lat": 44.0491,
+  "lng": 8.213,
+  "indirizzo": "Via Maggiore R. Enrico, 19; Via Maggiore Enrico Rinaldo, 19, Bastia, Albenga (SV)",
+  "email": "ponente@cipmliguria.it",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.I.P.M. Liguria APS",
+  "comune": "Genova",
+  "provincia": "GE",
+  "regione": "Liguria",
+  "lat": 44.406401,
+  "lng": 8.94285,
+  "indirizzo": "Piazza Colombo, 3/16",
+  "contatti": "0104073793",
+  "email": "cipmliguria@gmail.com",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Nuovo maschile APS",
+  "comune": "Pisa",
+  "provincia": "PI",
+  "regione": "Toscana",
+  "lat": 43.718906,
+  "lng": 10.394181,
+  "indirizzo": "Via Derna 13, Pisa",
+  "contatti": "370 3230356",
+  "email": "info@nuovomaschile.org",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. - Centro Studi Criminologici",
+  "comune": "Viterbo",
+  "provincia": "VT",
+  "regione": "Lazio",
+  "lat": 42.4186,
+  "lng": 12.1042,
+  "altreSedi": "Roma, Via Ruggero Fiore 36, 00136",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Cerchi di Luce (Civitavecchia)",
+  "comune": "Civitavecchia",
+  "provincia": "RM",
+  "regione": "Lazio",
+  "lat": 42.1,
+  "lng": 11.8,
+  "contatti": "331 4792953 (lunedì–sabato 9–19)",
+  "email": "cuavcerchidiluce@gmail.com",
+  "sito": "https://italiavirtuosa.it/cuav-centro-uomini-autori-di-violenza/",
+  "orari": "Solo su appuntamento: chiama prima di andare.",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti da Italia Virtuosa, ente che gestisce i centri Cerchi di Luce (italiavirtuosa.it)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Cerchi di Luce Latina",
+  "comune": "Latina",
+  "provincia": "LT",
+  "regione": "Lazio",
+  "lat": 41.4672,
+  "lng": 12.9036,
+  "contatti": "331 4792953 (lunedì–sabato 9–19)",
+  "email": "cuavcerchidiluce@gmail.com",
+  "sito": "https://italiavirtuosa.it/cuav-centro-uomini-autori-di-violenza/",
+  "orari": "Solo su appuntamento: chiama prima di andare.",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti da Italia Virtuosa, ente che gestisce i centri Cerchi di Luce (italiavirtuosa.it)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Cerchi di Luce Tuscia",
+  "comune": "Soriano nel Cimino",
+  "provincia": "VT",
+  "regione": "Lazio",
+  "lat": 42.4194,
+  "lng": 12.2342,
+  "contatti": "331 4792953 (lunedì–sabato 9–19)",
+  "email": "cuavcerchidiluce@gmail.com",
+  "sito": "https://italiavirtuosa.it/cuav-centro-uomini-autori-di-violenza/",
+  "orari": "Solo su appuntamento: chiama prima di andare.",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti da Italia Virtuosa, ente che gestisce i centri Cerchi di Luce (italiavirtuosa.it)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Cerchi di Luce",
+  "comune": "Ladispoli",
+  "provincia": "RM",
+  "regione": "Lazio",
+  "lat": 41.9544,
+  "lng": 12.0742,
+  "contatti": "331 4792953 (lunedì–sabato 9–19)",
+  "email": "cuavcerchidiluce@gmail.com",
+  "sito": "https://italiavirtuosa.it/cuav-centro-uomini-autori-di-violenza/",
+  "orari": "Solo su appuntamento: chiama prima di andare.",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti da Italia Virtuosa, ente che gestisce i centri Cerchi di Luce (italiavirtuosa.it)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. Cerchio degli uomini",
+  "comune": "Torino",
+  "provincia": "TO",
+  "regione": "Piemonte",
+  "lat": 45.061264,
+  "lng": 7.688453,
+  "indirizzo": "Via Giuseppe Mazzini 44",
+  "contatti": "366 406 1086",
+  "email": "centrodascolto@cerchiodegliuomini.org",
+  "altreSedi": "1) Via Roma 102, Collegno (TO) 2) Viale Vittoria 14, Alpignano (TO) 3) Via vittime di Bologna 20/22 Moncalieri (TO) 4) Via Regio Parco 33/A, Settimo Torinese (TO)",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. Cerchio degli uomini (sede di Settimo Torinese)",
+  "comune": "Settimo Torinese",
+  "provincia": "TO",
+  "regione": "Piemonte",
+  "lat": 45.132055,
+  "lng": 7.771237,
+  "indirizzo": "Via Alessandro Volta 44, Settimo Torinese (TO)",
+  "contatti": "366 406 1086",
+  "email": "centrodascolto@cerchiodegliuomini.org",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; sede e contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. Provincia di Novara",
+  "comune": "Novara",
+  "provincia": "NO",
+  "regione": "Piemonte",
+  "lat": 45.45,
+  "lng": 8.62,
+  "indirizzo": "Piazza Matteotti 1, terzo cortile",
+  "contatti": "0321 378273; 0321 378181",
+  "email": "centroservizi.pariopportunita@provincia.novara.it",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti da registro regionale CUAV della Regione Piemonte (regione.piemonte.it)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Spazio Ascolto Uomini N.A.V. (Non Agire Violenza)",
+  "comune": "Verona",
+  "provincia": "VR",
+  "regione": "Veneto",
+  "lat": 45.4386,
+  "lng": 10.9928,
+  "contatti": "333 9313148 (con segreteria telefonica)",
+  "email": "spazio.uomini@comune.verona.it",
+  "orari": "Ascolto telefonico lunedì, mercoledì e venerdì 10–11, giovedì 12–13. Si riceve su appuntamento.",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti da Comune di Verona, volantino del servizio (settembre 2024)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. Catanzaro",
+  "comune": "Catanzaro",
+  "provincia": "CZ",
+  "regione": "Calabria",
+  "lat": 38.91,
+  "lng": 16.5875,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.I.P.M. Emilia Impresa Sociale",
+  "comune": "Piacenza",
+  "provincia": "PC",
+  "regione": "Emilia-Romagna",
+  "lat": 45.053473,
+  "lng": 9.676582,
+  "indirizzo": "Via XXIV Maggio 142",
+  "contatti": "388 7880226; 353.4523987",
+  "email": "info@cipm.it; presidiocipmemilia@gmail.com; presidiocipmemilia.re@gmail.com",
+  "altreSedi": "42124, Reggio Emilia, Via Clementi 16",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.I.P.M. Emilia Impresa Sociale (sede di Reggio nell'Emilia)",
+  "comune": "Reggio nell'Emilia",
+  "provincia": "RE",
+  "regione": "Emilia-Romagna",
+  "lat": 44.694185,
+  "lng": 10.61037,
+  "indirizzo": "Via Clementi, 16",
+  "contatti": "353.4523987",
+  "email": "presidiocipmemilia.re@gmail.com",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; sede e contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. \"Zeroscuse\"",
+  "comune": "Avellino",
+  "provincia": "AV",
+  "regione": "Campania",
+  "lat": 40.9153,
+  "lng": 14.7897,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. Palermo",
+  "comune": "Palermo",
+  "provincia": "PA",
+  "regione": "Sicilia",
+  "lat": 38.1157,
+  "lng": 13.3613,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. Agrigento",
+  "comune": "Agrigento",
+  "provincia": "AG",
+  "regione": "Sicilia",
+  "lat": 37.3107,
+  "lng": 13.5766,
+  "indirizzo": "Via Mazzini n. 167; Via Agrigento n. 167",
+  "contatti": "0918147520",
+  "email": "centrouominiagrigento@gmail.com",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. - CAMBIAMENTI in RTI con Fondazione Famiglia Materna",
+  "comune": "Trento",
+  "provincia": "TN",
+  "regione": "Trentino-Alto Adige/Südtirol",
+  "lat": 46.0667,
+  "lng": 11.1167,
+  "contatti": "335 1802162",
+  "email": "cambiamenti.antiviolenza@gmail.com",
+  "altreSedi": "Rovereto Piazza Damiano Chiesa, 8",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. - CAMBIAMENTI in RTI con Fondazione Famiglia Materna (sede di Rovereto)",
+  "comune": "Rovereto",
+  "provincia": "TN",
+  "regione": "Trentino-Alto Adige/Südtirol",
+  "lat": 45.887861,
+  "lng": 11.035642,
+  "indirizzo": "Via Saibanti, 6, 38068 Rovereto",
+  "contatti": "335 1802162",
+  "email": "cambiamenti.antiviolenza@gmail.com",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; sede e contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Noi e Voi",
+  "comune": "Taranto",
+  "provincia": "TA",
+  "regione": "Puglia",
+  "lat": 40.4711,
+  "lng": 17.2431,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.I.P.M. Calabria ETS",
+  "comune": "Siderno",
+  "provincia": "RC",
+  "regione": "Calabria",
+  "lat": 38.264311,
+  "lng": 16.289874,
+  "indirizzo": "Via degli Oleandri 10",
+  "contatti": "328 6664006",
+  "email": "cipmcalabria@gmail.com",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti da rete CIPM (cipm.it/contatti)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Interpares Aps Ets",
+  "comune": "Trieste",
+  "provincia": "TS",
+  "regione": "Friuli-Venezia Giulia",
+  "lat": 45.651865,
+  "lng": 13.784071,
+  "indirizzo": "Via Crispi 49, Trieste",
+  "contatti": "320 3735663",
+  "email": "interpares.ts@gmail.com",
+  "altreSedi": "Vicolo Brovedan n.7, Udine",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Servizio Uomini Maltrattanti",
+  "comune": "Reggio nell'Emilia",
+  "provincia": "RE",
+  "regione": "Emilia-Romagna",
+  "lat": 44.705582,
+  "lng": 10.632458,
+  "indirizzo": "Via Donnino dal Verme 8",
+  "contatti": "3296707298",
+  "email": "sum@libera-mente.org",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Centro di Ascolto Uomini Maltrattanti di Ferrara",
+  "comune": "Ferrara",
+  "provincia": "FE",
+  "regione": "Emilia-Romagna",
+  "lat": 44.8298,
+  "lng": 11.620797,
+  "indirizzo": "Via delle Chiodare 1, 44121 Ferrara",
+  "contatti": "345 597 5453",
+  "email": "ferraracam@gmail.com",
+  "altreSedi": "Presso Cento (FE) Via Bartolomeo Campagnoli 7 44042",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Centro di Ascolto Uomini Maltrattanti di Ferrara (sede di Cento)",
+  "comune": "Cento",
+  "provincia": "FE",
+  "regione": "Emilia-Romagna",
+  "lat": 44.7333,
+  "lng": 11.2833,
+  "indirizzo": "Via B. Campagnoli n. 7",
+  "contatti": "345 597 5453",
+  "email": "ferraracam@gmail.com",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; sede e contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Uomini in Meglio",
+  "comune": "Darfo Boario Terme",
+  "provincia": "BS",
+  "regione": "Lombardia",
+  "lat": 45.8944,
+  "lng": 10.1867,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "CTM - Centro Trattamento Maltrattanti FORLI'",
+  "comune": "Forlì",
+  "provincia": "FC",
+  "regione": "Emilia-Romagna",
+  "lat": 44.225587,
+  "lng": 12.03716,
+  "indirizzo": "Via San Martino 13, Forlì",
+  "contatti": "800 161085",
+  "email": "ctm.forli@gmail.com",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Centro UominiAutori di Violenza (C.U.A.V.) di Borgomanero",
+  "comune": "Borgomanero",
+  "provincia": "NO",
+  "regione": "Piemonte",
+  "lat": 45.703499,
+  "lng": 8.464554,
+  "indirizzo": "Viale Libertà 30",
+  "contatti": "329 1218968",
+  "email": "cuavborgomanero@cissborgomanero.it",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti da registro regionale CUAV della Regione Piemonte (regione.piemonte.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "InContro: Oltre la Violenza",
+  "comune": "Torino",
+  "provincia": "TO",
+  "regione": "Piemonte",
+  "lat": 45.067905,
+  "lng": 7.63844,
+  "indirizzo": "Corso Trapani 95 (Fondazione Gruppo Abele)",
+  "contatti": "335 6865389; 011 2486221",
+  "email": "cu@gruppoabele.org",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti da registro regionale CUAV della Regione Piemonte (regione.piemonte.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "White Dove Ponente",
+  "comune": "Imperia",
+  "provincia": "IM",
+  "regione": "Liguria",
+  "lat": 43.891025,
+  "lng": 8.040144,
+  "indirizzo": "Via Don Abbo, 16 Imperia",
+  "contatti": "340 6080417",
+  "email": "whitedoveponente@gmail.com",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "White Dove Tigullio",
+  "comune": "Rapallo",
+  "provincia": "GE",
+  "regione": "Liguria",
+  "lat": 44.348565,
+  "lng": 9.227801,
+  "indirizzo": "Corso Matteotti 26 M – Rapallo",
+  "contatti": "338 484 0852",
+  "email": "whitedovetigullio@gmail.com",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "White Dove - Progetto Lato Oscuro",
+  "comune": "Genova",
+  "provincia": "GE",
+  "regione": "Liguria",
+  "lat": 44.402438,
+  "lng": 8.937052,
+  "indirizzo": "Via Alessi, 7/1 - 16128 Genova",
+  "contatti": "342 5741597",
+  "email": "info@whitedove.it",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Associazione Senza Violenza APS",
+  "comune": "Bologna",
+  "provincia": "BO",
+  "regione": "Emilia-Romagna",
+  "lat": 44.4939,
+  "lng": 11.3428,
+  "altreSedi": "40125, Bologna, Via De' Buttieri 9A",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. P.A.V.I.A.",
+  "comune": "Pavia",
+  "provincia": "PV",
+  "regione": "Lombardia",
+  "lat": 45.1853,
+  "lng": 9.155,
+  "altreSedi": "Vigevano Via L. Bretti, 13 Voghera Via A. Cagnoni, 23",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Centro Educativo alle Relazioni Affettive",
+  "comune": "San Donà di Piave",
+  "provincia": "VE",
+  "regione": "Veneto",
+  "lat": 45.6298,
+  "lng": 12.5641,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. Vercelli",
+  "comune": "Vercelli",
+  "provincia": "VC",
+  "regione": "Piemonte",
+  "lat": 45.3261,
+  "lng": 8.4234,
+  "indirizzo": "Piazza Municipio 1",
+  "contatti": "331 5602861; 375 7158252",
+  "email": "cuav@comune.vercelli.it",
+  "sito": "https://www.comune.vercelli.it/amministrazione/centro-uomini-autori-potenziali-autori-violenza-cuav",
+  "orari": "Aperto due giorni a settimana; si riceve anche su appuntamento chiamando i numeri dedicati.",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti da Comune di Vercelli (comune.vercelli.it) e registro regionale CUAV della Regione Piemonte",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Centro Ares Roma",
+  "comune": "Roma",
+  "provincia": "RM",
+  "regione": "Lazio",
+  "lat": 41.879349,
+  "lng": 12.569112,
+  "indirizzo": "Via delle Azalee 145",
+  "contatti": "335 1789704",
+  "email": "centroaresroma@gmail.com",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Il Primo Passo",
+  "comune": "Siracusa",
+  "provincia": "SR",
+  "regione": "Sicilia",
+  "lat": 37.0789,
+  "lng": 15.282426,
+  "indirizzo": "Via Costanza Bruno 31",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Il Primo Passo",
+  "comune": "Catania",
+  "provincia": "CT",
+  "regione": "Sicilia",
+  "lat": 37.5027,
+  "lng": 15.0873,
+  "indirizzo": "Via G. Lavaggi, 7 Catania",
+  "contatti": "095 2163092",
+  "email": "ilprimopasso.cfe@gmail.com",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.I.P.M. Puglia – in A.T.S. con CIPM soc.coop. soc. a.r.l. (Capofila)",
+  "comune": "Bari",
+  "provincia": "BA",
+  "regione": "Puglia",
+  "lat": 41.123736,
+  "lng": 16.86428,
+  "indirizzo": "Via Alessandro Maria Calefati 133",
+  "contatti": "347 6111346",
+  "email": "cipmpuglia2021@gmail.com",
+  "altreSedi": "Via Calefati 133",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti da rete CIPM (cipm.it/contatti)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.A.M. Caserta",
+  "comune": "Caserta",
+  "provincia": "CE",
+  "regione": "Campania",
+  "lat": 41.0667,
+  "lng": 14.3333,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Ishtaraps",
+  "comune": "Torre del Greco",
+  "provincia": "NA",
+  "regione": "Campania",
+  "lat": 40.7853,
+  "lng": 14.3953,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "U.D.i.RE APS C.U.A.V.",
+  "comune": "Torino",
+  "provincia": "TO",
+  "regione": "Piemonte",
+  "lat": 45.0792,
+  "lng": 7.6761,
+  "altreSedi": "Torino - Via Gavello n.2",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "L.I.B.E.R.A.T.I. Luogo di Intervento per il Benessere, l'Educazione e la Responsabilità: Azioni per la Trasformazione Individuale",
+  "comune": "Benevento",
+  "provincia": "BN",
+  "regione": "Campania",
+  "lat": 41.1333,
+  "lng": 14.7833,
+  "altreSedi": "Pietrelcina, via Maresciallo Mandato n.55",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. Marsica",
+  "comune": "Avezzano",
+  "provincia": "AQ",
+  "regione": "Abruzzo",
+  "lat": 42.031,
+  "lng": 13.4264,
+  "contatti": "085 8139942; 320 0678998",
+  "email": "info@cambiamentiaps.org",
+  "sito": "https://cambiamentiaps.org/servizi/cam-cuav-centro-uomini-autori-di-violenza/",
+  "orari": "Centralino lunedì e martedì 15–18, giovedì e venerdì 10–13.",
+  "note": "Sono i recapiti centrali dell’associazione Cambiamenti, a Pescara.",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti da Associazione Cambiamenti APS (cambiamentiaps.org)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. Molise",
+  "comune": "Campobasso",
+  "provincia": "CB",
+  "regione": "Molise",
+  "lat": 41.561,
+  "lng": 14.6684,
+  "contatti": "085 8139942; 320 0678998",
+  "email": "info@cambiamentiaps.org",
+  "sito": "https://cambiamentiaps.org/servizi/cam-cuav-centro-uomini-autori-di-violenza/",
+  "orari": "Centralino lunedì e martedì 15–18, giovedì e venerdì 10–13.",
+  "altreSedi": "Termoli via Regina Margherita di Savoia, Isernia via del Sannio",
+  "note": "Sono i recapiti centrali dell’associazione Cambiamenti, a Pescara.",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti da Associazione Cambiamenti APS (cambiamentiaps.org)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. Pescara Cambiamenti",
+  "comune": "Pescara",
+  "provincia": "PE",
+  "regione": "Abruzzo",
+  "lat": 42.4643,
+  "lng": 14.2142,
+  "indirizzo": "Piazza d’Angelosante 6, torre C (sede dell’associazione)",
+  "contatti": "085 8139942; 320 0678998",
+  "email": "info@cambiamentiaps.org",
+  "sito": "https://cambiamentiaps.org/servizi/cam-cuav-centro-uomini-autori-di-violenza/",
+  "orari": "Centralino lunedì e martedì 15–18, giovedì e venerdì 10–13.",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti da Associazione Cambiamenti APS (cambiamentiaps.org)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. Ancona",
+  "comune": "Ancona",
+  "provincia": "AN",
+  "regione": "Marche",
+  "lat": 43.6167,
+  "lng": 13.5167,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. Enna",
+  "comune": "Centuripe",
+  "provincia": "EN",
+  "regione": "Sicilia",
+  "lat": 37.6233,
+  "lng": 14.7395,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. Ragusa",
+  "comune": "Ragusa",
+  "provincia": "RG",
+  "regione": "Sicilia",
+  "lat": 36.925,
+  "lng": 14.7306,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. Caltanissetta",
+  "comune": "Caltanissetta",
+  "provincia": "CL",
+  "regione": "Sicilia",
+  "lat": 37.4915,
+  "lng": 14.0624,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Kairos",
+  "comune": "Taranto",
+  "provincia": "TA",
+  "regione": "Puglia",
+  "lat": 40.4711,
+  "lng": 17.2431,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Fiorire in Inverno",
+  "comune": "Frosinone",
+  "provincia": "FR",
+  "regione": "Lazio",
+  "lat": 41.6333,
+  "lng": 13.35,
+  "altreSedi": "Fumone presso Casa Comunale - Anagni, Via Bagno 21",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "La Scuola di Atene APS",
+  "comune": "Latina",
+  "provincia": "LT",
+  "regione": "Lazio",
+  "lat": 41.4672,
+  "lng": 12.9036,
+  "altreSedi": "Milano Fiumicino Novara",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. C.I.P.M. Lazio",
+  "comune": "Roma",
+  "provincia": "RM",
+  "regione": "Lazio",
+  "lat": 41.914321,
+  "lng": 12.548181,
+  "indirizzo": "Via Gian Bistolfi 35",
+  "contatti": "351 7986362",
+  "email": "cipmlazio@gmail.com",
+  "sito": "https://www.cipmlazio.it/",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti da CIPM Lazio ETS, carta dei servizi (cipmlazio.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Uomini Maltrattanti APS – Sezione provinciale di CREMONA",
+  "comune": "Castelleone",
+  "provincia": "CR",
+  "regione": "Lombardia",
+  "lat": 45.29136,
+  "lng": 9.76537,
+  "indirizzo": "Via Brocchi 13",
+  "email": "camsezionecremona@gmail.com",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Daimon",
+  "comune": "Modena",
+  "provincia": "MO",
+  "regione": "Emilia-Romagna",
+  "lat": 44.657631,
+  "lng": 10.940502,
+  "indirizzo": "Via Toniolo, 125 Modena",
+  "contatti": "3493381700",
+  "email": "progettodaimonbologna@gruppoceis.org; progettodaimon@gruppoceis.org",
+  "altreSedi": "Via Scipione del Ferro 4, Bologna",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Daimon (sede di Bologna)",
+  "comune": "Bologna",
+  "provincia": "BO",
+  "regione": "Emilia-Romagna",
+  "lat": 44.494756,
+  "lng": 11.367197,
+  "indirizzo": "Via Scipione dal Ferro, 4",
+  "contatti": "3493381700",
+  "email": "progettodaimonbologna@gruppoceis.org",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; sede e contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Flexus",
+  "comune": "Andria",
+  "provincia": "BT",
+  "regione": "Puglia",
+  "lat": 41.2317,
+  "lng": 16.3083,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Cambio Rotta",
+  "comune": "Chiaravalle Centrale",
+  "provincia": "CZ",
+  "regione": "Calabria",
+  "lat": 38.6833,
+  "lng": 16.4,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Kronos",
+  "comune": "Scafati",
+  "provincia": "SA",
+  "regione": "Campania",
+  "lat": 40.7536,
+  "lng": 14.5253,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. Marche sud- Ascoli Piceno",
+  "comune": "Folignano",
+  "provincia": "AP",
+  "regione": "Marche",
+  "lat": 42.821,
+  "lng": 13.6329,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. Marche sud- Fermo",
+  "comune": "Fermo",
+  "provincia": "FM",
+  "regione": "Marche",
+  "lat": 43.1613,
+  "lng": 13.7184,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Cris. A.M. (Crisalide Area Maltrattanti)",
+  "comune": "Brindisi",
+  "provincia": "BR",
+  "regione": "Puglia",
+  "lat": 40.6383,
+  "lng": 17.9458,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Cambiamento",
+  "comune": "Taranto",
+  "provincia": "TA",
+  "regione": "Puglia",
+  "lat": 40.4711,
+  "lng": 17.2431,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Associazione San Luigi",
+  "comune": "Salerno",
+  "provincia": "SA",
+  "regione": "Campania",
+  "lat": 40.6806,
+  "lng": 14.7594,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.I.P.M. Campania - Cambio Rotta",
+  "comune": "Napoli",
+  "provincia": "NA",
+  "regione": "Campania",
+  "lat": 40.854583,
+  "lng": 14.268884,
+  "indirizzo": "Via Milano 43 (sede operativa)",
+  "contatti": "334 7082792",
+  "email": "cipmcampania@gmail.com",
+  "altreSedi": "Napoli - Largo Donnaregina 24 Cava dei Tirreni (SA) -Piazza E. Abbro 1, Capodrise (CE) - Via D. Cirillo 26, Sant'Agata dei Goti (BN) - Via Riello 62",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti da rete CIPM (cipm.it/contatti)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. di Macerata",
+  "comune": "Macerata",
+  "provincia": "MC",
+  "regione": "Marche",
+  "lat": 43.3003,
+  "lng": 13.4533,
+  "altreSedi": "Sede legale Via Giovanni XXIII n. 45",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "A.P.S. A.D.S. Libertas Margot",
+  "comune": "Perugia",
+  "provincia": "PG",
+  "regione": "Umbria",
+  "lat": 43.1119,
+  "lng": 12.3885,
+  "altreSedi": "Via della Pallotta 9",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "A.P.S. Centro Prima - Prevenzione e Intervento Maltrattamenti",
+  "comune": "Roma",
+  "provincia": "RM",
+  "regione": "Lazio",
+  "lat": 41.956276,
+  "lng": 12.523779,
+  "indirizzo": "Via Monte Cervialto 82, Roma; Via Astura 2, Roma; Viale Giulio Cesare 75, Roma; Viale Carlo Felice 63, Roma",
+  "contatti": "377 5366270",
+  "email": "info@centroprima.it",
+  "altreSedi": "Via Astura 2 Roma",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "A.P.S. Centro Prima - Prevenzione e Intervento Maltrattamenti (sede di Ciampino)",
+  "comune": "Ciampino",
+  "provincia": "RM",
+  "regione": "Lazio",
+  "lat": 41.807354,
+  "lng": 12.598223,
+  "indirizzo": "Via Antonio Vivaldi 13, Ciampino, Roma",
+  "contatti": "377 5366270",
+  "email": "info@centroprima.it",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; sede e contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "A.P.S. Centro Prima - Prevenzione e Intervento Maltrattamenti (sede di Monterotondo)",
+  "comune": "Monterotondo",
+  "provincia": "RM",
+  "regione": "Lazio",
+  "lat": 42.051239,
+  "lng": 12.623705,
+  "indirizzo": "Via Corsica 33, Monterotondo, Roma",
+  "contatti": "377 5366270",
+  "email": "info@centroprima.it",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; sede e contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. Messina",
+  "comune": "Messina",
+  "provincia": "ME",
+  "regione": "Sicilia",
+  "lat": 38.1936,
+  "lng": 15.5542,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Uomini Oltre la Violenza",
+  "comune": "Foggia",
+  "provincia": "FG",
+  "regione": "Puglia",
+  "lat": 41.464234,
+  "lng": 15.547894,
+  "indirizzo": "Via della Repubblica 54, Foggia",
+  "contatti": "392 24 63 806",
+  "email": "uominioltrelaviolenza@gmail.com",
+  "altreSedi": "Tribunale Foggia v.le Primo Maggio n.30",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. Centro Antiviolenza Margherita ODV",
+  "comune": "Reggio di Calabria",
+  "provincia": "RC",
+  "regione": "Calabria",
+  "lat": 38.1144,
+  "lng": 15.65,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.I.P.M. Sardegna ETS",
+  "comune": "Cagliari",
+  "provincia": "CA",
+  "regione": "Sardegna",
+  "lat": 39.21632,
+  "lng": 9.124226,
+  "indirizzo": "Via Grazia Deledda 39 (sede legale)",
+  "contatti": "350 5677500",
+  "email": "associazionecipmsardegna@gmail.com",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti da rete CIPM (cipm.it/contatti)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. Centro Antiviolenza Margherita Sezione Napoli Porto",
+  "comune": "Napoli",
+  "provincia": "NA",
+  "regione": "Campania",
+  "lat": 40.8358,
+  "lng": 14.2486,
+  "altreSedi": "Centro Direzionale IS F11 interno 54",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "A Voce Alta Salerno",
+  "comune": "Salerno",
+  "provincia": "SA",
+  "regione": "Campania",
+  "lat": 40.6806,
+  "lng": 14.7594,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. Voandalana CIPM",
+  "comune": "Suzzara",
+  "provincia": "MN",
+  "regione": "Lombardia",
+  "lat": 44.9927,
+  "lng": 10.7494,
+  "altreSedi": "Via Principe Amedeo 23, Mantova",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Liberiamoci dalla violenza ( LDV )",
+  "comune": "Ferrara",
+  "provincia": "FE",
+  "regione": "Emilia-Romagna",
+  "lat": 44.8392,
+  "lng": 11.6175,
+  "contatti": "333 2415033 (giovedì 13–15; negli altri giorni si può lasciare un messaggio in segreteria)",
+  "email": "ldv@ausl.fe.it",
+  "sito": "https://www.ausl.fe.it/servizi-e-prestazioni/percorsi-di-cura-e-assistenza/liberiamoci-dalla-violenza",
+  "altreSedi": "Via Dazio 113 Bondeno -Via Felletti 2 Comacchio - Via De Amicis 22 Portomaggiore",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti da Azienda USL di Ferrara (ausl.fe.it)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Dico tra Noi",
+  "comune": "Pesaro",
+  "provincia": "PU",
+  "regione": "Marche",
+  "lat": 43.89807,
+  "lng": 12.899736,
+  "indirizzo": "Via Giolitti 173",
+  "contatti": "3421093007",
+  "email": "dicotranoi@comune.pesaro.pu.it",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Centro LDV (Liberiamoci dalla Violenza) di Bologna",
+  "comune": "Bologna",
+  "provincia": "BO",
+  "regione": "Emilia-Romagna",
+  "lat": 44.4939,
+  "lng": 11.3428,
+  "contatti": "366 4342321 (venerdì e lunedì 13:30–15)",
+  "email": "ldv@ausl.bologna.it",
+  "sito": "https://www.ausl.bologna.it/asl-bologna/staff/dass/centro-ldv",
+  "altreSedi": "Via Montebello 6 40121 Bologna , Via Asia 61",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti da Azienda USL di Bologna (ausl.bologna.it)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Un Nuovo Maschile",
+  "comune": "Rovigo",
+  "provincia": "RO",
+  "regione": "Veneto",
+  "lat": 45.070002,
+  "lng": 11.78468,
+  "indirizzo": "Vicolo Ciro Menotti, 8",
+  "contatti": "3204857693",
+  "email": "unnuovomaschile@cooperativapeterpan.it",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "ALBA Spazio di trasformAzione",
+  "comune": "Campogalliano",
+  "provincia": "MO",
+  "regione": "Emilia-Romagna",
+  "lat": 44.6904,
+  "lng": 10.8389,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. Chirone",
+  "comune": "Ronco all'Adige",
+  "provincia": "VR",
+  "regione": "Veneto",
+  "lat": 45.3365,
+  "lng": 11.2466,
+  "indirizzo": "Via Ippolita Forante, 8",
+  "contatti": "0456615377; 3773609505",
+  "email": "info@csrtchirone.it",
+  "altreSedi": "Montebelluna TV - Verona Viale Spolverini",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. Chirone (sede di Montebelluna)",
+  "comune": "Montebelluna",
+  "provincia": "TV",
+  "regione": "Veneto",
+  "lat": 45.7753,
+  "lng": 12.0389,
+  "indirizzo": "Via Corte Maggiore, 23",
+  "contatti": "3773609505",
+  "email": "info@csrtchirone.it",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; sede e contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. Chirone (sede di Verona)",
+  "comune": "Verona",
+  "provincia": "VR",
+  "regione": "Veneto",
+  "lat": 45.440398,
+  "lng": 11.019061,
+  "indirizzo": "Viale Spolverini 2a",
+  "contatti": "3773609505",
+  "email": "info@csrtchirone.it",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; sede e contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Spazio per Uomini che Vogliono Cambiare",
+  "comune": "Como",
+  "provincia": "CO",
+  "regione": "Lombardia",
+  "lat": 45.8103,
+  "lng": 9.0861,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Centro Uomini Autori di Violenza \"Andrea\"",
+  "comune": "Milano",
+  "provincia": "MI",
+  "regione": "Lombardia",
+  "lat": 45.4669,
+  "lng": 9.19,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Centro LDV Azienda USL della Romagna - Sede di Ravenna",
+  "comune": "Ravenna",
+  "provincia": "RA",
+  "regione": "Emilia-Romagna",
+  "lat": 44.4161,
+  "lng": 12.2017,
+  "contatti": "366 1449292 (giovedì 14–17)",
+  "email": "ldv@auslromagna.it",
+  "sito": "https://www.auslromagna.it/luoghi/consultori/centri-ldv-romagna",
+  "orari": "Su appuntamento.",
+  "altreSedi": "Piazza Anna Magnani 147, Cesena - Via Cristoforo Colombo 11, Forlì - Via XXIII Settembre 120, scala B, Rimini",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti da Azienda USL della Romagna (auslromagna.it)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Si Può Fare",
+  "comune": "Vicenza",
+  "provincia": "VI",
+  "regione": "Veneto",
+  "lat": 45.55,
+  "lng": 11.55,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "La Tana del Lupo",
+  "comune": "Chivasso",
+  "provincia": "TO",
+  "regione": "Piemonte",
+  "lat": 45.191,
+  "lng": 7.8872,
+  "indirizzo": "Via Baraggino, casetta 4",
+  "contatti": "393 2369997",
+  "email": "tana.lupo.cuav@gmail.com",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti da registro regionale CUAV della Regione Piemonte (regione.piemonte.it)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Associazione Perseo APS",
+  "comune": "Milano",
+  "provincia": "MI",
+  "regione": "Lombardia",
+  "lat": 45.4669,
+  "lng": 9.19,
+  "altreSedi": "Perseo Puglia, Calabria, Sicilia",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Metamorfosi",
+  "comune": "Chieti",
+  "provincia": "CH",
+  "regione": "Abruzzo",
+  "lat": 42.352901,
+  "lng": 14.17154,
+  "indirizzo": "Via Padre Bernardo Valera, 22, 66100 Chieti CH",
+  "contatti": "327 5249091",
+  "email": "metamorfosi@alpha.ch.it",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Cerchio degli Uomini Brescia ETS (CUB)",
+  "comune": "Brescia",
+  "provincia": "BS",
+  "regione": "Lombardia",
+  "lat": 45.542013,
+  "lng": 10.218762,
+  "indirizzo": "Via Paitone 53",
+  "email": "cerchiodegliuominibrescia@gmail.com",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Associazione Ares APS",
+  "comune": "Bassano del Grappa",
+  "provincia": "VI",
+  "regione": "Veneto",
+  "lat": 45.775411,
+  "lng": 11.749964,
+  "indirizzo": "Via Monte Novegno 7, Bassano del Grappa",
+  "contatti": "388 7742014",
+  "email": "centroares.bassano@gmail.com; associazionearesaps@pec.csv.vicenza.it",
+  "altreSedi": "Vicenza (VI) - San Vito di Leguzzano (VI) - Feltre (BL)",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Associazione Ares APS (sede di Feltre)",
+  "comune": "Feltre",
+  "provincia": "BL",
+  "regione": "Veneto",
+  "lat": 46.0167,
+  "lng": 11.9,
+  "indirizzo": "Via Nasci 2",
+  "contatti": "388 7742014",
+  "email": "centroares.bassano@gmail.com",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; sede e contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Associazione Ares APS (sede di San Vito di Leguzzano)",
+  "comune": "San Vito di Leguzzano",
+  "provincia": "VI",
+  "regione": "Veneto",
+  "lat": 45.680368,
+  "lng": 11.377357,
+  "indirizzo": "Via Monsignor Snichelotto 12",
+  "contatti": "388 7742014",
+  "email": "centroares.bassano@gmail.com; associazionearesaps@pec.csv.vicenza.it",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; sede e contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Associazione Ares APS (sede di Vicenza)",
+  "comune": "Vicenza",
+  "provincia": "VI",
+  "regione": "Veneto",
+  "lat": 45.543484,
+  "lng": 11.570423,
+  "indirizzo": "Viale Pace 89",
+  "contatti": "388 7742014",
+  "email": "associazionearesaps@pec.csv.vicenza.it",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; sede e contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Centro Liberiamoci dalla Violenza",
+  "comune": "Modena",
+  "provincia": "MO",
+  "regione": "Emilia-Romagna",
+  "lat": 44.6458,
+  "lng": 10.9257,
+  "contatti": "366 5711079 (lunedì–venerdì 13–15)",
+  "email": "ldv@ausl.mo.it",
+  "sito": "https://www.ausl.mo.it/luogo/centro-di-accompagnamento-al-cambiamento-per-uomini-liberiamoci-dalla-violenza-modena/",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti da Azienda USL di Modena (ausl.mo.it)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Dorea Casoria",
+  "comune": "Casoria",
+  "provincia": "NA",
+  "regione": "Campania",
+  "lat": 40.9,
+  "lng": 14.3,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Dorea Aversa",
+  "comune": "Aversa",
+  "provincia": "CE",
+  "regione": "Campania",
+  "lat": 40.973,
+  "lng": 14.2065,
+  "altreSedi": "Via Graefer 2 coop Selene - Caserta",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Centro G.A.M.E.",
+  "comune": "Cagliari",
+  "provincia": "CA",
+  "regione": "Sardegna",
+  "lat": 39.2149,
+  "lng": 9.1095,
+  "altreSedi": "Viale la Plaia 17",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "RAM - Responsabilità Autori di Maltrattamento",
+  "comune": "Napoli",
+  "provincia": "NA",
+  "regione": "Campania",
+  "lat": 40.8358,
+  "lng": 14.2486,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "DireUomo - APS",
+  "comune": "Rimini",
+  "provincia": "RN",
+  "regione": "Emilia-Romagna",
+  "lat": 44.0594,
+  "lng": 12.5683,
+  "altreSedi": "Rimini (RN) Via Retta n. 13",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.I.P.M. Toscana APS",
+  "comune": "Prato",
+  "provincia": "PO",
+  "regione": "Toscana",
+  "lat": 43.87463,
+  "lng": 11.105291,
+  "indirizzo": "Via Fra’ Bartolomeo 104",
+  "contatti": "351 5630703",
+  "email": "info.cipm.toscana@gmail.com",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti da rete CIPM (cipm.it/contatti)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Associazione Kali ODV Centro di Psicologia Applicata - Centro Maltrattanti",
+  "comune": "Parma",
+  "provincia": "PR",
+  "regione": "Emilia-Romagna",
+  "lat": 44.8015,
+  "lng": 10.328,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Toc Toc ROBERTO",
+  "comune": "Torino",
+  "provincia": "TO",
+  "regione": "Piemonte",
+  "lat": 45.019002,
+  "lng": 7.623677,
+  "indirizzo": "Via Monte Cengio 18/bis",
+  "contatti": "346 5004522",
+  "email": "spicocounseling@gmail.com",
+  "altreSedi": "Regione Gonzole 4 Orbassano (TO)",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti da registro regionale CUAV della Regione Piemonte (regione.piemonte.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Dalla Parte del Lupo",
+  "comune": "Bari",
+  "provincia": "BA",
+  "regione": "Puglia",
+  "lat": 41.1253,
+  "lng": 16.8667,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. L’elefante Bianco",
+  "comune": "Teramo",
+  "provincia": "TE",
+  "regione": "Abruzzo",
+  "lat": 42.6589,
+  "lng": 13.7039,
+  "indirizzo": "Piazza Garibaldi 55, Teramo",
+  "contatti": "393 80 38 329",
+  "email": "lelefantebianco@lelefantescs.it",
+  "altreSedi": "Atri c/o ASP 2 di Teramo via P. Baiocchi n.29 - Silvi, c/o Comune di Silvi via Piave n. 9 - Pineto, c/o Comune di Pineto SS 16 Adriatica n.14",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. L’elefante Bianco (sede di Atri)",
+  "comune": "Atri",
+  "provincia": "TE",
+  "regione": "Abruzzo",
+  "lat": 42.579106,
+  "lng": 13.97537,
+  "indirizzo": "Via Baiocchi Pietro 29, Atri (TE)",
+  "contatti": "393 80 38 329",
+  "email": "lelefantebianco@lelefantescs.it",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; sede e contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. L’elefante Bianco (sede di Silvi)",
+  "comune": "Silvi",
+  "provincia": "TE",
+  "regione": "Abruzzo",
+  "lat": 42.536415,
+  "lng": 14.131262,
+  "indirizzo": "Via Piave 9, Silvi (TE)",
+  "contatti": "393 80 38 329",
+  "email": "lelefantebianco@lelefantescs.it",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; sede e contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. L’elefante Bianco (sede di Pineto)",
+  "comune": "Pineto",
+  "provincia": "TE",
+  "regione": "Abruzzo",
+  "lat": 42.6167,
+  "lng": 14.0667,
+  "indirizzo": "SS 16 Adriatica 14, Pineto (TE)",
+  "contatti": "393 80 38 329",
+  "email": "lelefantebianco@lelefantescs.it",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; sede e contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. L'elefante Bianco",
+  "comune": "L'Aquila",
+  "provincia": "AQ",
+  "regione": "Abruzzo",
+  "lat": 42.354,
+  "lng": 13.392,
+  "indirizzo": "Via Giuseppe Bolino Stabile 4, n.10, Gignano (AQ)",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. Itinere",
+  "comune": "Pescara",
+  "provincia": "PE",
+  "regione": "Abruzzo",
+  "lat": 42.443603,
+  "lng": 14.246129,
+  "indirizzo": "Via Luigi Polacchi 19",
+  "contatti": "0859561793",
+  "email": "info@itinerecam.it",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Alter Ego APS",
+  "comune": "Alessandria",
+  "provincia": "AL",
+  "regione": "Piemonte",
+  "lat": 44.9133,
+  "lng": 8.62,
+  "indirizzo": "Piazza Garibaldi 21",
+  "contatti": "380 1743801",
+  "email": "progettoalterego@gmail.com",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti da registro regionale CUAV della Regione Piemonte (regione.piemonte.it)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "\"TIME OUT\" Centro per i Comportamenti Violenti Maschili nelle Relazioni con Partner o Ex Partner",
+  "comune": "Pontecagnano Faiano",
+  "provincia": "SA",
+  "regione": "Campania",
+  "lat": 40.65,
+  "lng": 14.8833,
+  "altreSedi": "UOSM 7/DS 66 Poliambulatorio Via Kennedy Salerno",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "La Rete che Libera Fuori",
+  "comune": "Nola",
+  "provincia": "NA",
+  "regione": "Campania",
+  "lat": 40.9259,
+  "lng": 14.5286,
+  "altreSedi": "Via Calabria, 13 Cosenza 87100 - Via Ulpiano,29 Roma 00193",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. - CAMBIAMENTI in RTI con ALFID - Associazione Laica Famiglie in Difficoltà",
+  "comune": "Rovereto",
+  "provincia": "TN",
+  "regione": "Trentino-Alto Adige/Südtirol",
+  "lat": 45.8833,
+  "lng": 11.0342,
+  "contatti": "0461 235008; 0461 233528",
+  "email": "info@alfid.it",
+  "altreSedi": "Via della Verrucca 1 Trento",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. - CAMBIAMENTI in RTI con ALFID - Associazione Laica Famiglie in Difficoltà (sede di Trento)",
+  "comune": "Trento",
+  "provincia": "TN",
+  "regione": "Trentino-Alto Adige/Südtirol",
+  "lat": 46.092957,
+  "lng": 11.119792,
+  "indirizzo": "Via Lunelli 4, Trento",
+  "contatti": "0461 235008; 0461 233528",
+  "email": "info@alfid.it",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; sede e contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. ASST Papa Giovanni XXIII",
+  "comune": "Bergamo",
+  "provincia": "BG",
+  "regione": "Lombardia",
+  "lat": 45.695,
+  "lng": 9.67,
+  "contatti": "035 2676269",
+  "email": "cuav.cbf@asst-pg23.it",
+  "sito": "https://www.asst-pg23.it/centri-percorsi-specialistici/percorso-violenza/centro-gli-uomini-autori-violenza-cuav",
+  "orari": "Su appuntamento; il primo colloquio informativo è gratuito.",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti da ASST Papa Giovanni XXIII (asst-pg23.it)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. SISPSe",
+  "comune": "Torino",
+  "provincia": "TO",
+  "regione": "Piemonte",
+  "lat": 45.055276,
+  "lng": 7.664135,
+  "indirizzo": "Corso Galileo Ferraris 109",
+  "contatti": "375 8171340",
+  "email": "cuavsispe@gmail.com",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti da registro regionale CUAV della Regione Piemonte (regione.piemonte.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "'Parla con noi' Donna e Politiche Familiari APS",
+  "comune": "Roma",
+  "provincia": "RM",
+  "regione": "Lazio",
+  "lat": 41.8931,
+  "lng": 12.4828,
+  "altreSedi": "Via Giovanni De Calvi 83 00151 Roma - Via Montecuccoli 15 00176 Roma - Via Val d'Ossola 25 00141 Roma",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "L'Istrice APS",
+  "comune": "Pordenone",
+  "provincia": "PN",
+  "regione": "Friuli-Venezia Giulia",
+  "lat": 45.9626,
+  "lng": 12.6563,
+  "indirizzo": "Borgo Sant'Antonio 12, Pordenone",
+  "contatti": "04321637178",
+  "email": "info@listrice.it",
+  "altreSedi": "Udine - Via Santo Stefano Gorizia - Corso Italia, 125",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "L'Istrice APS (sede di Udine)",
+  "comune": "Udine",
+  "provincia": "UD",
+  "regione": "Friuli-Venezia Giulia",
+  "lat": 46.080441,
+  "lng": 13.260418,
+  "indirizzo": "Via Umberto Zilli 53, Udine",
+  "contatti": "04321637178",
+  "email": "info@listrice.it",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; sede e contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Servizio Viol-A",
+  "comune": "Como",
+  "provincia": "CO",
+  "regione": "Lombardia",
+  "lat": 45.8103,
+  "lng": 9.0861,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.I.P.M. PIEMONTE - Centro Italiano per la Promozione della Mediazione Piemonte a.p.s.",
+  "comune": "Novara",
+  "provincia": "NO",
+  "regione": "Piemonte",
+  "lat": 45.446703,
+  "lng": 8.628705,
+  "indirizzo": "Corso Felice Cavallotti 40",
+  "contatti": "328 8173969",
+  "email": "cipmpiemonte@gmail.com",
+  "altreSedi": "Verbania: Via De Marchi, 16 c/o AVIS - Biella: C.so De Gasperi, 44 - Vercelli: C.so della Libertà, 72 c/o CVT",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti da rete CIPM (cipm.it/contatti)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "CO.TU.LE VI.",
+  "comune": "Trapani",
+  "provincia": "TP",
+  "regione": "Sicilia",
+  "lat": 38.0175,
+  "lng": 12.515,
+  "altreSedi": "Via Ercole, Santo Stefano Di Camastra (ME)",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori",
+   "uomini"
+  ],
+  "nome": "C.U.M.M. Centrascolto Uomini Maltrattanti e Maltrattati",
+  "comune": "Taranto",
+  "provincia": "TA",
+  "regione": "Puglia",
+  "lat": 40.4711,
+  "lng": 17.2431,
+  "altreSedi": "Via Carlo Magno n. 18, Taranto (TA) - Via Malta N. 1, San Giorgio Ionico (TA)",
+  "note": "Il nome indica che il centro accoglie anche uomini maltrattati: chiedi conferma al centro.",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.R.I. Asti - Progetto Umano",
+  "comune": "Asti",
+  "provincia": "AT",
+  "regione": "Piemonte",
+  "lat": 44.900774,
+  "lng": 8.201442,
+  "indirizzo": "Piazza Catena 3",
+  "contatti": "329 2106265",
+  "email": "umano@criasti.it",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti da registro regionale CUAV della Regione Piemonte (regione.piemonte.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Muoviti",
+  "comune": "Ravenna",
+  "provincia": "RA",
+  "regione": "Emilia-Romagna",
+  "lat": 44.41342,
+  "lng": 12.201084,
+  "indirizzo": "Via Mazzini 61, Ravenna",
+  "contatti": "327 4621965",
+  "email": "muoviti@librazione.org",
+  "altreSedi": "Via Castellani 25, Faenza (RA)",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Muoviti (sede di Faenza)",
+  "comune": "Faenza",
+  "provincia": "RA",
+  "regione": "Emilia-Romagna",
+  "lat": 44.284705,
+  "lng": 11.880034,
+  "indirizzo": "Via Giulio Castellani 25, Faenza RA",
+  "contatti": "327 4621965",
+  "email": "muoviti@librazione.org",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; sede e contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "G.R.U. Gruppo Responsabilità Uomini",
+  "comune": "Venezia",
+  "provincia": "VE",
+  "regione": "Veneto",
+  "lat": 45.4397,
+  "lng": 12.3319,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Nuovi Orizzonti",
+  "comune": "Roma",
+  "provincia": "RM",
+  "regione": "Lazio",
+  "lat": 41.8931,
+  "lng": 12.4828,
+  "altreSedi": "Via Tuscolana 55 00182 Roma - Circonvallazione Gianicolense, 214 00151 Roma",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Centro Ascolto Uomini Maltrattanti ETS",
+  "comune": "Firenze",
+  "provincia": "FI",
+  "regione": "Toscana",
+  "lat": 43.796136,
+  "lng": 11.233117,
+  "indirizzo": "Via Enrico Il Navigatore 17, 50127 Firenze",
+  "contatti": "339 8926550",
+  "email": "info@centrouominimaltrattanti.org",
+  "altreSedi": "Pistoia: Via Valiano Valiani 3 (presso Distretto Usl)",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Centro Ascolto Uomini Maltrattanti ETS (sede di Pistoia)",
+  "comune": "Pistoia",
+  "provincia": "PT",
+  "regione": "Toscana",
+  "lat": 43.931299,
+  "lng": 10.919789,
+  "indirizzo": "Vicolo Santa Caterina, 10, Pistoia",
+  "contatti": "339 8926550",
+  "email": "info@centrouominimaltrattanti.org",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; sede e contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Centro Ascolto Uomini Maltrattanti ETS (sede di Prato)",
+  "comune": "Prato",
+  "provincia": "PO",
+  "regione": "Toscana",
+  "lat": 43.909437,
+  "lng": 11.092905,
+  "indirizzo": "Via 7 Marzo 1944, 2/3, Prato",
+  "contatti": "339 8926550",
+  "email": "info@centrouominimaltrattanti.org",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; sede e contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Centro Ascolto Uomini Maltrattanti ETS (sede di Pieve a Nievole)",
+  "comune": "Pieve a Nievole",
+  "provincia": "PT",
+  "regione": "Toscana",
+  "lat": 43.880791,
+  "lng": 10.798206,
+  "indirizzo": "Via Donatori del Sangue, 16 51018 Pieve a Nievole (PT)",
+  "contatti": "339 8926550",
+  "email": "info@centrouominimaltrattanti.org",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; sede e contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. Sorry ASLTO3",
+  "comune": "Pinerolo",
+  "provincia": "TO",
+  "regione": "Piemonte",
+  "lat": 44.885269,
+  "lng": 7.325192,
+  "indirizzo": "Stradale Fenestrelle 72",
+  "contatti": "334 6382529",
+  "email": "psicologia.cuav@aslto3.piemonte.it",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti da registro regionale CUAV della Regione Piemonte (regione.piemonte.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Caritas Consulenza Uomini",
+  "comune": "Bolzano",
+  "provincia": "BZ",
+  "regione": "Trentino-Alto Adige/Südtirol",
+  "lat": 46.499316,
+  "lng": 11.356041,
+  "indirizzo": "Vicolo Gumer 6, Bolzano",
+  "contatti": "0471 324649",
+  "email": "mb@caritas.bz.it",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Pater Familias",
+  "comune": "Catania",
+  "provincia": "CT",
+  "regione": "Sicilia",
+  "lat": 37.5027,
+  "lng": 15.0873,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. MoCI Cosenza",
+  "comune": "Cosenza",
+  "provincia": "CS",
+  "regione": "Calabria",
+  "lat": 39.289151,
+  "lng": 16.259531,
+  "indirizzo": "Corso Bernardino Telesio 5",
+  "contatti": "0984485740",
+  "email": "cuav@mocicosenza.org",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Progetto da Uomo a Uomo ASST della Brianza",
+  "comune": "Vimercate",
+  "provincia": "MB",
+  "regione": "Lombardia",
+  "lat": 45.6167,
+  "lng": 9.3667,
+  "contatti": "333 6105686 (anche SMS e WhatsApp, lunedì–venerdì 8–16)",
+  "email": "cuav.brianza@asst-brianza.it",
+  "sito": "https://www.asst-brianza.it/web/index.php/schede/scheda/31",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti da ASST Brianza (asst-brianza.it)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Arteinsieme Soc. Coop. Sociale",
+  "comune": "Itri",
+  "provincia": "LT",
+  "regione": "Lazio",
+  "lat": 41.2833,
+  "lng": 13.5333,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Il Cortile C.U.A.V.",
+  "comune": "Roma",
+  "provincia": "RM",
+  "regione": "Lazio",
+  "lat": 41.8931,
+  "lng": 12.4828,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Antares",
+  "comune": "Siena",
+  "provincia": "SI",
+  "regione": "Toscana",
+  "lat": 43.3183,
+  "lng": 11.3314,
+  "altreSedi": "Via del Porrione 49; Strada del Mandorlo 3",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Cambiamento Maschile",
+  "comune": "Montebelluna",
+  "provincia": "TV",
+  "regione": "Veneto",
+  "lat": 45.7753,
+  "lng": 12.0389,
+  "indirizzo": "Piazzetta Mutilati ed Invalidi, Montebelluna (TV)",
+  "contatti": "345 9528685",
+  "email": "cambiamentomaschile@gmail.com",
+  "altreSedi": "1. Via Alzaia, 122 – 31100 Treviso 2. Via Adolfo Vital 160, c/o Sala \"Campolongo Sinistra\", – 31015 Conegliano (TV)",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Cambiamento Maschile (sede di Conegliano)",
+  "comune": "Conegliano",
+  "provincia": "TV",
+  "regione": "Veneto",
+  "lat": 45.876659,
+  "lng": 12.30357,
+  "indirizzo": "Via Adolfo Vital 160, c/o Sala \"Campolongo\"",
+  "contatti": "345 9528685",
+  "email": "cambiamentomaschile@gmail.com",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; sede e contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Cambiamento Maschile (sede di Treviso)",
+  "comune": "Treviso",
+  "provincia": "TV",
+  "regione": "Veneto",
+  "lat": 45.647721,
+  "lng": 12.269736,
+  "indirizzo": "Via Alzaia 122",
+  "contatti": "345 9528685",
+  "email": "cambiamentomaschile@gmail.com",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; sede e contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. Potenza",
+  "comune": "Potenza",
+  "provincia": "PZ",
+  "regione": "Basilicata",
+  "lat": 40.6333,
+  "lng": 15.8,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Centro Liberiamoci della Violenza",
+  "comune": "Piacenza",
+  "provincia": "PC",
+  "regione": "Emilia-Romagna",
+  "lat": 45.05,
+  "lng": 9.7,
+  "contatti": "348 3111757",
+  "email": "ldv@ausl.pc.it",
+  "sito": "https://www.ausl.pc.it/it/strutture-e-territorio/dipartimenti/salute-mentale-e-dipendenze-patologiche/psicologia-clinica-tutela-minori-e-salute-familiare/area-consultoriale/centro-liberiamoci-dalla-violenza",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti da Azienda USL di Piacenza (ausl.pc.it)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "PUR Progetto Uomini Responsabili",
+  "comune": "Carrara",
+  "provincia": "MS",
+  "regione": "Toscana",
+  "lat": 44.045746,
+  "lng": 10.05242,
+  "indirizzo": "Viale XX Settembre 245/d, Carrara (MS)",
+  "contatti": "351 9899220; 800 721 229",
+  "email": "info@centropur.it",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Men In Progress",
+  "comune": "Cuneo",
+  "provincia": "CN",
+  "regione": "Piemonte",
+  "lat": 44.3833,
+  "lng": 7.55,
+  "indirizzo": "Via San Pio X 13",
+  "contatti": "375 6859388",
+  "email": "progetto.uomini@coopsocfiordaliso.it",
+  "altreSedi": "Punto Meet via Leutrum 7 Cuneo",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti da registro regionale CUAV della Regione Piemonte (regione.piemonte.it)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "IL GATE – Centro di consapevolezza e cambiamento",
+  "comune": "Palazzolo sull'Oglio",
+  "provincia": "BS",
+  "regione": "Lombardia",
+  "lat": 45.6,
+  "lng": 9.8833,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Spazio Dike",
+  "comune": "Sulmona",
+  "provincia": "AQ",
+  "regione": "Abruzzo",
+  "lat": 42.048,
+  "lng": 13.9262,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. Medihospes",
+  "comune": "Campi Salentina",
+  "provincia": "LE",
+  "regione": "Puglia",
+  "lat": 40.4,
+  "lng": 18.0167,
+  "altreSedi": "Ugento via Monsignor De Razza n. 75",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. VIOL.A - Percorsi di cambiamento per uomini che agiscono violenza nelle relazioni affettive",
+  "comune": "Mantova",
+  "provincia": "MN",
+  "regione": "Lombardia",
+  "lat": 45.1564,
+  "lng": 10.7911,
+  "indirizzo": "Str. Gambarara n. 19",
+  "contatti": "348 0436200",
+  "email": "viola.libraonlus@gmail.com",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Centro Ascolto Uomini Maltrattanti - Sardegna",
+  "comune": "Sassari",
+  "provincia": "SS",
+  "regione": "Sardegna",
+  "lat": 40.732625,
+  "lng": 8.55714,
+  "indirizzo": "Viale Sicilia 2/e, Sassari",
+  "contatti": "366 62 87 187",
+  "email": "presidenza.camsassari@gmail.com",
+  "altreSedi": "Oristano, Nuoro, Olbia",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Centro Ascolto Uomini Maltrattanti - Sardegna (sede di Nuoro)",
+  "comune": "Nuoro",
+  "provincia": "NU",
+  "regione": "Sardegna",
+  "lat": 40.3201,
+  "lng": 9.3281,
+  "contatti": "366 6287187",
+  "email": "presidenza.camsassari@gmail.com",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; sede e contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Centro Ascolto Uomini Maltrattanti - Sardegna (sede di Olbia)",
+  "comune": "Olbia",
+  "provincia": "SS",
+  "regione": "Sardegna",
+  "lat": 40.9167,
+  "lng": 9.5,
+  "contatti": "366 6287187",
+  "email": "presidenza.camsassari@gmail.com",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; sede e contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Centro Ascolto Uomini Maltrattanti - Sardegna (sede di Oristano)",
+  "comune": "Oristano",
+  "provincia": "OR",
+  "regione": "Sardegna",
+  "lat": 39.9058,
+  "lng": 8.5916,
+  "contatti": "366 6287187",
+  "email": "presidenza.camsassari@gmail.com",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; sede e contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "\"Orizzonti Maschili\" Centro Uomini Autori di Violenza del Comune di Novara",
+  "comune": "Novara",
+  "provincia": "NO",
+  "regione": "Piemonte",
+  "lat": 45.446914,
+  "lng": 8.62505,
+  "indirizzo": "Corso Cavallotti 23",
+  "contatti": "800 628928",
+  "email": "sportellocuav@elios.coop; cuavnovara@comune.novara.it",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti da registro regionale CUAV della Regione Piemonte (regione.piemonte.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.U.A.V. C.I.S.AS.",
+  "comune": "Castelletto sopra Ticino",
+  "provincia": "NO",
+  "regione": "Piemonte",
+  "lat": 45.706597,
+  "lng": 8.628586,
+  "indirizzo": "Via Caduti per la Libertà 136",
+  "contatti": "331 1420572; 0331 973943",
+  "email": "cuav@cisasservizi.it",
+  "altreSedi": "Castelletto Sopra Ticino, Oleggio, Bellinzago Novarese",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti da registro regionale CUAV della Regione Piemonte (regione.piemonte.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Centro per Uomini Autori di Violenza Sondrio",
+  "comune": "Sondrio",
+  "provincia": "SO",
+  "regione": "Lombardia",
+  "lat": 46.1697,
+  "lng": 9.87,
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "SPAM (Supporto Psicologico Adulti Maltrattanti)",
+  "comune": "Biella",
+  "provincia": "BI",
+  "regione": "Piemonte",
+  "lat": 45.569949,
+  "lng": 8.068787,
+  "indirizzo": "Via Milano 36, Biella",
+  "contatti": "342 0955211",
+  "email": "spam.associazionepaviol@gmail.com",
+  "fonte": "Elenco CUAV del Ministero della Giustizia, aggiornato al 24/09/2026; contatti dalla Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Associazione Forum Lou Salome",
+  "comune": "Milano",
+  "provincia": "MI",
+  "regione": "Lombardia",
+  "lat": 45.451895,
+  "lng": 9.18703,
+  "indirizzo": "Piazzale di Porta Lodovica 3, Milano",
+  "contatti": "02 8716 8243",
+  "email": "info@nonpiuviolenti.it",
+  "fonte": "Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "C.I.P.M. Milano",
+  "comune": "Milano",
+  "provincia": "MI",
+  "regione": "Lombardia",
+  "lat": 45.4669,
+  "lng": 9.19,
+  "indirizzo": "Via Correggio, 1",
+  "contatti": "335360258",
+  "email": "info@cipm.it",
+  "fonte": "Rete nazionale Relive (associazionerelive.it)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Gruppo R",
+  "comune": "Padova",
+  "provincia": "PD",
+  "regione": "Veneto",
+  "lat": 45.439281,
+  "lng": 11.870525,
+  "indirizzo": "Via Sacro Cuore 5, Padova",
+  "contatti": "349 7611326",
+  "email": "consulenza.uomini@gruppopolis.it",
+  "fonte": "Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "La Svolta",
+  "comune": "Bergamo",
+  "provincia": "BG",
+  "regione": "Lombardia",
+  "lat": 45.672356,
+  "lng": 9.659599,
+  "indirizzo": "Via Carlo Alberto 23, Bergamo",
+  "contatti": "3913889213",
+  "email": "info@lasvolta.org",
+  "fonte": "Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Cooperativa Sociale Dorian Gray",
+  "comune": "Varese",
+  "provincia": "VA",
+  "regione": "Lombardia",
+  "lat": 45.814281,
+  "lng": 8.831567,
+  "indirizzo": "Via Piave, 12, 21100",
+  "contatti": "+39 342 197 4278",
+  "email": "cuav.varese@doriangrayonlus.com",
+  "fonte": "Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Associazione Confine",
+  "comune": "San Marino",
+  "provincia": "RSM",
+  "regione": "San Marino",
+  "lat": 43.9356,
+  "lng": 12.4473,
+  "indirizzo": "Via Adone 41, 47891 San Marino",
+  "contatti": "329 3515432",
+  "email": "ass.confine@gmail.com",
+  "fonte": "Rete nazionale Relive (associazionerelive.it)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Centro P.R.A.V.",
+  "comune": "Arezzo",
+  "provincia": "AR",
+  "regione": "Toscana",
+  "lat": 43.461205,
+  "lng": 11.879981,
+  "indirizzo": "Via Margaritone, 13",
+  "contatti": "353 4171454",
+  "email": "prav.cif.arezzo@gmail.com",
+  "fonte": "Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Centro Calabrese di Solidarietà - Settore Prevenzione",
+  "comune": "Catanzaro",
+  "provincia": "CZ",
+  "regione": "Calabria",
+  "lat": 38.911719,
+  "lng": 16.585888,
+  "indirizzo": "Via Fontana Vecchia, 73",
+  "contatti": "0961 557270",
+  "email": "prevenzione@ccscatanzaro.it",
+  "fonte": "Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Centro di mediazione sociale e penale - Cooperativa Accoglienza Vincenziana Napoli",
+  "comune": "Napoli",
+  "provincia": "NA",
+  "regione": "Campania",
+  "lat": 40.834426,
+  "lng": 14.2257,
+  "indirizzo": "Via Andrea D'Isernia, 11, 80122 Napoli NA",
+  "contatti": "327 9035599",
+  "email": "centromediazionesocialepenale@gmail.com",
+  "fonte": "Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Cooperativa sociale Nuova generazione",
+  "comune": "Palermo",
+  "provincia": "PA",
+  "regione": "Sicilia",
+  "lat": 38.1157,
+  "lng": 13.3613,
+  "indirizzo": "Via Agrigento n. 32",
+  "contatti": "0918147520",
+  "email": "centro.ascolto.uomini@gmail.com",
+  "fonte": "Rete nazionale Relive (associazionerelive.it)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Cooperativa sociale Nuova generazione",
+  "comune": "Palermo",
+  "provincia": "PA",
+  "regione": "Sicilia",
+  "lat": 38.1157,
+  "lng": 13.3613,
+  "indirizzo": "Via Agrigento 32, Palermo",
+  "contatti": "339 68 86 033",
+  "email": "nuovagen@libero.it",
+  "fonte": "Rete nazionale Relive (associazionerelive.it)",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "autori"
+  ],
+  "nome": "Un Nuovo Giorno ODV",
+  "comune": "Palermo",
+  "provincia": "PA",
+  "regione": "Sicilia",
+  "lat": 38.187211,
+  "lng": 13.295734,
+  "indirizzo": "Via Calcante, 9, 90147 Palermo PA",
+  "contatti": "375 7381570",
+  "email": "info@unnuovogiorno.it",
+  "fonte": "Rete nazionale Relive (associazionerelive.it)",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Liberi di Esserci",
+  "comune": "Agrigento",
+  "provincia": "AG",
+  "regione": "Sicilia",
+  "lat": 37.3107,
+  "lng": 13.5766,
+  "contatti": "092 2590292",
+  "note": "Servizi: Formazione professionale, Corsi di recupero e sostegno agli studi, Attività di integrazione (per persone migranti e rifugiati), Sportello legale, Consulenza in ambito sanitario, Sportello psicologico, Test IST, Orientamento al lavoro. Comune di Agrigento",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Sportello Regionale Arcobaleno Albano Laziale",
+  "comune": "Albano Laziale",
+  "provincia": "RM",
+  "regione": "Lazio",
+  "lat": 41.7333,
+  "lng": 12.6667,
+  "indirizzo": "Via Castro Partico, 3, Albano Laziale",
+  "email": "castelliromani@arcigay.it",
+  "sito": "https://lazio.lgbt/albano-laziale/",
+  "orari": "Tramite appuntamento.",
+  "note": "Servizi: Ascolto con colloqui telefonici, Ascolto con colloqui in modalità online, Ascolto in modalità fisica, Gruppi di auto mutuo aiuto in base all’esigenza di discriminazione, Protezione e accoglienza per le vittime di discriminazione LGBT, Supporto psicologico, Attività di mediazione sociale, lavorativa, familiare, scolastica, Assistenza legale sia in sede civile che penale, Orientamento al lavoro con previsione di corsi di in/formazione, consulenza e inserimento lavorativo, Orientamento all’autonomia abitativa, Consulenze mediche e possibilità di effettuare il test HIV, Sportello relativo ai migranti LGBT vittime di discriminazione nei Paesi di provenienza, Sportello relativo al supporto specifico per le persone trans Arcigay Castelli Romani",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Centre nous - Centro antidiscriminazioni Valle d’Aosta",
+  "comune": "Aosta",
+  "provincia": "AO",
+  "regione": "Valle d'Aosta/Vallée d'Aoste",
+  "lat": 45.741128,
+  "lng": 7.346749,
+  "indirizzo": "Via Croix Noire, 38, 11100 Aosta",
+  "contatti": "+393762793413",
+  "email": "info@centrenous.it",
+  "sito": "https://centrenous.it/",
+  "orari": "Sportello accoglienza LUN 16-18 MAR 10-12 MER Chiuso GIO 12-14 VEN 16-18 SAB 10-12 DOM Chiuso",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Centro LGBTI+ dell'Irpinia \"Carmela de Prisco\"",
+  "comune": "Atripalda",
+  "provincia": "AV",
+  "regione": "Campania",
+  "lat": 40.9167,
+  "lng": 14.8256,
+  "indirizzo": "Comune di Atripalda, Piazza Municipio, Atripalda",
+  "contatti": "0825 173 6010",
+  "email": "irpinia@centrolgbt.it",
+  "sito": "https://caserta.centro.lgbt/irpinia/",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Progetto Malika",
+  "comune": "Avellino",
+  "provincia": "AV",
+  "regione": "Campania",
+  "lat": 40.9153,
+  "lng": 14.7897,
+  "contatti": "0825 200567",
+  "email": "centromalika@comune.avellino.it",
+  "note": "Servizi: Consulenza giuridica, psicologica e lavorativa, formazione degli operatori di progetto accoglienza e primo ascolto. Comune di Avellino",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Centro ANTI Discriminazione MO.N.DI",
+  "comune": "Bari",
+  "provincia": "BA",
+  "regione": "Puglia",
+  "lat": 41.1253,
+  "lng": 16.8667,
+  "contatti": "320 115 2749",
+  "sito": "https://www.cadmondi.com/",
+  "note": "Servizi: Bari, Conversano, Taranto, Massafra, Lizzano Formazione professionale, Sportello legale, Sportello psicologico, Orientamento al lavoro. Comune di Noci",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Centro Contro le Discriminazioni Motivate da Orientamento Sessuale e Identità di Genere del Comune di BARI",
+  "comune": "Bari",
+  "provincia": "BA",
+  "regione": "Puglia",
+  "lat": 41.1253,
+  "lng": 16.8667,
+  "contatti": "3288212906",
+  "sito": "https://www.facebook.com/profile.php?id=100085538483379&sk=about&locale=it_IT",
+  "note": "Servizi: Formazione professionale, Sportello legale, Consulenza in ambito sanitario, Sportello psicologico, Orientamento al lavoro, Gruppi di mutuo aiuto, Ascolto telefonico e pronto intervento in emergenza H24, inserimento in strutture di accoglienza, attivazione misure di autonomia socioeconomica e abitativa, sensibilizzazione, informazione, prevenzione e formazione Comune di Bari – Ente gestore Cooperativa Sociale Medihospes",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "SOS Iride",
+  "comune": "Bergamo",
+  "provincia": "BG",
+  "regione": "Lombardia",
+  "lat": 45.691477,
+  "lng": 9.669045,
+  "indirizzo": "Via del Nastro Azzurro, 1a, Bergamo",
+  "contatti": "333 1278436",
+  "email": "info@sosiride.org",
+  "sito": "https://www.sosiride.org",
+  "note": "Servizi: Sportello legale, Consulenza in ambito sanitario, Sportello psicologico, Test IST, Orientamento al lavoro, consulenze per ricerca casa, attività di sensibilizzazione e informazione anche nelle scuole.",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Spazio Cassero",
+  "comune": "Bologna",
+  "provincia": "BO",
+  "regione": "Emilia-Romagna",
+  "lat": 44.502888,
+  "lng": 11.335069,
+  "indirizzo": "Via Don Giovanni Minzoni, 18, Bologna",
+  "contatti": "3880925933",
+  "email": "spaziocassero@cassero.it",
+  "sito": "https://www.cassero.it",
+  "orari": "Lunedì 15.00-18:00 Martedì e Mercoledì 9:30-13:30 Giovedì 15:00-18:00 Venerdì 9:30-13:30",
+  "note": "Servizi: Telefono amico, Sportello legale, Sportello psicologico, Assistenza sociale, Spazio di aggregazione per persone con disabilità Cassero LGBT",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "STAR",
+  "comune": "Bologna",
+  "provincia": "BO",
+  "regione": "Emilia-Romagna",
+  "lat": 44.4939,
+  "lng": 11.3428,
+  "contatti": "+39 051 271666",
+  "email": "info@mit-italia.it",
+  "sito": "https://mit-italia.it",
+  "note": "Servizi: Posti letto, Corsi di recupero e sostegno agli studi, Attività di integrazione (per persone migranti e rifugiati), Sportello legale, Consulenza in ambito sanitario, Sportello psicologico, Test IST, Orientamento al lavoro. MIT",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Centro Aristofane",
+  "comune": "Brescia",
+  "provincia": "BS",
+  "regione": "Lombardia",
+  "lat": 45.533853,
+  "lng": 10.219594,
+  "indirizzo": "Via Vittorio Emanuele II, n.72, Brescia",
+  "contatti": "378 3037939",
+  "email": "centroaristofane@gmail.com",
+  "sito": "https://www.adl-zavidovici.eu/progetti/centro-aristofane/",
+  "note": "Servizi: Servizi Erogati: Attività di integrazione (per persone migranti e rifugiati), Sportello legale, Sportello psicologico e counseling, Orientamento al lavoro Organizzazione responsabile: Associazione ADL a Zavidovici (capofila), Ass. Arcigay Orlando Brescia, Cooperativa Butterfly",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "CI Siamo!",
+  "comune": "Cagliari",
+  "provincia": "CA",
+  "regione": "Sardegna",
+  "lat": 39.226833,
+  "lng": 9.10276,
+  "indirizzo": "Via Falzarego, 35, Cagliari",
+  "email": "info@associazionearc.eu",
+  "sito": "https://www.associazionearc.eu/",
+  "note": "Servizi: Sportello legale, Sportello psicologico, Orientamento al lavoro. ARC Associazione Culturale e di Volontartiato LGBTQIA+ OdV",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "CAD Caivano",
+  "comune": "Caivano",
+  "provincia": "NA",
+  "regione": "Campania",
+  "lat": 40.95,
+  "lng": 14.3,
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Molise LGBT – Centro contro le Discriminazioni",
+  "comune": "Campobasso",
+  "provincia": "CB",
+  "regione": "Molise",
+  "lat": 41.563753,
+  "lng": 14.65758,
+  "indirizzo": "Viale del Castello, 68, Campobasso",
+  "contatti": "3347073204",
+  "email": "centrolgbt@molise.arcigay.it",
+  "sito": "https://molise.lgbt/cosa-facciamo/",
+  "note": "Servizi: Offre aiuto e supporto in caso di discriminazione. I servizi di consulenza offerti sono: – orientamento e mediazione – consulenza psicologica gratuita rivolta sia a persone LGBT+ che a familiari o amici – consulenza legale gratuita per casi di discriminazione e di violenza omo-transfobica – consulenza medica gratuita, in particolare per malattie sessualmente trasmissibili e HIV – supporto educativo antiomofobia e mediazione nel contesto scolastico – mediazione sociale, familiare e lavorativa – protezione per casi di omofobia familiare con reindirizzo presso altre strutture di accoglienza – informazioni su percorso di transizione e rettifica documenti per persone trans – confronto e orientamento online, via web, sms o chat – confronto e socializzazione in gruppi di aggregazione per persone LGBT+",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Centro Lgbt+ di Caserta",
+  "comune": "Caserta",
+  "provincia": "CE",
+  "regione": "Campania",
+  "lat": 41.070342,
+  "lng": 14.3495,
+  "indirizzo": "Via San Gennaro, 6, Caserta",
+  "contatti": "800 990 678",
+  "email": "caserta@centrolgbt.it",
+  "sito": "https://caserta.centro.lgbt/",
+  "orari": "Dal martedì al venerdì dalle 9 alle 19 Su appuntamento gli altri giorni",
+  "note": "Servizi: Formazione professionale, Attività di integrazione (per persone migranti e rifugiati), Sportello legale, Consulenza in ambito sanitario, Sportello psicologico, Test IST, Orientamento al lavoro, Assistenza fiscale tipo caf / network, RAIN ARCIGAY CASERTA ODV",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Sabir",
+  "comune": "Crotone",
+  "provincia": "KR",
+  "regione": "Calabria",
+  "lat": 39.083446,
+  "lng": 17.108228,
+  "indirizzo": "Viale Stazione, 16, 88900 Crotone",
+  "email": "info@associazionesabir.it",
+  "sito": "https://www.associazionesabir.org/",
+  "orari": "Lun-Gio 09:00 - 18:30 / Ven 09:00- 13:00",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Rainbow HUB",
+  "comune": "Fano",
+  "provincia": "PU",
+  "regione": "Marche",
+  "lat": 43.843069,
+  "lng": 13.015936,
+  "indirizzo": "Via Montevecchio, 46, Fano",
+  "contatti": "3666714881",
+  "sito": "https://www.facebook.com/rainbowhubmarche",
+  "orari": "Lunedì 9-12 Martedì 9-12/ 15-18 (a settimane alterne) Mercoledì / Giovedì / Venerdì 15-18",
+  "note": "Servizi: Attività di integrazione (per persone migranti e rifugiati), Sportello legale, Consulenza in ambito sanitario, Sportello psicologico, Orientamento al lavoro. COOSS MARCHE ONLUS SCPA",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "CAD Ferrara LGBTQIA+",
+  "comune": "Ferrara",
+  "provincia": "FE",
+  "regione": "Emilia-Romagna",
+  "lat": 44.833851,
+  "lng": 11.617089,
+  "indirizzo": "Via Ripagrande, 12, Ferrara",
+  "contatti": "3498739925",
+  "email": "cad@ferrara.arcigay.it",
+  "orari": "Lunedì: 17 – 20 Martedì e Giovedì: 15 – 18 Venerdì: 10 – 13",
+  "note": "Servizi: In partenariato con il Centro Donna Giustizia e il Centro Ascolto Uomini Maltrattanti: uno spazio sicuro, gratuito e accogliente per chi vive discriminazioni, violenza, bullismo o è in una condizione di fragilità motivata da orientamento sessuale e/o identità di genere Troverai una equipe multiprofessionale per: Ascolto e supporto emotivo Supporto legale Sostegno psicologico Orientamento al lavoro Orientamento ai servizi socio sanitari e all'autonoma abitativa Gruppi di auto mutuo aiuto Supporto legale e sociale dedicato alle persone migranti LGBTQIA+ Sportello specializzato, in collaborazione con il CAM, per uomini vittime di violenza e abusi in contesti affettivo-relazionali con persone dello stesso sesso e/o genere ‍Collaborazione con il centro antiviolenza CDG, per il supporto di donne LBT+ che subiscono violenza in contesti affettivo relazionali. L’accesso agli sportelli è libero, non c'è bisogno di un appuntamento e viene garantito l’anonimato.",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "CAD Altre Sponde",
+  "comune": "Firenze",
+  "provincia": "FI",
+  "regione": "Toscana",
+  "lat": 43.780493,
+  "lng": 11.238909,
+  "indirizzo": "Via delle Porte Nuove, 33, Firenze",
+  "contatti": "3275619373",
+  "email": "info@altresponde.it",
+  "sito": "https://www.altresponde.it",
+  "orari": "Dal Lunedì al Venerdì dalle 17:00 alle 19:00 - Chiuso sabato e domenica",
+  "note": "Servizi: CAD Altre Sponde - C/O Circolo Arci Porta al Prato - Primo Piano - Via delle Porte Nuove 33 – Firenze",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Centro A.R.I.A (Antidiscriminazione, Rete, In-formazione, Ascolto)",
+  "comune": "Foggia",
+  "provincia": "FG",
+  "regione": "Puglia",
+  "lat": 41.456972,
+  "lng": 15.553421,
+  "indirizzo": "Via Carlo Ciampitti, 42, 71121 Foggia",
+  "contatti": "351 1978942",
+  "email": "centroaria2023@gmail.com",
+  "orari": "Lun-mer 09.00-11.00 Mar-gio 17.30-19.30 Ven 16.30-18.30",
+  "note": "Servizi: Sportello accoglienza Sportello psicologico Consulenza specialistica e assistenza legale Orientamento al lavoro e all’autonomia abitativa Orientamento ai servizi socio sanitari Ascolto e counselling",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Sportello Regionale Arcobaleno Frosinone",
+  "comune": "Frosinone",
+  "provincia": "FR",
+  "regione": "Lazio",
+  "lat": 41.6333,
+  "lng": 13.35,
+  "indirizzo": "Piazza Quaranta Martiri di Vallerotonda, 1, Frosinone",
+  "email": "frosinone@arcigay.it",
+  "sito": "https://lazio.lgbt/frosinone/",
+  "note": "Servizi: Ascolto con colloqui telefonici, Ascolto con colloqui in modalità online, Ascolto in modalità fisica, Gruppi di auto mutuo aiuto in base all’esigenza di discriminazione, Protezione e accoglienza per le vittime di discriminazione LGBT, Supporto psicologico, Attività di mediazione sociale, lavorativa, familiare, scolastica, Assistenza legale sia in sede civile che penale, Orientamento al lavoro con previsione di corsi di in/formazione, consulenza e inserimento lavorativo, Orientamento all’autonomia abitativa, Consulenze mediche e possibilità di effettuare il test HIV, Sportello relativo ai migranti LGBT vittime di discriminazione nei Paesi di provenienza, Sportello relativo al supporto specifico per le persone trans Arcigay Frosinone",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Arcigay Genova Arcigay Genova – Approdo Lilia Mulas APS",
+  "comune": "Genova",
+  "provincia": "GE",
+  "regione": "Liguria",
+  "lat": 44.4072,
+  "lng": 8.9339,
+  "contatti": "3512275029",
+  "email": "sportello@arcigaygenova.it",
+  "sito": "https://www.arcigaygenova.it/servizi/approdo-sicuro/",
+  "note": "Servizi: Corsi di recupero e sostegno agli studi, Attività di integrazione (per persone migranti e rifugiati), Sportello legale, Consulenza in ambito sanitario, Sportello psicologico, Test IST, Orientamento al lavoro. Arcigay Genova aps",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Molise LGBT – Centro contro le Discriminazioni",
+  "comune": "Isernia",
+  "provincia": "IS",
+  "regione": "Molise",
+  "lat": 41.601027,
+  "lng": 14.243841,
+  "indirizzo": "Viale dei Pentri, 159, Isernia",
+  "contatti": "3347073204",
+  "email": "centrolgbt@molise.arcigay.it",
+  "sito": "https://molise.lgbt/cosa-facciamo/",
+  "note": "Servizi: Offre aiuto e supporto in caso di discriminazione. I servizi di consulenza offerti sono: – orientamento e mediazione – consulenza psicologica gratuita rivolta sia a persone LGBT+ che a familiari o amici – consulenza legale gratuita per casi di discriminazione e di violenza omo-transfobica – consulenza medica gratuita, in particolare per malattie sessualmente trasmissibili e HIV – supporto educativo antiomofobia e mediazione nel contesto scolastico – mediazione sociale, familiare e lavorativa – protezione per casi di omofobia familiare con reindirizzo presso altre strutture di accoglienza – informazioni su percorso di transizione e rettifica documenti per persone trans – confronto e orientamento online, via web, sms o chat – confronto e socializzazione in gruppi di aggregazione per persone LGBT+",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Sportello Regionale Arcobaleno Latina",
+  "comune": "Latina",
+  "provincia": "LT",
+  "regione": "Lazio",
+  "lat": 41.469952,
+  "lng": 12.901286,
+  "indirizzo": "Via Aurelio Saffi, 42/44, Latina",
+  "email": "sportello@latina.arcigay.it",
+  "sito": "https://lazio.lgbt/latina/",
+  "orari": "Lunedì 16:00 - 19:00 Mercoledì 16:00 - 19:00 Venerdì 16:00 - 19:00",
+  "note": "Servizi: Ascolto con colloqui telefonici, Ascolto con colloqui in modalità online, Ascolto in modalità fisica, Gruppi di auto mutuo aiuto in base all’esigenza di discriminazione, Protezione e accoglienza per le vittime di discriminazione LGBT, Supporto psicologico, Attività di mediazione sociale, lavorativa, familiare, scolastica, Assistenza legale sia in sede civile che penale, Orientamento al lavoro con previsione di corsi di in/formazione, consulenza e inserimento lavorativo, Orientamento all’autonomia abitativa, Consulenze mediche e possibilità di effettuare il test HIV, Sportello relativo ai migranti LGBT vittime di discriminazione nei Paesi di provenienza, Sportello relativo al supporto specifico per le persone trans Arcigay Latina",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "CAD L'Amara",
+  "comune": "Lecce",
+  "provincia": "LE",
+  "regione": "Puglia",
+  "lat": 40.352,
+  "lng": 18.1691,
+  "indirizzo": "Corte dei Chiaramonte, 2, Lecce",
+  "contatti": "379 1625246",
+  "email": "cad.lamara.lecce@gmail.com",
+  "orari": "Lunedì - Venerdì 9 - 13 / 15 - 19",
+  "note": "Servizi: Supporto psicologico, legale, socio-sanitario, servizi di orientamento al lavoro e incontri di formazione e sensibilizzazione. Ogni servizio è erogato da professionistə formatə e attentə ai temi della discriminazione e dei diritti della comunità LGBTQIA+",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "L’approdo",
+  "comune": "Livorno",
+  "provincia": "LI",
+  "regione": "Toscana",
+  "lat": 43.53277,
+  "lng": 10.316981,
+  "indirizzo": "Via Caduti del Lavoro, 26, Livorno",
+  "contatti": "380 5963102",
+  "email": "approdolgbtq@gmail.com",
+  "sito": "https://linktr.ee/approdolgbtq",
+  "orari": "Da lunedì a venerdì dalle 15:00 alle 19:00.",
+  "note": "Servizi: Psicologi/ghe, avvocata civilista, assistente sociale, educatore professionale, pediatra, medico, avvocata penalista e altri/e specialisti/e esterni/e tra cui esperta/o di risorse umane per inserimenti lavorativi, esperto/a sul tema dell'identità di genere per consulenza a persone trans*, non binarie ed intersex. Comune di Livorno con Arcigay Livorno e Agedo Livorno",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "CAD Mantova",
+  "comune": "Mantova",
+  "provincia": "MN",
+  "regione": "Lombardia",
+  "lat": 45.1564,
+  "lng": 10.7911,
+  "email": "cad@mantova.arcigay.it",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "CASA Arcobaleno",
+  "comune": "Milano",
+  "provincia": "MI",
+  "regione": "Lombardia",
+  "lat": 45.440171,
+  "lng": 9.146076,
+  "indirizzo": "Via Francesco Olgiati, 26, 20143 Milano",
+  "contatti": "347 7857248",
+  "email": "casa.arcobaleno@spazioapertoservizi.org",
+  "sito": "https://www.spazioapertoservizi.org/casarcobaleno/",
+  "note": "Servizi: Posti letto, Formazione professionale, Corsi di recupero e sostegno agli studi, Sportello legale, Consulenza in ambito sanitario, Sportello psicologico, Test IST, Orientamento al lavoro. Spazio Aperto Servizi",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "LILA Milano",
+  "comune": "Milano",
+  "provincia": "MI",
+  "regione": "Lombardia",
+  "lat": 45.4669,
+  "lng": 9.19,
+  "indirizzo": "LILA Milano ONLUS, Via Carlo Maderno, 4, 20136 Milano",
+  "contatti": "02 89400887",
+  "email": "lilamilano@lilamilano.it",
+  "sito": "https://www.lilamilano.it/",
+  "note": "Servizi: Formazione professionale, Attività di integrazione (per persone migranti e rifugiati), Sportello legale, Consulenza in ambito sanitario, Sportello psicologico, Test IST, Orientamento al lavoro. LILA Milano ONLUS insieme a Fondazione Somaschi",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "CIG Arcigay Milano",
+  "comune": "Milano",
+  "provincia": "MI",
+  "regione": "Lombardia",
+  "lat": 45.461049,
+  "lng": 9.210027,
+  "indirizzo": "Via Bezzecca, 3, 20135 Milano",
+  "contatti": "+39 0254122225",
+  "email": "segreteria@arcigaymilano.org",
+  "sito": "https://www.arcigaymilano.org",
+  "note": "Servizi: Formazione professionale, Corsi di recupero e sostegno agli studi, Attività di integrazione (per persone migranti e rifugiati), Sportello legale, Consulenza in ambito sanitario, Sportello psicologico, Test IST, helpline. ARCIGAY MILANO",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Sportello Trans",
+  "comune": "Milano",
+  "provincia": "MI",
+  "regione": "Lombardia",
+  "lat": 45.426225,
+  "lng": 9.175831,
+  "indirizzo": "Via Pietro Boifava, 60A, 20142 Milano",
+  "contatti": "02 89516464",
+  "email": "sportellotrans@alamilano.org",
+  "sito": "https://sportellotrans.alamilano.org/",
+  "orari": "Su appuntamento",
+  "note": "Servizi: Formazione professionale, Corsi di recupero e sostegno agli studi, Attività di integrazione (per persone migranti e rifugiati), Sportello legale, Consulenza in ambito sanitario, Sportello psicologico, Test IST, Orientamento al lavoro, gruppi di mutuo aiuto. ALA Milano ONLUS",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Inclushome",
+  "comune": "Modena",
+  "provincia": "MO",
+  "regione": "Emilia-Romagna",
+  "lat": 44.660677,
+  "lng": 10.916018,
+  "indirizzo": "Via del Tirassegno, 40b, Modena",
+  "contatti": "059366310",
+  "email": "info@caleidos.mo.it",
+  "sito": "https://www.caleidos.mo.it",
+  "note": "Servizi: Posti letto, Formazione professionale, Attività di integrazione (per persone migranti e rifugiati), Sportello legale, Sportello psicologico, Test IST, Orientamento al lavoro, corsi di alfabetizzazione, contributi (per vitto, vestiario, spese sanitarie. Caleidos Coop. Sociale in ATI con Arcigay Modena",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "CASA delle Culture e Dell’accoglienza delle Persone Lgbtqi+ di Napoli",
+  "comune": "Napoli",
+  "provincia": "NA",
+  "regione": "Campania",
+  "lat": 40.8358,
+  "lng": 14.2486,
+  "contatti": "081 1875 7513",
+  "email": "info@casalgbtqi.it",
+  "sito": "https://www.casalgbtqi.it",
+  "note": "Servizi: Posti letto, Formazione professionale, Corsi di recupero e sostegno agli studi, Attività di integrazione (per persone migranti e rifugiati), Sportello legale, Consulenza in ambito sanitario, Sportello psicologico, Test IST, supporto all’autonomia abitativa , orientamento a lavoro. Antinoo Arcigay Napoli",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Questa CASA Non È Un Albergo",
+  "comune": "Napoli",
+  "provincia": "NA",
+  "regione": "Campania",
+  "lat": 40.8358,
+  "lng": 14.2486,
+  "indirizzo": "San Carlo all'Arena, Napoli",
+  "contatti": "393 8013868",
+  "sito": "https://www.i-ken.org/",
+  "note": "Servizi: Posti letto, Formazione professionale, Attività di integrazione (per persone migranti e rifugiati), Sportello legale, Consulenza in ambito sanitario, Sportello psicologico, servizio civile universale, attività cinematografica. I KEN ONLUS",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Centro Spolato",
+  "comune": "Padova",
+  "provincia": "PD",
+  "regione": "Veneto",
+  "lat": 45.402464,
+  "lng": 11.912621,
+  "indirizzo": "Via Giovanni Boccaccio, 80, Padova",
+  "contatti": "0498205060",
+  "email": "info@centrospolato.it",
+  "sito": "https://www.centrospolato.it",
+  "orari": "Lun - Merc - Ven : ore 14.00 - 18.00; Mart - Sab : ore 10.00 - 14.00; Giov: Chiuso",
+  "note": "Servizi: Il Centro garantisce i seguenti servizi di base: - sportello di accoglienza e ascolto, in presenza o da remoto - servizi di supporto psicologico - consulenza legale - orientamento alla formazione e alla ricerca lavoro - orientamento all’autonomia abitativa In aggiunta, il Centro prevede ulteriori servizi quali: - gruppi di auto-mutuo-aiuto rivolti a persone trans* - accompagnamento ad uscite con unità di strada per contattare le persone sex-worker - gruppo di supporto a persone sieropositive - sportello di supporto socio-legale rivolto a persone migranti - incontri sociali interculturali - attività di formazione esterna rivolta a realtà del territorio I servizi sono erogati attraverso la collaborazione di varie realtà associative coinvolte, e con l’attivazione delle specifche convenzioni e partenariati. I servizi sono a titolo gratuito per l’utente. - Sportello di accoglienza e ascolto Comune di padova",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Protego",
+  "comune": "Palermo",
+  "provincia": "PA",
+  "regione": "Sicilia",
+  "lat": 38.118101,
+  "lng": 13.338516,
+  "indirizzo": "Via Paolo Gili, 4, Palermo",
+  "contatti": "375 5190167",
+  "email": "protego.arcigaypalermo@gmail.com",
+  "sito": "https://www.arcigay.it/articoli/centro-antidiscriminazioni-protego/",
+  "orari": "Lunedì e il mercoledì dalle 15:00 alle 19:00 e il martedì, giovedì e venerdì dalle 9:00 alle 13:00.",
+  "note": "Servizi: Sportello accoglienza e ascolto, Supporto psicologico, Consulenza legale Consulenza di servizio sociale, Orientamento alla formazione e alla ricerca lavoro Sportello salute e screening per le IST, Supporto socio-legale per persone migranti LGBQIA+, Mediazione familiare. Il primo e il terzo mercoledì del mese, inoltre, il servizio è aperto anche a Trapani, presso Solidalia, in piazzale Falcone e Borsellino, 32. Arcigay Palermo",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Centro Antidiscriminazione LGBTQIA+ \"Un Arcobaleno per Parma\"",
+  "comune": "Parma",
+  "provincia": "PR",
+  "regione": "Emilia-Romagna",
+  "lat": 44.793892,
+  "lng": 10.342097,
+  "indirizzo": "Via Primo Bandini, 6, 43123 Parma",
+  "contatti": "+39 334 286 29 29",
+  "email": "arcobalenoparma@gmail.com",
+  "orari": "numero telefono (help line h24): +39 334 286 29 29",
+  "note": "Servizi: Servizi offerti: help line h24, supporto psicologico, consulenza legale, gruppo di supporto, sportello informativo, formazioni, laboratorio teatrale, orientamento autonomia lavorativa, disponibilità di mediatori culturali e linguistici per accoglienza migranti/richiedenti asilo",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Todes! – Territorio, Opportunità, Diritti, Eguaglianza, Solidarietà",
+  "comune": "Pavia",
+  "provincia": "PV",
+  "regione": "Lombardia",
+  "lat": 45.182501,
+  "lng": 9.158038,
+  "indirizzo": "Corso Giuseppe Garibaldi, 20n, 27100 Pavia",
+  "contatti": "+39 391 168 9410",
+  "email": "info@coming-aut.it",
+  "sito": "https://www.coming-aut.it",
+  "note": "Servizi: Formazione professionale, Attività di integrazione (per persone migranti e rifugiati), Sportello legale, Consulenza in ambito sanitario, Sportello psicologico, Test IST, Orientamento al lavoro, sportello trans, sportello genitori, gruppi AMA. Coming-Aut LGBTI+ Community Center",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Omphalos Lgbti",
+  "comune": "Perugia",
+  "provincia": "PG",
+  "regione": "Umbria",
+  "lat": 43.096725,
+  "lng": 12.394523,
+  "indirizzo": "Via della Pallotta, 42, Perugia",
+  "contatti": "075 5094387",
+  "email": "help@omphalospg.it",
+  "sito": "https://help.omphalospg.it",
+  "orari": "Da lunedì a venerdì dalle 15:00 alle 19:00.",
+  "note": "Servizi: Formazione professionale, Attività di integrazione (per persone migranti e rifugiati), Sportello legale, Consulenza in ambito sanitario, Sportello psicologico, Test IST, Orientamento al lavoro, orientamento nel percorso di rassegnazione di genere (nei settori giuridici/burocratici) ; sportello dedicato alle donne vittime di violenza da parte di donne. OMPHALOS APS",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "CAD Pomigliano",
+  "comune": "Pomigliano d'Arco",
+  "provincia": "NA",
+  "regione": "Campania",
+  "lat": 40.90536,
+  "lng": 14.393982,
+  "indirizzo": "Via Trieste, 117, Pomigliano d'Arco, Napoli",
+  "contatti": "324.83.73.348",
+  "email": "info@cadpomigliano.it",
+  "sito": "https://www.cadpomigliano.it",
+  "orari": "MAR 09:00 – 14:00 MER 13:30 – 18:30 GIO 09:00 – 14:00",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "CARE",
+  "comune": "Pisa",
+  "provincia": "PI",
+  "regione": "Toscana",
+  "lat": 43.716684,
+  "lng": 10.392512,
+  "indirizzo": "Via Enrico Fermi, 27, Pisa",
+  "email": "care.lgbti@gmail.com",
+  "sito": "https://www.caretoscana.it/",
+  "note": "Servizi: Il progetto CARE è un Centro Antidiscriminazione, Rifugio, Empowerment per persone LGBTI+ vittime di omolesbobitransfobia che opera sul territorio dell’area costiera nord-ovest della Toscana (Pisa, Viareggio, Massa Carrara). Fanno parte di CARE Associazione Consultorio Transgenere di Torre del Lago, Pinkriot Arcigay Pisa, Cooperativa Sociale Arnera e Arci Lucca Versilia. Il CARE coordina in maniera sinergica una rete di associazioni e cooperative del territorio appartenenti al terzo settore per attuare azioni efficaci volte all’accoglienza e al supporto delle persone LGBTI+ che si trovano in una condizione di marginalità dovuta alla discriminazione fondata sulla base dell’orientamento sessuale, dell’identità di genere o delle caratteristiche sessuali.",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Artemide, Centro Servizi Lucano Lgbtqi+",
+  "comune": "Potenza",
+  "provincia": "PZ",
+  "regione": "Basilicata",
+  "lat": 40.6333,
+  "lng": 15.8,
+  "contatti": "345 4682486",
+  "sito": "https://www.facebook.com/ARTEMIDECentroservizilucanoLGBT",
+  "note": "Servizi: Formazione professionale, Corsi di recupero e sostegno agli studi, Attività di integrazione (per persone migranti e rifugiati), Sportello legale, Consulenza in ambito sanitario, Sportello psicologico, Orientamento al lavoro. Arcigay ArciGay Basilicata",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Progetto Lambda",
+  "comune": "Ragusa",
+  "provincia": "RG",
+  "regione": "Sicilia",
+  "lat": 36.925,
+  "lng": 14.7306,
+  "indirizzo": "Via Ing. Mario Spadola, 56, Ragusa",
+  "contatti": "0932 676474",
+  "sito": "https://progettolambda.it/",
+  "note": "Servizi: Formazione professionale, Corsi di recupero e sostegno agli studi, Attività di integrazione (per persone migranti e rifugiati), Sportello legale, Consulenza in ambito sanitario, Sportello psicologico, Orientamento al lavoro, ORIENTAMENTO ALLE FAMIGLIE / TUTELA ALLE PERSONE PERSEGUITATE DALLE FAMIGLIE. COMUNE DI RAGUSA ENTE CAPOFILA",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Centro Antidiscriminazioni Lgbti+",
+  "comune": "Ravenna",
+  "provincia": "RA",
+  "regione": "Emilia-Romagna",
+  "lat": 44.4161,
+  "lng": 12.2017,
+  "indirizzo": "Via Berlinguer 7, 48124 Ravenna RA",
+  "contatti": "0544 17 96 279",
+  "email": "sportello@antidiscriminazione.lgbt",
+  "sito": "https://antidiscriminazione.lgbt",
+  "orari": "Lunedì e Giovedì 17:00 – 19:00 Martedì, Mercoledì, Venerdì 09:00 – 11:00",
+  "note": "Servizi: Sportello legale, Sportello psicologico, Formazione su tematiche LGBTI+ Movimento Consumatori Ravenna APS",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Centro Antidiscriminazioni Lgbtqia+ Calabria",
+  "comune": "Reggio di Calabria",
+  "provincia": "RC",
+  "regione": "Calabria",
+  "lat": 38.1144,
+  "lng": 15.65,
+  "indirizzo": "Via E. Cuzzocrea, 11, Reggio Calabria",
+  "contatti": "327 4541465",
+  "email": "centroservizilgbtcalabria@gmail.com; reggiocalabria@arcigay.it",
+  "sito": "https://www.arcigay.it/articoli/centro-antidiscriminazione-lgbtqia-calabria/",
+  "note": "Servizi: Sportello Accoglienza, assistenza sociale, Supporto psicologico, Sportello legale, Sportello salute, Formazione continua per enti, professionisti/e, PA, volontari/e. Helpline TelofonoAmico [email protected] Arcigay Reggio Calabria",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "CASA Arcobaleno PIER Vittorio Tondelli",
+  "comune": "Reggio nell'Emilia",
+  "provincia": "RE",
+  "regione": "Emilia-Romagna",
+  "lat": 44.705055,
+  "lng": 10.625662,
+  "indirizzo": "Viale Regina Elena, 14, 42124 Reggio Emilia",
+  "contatti": "052 21607390",
+  "email": "info@arcigayreggioemilia.it",
+  "sito": "https://arcigayreggioemilia.it/casa-pier-vittorio-tondelli/",
+  "note": "Servizi: Posti letto, Formazione professionale, Attività di integrazione (per persone migranti e rifugiati), Sportello legale, Consulenza in ambito sanitario, Sportello psicologico, Test IST, Orientamento al lavoro, vito Arcigay Reggio Emilia “Gioconda”",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Sportello Regionale Arcobaleno",
+  "comune": "Rieti",
+  "provincia": "RI",
+  "regione": "Lazio",
+  "lat": 42.399402,
+  "lng": 12.854836,
+  "indirizzo": "Via dei Salici, 11, Rieti",
+  "contatti": "329 0715968",
+  "email": "rieti@arcigay.it",
+  "sito": "https://lazio.lgbt/rieti/",
+  "orari": "Ogni Giovedì su appuntamento",
+  "note": "Servizi: Ascolto con colloqui telefonici, Ascolto con colloqui in modalità online, Ascolto in modalità fisica, Gruppi di auto mutuo aiuto in base all’esigenza di discriminazione, Protezione e accoglienza per le vittime di discriminazione LGBT, Supporto psicologico, Attività di mediazione sociale, lavorativa, familiare, scolastica, Assistenza legale sia in sede civile che penale, Orientamento al lavoro con previsione di corsi di in/formazione, consulenza e inserimento lavorativo, Orientamento all’autonomia abitativa, Consulenze mediche e possibilità di effettuare il test HIV, Sportello relativo ai migranti LGBT vittime di discriminazione nei Paesi di provenienza, Sportello relativo al supporto specifico per le persone trans Arcigay Rieti",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "A CASA di Ornella",
+  "comune": "Roma",
+  "provincia": "RM",
+  "regione": "Lazio",
+  "lat": 41.8931,
+  "lng": 12.4828,
+  "contatti": "800713713",
+  "sito": "https://www.programmaintegra.it/wp/attivita/area-inclusione-sociale/a-casa-di-ornella/",
+  "note": "Servizi: Posti letto, Sportello legale, Sportello psicologico, Orientamento al lavoro, Accesso diretto ai servizi sociali. Municipio VII di Roma Capitale – Enti gestori Programma Integra e Gay Center",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "GAY HELP LINE - Speakly CHAT - Network Refuge Lgbt+",
+  "comune": "Roma",
+  "provincia": "RM",
+  "regione": "Lazio",
+  "lat": 41.875815,
+  "lng": 12.477107,
+  "indirizzo": "Via Nicola Zabaglia, 14, Roma",
+  "contatti": "800713713",
+  "email": "info@gayhelpline.it",
+  "sito": "https://gayhelpline.it",
+  "orari": "Lunedì al Sabato 16-20 Linea telefonica 24/7 Accoglienza Chat: Speakly.org (Lun - Ven - 16-20 )",
+  "note": "Servizi: CONTACT CENTER PER LGBT+ E CASE FAMIGLIA NETWORK REFUGE Gay Help Line è il contact center nazionale antiomobitransfobia per persone gay, lesbiche, bisex e trans gestito dal Gay Center. Fondato nel 2005, oltre a gestire casi di discriminazione, di violenze e di bullismo, rappresenta un punto di ascolto per chi è in difficoltà e fornisce ascolto, informazioni e supporto in forma riservata. Il servizio può essere contattato attraverso il numero verde 800713713 via web o Speakly chat. I servizi offrono: consulenza psicologica gratuita rivolta sia a persone LGBTI che a familiari o amici consulenza legale gratuita per casi di discriminazione e di violenza omo-transfobica consulenza medica gratuita, in particolare per malattie sessualmente trasmissibili e HIV supporto educativo antiomobitransfobia e mediazione nelle scuole; mediazione sociale, familiare e lavorativa protezione per casi di omofobia familiare con ospitalità e sostegno presso la casa famiglia Refuge lgbt. informazioni su percorso di transizione, e rettifica documenti per persone trans confronto e orientamento online, via web, sms o chat confronto e socializzazione in gruppi di aggregazione per persone lgbt+ Check point con Test IST orientamento al lavoro, formazione professionale, corsi di recupero e sostegno agli studi attività di integrazione e supporto per persone migranti e rifugiati Refuge LGBT, progetto di Gay Center, nato nel 2016, offre un servizio di prima ospitalità per le giovani vittime di omolesbobiatransfobia. Per accedere ai servizi di ospitalità basta contattare il numero verde Gay Help Line 800 713 713 o tramite la chat Speakly.org. La case sono gestite da personale qualificate, forniscono assistenza gratuita alle persone ospiti, integrando i servizi propri con quelli offerti dal territorio, istituisce convenzioni per facilitare il reinserimento professionale . Il Network Refuge offre alle persone ospiti: supporto psicologico, volto al superamento del disagio per un sereno reinserimento familiare e sociale supporto legale, a tutela dei diritti della persona ospite orientamento scolastico, per migliorare e supportare l’integrazione nel percorso scolastico e universitario orientamento professionale, per facilitare il percorso lavorativo o l’introduzione al mondo del lavoro mediazione con i servizi sociali, per facilitare l’utilizzo e l’accesso ai servizi sociali mediazione culturale, per supportare e migliorare l’inclusione nel contesto sociale mediazione familiare, volto alla possibilità di miglioramento dei rapporti familiari",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "nazionale": true,
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Sportello Arcobaleno Lazio sede di coordinamento centrale",
+  "comune": "Roma",
+  "provincia": "RM",
+  "regione": "Lazio",
+  "lat": 41.877037,
+  "lng": 12.474894,
+  "indirizzo": "Via Galvani, 51f, Roma",
+  "email": "roma@arcigay.it",
+  "sito": "https://lazio.lgbt",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Welcome4rainbow",
+  "comune": "Roma",
+  "provincia": "RM",
+  "regione": "Lazio",
+  "lat": 41.854375,
+  "lng": 12.475143,
+  "indirizzo": "Via Efeso, 2A, 00146 Roma",
+  "contatti": "800 110611",
+  "sito": "https://www.welcome4rainbow.org/",
+  "note": "Servizi: Attività di integrazione (per persone migranti e rifugiati), Sportello legale, Consulenza in ambito sanitario, Sportello psicologico, Test IST, Orientamento al lavoro, orientamento sociale, orientamento sociosanitario, servizi in LIS per persone sorde. Capoila: Circolo di Cultura Omosessuale “Mario Mieli”.Partner di progetto: Libellula APS, Cirses APS, Cora Roma Onlus, Rete Lenford, AVI onlus (partner di progetto).",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "CAD Salerno",
+  "comune": "Salerno",
+  "provincia": "SA",
+  "regione": "Campania",
+  "lat": 40.680714,
+  "lng": 14.759584,
+  "indirizzo": "Via Romualdo II Guarna, 2, 84121 Salerno",
+  "contatti": "800090530",
+  "email": "salernocad@gmail.com",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Pride Center – Centro Antidiscriminazione Lgbt+ del Vesuviano",
+  "comune": "San Giorgio a Cremano",
+  "provincia": "NA",
+  "regione": "Campania",
+  "lat": 40.8333,
+  "lng": 14.3333,
+  "contatti": "081 5654549",
+  "email": "pride.center@e-cremano.it",
+  "note": "Servizi: Sportello telefonico, Sportello legale, Sportello psicologico, gruppo di Auto-mutuo aiuto, Sportello Migranti, Orientamento al lavoro, Orientamento all’autornomia abitativa, laboratori e workshop di arte e sport Comune di San Giorgio A Cremano",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Centro ANTI Discriminazione",
+  "comune": "Sassari",
+  "provincia": "SS",
+  "regione": "Sardegna",
+  "lat": 40.7267,
+  "lng": 8.5592,
+  "indirizzo": "Via Rockfeller, 16c, Sassari",
+  "contatti": "079 219024",
+  "email": "info@movimentomosessualesardo.org",
+  "sito": "https://www.movimentomosessualesardo.org/",
+  "note": "Servizi: Formazione professionale, Corsi di recupero e sostegno agli studi, Attività di integrazione (per persone migranti e rifugiati), Sportello legale, Consulenza in ambito sanitario, Sportello psicologico, Test IST, Testata giornalistica bilingue “mosinforma.org” online. Movimento omosessuale Sardo",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Spazio Sicuro",
+  "comune": "Siena",
+  "provincia": "SI",
+  "regione": "Toscana",
+  "lat": 43.314345,
+  "lng": 11.337111,
+  "indirizzo": "La Corte dei Miracoli, Via Roma, Siena",
+  "contatti": "3450458870",
+  "email": "spaziosicuro@movimentopansessuale.it",
+  "sito": "https://www.facebook.com/m.pansessuale/posts/pfbid037CKTCX9tpy1Yi5N8NQDHqxtqDVvSwaGYhnscxkXq2R1Uh6uJoaYYvbqrdjuv7E5bl?locale=it_IT",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Centro ANTI Discriminazione MO.N.DI",
+  "comune": "Taranto",
+  "provincia": "TA",
+  "regione": "Puglia",
+  "lat": 40.458881,
+  "lng": 17.256023,
+  "indirizzo": "Corso Italia, 102, Taranto",
+  "contatti": "320 2164992",
+  "email": "info@cadmondi.com",
+  "note": "Servizi: Hermes Academy",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Centro Pride",
+  "comune": "Martinsicuro",
+  "provincia": "TE",
+  "regione": "Abruzzo",
+  "lat": 42.888277,
+  "lng": 13.909084,
+  "indirizzo": "Via Roma, 182, Martinsicuro",
+  "contatti": "366 7655842",
+  "email": "pride@ontheroad.coop",
+  "sito": "https://linktr.ee/centropride",
+  "orari": "Lunedì 13:00-15:00 Martedì 14:00 - 18:00 Mercoledì 10:00-14:00 Giovedì CHIUSO Venerdì 10:00-14:00",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Porto Sicuro",
+  "comune": "Torino",
+  "provincia": "TO",
+  "regione": "Piemonte",
+  "lat": 45.0792,
+  "lng": 7.6761,
+  "contatti": "331 4044495",
+  "email": "info@centroportosicuro.it",
+  "sito": "https://centroportosicuro.it",
+  "orari": "SERVIZIO TELEFONICO DI ASCOLTO Lunedì 14:30 - 16:30 Venerdì 15:00 - 17:00",
+  "note": "Servizi: Sportello telefonico, Accoglienza e Orientamento, Sportello lavoro, Sportello Casa, Sportello legale, Sportello Salute, Sportello famiglie Arcigay Torino",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Tohousing",
+  "comune": "Torino",
+  "provincia": "TO",
+  "regione": "Piemonte",
+  "lat": 45.0792,
+  "lng": 7.6761,
+  "email": "tohousing@quore.org",
+  "sito": "https://www.quore.org/to-housing-accoglienza-lgbtqi/",
+  "note": "Servizi: Posti letto, Formazione professionale, Corsi di recupero e sostegno agli studi, Attività di integrazione (per persone migranti e rifugiati), Sportello legale, Consulenza in ambito sanitario, Sportello psicologico, Test IST, Orientamento al lavoro. Associazione Quore",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Centro Antidiscriminazioni LGBTQIA+",
+  "comune": "Trento",
+  "provincia": "TN",
+  "regione": "Trentino-Alto Adige/Südtirol",
+  "lat": 46.064867,
+  "lng": 11.122333,
+  "indirizzo": "Via al Torrione, 6, 38122 Trento",
+  "contatti": "0461081645",
+  "email": "infocad@arcigaytrento.it",
+  "sito": "https://www.arcigaydeltrentino.it/cad",
+  "orari": "Lunedì – Venerdì dalle 17:30 – 18:30",
+  "note": "Servizi: SERVIZI - sportello ascolto, prima accoglienza e informazione - supporto psicologico - supporto finalizzato all’accesso ai percorsi di affermazione di genere - consulenza legale - orientamento ai servizi sociali e sanitari del territorio - orientamento al lavoro e all’autonomia abitativa - consulenza sessuale ed educazione affettiva - mediazione familiare",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "CAD Carra",
+  "comune": "Udine",
+  "provincia": "UD",
+  "regione": "Friuli-Venezia Giulia",
+  "lat": 46.056621,
+  "lng": 13.230847,
+  "indirizzo": "Via Grazzano, 57, 33100 Udine, Udine",
+  "contatti": "+39 335 180 7644",
+  "email": "carra@arcigayudine.it",
+  "orari": "Lunedì, mercoledì e giovedì dalle 14.00 alle 19.00 Martedì e venerdì dalle 09.00 alle 14.00",
+  "note": "Servizi: Accesso senza prenotazione Servizi offerti: Supporto psicologico Consulenze legali specializzate Informazione, accompagnamento e supporto legale, sanitario e sociale alle persone trans* vittime di violenza e discriminazione Supporto socio-legale per persone migranti LGBTQIA+ Supporto alla ricerca di lavoro e formazione Supporto per l'autonomia abitativa Consulenze su salute sessuale e accesso a test rapidi HIV e altre IST Colloqui di riduzione del danno e limitazione dei rischi legati al chemsex e alle sostanze psicoattive Mediazione e supporto familiare Mediazione e supporto scolastico Facilitazione di gruppi di mutuo e automutuo supporto Gestito da Arcigay Udine Fûr!",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Centro Arcobaleno",
+  "comune": "Varese",
+  "provincia": "VA",
+  "regione": "Lombardia",
+  "lat": 45.8167,
+  "lng": 8.8333,
+  "indirizzo": "Piazza Ventisei Maggio, 14, Varese",
+  "contatti": "0332 182 8050",
+  "sito": "https://www.centroarcobaleno.org",
+  "orari": "LUN-MAR-VEN: 18:30-20:30 MER-GIO: 10:30-12:30",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "comune"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "CAD Venezia",
+  "comune": "Venezia",
+  "provincia": "VE",
+  "regione": "Veneto",
+  "lat": 45.470862,
+  "lng": 12.222828,
+  "indirizzo": "Via della Rinascita, 96, Venezia",
+  "contatti": "0412746953",
+  "email": "cadvenezia@comune.venezia.it",
+  "sito": "https://www.comune.venezia.it/it/content/centro-antidiscriminazioni-motivate-orientamento-sessuale-e-identit-genere",
+  "orari": "LUN-MER-VEN: 10.30 -12.30; MAR-GIO 17.00 - 19.00;",
+  "note": "Servizi: Propone gratuitamente ascolto, percorsi di orientamento e sostegno attraverso: accoglienza telefonica attraverso una linea telefonica attiva h24; ascolto mediante colloqui telefonici e/o in presenza e/o su piattaforma online; supporto psicologico; interventi di mediazione sociale rivolti ai contesti sociali, familiari, lavorativi, abitativi; informazione e orientamento giuridico-legale, sia in ambito civile che penale; salute e benessere sessuale attraverso l’orientamento e affiancamento nell’accesso ai servizi sociali e/o sanitari specialistici del territorio; orientamento e assistenza in ambito lavorativo e abitativo; progetti di empowerment individualizzati volti all’inclusione sociale per le persone in carico; interventi di sensibilizzazione verso la cittadinanza, anche attraverso eventi culturali e sociali; interventi in Rete con i Servizi e le Istituzioni del territorio. (citofonare sul lato Via Castagna) Prenotazione appuntamenti: - via Whatsapp: 3498751720 (attivo durante l’apertura del centro) ; - via telefono: 0412746953 ; - via e-mail: [email protected]",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Rainbow House Verona",
+  "comune": "Verona",
+  "provincia": "VR",
+  "regione": "Veneto",
+  "lat": 45.411299,
+  "lng": 10.98525,
+  "indirizzo": "Via Scuderlando, 137, Verona",
+  "contatti": "3935827733",
+  "email": "info@rainbowhouseverona.eu",
+  "sito": "https://rainbowhouseverona.eu/it/",
+  "orari": "LUN e GIO: 17.00 - 19.00; MAR: 09:00 - 11:00; MER: 14:00 - 16:00; VEN: 12:00 - 14:00;",
+  "note": "Servizi: Rainbow House Verona (RHV) è un progetto ideato per offrire un supporto completo e integrato alle persone LGBTQIA+ che subiscono discriminazioni, violenze o si trovano in condizioni di vulnerabilità. I nostri servizi, frutto della sinergia tra Pianeta Milk, Circolo Pink LGBTE e Comunità dei Giovani, sono gratuiti, riservati, anonimi e accessibili a tutte le persone maggiorenni.",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Sportello Regionale Arcobaleno",
+  "comune": "Viterbo",
+  "provincia": "VT",
+  "regione": "Lazio",
+  "lat": 42.419191,
+  "lng": 12.114182,
+  "indirizzo": "Via Vicenza, 13, Viterbo",
+  "email": "viterbo@arcigay.it",
+  "sito": "https://lazio.lgbt/viterbo/",
+  "orari": "Ogni Mercoledì dalle 17:00 alle 20:00",
+  "note": "Servizi: Ascolto con colloqui telefonici, Ascolto con colloqui in modalità online, Ascolto in modalità fisica, Gruppi di auto mutuo aiuto in base all’esigenza di discriminazione, Protezione e accoglienza per le vittime di discriminazione LGBT, Supporto psicologico, Attività di mediazione sociale, lavorativa, familiare, scolastica, Assistenza legale sia in sede civile che penale, Orientamento al lavoro con previsione di corsi di in/formazione, consulenza e inserimento lavorativo, Orientamento all’autonomia abitativa, Consulenze mediche e possibilità di prenotare il test HIV (con il reparto di infettivologia dell'ospedale belcolle), Sportello relativo ai migranti LGBT vittime di discriminazione nei Paesi di provenienza, Sportello relativo al supporto specifico per le persone trans Arcigay Viterbo",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "lgbt"
+  ],
+  "nome": "Progetto STAR",
+  "comune": "Trieste",
+  "provincia": "TS",
+  "regione": "Friuli-Venezia Giulia",
+  "lat": 45.643564,
+  "lng": 13.763516,
+  "indirizzo": "Viale della Terza Armata, 20, Trieste",
+  "contatti": "+39 351 626 7436; 051 09 57 241 (Ufficio Nazionale)",
+  "email": "star.trieste@gmail.com; info@arcigay.it",
+  "sito": "https://www.csapsa.it/progetto-star/",
+  "orari": "Lunedì e Venerdì | 14:00 – 18:00",
+  "note": "Servizi: Accoglienza e ascolto, sportello legale, sportello psicologico, sportello lavoro, Casa di Accoglienza \"Cloe Bianco\".",
+  "fonte": "Mappa nazionale dei Centri Anti Discriminazione, Arcigay",
+  "pos": "indirizzo"
+ },
+ {
+  "cat": [
+   "uomini"
+  ],
+  "nome": "Centro Supporto ed Ascolto contro la Violenza DEMETRA",
+  "comune": "Torino",
+  "provincia": "TO",
+  "regione": "Piemonte",
+  "lat": 45.0792,
+  "lng": 7.6761,
+  "indirizzo": "Ospedale San Lazzaro, Via Cherasco 23, 2° piano",
+  "contatti": "011 6335899 (segreteria attiva 24 ore su 24); 335 7169000 (negli orari di apertura)",
+  "sito": "https://www.cittadellasalute.to.it/index.php?option=com_content&view=article&id=4040&Itemid=610",
+  "orari": "Lunedì–venerdì 7:30–19:30, su prenotazione telefonica o con accesso diretto",
+  "note": "Centro sanitario pubblico per persone adulte che subiscono violenza nelle relazioni. Per gli uomini la valutazione clinica si svolge all’ospedale Molinette.",
+  "fonte": "AOU Città della Salute e della Scienza di Torino",
+  "pos": "comune"
+ }
+]

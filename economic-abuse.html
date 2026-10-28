@@ -2,96 +2,89 @@
 <html lang="it">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Abuso economico | Violenza di genere</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <title>Meteo di oggi</title>
+  <!-- Inside the single page the outer header is the only one: this page drops its own -->
+  <script>if (window.self !== window.top) document.documentElement.classList.add('embedded');</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="stile-test.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
-    :root { --paper:#f7f4ed; --ink:#171717; --muted:#68635d; --line:#171717; --soft:#e7e1d6; --white:#fffdfa; --red:#b22b24; --blue:#12606d; }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; background: var(--paper); color: var(--ink); }
-    body { margin:0; font-family: Arial, Helvetica, sans-serif; line-height:1.42; background: linear-gradient(90deg, rgba(23,23,23,.045) 1px, transparent 1px) 0 0/48px 48px, linear-gradient(0deg, rgba(23,23,23,.035) 1px, transparent 1px) 0 0/48px 48px, var(--paper); }
-    a { color: inherit; text-decoration-thickness:1px; text-underline-offset:4px; }
-    button, input, textarea, select { font: inherit; }
-    .layout { display:grid; grid-template-columns:minmax(230px,18vw) 1fr; min-height:100vh; }
-    aside { position:sticky; top:62px; height:calc(100vh - 62px); padding:18px; border-right:2px solid var(--line); background:rgba(247,244,237,.96); display:flex; flex-direction:column; gap:22px; }
-    .mark { width:44px; height:44px; border:2px solid var(--line); background:var(--white); display:grid; place-items:center; font-weight:800; }
-    .brand { display:grid; gap:10px; padding-bottom:18px; border-bottom:2px solid var(--line); }
-    .brand strong { font-size:clamp(1.4rem,2vw,2rem); line-height:.95; text-transform:uppercase; }
-    .tiny, .eyebrow { color:var(--muted); font-size:.78rem; text-transform:uppercase; letter-spacing:.06em; }
-    nav { display:grid; gap:8px; }
-    nav a { display:grid; grid-template-columns:2rem 1fr; gap:10px; padding:8px 0; border-bottom:1px solid rgba(23,23,23,.28); text-decoration:none; }
-    main { min-width:0; }
-    .site-header { position:sticky; top:0; z-index:10; display:flex; justify-content:space-between; align-items:center; gap:14px; padding:12px clamp(18px,5vw,72px); border-bottom:2px solid var(--line); background:rgba(247,244,237,.98); }
-    .header-btn { border:2px solid var(--line); background:var(--white); color:var(--ink); padding:9px 12px; text-decoration:none; text-transform:uppercase; font-size:.78rem; letter-spacing:.05em; }
-    .exit-btn { border-color:var(--red); background:#f20d0d; color:#fff; font-weight:800; }
-    section { padding:clamp(28px,5vw,72px); border-bottom:2px solid var(--line); }
-    .hero { background:var(--white); }
-    .topline { display:flex; justify-content:space-between; gap:14px; border-bottom:2px solid var(--line); padding-bottom:14px; margin-bottom:36px; }
-    h1, h2, h3, p { margin-top:0; }
-    h1 { max-width:12ch; font-size:clamp(3.3rem,8.4vw,8.4rem); line-height:.82; text-transform:uppercase; letter-spacing:0; }
-    h2 { font-size:clamp(2rem,4.4vw,4.5rem); line-height:.9; text-transform:uppercase; letter-spacing:0; }
-    h3 { font-size:clamp(1.15rem,1.65vw,1.55rem); line-height:1.05; }
-    .lead { max-width:960px; font-size:clamp(1.12rem,1.75vw,1.55rem); line-height:1.2; }
-    .panel { border:2px solid var(--line); background:var(--white); padding:clamp(18px,2.4vw,30px); }
-    .grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
-    .question { border:2px solid var(--line); background:var(--white); display:grid; grid-template-columns:1fr; gap:16px; padding:16px; align-items:start; }
-    .question small { color:var(--muted); text-transform:uppercase; letter-spacing:.05em; }
-    .choices { display:grid; gap:10px; align-items:start; }
-    .choices label { border:2px solid var(--line); background:var(--paper); padding:10px 12px; cursor:pointer; }
-    .choices input { margin-right:8px; }
-    .result { border-left:10px solid var(--red); background:var(--white); padding:18px; font-size:1.1rem; }
-    .actions { display:flex; gap:10px; flex-wrap:wrap; }
-    @media (max-width:900px) { .layout, .grid { grid-template-columns:1fr; } aside { position:relative; top:0; height:auto; border-right:0; border-bottom:2px solid var(--line); } }
-    @media (max-width:620px) { section { padding:24px 16px; } .question { grid-template-columns:1fr; } .topline, .site-header { display:grid; } h1 { font-size:clamp(3rem,16vw,4.8rem); } }
+    /* The three bands of the total, with the reader's score marked on them */
+    .bands { position: relative; padding-top: 30px; }
+
+    .bands-track {
+      display: grid;
+      grid-template-columns: var(--cols);
+      gap: 4px;
+    }
+
+    .bands-track > div {
+      height: 10px;
+      border-radius: 5px;
+      background: var(--land);
+    }
+
+    .bands-track > div.is-here { background: var(--ink); }
+
+    .bands-labels {
+      display: grid;
+      grid-template-columns: var(--cols);
+      gap: 4px;
+      margin-top: 8px;
+      font-size: var(--t-small);
+      color: var(--muted);
+    }
+
+    .bands-labels .is-here { color: var(--ink); }
+
+    .marker {
+      position: absolute;
+      top: 0;
+      left: var(--at);
+      transform: translateX(-50%);
+      font-size: var(--t-small);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      animation: marker-in .9s var(--ease) both .15s;
+    }
+
+    .marker::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 21px;
+      width: 1px;
+      height: 12px;
+      background: var(--ink);
+    }
+
+    @keyframes marker-in { from { left: 0; opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) { .marker { animation: none; } }
   </style>
 </head>
 <body>
   <header class="site-header" aria-label="Azioni principali">
-    <span class="tiny">Abuso economico</span>
-    <a class="header-btn exit-btn" href="https://news.google.com/">Esci subito dal sito</a>
-  </header>
-  <div class="layout">
-    <aside>
-      <div class="brand"><div class="mark">AE</div><strong>Abuso economico</strong><span class="tiny">Controllo e denaro</span></div>
-      <nav>
-        <a href="index.html#test" target="_blank"><b>←</b><span>Torna alla mappa</span></a>
-        <a href="#domande" target="_blank"><b>1</b><span>Questionario</span></a>
-        <a href="#risultato" target="_blank"><b>2</b><span>Risultato</span></a>
-      </nav>
-      <p class="tiny">Le risposte restano in questa pagina. Non ci sono risposte giuste o sbagliate: il risultato serve a orientare sull'abuso economico.</p>
-    </aside>
-    <main>
-      <section class="hero">
-        <div class="topline"><span class="tiny">Abuso economico</span><span class="tiny">Questionario interattivo</span></div>
-        <h1>Abuso economico</h1>
-        <p class="lead">Rispondi in base alla tua esperienza. Questo questionario aiuta a individuare comportamenti di controllo finanziario e coercizione economica.</p>
-      </section>
-
-      <section id="domande">
-        <h2>Questionario</h2>
-        <p class="lead">Seleziona la frequenza con cui si verificano questi comportamenti.</p>
-        <div class="grid" id="questions"></div>
-      </section>
-
-      <section id="risultato">
-        <h2>Risultato</h2>
-        <div class="grid">
-          <div class="panel">
-            <h3>Totale</h3>
-            <p>Valore totale: <b id="totalScore">0</b> / 60</p>
-            <p>Domande risposte: <b id="answeredCount">0</b> / 12</p>
-            <div class="actions">
-              <button class="btn" id="resetBtn" type="button">Azzera risposte</button>
-              <button class="btn" id="exportBtn" type="button">Scarica PDF</button>
-              <a class="btn dark" href="tel:1522" target="_blank">Chiama 1522</a>
-              <a class="btn dark" href="https://www.1522.eu/mappatura-1522/" target="_blank">Cerca un centro antiviolenza</a>
-            </div>
-          </div>
-          <div class="result" id="resultBox">Rispondi a tutte le domande per leggere il risultato.</div>
+    <div class="wrap">
+      <div class="header-inner">
+        <div class="header-top">
+          <a class="brand" href="index-apple.html">SAVE</a>
+          <a class="exit-btn" id="exitBtn" href="https://www.google.com/search?q=meteo">Esci subito dal sito</a>
         </div>
-      </section>
-    </main>
-  </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="progress wrap" id="progress" aria-label="Avanzamento del questionario"></div>
+
+  <main class="wrap">
+    <div class="stage" id="stage" aria-live="polite"></div>
+  </main>
+
+  <script src="stile-test.js"></script>
   <script>
     const items = [
       'ti chiede di chiedergli dei soldi',
@@ -116,27 +109,29 @@
       ['Molto spesso', 5]
     ];
 
-    function renderQuestions() {
-      document.querySelector('#questions').innerHTML = items.map((item, index) => `
-        <div class="question">
-          <div><small>Domanda ${index + 1}</small><p>Quanto spesso il tuo partner ${item}?</p></div>
-          <div class="choices">
-            ${options.map(option => `
-              <label><input type="radio" name="q${index}" value="${option[1]}"> ${option[0]}</label>
-            `).join('')}
-          </div>
-        </div>
-      `).join('');
-    }
+    // Thresholds of evaluate(), drawn on the report
+    const BANDS = [
+      { label: 'Bassa', from: 12, to: 18 },
+      { label: 'Moderata', from: 19, to: 35 },
+      { label: 'Alta', from: 36, to: 60 }
+    ];
+
+    const SECONDS_PER_ITEM = 9;
+
+    const answers = Array(items.length).fill(null);
+    const stage = document.getElementById('stage');
+    const progressEl = document.getElementById('progress');
+    // 0 = intro, 1..12 = questions, 13 = result
+    let cursor = 0;
+    const RESULT = items.length + 1;
 
     function computeScore() {
       let score = 0;
       let answered = 0;
-      items.forEach((_, index) => {
-        const checked = document.querySelector(`input[name="q${index}"]:checked`);
-        if (checked) {
+      answers.forEach(value => {
+        if (value !== null) {
           answered += 1;
-          score += Number(checked.value);
+          score += value;
         }
       });
       return { score, answered };
@@ -155,52 +150,195 @@
       return { label: 'Alta', text: 'Segnali forti di abuso economico e coercizione. Considera di contattare un Centro Antiviolenza o il 1522 per supporto.' };
     }
 
-    function update() {
-      const { score, answered } = computeScore();
-      const outcome = evaluate(score, answered);
-      document.querySelector('#totalScore').textContent = score;
-      document.querySelector('#answeredCount').textContent = answered;
-      document.querySelector('#resultBox').innerHTML = answered < items.length ? outcome.text : `<h3>${outcome.label}</h3><p>${outcome.text}</p>`;
+    function updateProgress() {
+      const done = Math.min(Math.max(cursor - 1, 0), items.length);
+      TestKit.progress(progressEl, {
+        segments: [{ label: 'Domande', total: items.length, done: cursor === RESULT ? items.length : done, current: cursor > 0 && cursor < RESULT }],
+        where: cursor === 0 ? 'Introduzione' : cursor === RESULT ? '<b>Il tuo risultato</b>' : `<b>Domanda ${cursor}</b> di ${items.length}`,
+        seconds: cursor === RESULT ? null : (items.length - Math.max(cursor - 1, 0)) * SECONDS_PER_ITEM
+      });
     }
 
-    renderQuestions();
-    document.addEventListener('change', update);
-    document.querySelector('#resetBtn').addEventListener('click', () => {
-      document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
-      update();
+    function go(delta) {
+      cursor = Math.max(0, Math.min(RESULT, cursor + delta));
+      render();
+    }
+
+    function introHtml() {
+      return `
+        <span class="kicker">Scale of Economic Abuse, SEA-12</span>
+        <h1 class="title">Abuso economico</h1>
+        <p class="lead">Dodici domande su come il tuo partner gestisce il denaro, il lavoro e le spese. Per ognuna scegli quanto spesso succede. Non ci sono risposte giuste o sbagliate.</p>
+        <div class="box facts">
+          <div class="box-row"><span>Domande</span><b>12, una alla volta</b></div>
+          <div class="box-row"><span>Tempo</span><b>Circa 2 minuti</b></div>
+          <div class="box-row"><span>Le risposte</span><b>Restano su questo dispositivo</b></div>
+        </div>
+        <p class="note">Puoi tornare indietro o fermarti quando vuoi. Il pulsante in alto, o il tasto Esc, chiude subito il sito.</p>
+        <div class="step-actions"><span></span><button class="btn primary" type="button" data-next>Inizia il questionario</button></div>`;
+    }
+
+    function questionHtml(index) {
+      const value = answers[index];
+      return `
+        <span class="kicker">Domanda ${index + 1} di ${items.length}</span>
+        <p class="question" id="question">Quanto spesso il tuo partner ${items[index]}?</p>
+        <div class="options" role="radiogroup" aria-labelledby="question" data-keys>
+          ${options.map(([label, v], i) => `
+            <label class="option">
+              <input type="radio" name="answer" value="${v}" ${value === v ? 'checked' : ''}>
+              <span class="mark" aria-hidden="true"></span>
+              <span class="option-text"><strong>${label}</strong></span>
+              <span class="key" aria-hidden="true">${i + 1}</span>
+            </label>`).join('')}
+        </div>
+        <p class="saved" aria-live="polite"></p>
+        <div class="step-actions">
+          <button class="btn quiet" type="button" data-back>Indietro</button>
+          <button class="btn primary" type="button" data-next ${value === null ? 'disabled' : ''}>${index === items.length - 1 ? 'Vedi il risultato' : 'Avanti'}</button>
+        </div>`;
+    }
+
+    function resultHtml() {
+      const { score, answered } = computeScore();
+      const result = evaluate(score, answered);
+      if (result.label === '-') {
+        const first = answers.findIndex(v => v === null);
+        return `<div class="report">
+          <div class="report-head">
+            <span class="kicker">Il tuo risultato</span>
+            <h2 class="question" id="question">Mancano ${items.length - answered} risposte</h2>
+            <p class="lead">${result.text}</p>
+          </div>
+          <div class="step-actions"><span></span><button class="btn primary" type="button" data-goto="${first + 1}">Torna alla domanda ${first + 1}</button></div>
+        </div>`;
+      }
+
+      const span = 60 - 12;
+      const cols = BANDS.map(b => `${b.to - b.from + 1}fr`).join(' ');
+      const counts = options.map(([label, v]) => [label, answers.filter(a => a === v).length]);
+      const headline = {
+        Bassa: 'Comportamenti di controllo economico poco frequenti',
+        Moderata: 'Comportamenti di controllo economico che meritano attenzione',
+        Alta: 'Comportamenti di controllo economico frequenti'
+      }[result.label];
+
+      return `<div class="report">
+        <div class="report-head">
+          <span class="kicker">Il tuo risultato</span>
+          <h2 class="question" id="question">${headline}</h2>
+          <p class="lead">${result.text}</p>
+        </div>
+
+        <section class="report-block" aria-labelledby="totalTitle">
+          <h2 id="totalTitle">Il totale, ${score} su 60</h2>
+          <div class="bands" style="--cols:${cols}">
+            <span class="marker" style="--at:${(score - 12) / span * 100}%">${score}</span>
+            <div class="bands-track" aria-hidden="true">${BANDS.map(b => `<div class="${b.label === result.label ? 'is-here' : ''}"></div>`).join('')}</div>
+            <div class="bands-labels">${BANDS.map(b => `<span class="${b.label === result.label ? 'is-here' : ''}">${b.label}, da ${b.from} a ${b.to}</span>`).join('')}</div>
+          </div>
+          <p class="note" style="margin-top:14px">Ogni risposta vale da 1 (mai) a 5 (molto spesso): il totale va quindi da 12 a 60.</p>
+        </section>
+
+        <section class="report-block" aria-labelledby="freqTitle">
+          <h2 id="freqTitle">Le tue risposte, per frequenza</h2>
+          <div class="bars">
+            ${counts.map(([label, n], i) => `
+              <div class="bar-row">
+                <div class="bar-label"><span>${label}</span><span>${n === 1 ? '1 risposta' : n + ' risposte'}</span></div>
+                <div class="bar-track"><i class="${i >= 3 ? 'maroon' : i === 2 ? 'ochre' : 'grey'}" style="--w:${n / items.length * 100}%"></i></div>
+              </div>`).join('')}
+          </div>
+        </section>
+
+        <section class="report-block" aria-labelledby="nextTitle">
+          <h2 id="nextTitle">Cosa puoi fare adesso</h2>
+          <p>Un Centro Antiviolenza può aiutarti anche sugli aspetti economici: conti, debiti, lavoro e documenti. Il contatto è gratuito e riservato.</p>
+          <div class="btn-row">
+            <a class="btn primary" href="tel:1522">Chiama il 1522</a>
+            <a class="btn" href="trova-centro.html">Cerca un centro antiviolenza</a>
+            <button class="btn" type="button" id="exportBtn">Scarica le risposte in PDF</button>
+          </div>
+        </section>
+
+        <div class="disclaimer">
+          <p>Lo SEA-12 misura quanto spesso si verificano alcuni comportamenti di controllo economico. Le tre fasce sono indicative: non sono una diagnosi e non dicono, da sole, se una relazione è violenta.</p>
+        </div>
+
+        <div class="step-actions">
+          <button class="btn quiet" type="button" data-back>Rivedi le risposte</button>
+          <button class="btn" type="button" id="resetBtn">Azzera le risposte</button>
+        </div>
+      </div>`;
+    }
+
+    function render() {
+      updateProgress();
+      if (cursor === 0) TestKit.swap(stage, introHtml(), { focus: false });
+      else if (cursor === RESULT) TestKit.swap(stage, resultHtml());
+      else TestKit.swap(stage, questionHtml(cursor - 1));
+    }
+
+    stage.addEventListener('change', event => {
+      if (event.target.name !== 'answer') return;
+      const index = cursor - 1;
+      const wasAnswered = answers[index] !== null;
+      answers[index] = Number(event.target.value);
+      stage.querySelector('[data-next]').disabled = false;
+      TestKit.confirmThen(() => go(1), { auto: !wasAnswered });
     });
-    document.querySelector('#exportBtn').addEventListener('click', () => {
+
+    stage.addEventListener('click', event => {
+      if (event.target.closest('[data-next]')) go(1);
+      if (event.target.closest('[data-back]')) go(-1);
+      const jump = event.target.closest('[data-goto]');
+      if (jump) { cursor = Number(jump.dataset.goto); render(); }
+      if (event.target.closest('#resetBtn')) { answers.fill(null); cursor = 0; render(); }
+      if (event.target.closest('#exportBtn')) exportPdf();
+    });
+
+    function exportPdf() {
       const { score, answered } = computeScore();
       const outcome = evaluate(score, answered);
       const now = new Date().toLocaleDateString('it-IT') + ' ' + new Date().toLocaleTimeString('it-IT');
-      let pdfContent = `QUESTIONARIO ABUSO ECONOMICO - RISPOSTE\n\n`;
-      pdfContent += `Data: ${now}\n\n`;
-      pdfContent += `DOMANDE E RISPOSTE\n`;
-      pdfContent += `${'─'.repeat(50)}\n`;
-      items.forEach((item, index) => {
-        const checked = document.querySelector(`input[name="q${index}"]:checked`);
-        const optionLabels = { '1': 'Mai', '2': 'Quasi mai', '3': 'Qualche volta', '4': 'Spesso', '5': 'Molto spesso' };
-        const answer = checked ? optionLabels[checked.value] : '-';
-        pdfContent += `${index + 1}. Quanto spesso il tuo partner ${item}?\n   Risposta: ${answer}\n\n`;
-      });
-      pdfContent += `\nRISULTATI\n`;
-      pdfContent += `${'─'.repeat(50)}\n`;
-      pdfContent += `Valore totale: ${score} / 60\n`;
-      pdfContent += `Domande risposte: ${answered} / ${items.length}\n`;
-      if (answered === items.length) {
-        pdfContent += `\nValutazione: ${outcome.label}\n`;
-        pdfContent += `${outcome.text}\n`;
-      } else {
-        pdfContent += `\n${outcome.text}\n`;
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+      const margin = 15;
+      const pageW = 210 - margin * 2;
+      let y = margin;
+
+      function addLine(text, bold = false, size = 10) {
+        doc.setFontSize(size);
+        doc.setFont('helvetica', bold ? 'bold' : 'normal');
+        doc.splitTextToSize(text, pageW).forEach(line => {
+          if (y > 280) { doc.addPage(); y = margin; }
+          doc.text(line, margin, y);
+          y += 6;
+        });
       }
-      const element = document.createElement('div');
-      element.style.whiteSpace = 'pre-wrap';
-      element.style.fontFamily = 'monospace';
-      element.style.padding = '20px';
-      element.textContent = pdfContent;
-      const opt = { margin: 10, filename: 'Abuso_Economico_risposte.pdf', image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 }, jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' } };
-      html2pdf().set(opt).from(element).save();
-    });
+      function addSeparator() { doc.setDrawColor(100); doc.line(margin, y, 210 - margin, y); y += 5; }
+
+      addLine('QUESTIONARIO ABUSO ECONOMICO - RISPOSTE', true, 14);
+      addLine(`Data: ${now}`);
+      addSeparator();
+      addLine('DOMANDE E RISPOSTE', true, 12);
+      items.forEach((item, index) => {
+        const found = options.find(([, v]) => v === answers[index]);
+        addLine(`${index + 1}. Quanto spesso il tuo partner ${item}?`);
+        addLine(`   Risposta: ${found ? found[0] : '-'}`, true);
+        y += 2;
+      });
+      addSeparator();
+      addLine('RISULTATI', true, 12);
+      addLine(`Valore totale: ${score} / 60`);
+      addLine(`Domande risposte: ${answered} / ${items.length}`);
+      if (answered === items.length) addLine(`Valutazione: ${outcome.label}`, true);
+      addLine(outcome.text);
+      doc.save('Abuso_Economico_risposte.pdf');
+    }
+
+    render();
   </script>
+  <script src="quick-exit.js"></script>
 </body>
 </html>

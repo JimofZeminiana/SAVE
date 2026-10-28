@@ -1,519 +1,220 @@
 <!doctype html>
 <html lang="it">
-
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <title>Meteo di oggi</title>
+  <!-- Inside the single page the outer header is the only one: this page drops its own -->
+  <script>if (window.self !== window.top) document.documentElement.classList.add('embedded');</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="stile-test.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <title>SARA-S aggiornato | Violenza di genere</title>
   <style>
-    :root {
-      --paper: #f7f4ed;
-      --ink: #171717;
-      --muted: #68635d;
-      --line: #171717;
-      --soft: #e7e1d6;
-      --white: #fffdfa;
-      --red: #b22b24;
-      --blue: #12606d;
-      --green: #506d2f;
-    }
+    .screen[hidden] { display: none; }
 
-    * {
-      box-sizing: border-box;
-    }
+    .meta { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 20px; margin-bottom: 32px; }
+    .sources { margin-top: 12px; }
 
-    html {
-      scroll-behavior: smooth;
-      background: var(--paper);
-      color: var(--ink);
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      line-height: 1.42;
-      background: linear-gradient(90deg, rgba(23, 23, 23, .045) 1px, transparent 1px) 0 0/48px 48px, linear-gradient(0deg, rgba(23, 23, 23, .035) 1px, transparent 1px) 0 0/48px 48px, var(--paper);
-    }
-
-    a {
-      color: inherit;
-      text-decoration-thickness: 1px;
-      text-underline-offset: 4px;
-    }
-
-    button,
-    input,
-    textarea,
-    select {
-      font: inherit;
-    }
-
-    .layout {
+    /* Coding key, always beside the factors it explains */
+    .code-key {
       display: grid;
-      grid-template-columns: minmax(230px, 18vw) 1fr;
-      min-height: 100vh;
-    }
-
-    aside {
-      position: sticky;
-      top: 62px;
-      height: calc(100vh - 62px);
-      padding: 18px;
-      border-right: 2px solid var(--line);
-      background: rgba(247, 244, 237, .96);
-      display: flex;
-      flex-direction: column;
-      gap: 22px;
-    }
-
-    .brand {
-      display: grid;
-      gap: 10px;
-      padding-bottom: 18px;
-      border-bottom: 2px solid var(--line);
-    }
-
-    .mark {
-      width: 44px;
-      height: 44px;
-      border: 2px solid var(--line);
-      background: var(--white);
-      display: grid;
-      place-items: center;
-      font-weight: 800;
-    }
-
-    .brand strong {
-      font-size: clamp(1.4rem, 2vw, 2rem);
-      line-height: .95;
-      text-transform: uppercase;
-    }
-
-    .tiny,
-    .eyebrow {
+      grid-template-columns: repeat(4, auto);
+      justify-content: start;
+      gap: 6px 24px;
+      margin-bottom: 28px;
+      font-size: var(--t-small);
       color: var(--muted);
-      font-size: .78rem;
-      text-transform: uppercase;
-      letter-spacing: .06em;
     }
 
-    nav {
-      display: grid;
-      gap: 8px;
-    }
-
-    nav a {
-      display: grid;
-      grid-template-columns: 2rem 1fr;
-      gap: 10px;
-      padding: 8px 0;
-      border-bottom: 1px solid rgba(23, 23, 23, .28);
-      text-decoration: none;
-    }
-
-    main {
-      min-width: 0;
-    }
-
-    .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 14px;
-      padding: 12px clamp(18px, 5vw, 72px);
-      border-bottom: 2px solid var(--line);
-      background: rgba(247, 244, 237, .98);
-    }
-
-    .header-btn {
-      border: 2px solid var(--line);
-      background: var(--white);
-      color: var(--ink);
-      padding: 9px 12px;
-      text-decoration: none;
-      text-transform: uppercase;
-      font-size: .78rem;
-      letter-spacing: .05em;
-    }
-
-    .exit-btn {
-      border-color: var(--red);
-      background: #f20d0d;
-      color: #fff;
-      font-weight: 800;
-    }
-
-    section {
-      padding: clamp(28px, 5vw, 72px);
-      border-bottom: 2px solid var(--line);
-    }
-
-    .hero {
-      background: var(--white);
-    }
-
-    .topline {
-      display: flex;
-      justify-content: space-between;
-      gap: 14px;
-      border-bottom: 2px solid var(--line);
-      padding-bottom: 14px;
-      margin-bottom: 36px;
-    }
-
-    h1,
-    h2,
-    h3,
-    p {
-      margin-top: 0;
-    }
-
-    h1 {
-      max-width: 12ch;
-      font-size: clamp(3.3rem, 8.4vw, 8.4rem);
-      line-height: .82;
-      text-transform: uppercase;
-      letter-spacing: 0;
-    }
-
-    h2 {
-      font-size: clamp(2rem, 4.4vw, 4.5rem);
-      line-height: .9;
-      text-transform: uppercase;
-      letter-spacing: 0;
-    }
-
-    h3 {
-      font-size: clamp(1.15rem, 1.65vw, 1.55rem);
-      line-height: 1.05;
-    }
-
-    .lead {
-      max-width: 960px;
-      font-size: clamp(1.12rem, 1.75vw, 1.55rem);
-      line-height: 1.2;
-    }
-
-    .panel,
-    .factor {
-      border: 2px solid var(--line);
-      background: var(--white);
-      padding: clamp(16px, 2vw, 24px);
-    }
-
-    .meta {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-    }
-
-    label span {
-      display: block;
-      color: var(--muted);
-      font-size: .78rem;
-      text-transform: uppercase;
-      letter-spacing: .05em;
-      margin-bottom: 4px;
-    }
-
-    input[type="text"],
-    input[type="date"],
-    textarea,
-    select {
-      width: 100%;
-      border: 2px solid var(--line);
-      background: var(--paper);
-      padding: 10px;
-      border-radius: 0;
-    }
-
-    textarea {
-      min-height: 120px;
-      resize: vertical;
-    }
-
-    .sources {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .sources label,
-    .radio-grid label {
-      border: 1px solid rgba(23, 23, 23, .35);
-      background: var(--paper);
-      padding: 10px;
-      cursor: pointer;
-    }
-
-    .factors {
-      display: grid;
-      gap: 12px;
-    }
+    .code-key b { margin-right: 6px; color: var(--ink); font-weight: 500; }
 
     .factor {
       display: grid;
-      gap: 14px;
+      gap: 16px;
+      padding: 22px 0 26px;
+      border-top: 1px solid var(--rule);
     }
 
     .factor-head {
       display: grid;
-      grid-template-columns: auto 1fr;
+      grid-template-columns: 2.25rem 1fr;
       gap: 14px;
-      align-items: start;
+      align-items: baseline;
     }
 
-    .num {
-      min-width: 44px;
-      height: 44px;
-      border: 2px solid var(--line);
-      background: var(--paper);
-      display: grid;
-      place-items: center;
-      font-weight: 800;
-    }
-
-    .category {
+    .factor-num {
+      font-size: 1.5rem;
+      font-weight: 300;
+      line-height: 1;
+      letter-spacing: -.03em;
       color: var(--muted);
-      font-size: .78rem;
-      text-transform: uppercase;
-      letter-spacing: .05em;
     }
 
-    .coding {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
+    .factor-head h3 { margin: 0; font-size: 1.125rem; font-weight: 400; line-height: 1.35; }
 
-    .radio-grid {
+    .factor-body { display: grid; gap: 14px; padding-left: calc(2.25rem + 14px); }
+
+    .coding { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 20px; }
+
+    fieldset { margin: 0; padding: 0; border: 0; min-width: 0; }
+    legend { padding: 0; margin-bottom: 6px; font-size: var(--t-small); color: var(--muted); }
+
+    /* Four codes as one segmented control: the chosen one fills */
+    .seg {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      border-top: 1px solid var(--line);
-      border-left: 1px solid var(--line);
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      overflow: hidden;
     }
 
-    .radio-grid label {
-      border-top: 0;
-      border-left: 0;
-      text-align: center;
-    }
-
-    .risk-grid {
+    .seg label {
+      position: relative;
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-    }
-
-    .summary {
-      position: sticky;
-      bottom: 0;
-      border-top: 2px solid var(--line);
-      background: var(--ink);
-      color: var(--paper);
-      padding: 16px clamp(18px, 5vw, 72px);
-      display: flex;
-      justify-content: space-between;
-      gap: 18px;
-      flex-wrap: wrap;
-      z-index: 2;
-    }
-
-    .summary b {
-      font-size: 1.5rem;
-    }
-
-    .btn {
-      border: 2px solid var(--line);
-      background: var(--paper);
-      padding: 10px 12px;
+      place-items: center;
+      min-height: 40px;
       cursor: pointer;
-      text-decoration: none;
+      font-size: .9375rem;
+      font-weight: 400;
+      transition: background-color .25s var(--ease), color .25s var(--ease);
     }
 
-    .actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
+    .seg label + label { border-left: 1px solid var(--rule); }
+    .seg input { position: absolute; opacity: 0; pointer-events: none; }
+    .seg label:has(input:checked) { background: var(--ink); color: var(--paper); }
+    .seg label:has(input:focus-visible) { outline: 2px solid var(--ink); outline-offset: -4px; }
+    .seg label:active { background: var(--fill); transition-duration: 0s; }
+
+    .risk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 20px; margin-bottom: 24px; }
+    .plan-grid { display: grid; gap: 20px; }
+
+    .summary-rows .box-row { grid-template-columns: 1fr auto; }
+
+    @media (hover: hover) {
+      .seg label:hover:not(:has(input:checked)) { background: var(--fill); }
     }
 
-    @media (max-width:900px) {
-
-      .layout,
-      .meta,
-      .coding,
-      .risk-grid {
-        grid-template-columns: 1fr;
-      }
-
-      aside {
-        position: relative;
-        top: 0;
-        height: auto;
-        border-right: 0;
-        border-bottom: 2px solid var(--line);
-      }
-
-      .sources {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width:620px) {
-      section {
-        padding: 24px 16px;
-      }
-
-      .topline,
-      .site-header,
-      .summary {
-        display: grid;
-      }
-
-      .factor-head,
-      .radio-grid {
-        grid-template-columns: 1fr;
-      }
-
-      h1 {
-        font-size: clamp(3rem, 16vw, 4.8rem);
-      }
+    @media (max-width: 760px) {
+      .meta, .coding, .risk-grid { grid-template-columns: 1fr; }
+      .factor-body { padding-left: 0; }
+      .code-key { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
-
 <body>
   <header class="site-header" aria-label="Azioni principali">
-    <span class="tiny">Formulario SARA-S</span>
-    <a class="header-btn exit-btn" href="https://news.google.com/">Esci subito dal sito</a>
-  </header>
-  <div class="layout">
-    <aside>
-      <div class="brand">
-        <div class="mark">S</div><strong>SARA-S aggiornato</strong><span class="tiny">Valutazione del rischio di
-          recidiva</span>
+    <div class="wrap">
+      <div class="header-inner">
+        <div class="header-top">
+          <a class="brand" href="index-apple.html">SAVE</a>
+          <a class="exit-btn" id="exitBtn" href="https://www.google.com/search?q=meteo">Esci subito dal sito</a>
+        </div>
       </div>
-      <nav>
-        <a href="index.html#test"><b>←</b><span>Torna alla mappa</span></a>
-        <a href="#info"><b>1</b><span>Informazioni e fonti</span></a>
-        <a href="#fattori"><b>2</b><span>Fattori</span></a>
-        <a href="#valutazione"><b>3</b><span>Valutazione</span></a>
-        <a href="#piano"><b>4</b><span>Piano e scenari</span></a>
-      </nav>
-      <p class="tiny">Strumento informativo, non diagnostico. L’uso appropriato del SARA-S prevede formazione specifica.
-      </p>
-    </aside>
-    <main>
-      <section class="hero">
-        <div class="topline"><span class="tiny">Spousal Assault Risk Assessment</span><span class="tiny">tests / SARA -
-            S aggiornata.pdf</span></div>
-        <h1>SARA-S</h1>
-        <p class="lead">Formulario web per organizzare le informazioni raccolte sui fattori collegati alla recidiva. Le
-          risposte restano nel browser e non vengono salvate.</p>
+    </div>
+  </header>
+
+  <div class="progress wrap" id="progress" aria-label="Avanzamento del formulario"></div>
+
+  <main class="wrap">
+    <div class="stage wide" id="stage">
+      <section class="screen" data-screen="intro">
+        <span class="kicker">Spousal Assault Risk Assessment, versione screening aggiornata</span>
+        <h1 class="title">SARA-S</h1>
+        <p class="lead">Formulario per organizzare le informazioni raccolte sui fattori collegati alla recidiva. Una sezione alla volta: puoi spostarti avanti e indietro senza perdere nulla.</p>
+        <div class="box facts">
+          <div class="box-row"><span>Sezioni</span><b>7, più un riepilogo</b></div>
+          <div class="box-row"><span>Fattori</span><b>15, più 4 considerazioni</b></div>
+          <div class="box-row"><span>Tempo</span><b>Circa 45 minuti</b></div>
+          <div class="box-row"><span>I dati</span><b>Restano in questa pagina</b></div>
+        </div>
+        <div class="callout"><span class="dot maroon" aria-hidden="true"></span><div><p>Strumento informativo, non diagnostico. L’uso appropriato del SARA-S prevede una formazione specifica. Ricaricando o chiudendo la pagina il formulario si azzera: scarica il PDF prima di uscire.</p></div></div>
+        <div class="step-actions"><span></span><button class="btn primary" type="button" data-next>Inizia la compilazione</button></div>
       </section>
 
-      <section id="info">
-        <h2>Informazioni</h2>
-        <div class="panel">
-          <div class="meta">
-            <label><span>Nome vittima / n. identificazione</span><input type="text"></label>
-            <label><span>Nome autore / n. identificazione</span><input type="text"></label>
-            <label><span>Compilato da</span><input type="text"></label>
-            <label><span>Data compilazione</span><input type="date"></label>
-          </div>
-          <h3 style="margin-top:22px">Fonti di informazione</h3>
-          <div class="sources">
-            <label><input type="checkbox"> Autore della violenza</label>
-            <label><input type="checkbox"> Vittima della violenza</label>
-            <label><input type="checkbox"> Analisi documentale</label>
-            <label><input type="checkbox"> Altro contesto familiare, amicale o sociale</label>
-          </div>
+      <section class="screen" data-screen="info" id="info" hidden>
+        <span class="kicker">Sezione 1 di 7</span>
+        <h2 class="question">Informazioni e fonti</h2>
+        <div class="meta">
+          <label class="field"><span>Nome vittima o numero di identificazione</span><input type="text"></label>
+          <label class="field"><span>Nome autore o numero di identificazione</span><input type="text"></label>
+          <label class="field"><span>Compilato da</span><input type="text"></label>
+          <label class="field"><span>Data di compilazione</span><input type="date"></label>
+        </div>
+        <h3>Fonti di informazione</h3>
+        <div class="options sources">
+          <label class="option"><input type="checkbox"><span class="mark" aria-hidden="true"></span><span class="option-text"><strong>Autore della violenza</strong></span></label>
+          <label class="option"><input type="checkbox"><span class="mark" aria-hidden="true"></span><span class="option-text"><strong>Vittima della violenza</strong></span></label>
+          <label class="option"><input type="checkbox"><span class="mark" aria-hidden="true"></span><span class="option-text"><strong>Analisi documentale</strong></span></label>
+          <label class="option"><input type="checkbox"><span class="mark" aria-hidden="true"></span><span class="option-text"><strong>Altro contesto familiare, amicale o sociale</strong></span></label>
         </div>
       </section>
 
-      <section id="fattori">
-        <h2>Fattori</h2>
-        <p class="lead">Procedura di codifica: S = sì, presente; N = no, non presente; - = informazioni insufficienti; ?
-          = probabilmente o parzialmente presente.</p>
-        <div class="factors" id="factorList"></div>
-      </section>
+      <!-- Factor groups are filled in by the script -->
+      <div id="factorScreens"></div>
 
-      <section id="valutazione">
-        <h2>Valutazione</h2>
+      <section class="screen" data-screen="valutazione" id="valutazione" hidden>
+        <span class="kicker">Sezione 6 di 7</span>
+        <h2 class="question">Valutazione del rischio</h2>
         <div class="risk-grid">
-          <label><span>Rischio immediato, nei 2 mesi successivi</span><select>
-              <option>Non indicato</option>
-              <option>Basso</option>
-              <option>Medio</option>
-              <option>Elevato</option>
-            </select></label>
-          <label><span>Rischio a lungo termine, oltre i 2 mesi</span><select>
-              <option>Non indicato</option>
-              <option>Basso</option>
-              <option>Medio</option>
-              <option>Elevato</option>
-            </select></label>
-          <label><span>Rischio di violenza molto grave o letale</span><select>
-              <option>Non indicato</option>
-              <option>Basso</option>
-              <option>Medio</option>
-              <option>Elevato</option>
-            </select></label>
-          <label><span>Rischio di escalation della violenza</span><select>
-              <option>Non indicato</option>
-              <option>Basso</option>
-              <option>Medio</option>
-              <option>Elevato</option>
-            </select></label>
-          <label><span>Rischio violenza sui minori</span><select>
-              <option>Non indicato</option>
-              <option>Basso</option>
-              <option>Medio</option>
-              <option>Elevato</option>
-            </select></label>
+          <label class="field"><span>Rischio immediato, nei 2 mesi successivi</span><select><option>Non indicato</option><option>Basso</option><option>Medio</option><option>Elevato</option></select></label>
+          <label class="field"><span>Rischio a lungo termine, oltre i 2 mesi</span><select><option>Non indicato</option><option>Basso</option><option>Medio</option><option>Elevato</option></select></label>
+          <label class="field"><span>Rischio di violenza molto grave o letale</span><select><option>Non indicato</option><option>Basso</option><option>Medio</option><option>Elevato</option></select></label>
+          <label class="field"><span>Rischio di escalation della violenza</span><select><option>Non indicato</option><option>Basso</option><option>Medio</option><option>Elevato</option></select></label>
+          <label class="field"><span>Rischio di violenza sui minori</span><select><option>Non indicato</option><option>Basso</option><option>Medio</option><option>Elevato</option></select></label>
         </div>
-        <div class="panel" style="margin-top:16px">
-          <h3>Resoconto conclusivo</h3>
-          <textarea
-            placeholder="Descrivere quando, come e da chi è avvenuta la valutazione; i principali contenuti emersi; la percezione del rischio espressa dalle persone intervistate."></textarea>
+        <label class="field"><span>Resoconto conclusivo</span><textarea placeholder="Quando, come e da chi è avvenuta la valutazione; i principali contenuti emersi; la percezione del rischio espressa dalle persone intervistate."></textarea></label>
+      </section>
+
+      <section class="screen" data-screen="piano" id="piano" hidden>
+        <span class="kicker">Sezione 7 di 7</span>
+        <h2 class="question">Piano e scenari</h2>
+        <div class="plan-grid">
+          <label class="field"><span>Piano di gestione e di intervento</span><textarea placeholder="Misure preventive e cautelari, percorsi di supporto e protezione per la vittima, azioni di monitoraggio."></textarea></label>
+          <label class="field"><span>Possibili scenari senza misure preventive</span><textarea placeholder="Probabilità, natura, gravità, immediatezza, frequenza o durata della violenza."></textarea></label>
+          <label class="field"><span>Eventi critici che potrebbero aumentare il rischio</span><textarea placeholder="Ad esempio separazione, affidamento dei figli, revoca di misure cautelari o altri eventi rilevanti."></textarea></label>
         </div>
       </section>
 
-      <section id="piano">
-        <h2>Piano</h2>
-        <div class="risk-grid">
-          <div class="panel">
-            <h3>Piano di gestione e di intervento</h3>
-            <textarea
-              placeholder="Misure preventive e cautelari, percorsi di supporto e protezione per la vittima, azioni di monitoraggio."></textarea>
-          </div>
-          <div class="panel">
-            <h3>Possibili scenari senza misure preventive</h3>
-            <textarea
-              placeholder="Probabilità, natura, gravità, immediatezza, frequenza o durata della violenza."></textarea>
-          </div>
-          <div class="panel">
-            <h3>Eventi critici che potrebbero aumentare il rischio</h3>
-            <textarea
-              placeholder="Ad esempio separazione, affidamento dei figli, revoca di misure cautelari o altri eventi rilevanti."></textarea>
-          </div>
-          <div class="panel">
-            <h3>Nota d’uso</h3>
-            <p>Questa guida SARA-S è da intendersi solo per scopi informativi non diagnostici. Il suo uso appropriato
-              prevede una formazione specifica.</p>
-            <div class="actions">
-              <button class="btn" id="exportBtn" type="button">Scarica PDF</button>
-            </div>
-          </div>
+      <section class="screen report" data-screen="riepilogo" hidden>
+        <div class="report-head">
+          <span class="kicker">Riepilogo</span>
+          <h2 class="question" id="summaryTitle"></h2>
+          <p class="lead">Il SARA-S non produce un punteggio. Questo riepilogo mostra come sono stati codificati i fattori, per aiutare a rileggere il quadro prima del giudizio professionale.</p>
         </div>
+        <section class="report-block" aria-labelledby="codingTitle">
+          <h2 id="codingTitle">Codifica dei 19 elementi</h2>
+          <div class="bars" id="codingBars"></div>
+          <div class="legend-inline">
+            <span><i class="dot maroon"></i>S, presente</span>
+            <span><i class="dot ochre"></i>?, parzialmente</span>
+            <span><i class="dot grey"></i>N, non presente</span>
+            <span><i class="dot" style="background:var(--soft-rule)"></i>–, informazioni insufficienti</span>
+            <span>Spazio vuoto, non codificato</span>
+          </div>
+        </section>
+        <section class="report-block" aria-labelledby="presentTitle">
+          <h2 id="presentTitle">Presenti nell’ultimo mese</h2>
+          <div id="presentList"></div>
+        </section>
+        <section class="report-block" aria-labelledby="riskTitle">
+          <h2 id="riskTitle">Valutazione indicata</h2>
+          <div class="box summary-rows" id="riskSummary"></div>
+        </section>
+        <div class="btn-row"><button class="btn primary" id="exportBtn" type="button">Scarica il formulario in PDF</button></div>
+        <div class="disclaimer"><p>Questa guida SARA-S è da intendersi solo per scopi informativi non diagnostici. Il suo uso appropriato prevede una formazione specifica e l’integrazione di fonti multiple.</p></div>
       </section>
-    </main>
-  </div>
+
+      <div class="step-actions" id="nav" hidden>
+        <button class="btn quiet" type="button" data-back>Indietro</button>
+        <button class="btn primary" type="button" data-next>Avanti</button>
+      </div>
+    </div>
+  </main>
+
+  <script src="stile-test.js"></script>
   <script>
     const factors = [
       ['VIOLENZE DA PARTE DEL PARTNER O EX PARTNER', '1', 'Violenze fisiche e/o sessuali'],
@@ -536,27 +237,126 @@
       ['ALTRE CONSIDERAZIONI', 'C', 'Bambine e bambini vittime di violenza fisica e/o sessuale'],
       ['ALTRE CONSIDERAZIONI', 'D', 'Ulteriori elementi che possono incidere sul rischio di recidiva']
     ];
-    function radio(name) {
-      return `<div class="radio-grid">
-        <label><input type="radio" name="${name}" value="S"> S</label>
-        <label><input type="radio" name="${name}" value="N"> N</label>
-        <label><input type="radio" name="${name}" value="-"> -</label>
-        <label><input type="radio" name="${name}" value="?"> ?</label>
-      </div>`;
+
+    const groups = [
+      { key: 'VIOLENZE DA PARTE DEL PARTNER O EX PARTNER', label: 'Violenze', title: 'Violenze da parte del partner o ex partner' },
+      { key: 'AUTORE DELLA VIOLENZA', label: 'Autore', title: 'Autore della violenza' },
+      { key: 'VITTIMA DELLA VIOLENZA', label: 'Vittima', title: 'Vittima della violenza' },
+      { key: 'ALTRE CONSIDERAZIONI', label: 'Altre', title: 'Altre considerazioni' }
+    ];
+
+    const CODES = [['S', 'presente'], ['N', 'non presente'], ['-', 'informazioni insufficienti'], ['?', 'probabilmente o parzialmente presente']];
+
+    function radio(name, label) {
+      return `<fieldset><legend>${label}</legend><div class="seg">
+        ${CODES.map(([v, title]) => `<label title="${title}"><input type="radio" name="${name}" value="${v}" aria-label="${v === '-' ? '–' : v}, ${title}"><span aria-hidden="true">${v === '-' ? '–' : v}</span></label>`).join('')}
+      </div></fieldset>`;
     }
-    document.querySelector('#factorList').innerHTML = factors.map((f, i) => `
-      <article class="factor">
-        <div class="factor-head"><div class="num">${f[1]}</div><div><div class="category">${f[0]}</div><h3>${f[2]}</h3></div></div>
-        <div class="coding">
-          <div><label><span>Ultimo mese</span></label>${radio(`now_${i}`)}</div>
-          <div><label><span>In passato</span></label>${radio(`past_${i}`)}</div>
-        </div>
-        <label><span>Ulteriori informazioni</span><textarea placeholder="Annotare elementi oggettivi, fonti, eventi o comportamenti specifici."></textarea></label>
-      </article>
-    `).join('');
-    function update() { }
-    document.addEventListener('change', update);
-    update();
+
+    document.querySelector('#factorScreens').innerHTML = groups.map((g, gi) => `
+      <section class="screen" data-screen="g${gi}" hidden>
+        <span class="kicker">Sezione ${gi + 2} di 7</span>
+        <h2 class="question">${g.title}</h2>
+        <div class="code-key" aria-label="Codici">${CODES.map(([v, t]) => `<span><b>${v === '-' ? '–' : v}</b>${t}</span>`).join('')}</div>
+        ${factors.map((f, i) => f[0] !== g.key ? '' : `
+          <article class="factor">
+            <div class="factor-head"><span class="factor-num">${f[1]}</span><h3>${f[2]}</h3></div>
+            <div class="factor-body">
+              <div class="coding">${radio(`now_${i}`, 'Ultimo mese')}${radio(`past_${i}`, 'In passato')}</div>
+              <label class="field"><span>Ulteriori informazioni</span><textarea placeholder="Annotare elementi oggettivi, fonti, eventi o comportamenti specifici."></textarea></label>
+            </div>
+          </article>`).join('')}
+      </section>`).join('');
+
+    const order = ['intro', 'info', 'g0', 'g1', 'g2', 'g3', 'valutazione', 'piano', 'riepilogo'];
+    // Rough minutes per section, for the time left
+    const MINUTES = { info: 3, factor: 1.5, valutazione: 5, piano: 8 };
+    const stage = document.getElementById('stage');
+    const progressEl = document.getElementById('progress');
+    const nav = document.getElementById('nav');
+    let cursor = 0;
+
+    const coded = i => document.querySelector(`input[name="now_${i}"]:checked`) && document.querySelector(`input[name="past_${i}"]:checked`);
+    const groupFactors = gi => factors.map((f, i) => [f, i]).filter(([f]) => f[0] === groups[gi].key);
+
+    function updateProgress() {
+      const name = order[cursor];
+      const segment = (label, screen, total, done) => ({ label, total, done: order.indexOf(screen) < cursor ? total : done, current: name === screen });
+      const segments = [
+        segment('Informazioni', 'info', 1, 0),
+        ...groups.map((g, gi) => {
+          const list = groupFactors(gi);
+          return segment(g.label, `g${gi}`, list.length, list.filter(([, i]) => coded(i)).length);
+        }),
+        segment('Valutazione', 'valutazione', 1, 0),
+        segment('Piano', 'piano', 1, 0)
+      ];
+      const done = factors.filter((f, i) => coded(i)).length;
+      let minutes = 0;
+      order.slice(cursor).forEach(screen => {
+        if (screen.startsWith('g')) minutes += groupFactors(Number(screen[1])).filter(([, i]) => !coded(i)).length * MINUTES.factor;
+        else minutes += MINUTES[screen] || 0;
+      });
+      TestKit.progress(progressEl, {
+        segments,
+        where: name === 'intro' ? 'Introduzione' : name === 'riepilogo' ? `<b>Riepilogo</b>, ${done} elementi su 19 codificati` : `<b>Sezione ${cursor} di 7</b>, ${done} elementi su 19 codificati`,
+        seconds: name === 'riepilogo' ? null : minutes * 60
+      });
+    }
+
+    function show(index) {
+      cursor = Math.max(0, Math.min(order.length - 1, index));
+      const name = order[cursor];
+      if (name === 'riepilogo') renderSummary();
+      stage.querySelectorAll('.screen').forEach(screen => {
+        const active = screen.dataset.screen === name;
+        screen.hidden = !active;
+        // Restart the entrance on the section that just arrived
+        screen.classList.remove('step');
+        if (active) { void screen.offsetWidth; screen.classList.add('step'); }
+      });
+      nav.hidden = name === 'intro';
+      nav.querySelector('[data-next]').hidden = name === 'riepilogo';
+      nav.querySelector('[data-next]').textContent = name === 'piano' ? 'Vedi il riepilogo' : 'Avanti';
+      updateProgress();
+      const top = stage.getBoundingClientRect().top + window.scrollY - 200;
+      if (window.scrollY > top) window.scrollTo({ top: Math.max(0, top), behavior: 'instant' });
+      const heading = stage.querySelector(`.screen[data-screen="${name}"] .question, .screen[data-screen="${name}"] .title`);
+      if (heading && name !== 'intro') { heading.setAttribute('tabindex', '-1'); heading.focus({ preventScroll: true }); }
+    }
+
+    function renderSummary() {
+      const colours = { S: 'var(--maroon)', '?': 'var(--ochre)', N: 'var(--grey)', '-': 'var(--soft-rule)' };
+      const row = (prefix, label) => {
+        const values = factors.map((f, i) => document.querySelector(`input[name="${prefix}_${i}"]:checked`)?.value);
+        const counts = ['S', '?', 'N', '-'].map(v => [v, values.filter(x => x === v).length]);
+        const empty = values.filter(x => !x).length;
+        return `<div class="bar-row">
+          <div class="bar-label"><span>${label}</span><span>${counts.map(([v, n]) => `${v === '-' ? '–' : v} ${n}`).join(', ')}${empty ? `, non codificati ${empty}` : ''}</span></div>
+          <div class="stack" aria-hidden="true">${counts.map(([v, n]) => n ? `<i style="--n:${n};background:${colours[v]}"></i>` : '').join('')}${empty ? `<i style="--n:${empty};background:transparent"></i>` : ''}</div>
+        </div>`;
+      };
+      document.querySelector('#codingBars').innerHTML = row('now', 'Ultimo mese') + row('past', 'In passato');
+
+      const present = factors.map((f, i) => [f, document.querySelector(`input[name="now_${i}"]:checked`)?.value]).filter(([, v]) => v === 'S' || v === '?');
+      document.querySelector('#presentList').innerHTML = present.length
+        ? `<div class="box summary-rows">${present.map(([f, v]) => `<div class="box-row"><span style="color:var(--ink)">${f[1]}. ${f[2]}</span><b>${v === 'S' ? 'presente' : 'parzialmente'}</b></div>`).join('')}</div>`
+        : '<p class="note">Nessun elemento codificato come presente o parzialmente presente nell’ultimo mese.</p>';
+
+      document.querySelector('#riskSummary').innerHTML = [...document.querySelectorAll('#valutazione select')].map(sel =>
+        `<div class="box-row"><span style="color:var(--ink)">${sel.closest('label').querySelector('span').textContent}</span><b>${sel.value}</b></div>`).join('');
+
+      const done = factors.filter((f, i) => coded(i)).length;
+      document.querySelector('#summaryTitle').textContent = done === factors.length ? 'Tutti i 19 elementi sono codificati' : `${done} elementi su 19 codificati per entrambi i periodi`;
+    }
+
+    stage.addEventListener('click', event => {
+      if (event.target.closest('[data-next]')) show(cursor + 1);
+      if (event.target.closest('[data-back]')) show(cursor - 1);
+    });
+
+    stage.addEventListener('change', () => updateProgress());
+
     document.querySelector('#exportBtn').addEventListener('click', () => {
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
@@ -663,7 +463,9 @@
 
       doc.save('SARA-S_valutazione.pdf');
     });
-  </script>
-</body>
 
+    show(0);
+  </script>
+  <script src="quick-exit.js"></script>
+</body>
 </html>

@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Percorso riservato e non diagnostico per riconoscere segnali di controllo, abuso e violenza e trovare supporto.">
+  <title>Meteo di oggi</title>
+  <style>
+    :root {
+      --paper:#f7f4ed;
+      --ink:#171717;
+      --muted:#68635d;
+      --soft:#e7e1d6;
+      --white:#fffdfa;
+      --red:#b22b24;
+      --blue:#12606d;
+      --green:#506d2f;
+      --violet:#60436f;
+      --yellow:#d49b24;
+      --line:#171717;
+      --radius:6px;
+    }
+
+    * { box-sizing:border-box; }
+    html { background:var(--paper); color:var(--ink); }
+    body {
+      margin:0;
+      font-family:Arial, Helvetica, sans-serif;
+      font-size:16px;
+      line-height:1.42;
+      background:
+        linear-gradient(90deg, rgba(23,23,23,.045) 1px, transparent 1px) 0 0/48px 48px,
+        linear-gradient(0deg, rgba(23,23,23,.035) 1px, transparent 1px) 0 0/48px 48px,
+        var(--paper);
+    }
+    button, input { font:inherit; }
+    button, label { -webkit-tap-highlight-color:transparent; }
+    a { color:inherit; text-decoration-thickness:1px; text-underline-offset:4px; }
+    h1, h2, h3, p { margin-top:0; }
+    button:focus-visible, a:focus-visible, input:focus-visible + span {
+      outline:4px solid var(--yellow);
+      outline-offset:3px;
+    }
+
+    .site-header {
+      position:sticky;
+      top:0;
+      z-index:20;
+      min-height:62px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      padding:10px clamp(16px, 5vw, 72px);
+      border-bottom:2px solid var(--line);
+      background:rgba(247,244,237,.98);
+    }
+    .tiny, .eyebrow {
+      color:var(--muted);
+      font-size:.78rem;
+      text-transform:uppercase;
+      letter-spacing:.06em;
+    }
+    .header-actions, .actions, .help-actions {
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+    }
+    .header-btn, .btn {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:44px;
+      border:2px solid var(--line);
+      border-radius:0;
+      padding:10px 14px;
+      background:var(--white);
+      color:var(--ink);
+      text-decoration:none;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .header-btn { text-transform:uppercase; font-size:.78rem; letter-spacing:.05em; }
+    .btn.primary { background:var(--ink); color:var(--white); }
+    .btn.danger, .exit-btn { border-color:var(--red); background:#e31313; color:#fff; }
+    .btn:disabled { opacity:.4; cursor:not-allowed; }
+    .btn:not(:disabled):hover, .header-btn:hover { transform:translateY(-1px); box-shadow:3px 3px 0 var(--line); }
+
+    .layout { min-height:calc(100vh - 62px); display:grid; grid-template-columns:minmax(230px,18vw) 1fr; }
+    aside {
+      position:sticky;
+      top:62px;
+      height:calc(100vh - 62px);
+      padding:18px;
+      border-right:2px solid var(--line);
+      background:rgba(247,244,237,.96);
+      display:flex;
+      flex-direction:column;
+      gap:24px;
+    }
+    .brand { display:grid; gap:10px; padding-bottom:18px; border-bottom:2px solid var(--line); }
+    .mark {
+      width:44px;
+      height:44px;
+      display:grid;
+      place-items:center;
+      border:2px solid var(--line);
+      background:var(--white);
+      font-weight:800;
+    }
+    .brand strong { font-size:clamp(1.3rem,2vw,1.9rem); line-height:.95; text-transform:uppercase; }
+    .side-nav { display:grid; gap:8px; }
+    .side-nav a {
+      display:grid;
+      grid-template-columns:2rem 1fr;
+      gap:10px;
+      padding:8px 0;
+      border-bottom:1px solid rgba(23,23,23,.28);
+      text-decoration:none;
+    }
+    .privacy-note { margin-top:auto; padding-top:16px; border-top:2px solid var(--line); }
+
+    main { min-width:0; display:grid; grid-template-rows:auto 1fr auto; }
+    .progress-wrap { padding:18px clamp(18px,5vw,72px) 0; background:var(--white); }
+    .progress-track { height:10px; border:2px solid var(--line); background:var(--paper); }
+    .progress-fill { height:100%; width:0; background:var(--blue); transition:width .25s ease; }
+    .progress-meta { display:flex; justify-content:space-between; gap:16px; padding:8px 0 18px; }
+
+    .stage {
+      min-height:620px;
+      padding:clamp(30px,6vw,88px);
+      background:var(--white);
+      border-bottom:2px solid var(--line);
+    }
+    .screen { max-width:1040px; margin:0 auto; }
+    .step-label { display:block; margin-bottom:16px; color:var(--blue); font-weight:800; text-transform:uppercase; letter-spacing:.06em; }
+    h1 { max-width:12ch; font-size:clamp(3rem,8vw,7.8rem); line-height:.82; text-transform:uppercase; }
+    h2 { max-width:18ch; font-size:clamp(2rem,4.8vw,4.7rem); line-height:.92; text-transform:uppercase; }
+    h1[tabindex], h2[tabindex] { outline:none; }
+    h3 { font-size:clamp(1.1rem,2vw,1.5rem); line-height:1.1; }
+    .lead { max-width:850px; font-size:clamp(1.12rem,2vw,1.6rem); line-height:1.2; }
+    .supporting { max-width:780px; color:var(--muted); }
+
+    .choice-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin:28px 0; }
+    .choice { position:relative; display:block; cursor:pointer; }
+    .choice input { position:absolute; opacity:0; pointer-events:none; }
+    .choice span {
+      min-height:116px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap:14px;
+      padding:18px;
+      border:2px solid var(--line);
+      background:var(--paper);
+    }
+    .choice input:checked + span { background:var(--blue); color:#fff; border-color:var(--blue); box-shadow:4px 4px 0 var(--ink); }
+    .choice:hover span { background:var(--soft); }
+    .choice input:checked:hover + span { background:var(--blue); }
+    .choice strong { font-size:1.08rem; }
+    .choice small { color:inherit; opacity:.78; }
+
+    .notice, .urgent, .validation {
+      padding:18px;
+      margin:22px 0;
+      border:2px solid var(--line);
+      background:var(--paper);
+    }
+    .notice { border-left:10px solid var(--blue); }
+    .urgent { border-left:10px solid var(--red); background:#fff4f1; }
+    .validation { display:none; border-left:10px solid var(--yellow); }
+    .validation.show { display:block; }
+    .notice p:last-child, .urgent p:last-child, .validation p:last-child { margin-bottom:0; }
+    .safe-list { margin:0; padding-left:1.2em; }
+    .safe-list li { margin-bottom:8px; }
+    .actions { margin-top:30px; justify-content:space-between; }
+    .action-group { display:flex; flex-wrap:wrap; gap:10px; }
+
+    .result-intro { border-bottom:2px solid var(--line); padding-bottom:24px; margin-bottom:24px; }
+    .result-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); border-top:2px solid var(--line); border-left:2px solid var(--line); margin:24px 0; }
+    .result-card { min-height:210px; padding:20px; border-right:2px solid var(--line); border-bottom:2px solid var(--line); background:var(--white); }
+    .result-card .tag { display:inline-block; margin-bottom:28px; padding:4px 7px; border:1px solid var(--line); background:var(--paper); font-size:.72rem; text-transform:uppercase; letter-spacing:.05em; }
+    .next-step { margin-top:22px; padding:24px; border:2px solid var(--line); background:var(--paper); }
+    .disclaimer { margin-top:24px; color:var(--muted); font-size:.92rem; }
+    .source-strip { padding:26px clamp(18px,5vw,72px); background:var(--paper); }
+    .source-strip details { max-width:1040px; margin:auto; border:2px solid var(--line); background:var(--white); }
+    .source-strip summary { cursor:pointer; padding:14px 16px; font-weight:700; }
+    .source-body { padding:0 18px 18px; }
+    .source-body li { margin-bottom:8px; }
+    footer { padding:20px clamp(18px,5vw,72px); background:var(--ink); color:var(--paper); display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+
+    @media (max-width:900px) {
+      .layout { grid-template-columns:1fr; }
+      aside { display:none; }
+      .stage { min-height:560px; }
+    }
+    @media (max-width:640px) {
+      .site-header, .progress-meta, footer { align-items:stretch; }
+      .site-header { display:grid; }
+      .header-actions { display:grid; grid-template-columns:1fr 1fr; }
+      .stage { padding:32px 16px; }
+      .progress-wrap { padding-inline:16px; }
+      .choice-grid, .result-grid { grid-template-columns:1fr; }
+      .choice span { min-height:96px; }
+      .actions { align-items:stretch; }
+      .actions, .action-group { display:grid; grid-template-columns:1fr; }
+    }
+    @media (prefers-reduced-motion:reduce) {
+      *, *::before, *::after { scroll-behavior:auto !important; transition:none !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header" aria-label="Azioni di sicurezza">
+    <span class="tiny">Percorso riservato · nessun dato salvato</span>
+    <div class="header-actions">
+      <a class="header-btn" href="index.html#test">Torna alla mappa</a>
+      <a class="header-btn exit-btn" href="https://www.google.com/search?q=meteo" id="exitBtn">Esci subito dal sito</a>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside>
+      <div class="brand">
+        <div class="mark">?</div>
+        <strong>Capire la situazione</strong>
+        <span class="tiny">Orientamento, non diagnosi</span>
+      </div>
+      <nav class="side-nav" aria-label="Indice del percorso">
+        <a href="#percorso"><b>1</b><span>La situazione</span></a>
+        <a href="#percorso"><b>2</b><span>I segnali</span></a>
+        <a href="#percorso"><b>3</b><span>Ciò che conta ora</span></a>
+        <a href="#fonti"><b>4</b><span>Metodo e fonti</span></a>
+      </nav>
+      <div class="privacy-note tiny">
+        Le risposte esistono solo nella memoria temporanea di questa pagina. Chiudendo o ricaricando, il percorso ricomincia.
+      </div>
+    </aside>
+
+    <main>
+      <div class="progress-wrap" aria-label="Avanzamento del percorso">
+        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+        <div class="progress-meta"><span class="tiny" id="progressText">Introduzione</span><span class="tiny">Puoi fermarti in qualsiasi momento</span></div>
+      </div>
+
+      <section class="stage" id="percorso" aria-live="polite" aria-atomic="true"></section>
+
+      <section class="source-strip" id="fonti">
+        <details>
+          <summary>Metodo, limiti e fonti del percorso</summary>
+          <div class="source-body">
+            <p>Questo percorso organizza informazioni e opzioni: non stabilisce se un reato è avvenuto, non formula diagnosi e non sostituisce una valutazione professionale.</p>
+            <ul>
+              <li><a href="https://myplanapp.org/en/home" target="_blank" rel="noopener">myPlan</a>: modello di decision aid con segnali, priorità e indicazioni personalizzate.</li>
+              <li><a href="https://pubmed.ncbi.nlm.nih.gov/25547929/" target="_blank" rel="noopener">Eden et al. (2015)</a>: trial randomizzato sul supporto alle decisioni di sicurezza.</li>
+              <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9419475/" target="_blank" rel="noopener">Emezue et al. (2022)</a>: revisione sistematica degli interventi digitali per la violenza nelle relazioni intime.</li>
+              <li><a href="https://www.who.int/publications/i/item/WHO-RHR-14.26" target="_blank" rel="noopener">OMS, approccio LIVES</a>: ascolto, comprensione dei bisogni, validazione, sicurezza e supporto.</li>
+              <li><a href="https://pubmed.ncbi.nlm.nih.gov/18667689/" target="_blank" rel="noopener">Campbell et al. (2009)</a>: indicatori di rischio grave alla base del Danger Assessment.</li>
+            </ul>
+            <p>La ricerca disponibile riguarda soprattutto donne in relazioni intime eterosessuali. Il linguaggio del percorso è inclusivo, ma non implica che gli strumenti originari siano stati validati allo stesso modo per ogni genere, età o contesto.</p>
+          </div>
+        </details>
+      </section>
+
+      <footer>
+        <span>Violenza di genere · mappa operativa</span>
+        <span>In pericolo immediato: 112 · supporto: 1522</span>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    const stage = document.querySelector('#percorso');
+    const progressFill = document.querySelector('#progressFill');
+    const progressText = document.querySelector('#progressText');
+
+    const state = {
+      concern: null,
+      context: null,
+      urgent: null,
+      behaviours: [],
+      noneBehaviour: false,
+      pattern: null,
+      priority: null
+    };
+
+    const behaviourInfo = {
+      control: {
+        title: 'Controllo e isolamento',
+        text: 'Limitare spostamenti, amicizie, lavoro, studio, abbigliamento o decisioni può ridurre progressivamente autonomia e libertà.'
+      },
+      psychological: {
+        title: 'Violenza psicologica',
+        text: 'Umiliazioni, insulti, colpevolizzazione, intimidazione o minacce non sono semplici conflitti quando diventano strumenti di paura e controllo.'
+      },
+      digital: {
+        title: 'Controllo digitale o stalking',
+        text: 'Controllare dispositivi, password, posizione e profili, oppure imporre contatti insistenti e indesiderati, può essere una forma di abuso.'
+      },
+      economic: {
+        title: 'Abuso economico',
+        text: 'Impedire di lavorare, controllare ogni spesa, nascondere informazioni o creare debiti può produrre dipendenza e limitare le possibilità di scelta.'
+      },
+      physical: {
+        title: 'Violenza fisica',
+        text: 'Spinte, schiaffi, colpi, immobilizzazione, strangolamento o qualsiasi aggressione fisica sono violenza, anche se accadono una sola volta.'
+      },
+      sexual: {
+        title: 'Violenza o coercizione sessuale',
+        text: 'Pressioni, ricatti o atti sessuali senza un consenso libero e attuale sono violenza. Essere in una relazione non sostituisce il consenso.'
+      },
+      discrimination: {
+        title: 'Svalutazione o discriminazione',
+        text: 'Usare genere, orientamento, identità, disabilità, origine, religione o altre caratteristiche per umiliare, minacciare o controllare aggrava la situazione.'
+      },
+      children: {
+        title: 'Figli, figlie o altre persone coinvolte',
+        text: 'Minacce, violenza assistita o uso di altre persone per controllare qualcuno richiedono attenzione anche alla loro sicurezza e al loro benessere.'
+      }
+    };
+
+    const priorityInfo = {
+      understand: {
+        title: 'Dare un nome a ciò che accade',
+        text: 'Puoi leggere le forme della violenza nella mappa e, se la situazione riguarda un partner o ex partner, proseguire con il questionario ISA.'
+      },
+      talk: {
+        title: 'Parlarne senza essere giudicatə',
+        text: 'Il 1522 offre ascolto gratuito e anonimo. Un Centro Antiviolenza può aiutare a esplorare possibilità senza obbligare a denunciare o lasciare una relazione.'
+      },
+      safety: {
+        title: 'Pensare alla sicurezza',
+        text: 'Valuta un contatto riservato con il 1522 o un Centro Antiviolenza. Se usare questo dispositivo non è sicuro, cerca quando possibile un dispositivo non controllato.'
+      },
+      children: {
+        title: 'Proteggere figli, figlie o altre persone',
+        text: 'Un servizio specializzato può costruire con te un piano che consideri le esigenze di tutte le persone coinvolte, senza soluzioni automatiche.'
+      },
+      practical: {
+        title: 'Casa, denaro, salute o aspetti legali',
+        text: 'I Centri Antiviolenza possono orientare verso supporto psicologico, legale, economico, sanitario e abitativo disponibile sul territorio.'
+      }
+    };
+
+    const steps = ['intro', 'concern', 'context', 'urgent', 'behaviours', 'pattern', 'priority', 'result'];
+    let cursor = 0;
+
+    function radioChoice(name, value, title, description, selected) {
+      return `<label class="choice"><input type="radio" name="${name}" value="${value}" ${selected === value ? 'checked' : ''}><span><strong>${title}</strong>${description ? `<small>${description}</small>` : ''}</span></label>`;
+    }
+
+    function checkboxChoice(value, title, description) {
+      return `<label class="choice"><input type="checkbox" name="behaviour" value="${value}" ${state.behaviours.includes(value) ? 'checked' : ''}><span><strong>${title}</strong><small>${description}</small></span></label>`;
+    }
+
+    function navigation(showBack = true, nextText = 'Continua') {
+      return `<div class="validation" id="validation" role="alert"><p>Scegli una risposta per continuare. Puoi anche selezionare “Non so”.</p></div>
+        <div class="actions">
+          <div class="action-group">${showBack ? '<button class="btn" type="button" data-action="back">← Indietro</button>' : ''}</div>
+          <div class="action-group"><button class="btn primary" type="button" data-action="next">${nextText} →</button></div>
+        </div>`;
+    }
+
+    function updateProgress() {
+      const visibleStep = Math.min(cursor, steps.length - 1);
+      const percent = cursor === 0 ? 0 : Math.round((visibleStep / (steps.length - 1)) * 100);
+      progressFill.style.width = `${percent}%`;
+      progressText.textContent = cursor === 0 ? 'Introduzione' : cursor === steps.length - 1 ? 'Il tuo orientamento' : `Passaggio ${cursor} di ${steps.length - 2}`;
+    }
+
+    function introScreen() {
+      return `<div class="screen">
+        <span class="step-label">Prima di iniziare</span>
+        <h1>Capire la situazione</h1>
+        <p class="lead">Un breve percorso per riconoscere comportamenti che ti preoccupano e trovare informazioni più adatte a ciò che stai vivendo o osservando.</p>
+        <div class="notice">
+          <h3>Riservato e senza giudizio</h3>
+          <p>Non ti chiederemo nomi o contatti. Le risposte non vengono salvate né inviate. Il risultato non è una diagnosi e non decide al posto tuo.</p>
+        </div>
+        <div class="urgent">
+          <h3>Hai bisogno di aiuto adesso?</h3>
+          <p>Se tu o un'altra persona siete in pericolo immediato, chiama il <strong>112</strong>. Per ascolto e orientamento gratuito, anonimo e attivo 24 ore su 24, contatta il <strong>1522</strong>.</p>
+          <div class="help-actions"><a class="btn danger" href="tel:112">Chiama 112</a><a class="btn" href="tel:1522">Chiama 1522</a></div>
+        </div>
+        ${navigation(false, 'Inizia')}
+      </div>`;
+    }
+
+    function concernScreen() {
+      return `<div class="screen">
+        <span class="step-label">La situazione</span>
+        <h2>Per chi stai cercando di capire?</h2>
+        <p class="lead">La risposta serve solo ad adattare il linguaggio del percorso.</p>
+        <div class="choice-grid">
+          ${radioChoice('concern','self','Per me','Sto pensando a qualcosa che vivo o ho vissuto.',state.concern)}
+          ${radioChoice('concern','other','Per un’altra persona','Qualcosa che vedo o che mi è stato raccontato mi preoccupa.',state.concern)}
+        </div>
+        ${navigation()}
+      </div>`;
+    }
+
+    function contextScreen() {
+      return `<div class="screen">
+        <span class="step-label">Il contesto</span>
+        <h2>Dove accadono soprattutto questi comportamenti?</h2>
+        <p class="lead">Puoi scegliere il contesto più vicino, anche se la situazione attraversa più spazi.</p>
+        <div class="choice-grid">
+          ${radioChoice('context','partner','Partner o ex partner','Una relazione attuale, passata o in fase di separazione.',state.context)}
+          ${radioChoice('context','family','Famiglia o casa','Un familiare, convivente o altra persona vicina.',state.context)}
+          ${radioChoice('context','public','Lavoro, scuola o spazio pubblico','Comportamenti legati a colleghi, responsabili, compagni o sconosciuti.',state.context)}
+          ${radioChoice('context','online','Online o tramite dispositivi','Contatti, immagini, account, localizzazione o sorveglianza digitale.',state.context)}
+          ${radioChoice('context','unsure','Non so definirlo','Il contesto è misto, incerto o non compare qui.',state.context)}
+        </div>
+        ${navigation()}
+      </div>`;
+    }
+
+    function urgentScreen() {
+      return `<div class="screen">
+        <span class="step-label">Sicurezza</span>
+        <h2>C’è un pericolo urgente o un rischio di violenza grave?</h2>
+        <p class="lead">Pensa a questo momento e alle ultime settimane.</p>
+        <div class="notice">
+          <p>Per esempio: ci sono state minacce di morte o con un’arma, strangolamento, blocchi mentre qualcuno cercava di allontanarsi, oppure il timore che qualcosa di grave possa accadere presto.</p>
+        </div>
+        <div class="choice-grid">
+          ${radioChoice('urgent','yes','Sì','Uno o più di questi segnali sono presenti.',state.urgent)}
+          ${radioChoice('urgent','no','No','Non riconosco questi segnali in questo momento.',state.urgent)}
+          ${radioChoice('urgent','unsure','Non so','Ho dubbi o non conosco abbastanza la situazione.',state.urgent)}
+          ${radioChoice('urgent','skip','Preferisco non rispondere','Posso comunque continuare il percorso.',state.urgent)}
+        </div>
+        <div class="urgent" id="urgentHelp" ${state.urgent === 'yes' ? '' : 'hidden'}>
+          <h3>La sicurezza viene prima</h3>
+          <p>Se il pericolo è immediato, chiama il 112. Il 1522 può aiutare a valutare opzioni e servizi senza obbligare a prendere una decisione specifica.</p>
+          <div class="help-actions"><a class="btn danger" href="tel:112">Chiama 112</a><a class="btn" href="tel:1522">Chiama 1522</a></div>
+        </div>
+        ${navigation()}
+      </div>`;
+    }
+
+    function behavioursScreen() {
+      return `<div class="screen">
+        <span class="step-label">I segnali</span>
+        <h2>Quali comportamenti riconosci?</h2>
+        <p class="lead">Seleziona tutte le descrizioni pertinenti. Conta anche un singolo episodio, se ti ha fattə sentire in pericolo o senza possibilità di scelta.</p>
+        <div class="choice-grid">
+          ${checkboxChoice('control','Controllo e isolamento','Limita persone, luoghi, lavoro, studio, abiti o decisioni.')}
+          ${checkboxChoice('psychological','Umiliazioni o minacce','Insulta, svaluta, intimorisce, colpevolizza o ricatta.')}
+          ${checkboxChoice('digital','Controllo digitale o stalking','Controlla dispositivi, posizione o account; insiste con contatti indesiderati.')}
+          ${checkboxChoice('economic','Controllo economico','Controlla denaro e spese, impedisce di lavorare o crea debiti.')}
+          ${checkboxChoice('physical','Aggressione fisica','Spinge, colpisce, blocca, ferisce o mette le mani al collo.')}
+          ${checkboxChoice('sexual','Pressione o violenza sessuale','Ignora un no, insiste, ricatta o compie atti senza consenso.')}
+          ${checkboxChoice('discrimination','Svalutazione discriminatoria','Usa identità, genere, orientamento, origine, religione o disabilità per colpire.')}
+          ${checkboxChoice('children','Coinvolgimento di altre persone','Minaccia figli, figlie, familiari, animali o li usa per controllare.')}
+        </div>
+        <label class="choice"><input type="checkbox" id="noneBehaviour" ${state.noneBehaviour ? 'checked' : ''}><span><strong>Nessuna di queste / non so</strong><small>Il disagio può comunque meritare ascolto e approfondimento.</small></span></label>
+        ${navigation()}
+      </div>`;
+    }
+
+    function patternScreen() {
+      return `<div class="screen">
+        <span class="step-label">L’andamento</span>
+        <h2>Come descriveresti ciò che sta accadendo?</h2>
+        <p class="lead">Non serve ricordare ogni episodio. Scegli ciò che si avvicina di più alla tua percezione.</p>
+        <div class="choice-grid">
+          ${radioChoice('pattern','single','Un episodio che preoccupa','È successo una volta o non so se sia già accaduto prima.',state.pattern)}
+          ${radioChoice('pattern','repeated','Un comportamento ripetuto','Ritorna nel tempo o in forme diverse.',state.pattern)}
+          ${radioChoice('pattern','escalating','Sta peggiorando','Frequenza, intensità, minacce o controllo stanno aumentando.',state.pattern)}
+          ${radioChoice('pattern','fear','C’è paura o adattamento','Si cambiano abitudini o parole per evitare reazioni.',state.pattern)}
+          ${radioChoice('pattern','unsure','Non so','È difficile ricostruire o definire l’andamento.',state.pattern)}
+        </div>
+        ${navigation()}
+      </div>`;
+    }
+
+    function priorityScreen() {
+      return `<div class="screen">
+        <span class="step-label">Ciò che conta ora</span>
+        <h2>Qual è il bisogno più importante in questo momento?</h2>
+        <p class="lead">Non è una scelta definitiva: serve a proporre un primo passo più pertinente.</p>
+        <div class="choice-grid">
+          ${radioChoice('priority','understand','Capire e dare un nome','Vorrei distinguere conflitto, controllo, abuso o violenza.',state.priority)}
+          ${radioChoice('priority','talk','Parlarne con qualcuno','Vorrei essere ascoltatə senza giudizio o pressioni.',state.priority)}
+          ${radioChoice('priority','safety','Pensare alla sicurezza','Vorrei capire come ridurre un rischio o prepararmi.',state.priority)}
+          ${radioChoice('priority','children','Considerare altre persone','Mi preoccupano figli, figlie, familiari o altre persone coinvolte.',state.priority)}
+          ${radioChoice('priority','practical','Affrontare bisogni pratici','Casa, denaro, salute, lavoro, documenti o aspetti legali.',state.priority)}
+        </div>
+        ${navigation(true, 'Vedi l’orientamento')}
+      </div>`;
+    }
+
+    function contextMessage() {
+      const messages = {
+        partner: 'La situazione riguarda una relazione intima attuale o passata. Controllo, paura e limitazione dell’autonomia sono elementi importanti da osservare, anche in assenza di aggressioni fisiche.',
+        family: 'La violenza può avvenire anche all’interno della famiglia o della convivenza. Il legame con la persona non rende accettabili minacce, controllo o aggressioni.',
+        public: 'Molestie, discriminazioni, minacce e violenza possono avvenire sul lavoro, a scuola o negli spazi pubblici. Questo percorso offre un primo orientamento, ma potrebbero servire risorse specifiche per quel contesto.',
+        online: 'Ciò che avviene online è reale: sorveglianza, diffusione di immagini, accesso agli account, minacce e contatti insistenti possono causare danno e limitare la libertà.',
+        unsure: 'Non è necessario trovare subito una definizione perfetta. Più comportamenti e contesti possono sovrapporsi, e il disagio è una ragione sufficiente per cercare ascolto.'
+      };
+      return messages[state.context] || messages.unsure;
+    }
+
+    function resultScreen() {
+      const cards = state.behaviours.map(key => {
+        const item = behaviourInfo[key];
+        return `<article class="result-card"><span class="tag">Segnale riconosciuto</span><h3>${item.title}</h3><p>${item.text}</p></article>`;
+      }).join('');
+      const noCards = `<article class="result-card"><span class="tag">Da approfondire</span><h3>Il disagio conta</h3><p>Non riconoscere una descrizione non dimostra che la situazione sia sicura. Puoi ripetere il percorso, leggere esempi concreti o parlarne con una persona competente.</p></article>`;
+      const patternText = {
+        single: 'Anche un episodio singolo può essere serio. Conta il comportamento e il suo impatto, non soltanto quante volte è accaduto.',
+        repeated: 'La ripetizione suggerisce un modello, non un episodio isolato. Osservare come i comportamenti si combinano può aiutare a comprendere il controllo esercitato.',
+        escalating: 'Un aumento di frequenza o gravità è un segnale di attenzione. Considera un confronto riservato sulla sicurezza con un servizio specializzato.',
+        fear: 'Cambiare il proprio comportamento per evitare reazioni indica che paura e controllo stanno limitando la libertà di scelta.',
+        unsure: 'È comune avere ricordi frammentari o difficoltà a definire un andamento. Non devi dimostrare nulla per meritare ascolto.'
+      };
+      const priority = priorityInfo[state.priority] || priorityInfo.understand;
+      const urgentBlock = state.urgent === 'yes' ? `<div class="urgent"><h3>Hai indicato segnali di possibile pericolo grave</h3><p>Se il pericolo è immediato, chiama il 112. Se puoi farlo in sicurezza, il 1522 o un Centro Antiviolenza possono aiutarti a valutare opzioni personalizzate.</p><div class="help-actions"><a class="btn danger" href="tel:112">Chiama 112</a><a class="btn" href="tel:1522">Chiama 1522</a></div></div>` : '';
+      const isaLink = state.context === 'partner' ? '<a class="btn" href="isa.html">Questionario ISA</a>' : '';
+      const economicLink = state.behaviours.includes('economic') ? '<a class="btn" href="economic-abuse.html">Approfondisci l’abuso economico</a>' : '';
+
+      return `<div class="screen">
+        <div class="result-intro">
+          <span class="step-label">Il tuo orientamento</span>
+          <h2>${state.urgent === 'yes' ? 'La sicurezza viene prima' : state.behaviours.length ? 'Ci sono segnali da non minimizzare' : 'Vale la pena ascoltare il disagio'}</h2>
+          <p class="lead">${contextMessage()}</p>
+        </div>
+        ${urgentBlock}
+        <div class="notice"><h3>Come leggere il quadro</h3><p>${patternText[state.pattern] || patternText.unsure}</p></div>
+        <div class="result-grid">${cards || noCards}</div>
+        <div class="next-step"><span class="eyebrow">Un possibile primo passo</span><h3>${priority.title}</h3><p>${priority.text}</p><div class="help-actions"><a class="btn primary" href="tel:1522">Contatta il 1522</a><a class="btn" href="trova-centro.html">Trova un Centro Antiviolenza</a>${isaLink}${economicLink}</div></div>
+        <p class="disclaimer">Questo orientamento non assegna un punteggio e non certifica né esclude una situazione di violenza. Solo tu conosci pienamente il tuo contesto; una persona specializzata può aiutarti a valutarlo senza giudicare o imporre decisioni.</p>
+        <div class="actions"><div class="action-group"><button class="btn" type="button" data-action="back">← Rivedi le risposte</button></div><div class="action-group"><button class="btn" type="button" data-action="reset">Ricomincia</button><a class="btn" href="index.html#forme">Leggi forme e dinamiche</a></div></div>
+      </div>`;
+    }
+
+    function render() {
+      const step = steps[cursor];
+      const screens = {
+        intro:introScreen,
+        concern:concernScreen,
+        context:contextScreen,
+        urgent:urgentScreen,
+        behaviours:behavioursScreen,
+        pattern:patternScreen,
+        priority:priorityScreen,
+        result:resultScreen
+      };
+      stage.innerHTML = screens[step]();
+      updateProgress();
+      window.scrollTo({ top:0, behavior:'smooth' });
+      const heading = stage.querySelector('h1, h2');
+      if (heading) { heading.setAttribute('tabindex','-1'); heading.focus({preventScroll:true}); }
+    }
+
+    function saveCurrent() {
+      const step = steps[cursor];
+      if (step === 'intro') return true;
+      if (step === 'behaviours') {
+        const none = document.querySelector('#noneBehaviour');
+        state.behaviours = [...document.querySelectorAll('input[name="behaviour"]:checked')].map(input => input.value);
+        state.noneBehaviour = Boolean(none && none.checked);
+        if (state.behaviours.length || state.noneBehaviour) return true;
+        return false;
+      }
+      const input = document.querySelector(`input[name="${step}"]:checked`);
+      if (!input) return false;
+      state[step] = input.value;
+      return true;
+    }
+
+    stage.addEventListener('change', event => {
+      if (event.target.name === 'urgent') {
+        state.urgent = event.target.value;
+        const urgentHelp = document.querySelector('#urgentHelp');
+        if (urgentHelp) urgentHelp.hidden = state.urgent !== 'yes';
+      }
+      if (event.target.name === 'behaviour') {
+        const none = document.querySelector('#noneBehaviour');
+        if (none) none.checked = false;
+        state.noneBehaviour = false;
+      }
+      if (event.target.id === 'noneBehaviour' && event.target.checked) {
+        document.querySelectorAll('input[name="behaviour"]').forEach(input => input.checked = false);
+        state.noneBehaviour = true;
+      }
+      const validation = document.querySelector('#validation');
+      if (validation) validation.classList.remove('show');
+    });
+
+    stage.addEventListener('click', event => {
+      const control = event.target.closest('[data-action]');
+      if (!control) return;
+      const action = control.dataset.action;
+      if (action === 'next') {
+        if (!saveCurrent()) {
+          const validation = document.querySelector('#validation');
+          if (validation) { validation.classList.add('show'); validation.scrollIntoView({behavior:'smooth', block:'center'}); }
+          return;
+        }
+        cursor = Math.min(cursor + 1, steps.length - 1);
+        render();
+      }
+      if (action === 'back') {
+        saveCurrent();
+        cursor = Math.max(cursor - 1, 0);
+        render();
+      }
+      if (action === 'reset') {
+        Object.assign(state, { concern:null, context:null, urgent:null, behaviours:[], noneBehaviour:false, pattern:null, priority:null });
+        cursor = 0;
+        render();
+      }
+    });
+
+    document.querySelector('#exitBtn').addEventListener('click', () => {
+      Object.assign(state, { concern:null, context:null, urgent:null, behaviours:[], noneBehaviour:false, pattern:null, priority:null });
+    });
+
+    render();
+  </script>
+  <script src="quick-exit.js"></script>
+</body>
+</html>

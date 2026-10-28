@@ -1,0 +1,816 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Venti situazioni, cinque modi per aiutare. Un gioco sulle scelte di chi assiste a molestie e discriminazioni."><title>Meteo di oggi</title>
+  <!-- Inside the single page the outer header is the only one: this page drops its own -->
+  <script>if (window.self !== window.top) document.documentElement.classList.add('embedded');</script>
+<meta name="color-scheme" content="light dark">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="stile-test.css">
+<style>
+    /* Game layout on the site's own tokens (stile-test.css): situation on the left, choices on the right */
+    main { max-width: 1440px; margin: 0 auto; padding-inline: max(var(--gutter), env(safe-area-inset-left)); }
+    button { cursor: pointer; }
+    button:disabled { cursor: not-allowed; }
+
+    .masthead {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: clamp(28px, 5vw, 56px) max(var(--gutter), env(safe-area-inset-left)) 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      flex-wrap: wrap;
+      gap: 16px 24px;
+    }
+
+    .wordmark {
+      font-size: clamp(2.5rem, 6vw, 4.75rem);
+      font-weight: 300;
+      line-height: .95;
+      letter-spacing: -.04em;
+    }
+
+    .masthead nav { display: flex; gap: 10px; }
+
+    .masthead nav button,
+    .secondary {
+      min-height: 40px;
+      padding: 8px 18px;
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      background: none;
+      font-size: .9375rem;
+      font-weight: 400;
+      transition: background-color .2s var(--ease), transform .15s var(--ease);
+    }
+
+    .masthead nav button:active, .secondary:active { transform: scale(.97); transition-duration: 0s; }
+
+    .eyebrow { margin: 0; font-size: var(--t-small); color: var(--muted); letter-spacing: .01em; }
+
+    /* Status: where you are, what you have left, what you achieved */
+    .status-strip {
+      display: grid;
+      grid-template-columns: 5fr 4fr 3fr;
+      gap: 16px clamp(24px, 4vw, 64px);
+      align-items: end;
+      padding: 16px 0 18px;
+      border-top: 1px solid var(--rule);
+      border-bottom: 1px solid var(--rule);
+    }
+
+    .chapter { display: grid; gap: 2px; }
+    .chapter > span:last-child { font-size: var(--t-intro); font-weight: 300; letter-spacing: -.01em; line-height: 1.25; }
+
+    .resolve-caption { display: flex; justify-content: space-between; gap: 16px; margin-bottom: 8px; font-size: var(--t-small); color: var(--muted); }
+    .resolve-caption strong { color: var(--ink); font-weight: 400; font-variant-numeric: tabular-nums; }
+
+    meter { appearance: none; display: block; width: 100%; height: 8px; border: 0; border-radius: 4px; background: var(--land); }
+    meter::-webkit-meter-bar { height: 8px; border: 0; border-radius: 4px; background: var(--land); }
+    meter::-webkit-meter-optimum-value { border-radius: 4px; background: var(--ink); transition: width .6s var(--ease); }
+    meter::-moz-meter-bar { border-radius: 4px; background: var(--ink); }
+
+    .impact { display: grid; gap: 2px; justify-items: end; text-align: right; }
+    .impact strong { font-size: var(--t-intro); font-weight: 300; font-variant-numeric: tabular-nums; }
+
+    .play-area {
+      display: grid;
+      grid-template-columns: 5fr 7fr;
+      gap: 32px clamp(24px, 4vw, 64px);
+      align-items: start;
+      padding: clamp(28px, 4vw, 48px) 0 clamp(48px, 6vw, 88px);
+    }
+
+    .card-stage { position: sticky; top: calc(var(--header-h) + 24px); min-width: 0; }
+    .choices-panel { min-width: 0; }
+
+    .card-kicker { display: flex; justify-content: space-between; gap: 16px; margin-bottom: 12px; font-size: var(--t-small); color: var(--muted); }
+
+    .scene-card { border: 1px solid var(--rule); border-radius: var(--r-box); }
+    .card-copy { padding: 20px 22px 22px; }
+    .card-copy h1 { margin: 8px 0 16px; font-size: var(--t-question); font-weight: 300; line-height: 1.2; letter-spacing: -.015em; }
+    .card-copy > p { margin: 0 0 20px; font-size: 1.0625rem; line-height: 1.55; }
+
+    .clue { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: baseline; padding-top: 14px; border-top: 1px solid var(--rule); }
+    .clue::before { content: ""; width: 11px; height: 11px; border-radius: 50%; background: var(--vermilion); transform: translateY(1px); }
+    .clue p { margin: 0; font-size: .9375rem; color: var(--muted); }
+
+    .choices-panel h2 { margin: 2px 0 6px; font-size: var(--t-intro); font-weight: 400; }
+    .choice-hint { margin: 0 0 18px; font-size: .9375rem; color: var(--muted); }
+
+    /* Five ways to help: ruled rows in one rounded box, cost on the right */
+    .choices { border: 1px solid var(--rule); border-radius: var(--r-box); overflow: hidden; }
+
+    .choice {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1.5rem 1fr auto;
+      gap: 14px;
+      align-items: start;
+      padding: 16px 18px;
+      border: 0;
+      background: none;
+      text-align: left;
+      transition: background-color .25s var(--ease), box-shadow .25s var(--ease);
+    }
+
+    .choice + .choice { border-top: 1px solid var(--rule); }
+    .choice[aria-pressed="true"] { background: var(--fill); box-shadow: inset 3px 0 var(--ink); }
+    .choice:active:not(:disabled) { background: var(--fill); transition-duration: 0s; }
+    .choice:disabled { opacity: .4; }
+
+    .choice-number { font-size: .75rem; color: var(--muted); padding-top: 4px; font-variant-numeric: tabular-nums; }
+    .method-copy { display: grid; gap: 4px; min-width: 0; }
+    .method-copy strong { font-size: 1.0625rem; font-weight: 400; }
+    .specific-action { font-size: .9375rem; line-height: 1.5; color: var(--muted); }
+    .choice[aria-pressed="true"] .specific-action { color: var(--ink); }
+    .unavailable { font-size: var(--t-small); color: var(--maroon); }
+
+    .cost { display: grid; justify-items: end; font-size: 1.5rem; font-weight: 300; line-height: 1; font-variant-numeric: tabular-nums; }
+    .cost small { margin-top: 4px; font-size: .75rem; color: var(--muted); }
+
+    .primary {
+      width: 100%;
+      min-height: 48px;
+      padding: 12px 22px;
+      border: 1px solid var(--ink);
+      border-radius: 999px;
+      background: var(--ink);
+      color: var(--paper);
+      font-size: .9375rem;
+      font-weight: 400;
+      transition: transform .15s var(--ease), opacity .2s var(--ease), filter .2s var(--ease);
+    }
+
+    .primary:disabled { opacity: .35; }
+    .primary:active:not(:disabled) { transform: scale(.98); transition-duration: 0s; }
+    #commit { margin-top: 18px; }
+    .keyboard-hint { margin: 10px 0 0; font-size: var(--t-small); color: var(--muted); text-align: center; }
+
+    /* Feedback after a choice */
+    .result-area, .end-area { max-width: 760px; padding: clamp(32px, 5vw, 64px) 0 clamp(48px, 6vw, 88px); }
+    .result-area h1, .end-area h1 { margin: 8px 0 16px; font-size: var(--t-question); font-weight: 300; line-height: 1.2; letter-spacing: -.015em; }
+    .result-lead { margin: 0 0 24px; font-size: var(--t-intro); line-height: 1.32; letter-spacing: -.01em; }
+    .result-detail { margin: 12px 0; padding: 14px 18px 16px; border: 1px solid var(--rule); border-radius: var(--r-box); }
+    .result-detail p { margin: 6px 0 0; }
+    .result-meta { display: flex; flex-wrap: wrap; gap: 6px 24px; margin: 20px 0 24px; font-size: .9375rem; color: var(--muted); }
+    .result-meta strong { color: var(--ink); font-weight: 400; }
+    .result-area .primary, .end-area > .primary { width: auto; }
+
+    .end-area > p { max-width: 62ch; }
+    .end-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      margin: 28px 0;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+      border-radius: var(--r-box);
+      overflow: hidden;
+    }
+    .end-stat { display: grid; gap: 6px; padding: 16px 18px 18px; background: var(--paper); }
+    .end-stat strong { font-size: clamp(2rem, 4vw, 3rem); font-weight: 300; line-height: 1; letter-spacing: -.03em; }
+    .end-stat span { font-size: .9375rem; color: var(--muted); }
+
+    .recap { margin-top: 32px; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+    .recap > summary { padding: 14px 0; cursor: pointer; font-weight: 400; }
+    .recap-item { padding: 16px 0; border-top: 1px solid var(--soft-rule); }
+    .recap-item h3 { margin: 0 0 6px; }
+    .recap-item p { margin: 4px 0; font-size: .9375rem; max-width: 62ch; }
+    .recap-item .outcome-good { color: var(--muted); }
+    .recap-item .outcome-miss { color: var(--maroon); }
+    .small { font-size: var(--t-small); color: var(--muted); }
+
+    footer.game-footer {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 20px max(var(--gutter), env(safe-area-inset-left)) max(28px, env(safe-area-inset-bottom));
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px 20px;
+      font-size: var(--t-small);
+      color: var(--muted);
+      /* Hairline across the content width only, not the side padding */
+      background: linear-gradient(var(--rule), var(--rule)) top center / calc(100% - 2 * max(var(--gutter), env(safe-area-inset-left))) 1px no-repeat;
+    }
+
+    dialog {
+      width: min(640px, calc(100% - 32px));
+      max-height: 85vh;
+      padding: 24px 24px 22px;
+      border: 1px solid var(--ink);
+      border-radius: var(--r-box);
+      background: var(--paper);
+      color: var(--ink);
+    }
+    dialog[open] { animation: dialog-in .42s var(--ease); }
+    dialog::backdrop { background: rgba(21,21,21,.5); }
+    @keyframes dialog-in { from { opacity: 0; transform: translateY(10px) scale(.985); } }
+    dialog h2 { margin: 6px 0 16px; font-size: var(--t-question); font-weight: 300; line-height: 1.2; letter-spacing: -.015em; }
+    dialog > p { color: var(--muted); }
+    dialog strong { color: var(--ink); font-weight: 500; }
+    .dialog-close { position: absolute; right: 12px; top: 8px; border: 0; background: none; font-size: 1.75rem; line-height: 1; padding: 6px 10px; }
+    .guide-methods { margin: 18px 0; padding: 4px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+    .guide-methods p { display: grid; gap: 2px; margin: 12px 0; }
+    .guide-note { margin: 20px 0; padding: 14px 18px; border: 1px solid var(--rule); border-radius: var(--r-box); font-size: .9375rem; }
+    .guide-note p { margin: 8px 0 0; color: var(--muted); }
+    .dialog-actions { display: flex; gap: 10px; margin-top: 20px; }
+    .dialog-actions > * { flex: 1; width: auto; }
+    h1:focus { outline: none; }
+
+    @media (hover: hover) {
+      .masthead nav button:hover, .secondary:hover { background: var(--fill); }
+      .choice:hover:not(:disabled) { background: var(--fill); }
+      .primary:hover:not(:disabled) { filter: brightness(1.15); }
+    }
+
+    @media (max-width: 860px) {
+      .play-area { grid-template-columns: 1fr; }
+      .card-stage { position: static; }
+      .status-strip { grid-template-columns: 1fr 1fr; }
+      .chapter { grid-column: 1 / -1; }
+      .keyboard-hint, .choice-number { display: none; }
+      .choice { grid-template-columns: 1fr auto; }
+    }
+
+    @media (max-width: 560px) {
+      .end-stats { grid-template-columns: 1fr; }
+      .dialog-actions { flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      dialog[open] { animation: none; }
+      *, *::before, *::after { transition-property: opacity, background-color, color !important; }
+    }
+  </style>
+</head>
+<body>
+<header class="site-header" aria-label="Azioni principali"><div class="wrap"><div class="header-inner"><div class="header-top"><a class="brand" href="index-apple.html">SAVE</a><a class="exit-btn" id="exitBtn" href="https://www.google.com/search?q=meteo">Esci subito dal sito</a></div></div></div></header>
+<header class="masthead"><span class="wordmark">Un piccolo gesto</span><nav aria-label="Comandi di gioco"><button id="guide-open">Come si gioca</button><button id="restart-open">Ricomincia</button></nav></header>
+<main>
+<section class="status-strip" aria-label="Avanzamento della partita"><div class="chapter"><span class="eyebrow">Il coraggio di intervenire</span><span id="chapter-name"></span></div><div class="resolve"><div class="resolve-caption"><label for="resolve-meter">Determinazione</label><span><strong id="budget">60</strong> / 60</span></div><meter id="resolve-meter" min="0" max="60" value="60">60 su 60</meter></div><div class="impact"><span class="eyebrow">Interventi efficaci</span><strong><span id="supported">0</span> / 20</strong></div></section>
+<section id="play-area" class="play-area"><div class="card-stage"><div class="card-kicker"><span id="moment-count"></span><span id="place"></span></div><article class="scene-card" id="scene-card" aria-labelledby="scene-title"><div class="card-copy"><span class="eyebrow">La situazione</span><h1 id="scene-title" tabindex="-1"></h1><p id="story"></p><div class="clue"><p id="clue"></p></div></div></article></div><section class="choices-panel" aria-labelledby="choice-title"><p class="eyebrow">Cinque modi per aiutare</p><h2 id="choice-title">Come intervieni?</h2><p class="choice-hint">Leggi le azioni, scegli una risposta e conferma. Ogni scelta consuma determinazione.</p><div id="choices" class="choices" role="group" aria-label="Scegli un intervento"></div><button class="primary" id="commit" disabled>Scegli una risposta</button><p class="keyboard-hint">Tasti da 1 a 5 per scegliere, Invio per confermare</p></section></section>
+<section class="result-area" id="result-area" hidden aria-labelledby="result-title" aria-live="polite"></section><section class="end-area" id="end-area" hidden aria-labelledby="end-title"></section>
+</main>
+<footer class="game-footer"><span>20 situazioni. Un mondo condiviso.</span><span>Ispirato alle <a href="https://righttobe.org/guides/bystander-intervention-training/" target="_blank" rel="noopener">5D di Right To Be (guida in inglese)</a></span></footer>
+<dialog id="guide"><button class="dialog-close" aria-label="Chiudi le istruzioni" data-close="guide">×</button><p class="eyebrow">Le regole del gioco</p><h2>Un gesto adatto<br>al momento giusto.</h2><p>Hai <strong>60 punti di determinazione</strong> per affrontare <strong>20 situazioni</strong>. Leggi le cinque azioni, scegli e conferma. Ogni azione consuma punti, anche quando non funziona.</p><p>Ogni situazione ha una soglia di efficacia nascosta. Per raggiungerla, l’azione deve essere adatta al contesto: spendere di più non significa aiutare meglio. Dopo ogni scelta scoprirai perché ha funzionato oppure no.</p><div class="guide-methods"><p><strong>Distrarre, 2 punti</strong> Creare un’interruzione e una via d’uscita.</p><p><strong>Delegare, 3 punti</strong> Coinvolgere qualcuno in grado di aiutare.</p><p><strong>Documentare, 3 punti</strong> Conservare un resoconto in modo responsabile.</p><p><strong>Dare sostegno dopo, 1 punto</strong> Chiedere come sta la persona dopo l’episodio.</p><p><strong>Dire chiaramente, 5 punti</strong> Porre un limite breve e diretto.</p></div><p>L’obiettivo è offrire sostegno in tutte e 20 le situazioni. Se esaurisci la determinazione, la partita finisce. Il riepilogo ti aiuta a individuare risposte efficaci con un costo minore.</p><div class="guide-note"><strong>Una meccanica di gioco, non una misura delle persone.</strong><p>La determinazione rappresenta la «barriera di accettazione», cioè lo sforzo necessario per intervenire. Costi e soglie sono inventati per il gioco: la sicurezza delle persone e le situazioni reali non si misurano così.</p><p>Considera la sicurezza e i desideri della persona. Documenta soltanto se qualcuno sta già aiutando e puoi farlo in sicurezza; lascia alla persona il controllo del materiale. Un intervento diretto deve essere breve e non aumentare la tensione. Dare sostegno dopo non significa ignorare un pericolo in corso.</p></div><p class="small">Gioco educativo indipendente, non affiliato a Right To Be o Reigns. I nomi delle 5D sono adattati in italiano. Nella realtà i cinque approcci si possono combinare; ogni turno ne esplora uno.</p><button class="primary" data-close="guide">Torna alla situazione</button></dialog>
+<dialog id="restart"><p class="eyebrow">Un nuovo tentativo</p><h2>Vuoi ricominciare?</h2><p>La partita attuale verrà cancellata. Tornerai alla prima situazione con 60 punti di determinazione.</p><div class="dialog-actions"><button class="secondary" data-close="restart">Continua la partita</button><button class="primary" id="restart-confirm">Ricomincia</button></div></dialog>
+
+<script>
+const STARTING_BUDGET=60;
+const METHODS=[{"id": "distract", "name": "Distrarre", "cost": 2}, {"id": "delegate", "name": "Delegare", "cost": 3}, {"id": "document", "name": "Documentare", "cost": 3}, {"id": "delay", "name": "Dare sostegno dopo", "cost": 1}, {"id": "direct", "name": "Dire chiaramente", "cost": 5}];
+const SCENES=[
+  {
+    "title": "Il posto libero",
+    "place": "Il treno del mattino",
+    "chapter": "Verso la città",
+    "story": "Un passeggero continua a commentare l’aspetto di una donna. Lei risponde a monosillabi e si gira verso il finestrino. Il posto accanto a te è libero e puoi parlarle senza avvicinarti a lui.",
+    "clue": "Lei sta cercando un modo per sottrarsi alla conversazione.",
+    "threshold": 2,
+    "fit": [
+      4,
+      3,
+      0,
+      0,
+      2
+    ],
+    "actions": [
+      "Le chiedi se questo treno va alla stazione Centrale, poi le offri il posto accanto a te.",
+      "Chiedi discretamente al personale di bordo di verificare se ha bisogno di aiuto.",
+      "Inizi a filmare, mentre nessuno le sta offrendo aiuto.",
+      "Aspetti di arrivare alla tua fermata prima di chiederle se ha bisogno di aiuto.",
+      "Da una distanza sicura, chiedi brevemente al passeggero di smettere di commentare il suo aspetto."
+    ],
+    "lesson": "Una domanda ordinaria può offrire una via d’uscita dalla conversazione. In questa situazione basta una piccola interruzione."
+  },
+  {
+    "title": "Una battuta al bancone",
+    "place": "Il bar di quartiere",
+    "chapter": "Verso la città",
+    "story": "Un cliente imita l’accento della persona al bancone. Prima che tu possa intervenire, il cliente se ne va. La persona abbassa lo sguardo e comincia a sistemare le tazze. Dietro di te non c’è nessuno in attesa.",
+    "clue": "L’episodio è finito. La persona coinvolta è ancora qui.",
+    "threshold": 2,
+    "fit": [
+      1,
+      1,
+      0,
+      4,
+      0
+    ],
+    "actions": [
+      "Parli del tempo senza riconoscere ciò che è successo.",
+      "Chiami il responsabile senza prima chiedere alla persona al bancone.",
+      "Fotografi la persona mentre appare turbata.",
+      "Dici che quel commento era ingiusto e chiedi se desidera un momento di pausa o un po’ di compagnia.",
+      "Segui il cliente fuori dal bar per affrontarlo."
+    ],
+    "lesson": "Il sostegno dopo un episodio può fare la differenza. Una domanda discreta permette alla persona di scegliere di cosa ha bisogno."
+  },
+  {
+    "title": "Alla fermata",
+    "place": "La fermata dell’autobus",
+    "chapter": "Verso la città",
+    "story": "Un uomo urla contro un adolescente per il suo abbigliamento e si avvicina sempre di più. Il ragazzo è con le spalle contro la pensilina. È appena arrivato un autobus e l’autista osserva dalla porta aperta.",
+    "clue": "La tensione sta aumentando. C’è qualcuno vicino che può aiutare.",
+    "threshold": 4,
+    "fit": [
+      2,
+      5,
+      0,
+      0,
+      0
+    ],
+    "actions": [
+      "Cerchi di interrompere le urla chiedendo indicazioni al ragazzo.",
+      "Spieghi all’autista cosa sta succedendo e gli chiedi di aiutare il ragazzo a salire in sicurezza.",
+      "Filmi dal marciapiede mentre nessuno interviene.",
+      "Aspetti che l’uomo si allontani.",
+      "Ti metti tra i due e affronti l’uomo."
+    ],
+    "lesson": "L’autista può offrire subito una via d’uscita. Affrontare direttamente una persona già aggressiva può aumentare il rischio."
+  },
+  {
+    "title": "L’aiuto è già arrivato",
+    "place": "L’atrio della stazione",
+    "chapter": "Verso la città",
+    "story": "Una dipendente della stazione sta aiutando una persona che ha subito molestie. Sei a distanza di sicurezza dall’aggressore. La persona ti chiede di annotare l’ora e le parole pronunciate, per decidere in seguito se fare una segnalazione.",
+    "clue": "Qualcuno sta già aiutando e la persona ha chiesto una testimonianza.",
+    "threshold": 3,
+    "fit": [
+      1,
+      2,
+      5,
+      2,
+      0
+    ],
+    "actions": [
+      "Interrompi la dipendente per chiedere alla persona informazioni sugli orari dei treni.",
+      "Ti allontani per cercare un altro dipendente, anche se qualcuno sta già aiutando.",
+      "Scrivi un resoconto dei fatti e lo consegni in privato alla persona, lasciando a lei la scelta di come usarlo.",
+      "Offri di parlarne più tardi, senza prendere gli appunti richiesti.",
+      "Ti avvicini all’aggressore per pretendere delle scuse."
+    ],
+    "lesson": "Un resoconto riservato sostiene la decisione della persona coinvolta. L’aiuto è già presente e qui è possibile documentare in sicurezza."
+  },
+  {
+    "title": "Non è una battuta",
+    "place": "La riunione di lavoro",
+    "chapter": "Al lavoro",
+    "story": "Un collega ripete una battuta sessista dopo che Maya gli ha chiesto di smettere. Sei tu a condurre la riunione. Maya ti guarda e dice: «Puoi sostenermi?». L’ambiente è calmo e puoi porre un limite senza aprire uno scontro.",
+    "clue": "Hai una responsabilità e Maya ti ha chiesto di intervenire.",
+    "threshold": 4,
+    "fit": [
+      2,
+      2,
+      1,
+      1,
+      5
+    ],
+    "actions": [
+      "Passi subito al punto successivo dell’ordine del giorno.",
+      "Prometti di parlarne domani con un altro responsabile.",
+      "Annoti la battuta senza rispondere.",
+      "Decidi di chiedere a Maya come sta dopo la riunione.",
+      "Dici: «Questo commento non è accettabile. Fermiamoci qui», poi restituisci la parola a Maya, se lo desidera."
+    ],
+    "lesson": "Un limite breve e chiaro risponde alla tua responsabilità e alla richiesta di Maya. Cambiare soltanto argomento lascia quella richiesta senza risposta."
+  },
+  {
+    "title": "Una conversazione scomoda",
+    "place": "La cucina dell’ufficio",
+    "chapter": "Al lavoro",
+    "story": "Un collega continua a fare domande invadenti sulla vita sentimentale di una persona appena assunta. Lei si sposta verso la porta. Dovete entrambi partecipare a un laboratorio in fondo al corridoio e il passaggio è libero.",
+    "clue": "C’è già un motivo naturale per allontanarsi.",
+    "threshold": 2,
+    "fit": [
+      4,
+      3,
+      0,
+      0,
+      3
+    ],
+    "actions": [
+      "Chiedi alla nuova collega di accompagnarti al laboratorio.",
+      "Chiedi al responsabile nelle vicinanze di aiutarti a interrompere la conversazione.",
+      "Registri le domande personali con il telefono.",
+      "Te ne vai e le scrivi dopo il lavoro.",
+      "Dici con calma che è il momento di smettere con le domande personali."
+    ],
+    "lesson": "Il laboratorio offre una via d’uscita senza creare pressione. Anche porre un limite può funzionare, ma costa più risorse nel gioco."
+  },
+  {
+    "title": "I messaggi restano",
+    "place": "La chat del gruppo di lavoro",
+    "chapter": "Al lavoro",
+    "story": "Una moderatrice sta intervenendo su ripetuti messaggi discriminatori nella chat. La persona presa di mira ti chiede in privato di salvarli prima che scompaiano. Vuole decidere se presentare una segnalazione formale.",
+    "clue": "La moderazione è già in corso. I messaggi potrebbero sparire.",
+    "threshold": 3,
+    "fit": [
+      0,
+      2,
+      5,
+      1,
+      1
+    ],
+    "actions": [
+      "Pubblichi un’immagine divertente per cambiare argomento.",
+      "Tagghi un’altra moderatrice senza conservare i messaggi.",
+      "Salvi i messaggi con data e ora e li condividi soltanto con la persona che te li ha chiesti.",
+      "Offri di parlarne domani, senza salvare nulla.",
+      "Inizi una discussione pubblica con chi ha inviato i messaggi."
+    ],
+    "lesson": "Conservare i messaggi richiesti può essere utile mentre la moderatrice gestisce il problema immediato. Lascia alla persona coinvolta il controllo del materiale."
+  },
+  {
+    "title": "Dopo la presentazione",
+    "place": "Le scale in silenzio",
+    "chapter": "Al lavoro",
+    "story": "Durante una presentazione, un visitatore ha deriso la balbuzie di un tuo collega. Il visitatore se n’è andato. Trovi il collega sulle scale. Ti dice: «Avevo solo bisogno di uscire da lì».",
+    "clue": "Non c’è più uno scontro in corso da interrompere.",
+    "threshold": 2,
+    "fit": [
+      1,
+      1,
+      0,
+      5,
+      0
+    ],
+    "actions": [
+      "Insisti per parlare della prossima presentazione.",
+      "Porti diversi responsabili sulle scale senza chiederglielo.",
+      "Scatti una foto per mostrare quanto è turbato.",
+      "Riconosci ciò che è successo e chiedi se preferisce compagnia, spazio o aiuto.",
+      "Chiami il visitatore e pretendi che torni."
+    ],
+    "lesson": "Chiedere come sta offre riconoscimento e possibilità di scelta. Lascia che sia il tuo collega a decidere tempi e modi."
+  },
+  {
+    "title": "La porta dello spogliatoio",
+    "place": "La palestra di quartiere",
+    "chapter": "In città",
+    "story": "Una persona impedisce con aggressività a un’altra di entrare nello spogliatoio, mettendo in discussione il suo genere. La responsabile di turno è al banco accanto a te. La persona bloccata indica il banco in cerca di aiuto.",
+    "clue": "L’accesso è bloccato e la responsabile può intervenire.",
+    "threshold": 4,
+    "fit": [
+      2,
+      5,
+      0,
+      0,
+      1
+    ],
+    "actions": [
+      "Chiedi alla persona bloccata informazioni su un corso di ginnastica.",
+      "Avvisi la responsabile e le chiedi di garantire subito un accesso sicuro allo spogliatoio.",
+      "Filmi lo scontro prima di cercare aiuto.",
+      "Aspetti che l’ingresso si liberi da solo.",
+      "Ti metti a discutere con la persona che blocca la porta."
+    ],
+    "lesson": "Chi è responsabile dello spazio può ripristinare l’accesso e fermare il comportamento. Una discussione può peggiorare un incontro già teso."
+  },
+  {
+    "title": "Tra gli scaffali",
+    "place": "La libreria",
+    "chapter": "In città",
+    "story": "Un cliente insiste per avere il numero di telefono di una donna che ha già rifiutato. Lei incrocia il tuo sguardo e guarda verso una corsia più tranquilla. Sei accanto a un espositore che stava osservando poco prima.",
+    "clue": "C’è spazio per allontanarsi senza richiamare una folla.",
+    "threshold": 2,
+    "fit": [
+      5,
+      3,
+      0,
+      0,
+      3
+    ],
+    "actions": [
+      "Chiedi alla donna di aiutarti a trovare un libro nella corsia accanto.",
+      "Chiedi discretamente a una libraia di verificare se la donna ha bisogno di aiuto.",
+      "Fotografi le due persone senza offrire aiuto.",
+      "Torni più tardi per vedere se la donna è ancora lì.",
+      "Dici brevemente al cliente di rispettare il rifiuto, poi rivolgi la tua attenzione alla donna."
+    ],
+    "lesson": "Una richiesta estranea all’episodio può facilitare l’uscita dalla situazione. L’obiettivo è lasciare spazio alla scelta della persona."
+  },
+  {
+    "title": "Un limite a tavola",
+    "place": "Il pranzo in famiglia",
+    "chapter": "In città",
+    "story": "Tuo zio fa un altro commento offensivo sull’orientamento sessuale di tuo cugino. Tuo cugino ti aveva chiesto di parlare se fosse successo di nuovo. Tutti sono seduti con calma e ritieni sicuro porre un limite breve.",
+    "clue": "Sai già che tuo cugino desidera un tuo intervento.",
+    "threshold": 4,
+    "fit": [
+      2,
+      2,
+      0,
+      2,
+      5
+    ],
+    "actions": [
+      "Chiedi di passarti il pane e cambi argomento.",
+      "Scrivi a un altro familiare perché se ne occupi la settimana prossima.",
+      "Registri di nascosto la conversazione familiare.",
+      "Ti limiti a chiedere a tuo cugino come sta dopo pranzo.",
+      "Dici: «Smetti di fare commenti sul suo orientamento sessuale», poi rivolgi l’attenzione a tuo cugino."
+    ],
+    "lesson": "Tuo cugino ha chiesto un limite nel momento in cui accade. Sii breve: sostenerlo conta più che vincere una discussione."
+  },
+  {
+    "title": "Al semaforo",
+    "place": "La strada principale",
+    "chapter": "In città",
+    "story": "Da un’auto di passaggio qualcuno insulta una persona in sedia a rotelle. L’auto è già lontana prima che cambi il semaforo. Aspetti accanto alla persona, che sembra scossa.",
+    "clue": "L’episodio è stato breve. Puoi ancora offrire sostegno.",
+    "threshold": 2,
+    "fit": [
+      1,
+      1,
+      0,
+      4,
+      0
+    ],
+    "actions": [
+      "Indichi una vetrina e ignori ciò che è accaduto.",
+      "Vai a cercare un addetto alla sicurezza, lasciando sola la persona.",
+      "Fotografi la persona senza chiedere.",
+      "Dici di aver sentito l’insulto e chiedi se desidera che tu aspetti con lei.",
+      "Insegui l’auto per rispondere urlando."
+    ],
+    "lesson": "Riconosci ciò che è successo senza dare per scontato quale aiuto serva. Offri compagnia e rispetta la risposta."
+  },
+  {
+    "title": "L’uscita affollata",
+    "place": "Il locale della serata",
+    "chapter": "Dopo il tramonto",
+    "story": "Una persona ubriaca continua ad afferrare qualcuno vicino all’uscita. Un addetto formato alla sicurezza è a pochi passi. La persona che cerca di andarsene si divincola e guarda intorno in cerca di aiuto.",
+    "clue": "C’è un contatto indesiderato e un aiuto qualificato nelle vicinanze.",
+    "threshold": 4,
+    "fit": [
+      2,
+      5,
+      0,
+      0,
+      0
+    ],
+    "actions": [
+      "Cerchi di distrarre la persona ubriaca chiedendole della musica.",
+      "Segnali all’addetto il contatto indesiderato e gli chiedi di aiutare la persona a uscire in sicurezza.",
+      "Inizi a registrare mentre la persona sta ancora cercando di liberarsi.",
+      "Aspetti fuori per offrire conforto più tardi.",
+      "Ti fai largo verso l’uscita e affronti la persona ubriaca."
+    ],
+    "lesson": "L’intervento tempestivo dell’addetto risponde al bisogno immediato. Aspettare o limitarsi a filmare lascia la persona senza sostegno."
+  },
+  {
+    "title": "Una testimonianza richiesta",
+    "place": "Fuori dal locale",
+    "chapter": "Dopo il tramonto",
+    "story": "Il personale ha separato due clienti dopo un episodio di molestie razziste. La persona presa di mira è al sicuro con un’amica e ti chiede di scrivere ciò che hai visto. Puoi farlo dall’ingresso presidiato.",
+    "clue": "Il pericolo immediato è gestito. Serve una testimonianza.",
+    "threshold": 3,
+    "fit": [
+      0,
+      2,
+      5,
+      2,
+      0
+    ],
+    "actions": [
+      "Distrai l’amica con una domanda sui taxi.",
+      "Vai a cercare un altro addetto invece di scrivere il resoconto.",
+      "Annoti soltanto ciò che hai osservato e consegni il resoconto in privato alla persona.",
+      "Offri di parlarne domani ma te ne vai senza prendere appunti.",
+      "Torni dentro per affrontare l’aggressore."
+    ],
+    "lesson": "Una testimonianza richiesta è utile quando sostegno e sicurezza sono già garantiti. Evita supposizioni e lascia alla persona la scelta di come usarla."
+  },
+  {
+    "title": "Una pausa al bancone",
+    "place": "La sala della musica",
+    "chapter": "Dopo il tramonto",
+    "story": "Uno sconosciuto continua a invadere lo spazio della tua amica e a parlare sopra i suoi tentativi di andarsene. Lei indica il vostro gruppo dall’altra parte della sala. Lo sconosciuto è calmo e il percorso è libero.",
+    "clue": "La tua amica segnala che vuole tornare dal gruppo.",
+    "threshold": 2,
+    "fit": [
+      5,
+      3,
+      0,
+      0,
+      3
+    ],
+    "actions": [
+      "Ti avvicini e chiedi alla tua amica di aiutarti a scegliere una canzone con il gruppo.",
+      "Chiedi al barista di aiutare la tua amica a lasciare la conversazione.",
+      "Filmi la tua amica e lo sconosciuto.",
+      "Lasci lì la tua amica e le chiedi come sta domani.",
+      "Dici con calma che la tua amica sta andando via e chiedi di lasciarle spazio."
+    ],
+    "lesson": "Un invito naturale offre una via d’uscita. Più risposte possono funzionare, ma quella efficace con il costo minore conserva risorse."
+  },
+  {
+    "title": "Il ritorno a casa",
+    "place": "L’autobus notturno",
+    "chapter": "Dopo il tramonto",
+    "story": "Un passeggero fa un commento ostile sul velo della tua vicina di casa, poi scende. Lei si sposta sul sedile accanto e sospira. Sull’autobus è tornata la calma.",
+    "clue": "La persona che ha causato il danno se n’è andata.",
+    "threshold": 2,
+    "fit": [
+      1,
+      1,
+      0,
+      5,
+      0
+    ],
+    "actions": [
+      "Fai una domanda casuale senza riconoscere il commento.",
+      "Chiedi all’autista di fermarsi e richiami l’attenzione di tutti sull’episodio.",
+      "Filmi la reazione della tua vicina.",
+      "Chiedi se desidera compagnia e riconosci che quel commento era sbagliato.",
+      "Scendi per inseguire il passeggero."
+    ],
+    "lesson": "Una domanda tranquilla mantiene l’attenzione sui bisogni della tua vicina. Potrebbe volere compagnia oppure preferire un po’ di spazio."
+  },
+  {
+    "title": "Le regole valgono qui",
+    "place": "La riunione dei volontari",
+    "chapter": "Ciò che portiamo con noi",
+    "story": "Un volontario usa deliberatamente i pronomi sbagliati per Alex dopo essere stato corretto. Coordini tu il turno. Alex ti chiede di intervenire. Il volontario è calmo e sta ascoltando: puoi esprimere brevemente l’aspettativa.",
+    "clue": "Hai la responsabilità del gruppo e Alex ti ha chiesto di porre un limite.",
+    "threshold": 4,
+    "fit": [
+      2,
+      2,
+      1,
+      1,
+      5
+    ],
+    "actions": [
+      "Assegni in fretta un compito a tutti e vai avanti.",
+      "Lasci un messaggio perché se ne occupi chi coordinerà domani.",
+      "Annoti lo scambio ma non dici nulla.",
+      "Ti limiti a chiedere ad Alex come sta alla fine del turno.",
+      "Indichi i pronomi corretti di Alex, chiedi al volontario di usarli e riprendi la riunione."
+    ],
+    "lesson": "Nel tuo ruolo è appropriato esprimere un’aspettativa chiara e breve. Segui le indicazioni di Alex senza trasformare la correzione in un dibattito pubblico."
+  },
+  {
+    "title": "Un posto nel gruppo",
+    "place": "L’orto condiviso",
+    "chapter": "Ciò che portiamo con noi",
+    "story": "Una persona continua a fare domande invadenti sullo status migratorio di un nuovo partecipante. Lui smette di rispondere e guarda verso il tavolo delle piantine. Stai per iniziare proprio lì un’attività di gruppo.",
+    "clue": "Un invito accogliente può interrompere le domande.",
+    "threshold": 2,
+    "fit": [
+      5,
+      3,
+      0,
+      0,
+      3
+    ],
+    "actions": [
+      "Inviti il nuovo partecipante ad aiutarti a scegliere dove piantare le piantine.",
+      "Chiedi a chi coordina l’orto di unirsi a voi e interrompere le domande.",
+      "Inizi a registrare le risposte del nuovo partecipante.",
+      "Aspetti il prossimo fine settimana per chiedergli come sta.",
+      "Chiedi con calma di smettere con le domande personali."
+    ],
+    "lesson": "Un invito può interrompere la pressione e far sentire una persona inclusa, senza costringerla a dare spiegazioni."
+  },
+  {
+    "title": "Commenti che si ripetono",
+    "place": "Il forum di quartiere",
+    "chapter": "Ciò che portiamo con noi",
+    "story": "I moderatori hanno sospeso un account per molestie ripetute. La vicina presa di mira ti chiede di raccogliere i commenti pubblici rimasti per la sua segnalazione. Puoi salvarli senza contattare l’account sospeso.",
+    "clue": "Le molestie in corso sono state fermate. È richiesto un resoconto riservato.",
+    "threshold": 3,
+    "fit": [
+      0,
+      2,
+      5,
+      2,
+      0
+    ],
+    "actions": [
+      "Riempi il forum di messaggi non pertinenti.",
+      "Chiedi ai moderatori di ripetere la sospensione invece di raccogliere i commenti.",
+      "Salvi commenti e date e consegni il materiale direttamente alla tua vicina.",
+      "Offri incoraggiamento ma non salvi i commenti che potrebbero scomparire.",
+      "Contatti l’account sospeso per discutere."
+    ],
+    "lesson": "Raccogliere il materiale richiesto può completare il lavoro di moderazione. Non ripubblicare le molestie e non ampliarne il pubblico."
+  },
+  {
+    "title": "Prima di andare via",
+    "place": "La sala di quartiere",
+    "chapter": "Ciò che portiamo con noi",
+    "story": "Un visitatore insulta ad alta voce una volontaria e blocca l’unica uscita aperta della sala. Lei chiede aiuto. La responsabile dell’evento e due addetti sono al tavolo accanto e possono aprire un’altra uscita.",
+    "clue": "Una via d’uscita sicura conta più di una risposta energica.",
+    "threshold": 4,
+    "fit": [
+      2,
+      5,
+      0,
+      0,
+      0
+    ],
+    "actions": [
+      "Fai al visitatore una domanda non pertinente, senza cercare aiuto.",
+      "Avvisi la responsabile e chiedi agli addetti di aprire un’uscita sicura e aiutare la volontaria.",
+      "Registri dal tuo posto mentre nessuno interviene.",
+      "Aspetti che la sala si svuoti per chiedere alla volontaria come sta.",
+      "Affronti da solo il visitatore sulla soglia bloccata."
+    ],
+    "lesson": "Un aiuto coordinato può creare una via d’uscita sicura. La risposta adatta dipende dalle circostanze, anche alla fine del gioco."
+  }
+];
+function freshGame() { return {budget:STARTING_BUDGET, index:0, history:[]}; }
+function bestChoice(s) {
+  return METHODS.map((m,i)=>({...m,index:i})).filter(m=>s.fit[m.index]>=s.threshold).sort((a,b)=>a.cost-b.cost)[0];
+}
+function play(state, choice) {
+  if (state.index >= SCENES.length || state.budget < 1) throw new Error('Questa partita è finita.');
+  if (!Number.isInteger(choice) || !METHODS[choice]) throw new Error('Scegli un metodo valido.');
+  const method = METHODS[choice];
+  if (method.cost > state.budget) throw new Error('Determinazione insufficiente.');
+  const s = SCENES[state.index];
+  const effective = s.fit[choice] >= s.threshold;
+  const best = bestChoice(s);
+  const result = {scene:state.index, choice, effective, efficient:effective && method.cost === best.cost, spent:method.cost, best:best.index};
+  return {budget:state.budget-method.cost,index:state.index+1,history:[...state.history,result]};
+}
+function isOver(state) { return state.index >= SCENES.length || state.budget < 1; }
+
+
+const $ = id => document.getElementById(id);
+let state = freshGame(), selected = null, phase = 'choose';
+const esc = text => String(text).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function updateStatus() {
+  $('budget').textContent=state.budget;
+  $('resolve-meter').value=state.budget;
+  $('resolve-meter').textContent=`${state.budget} su 60`;
+  $('supported').textContent=state.history.filter(r=>r.effective).length;
+}
+function focusHeading(id) { $(id).focus({preventScroll:true});window.scrollTo({top:0,behavior:'instant'}); }
+function renderScene(focus=false) {
+  phase='choose';selected=null;
+  $('play-area').hidden=false;$('result-area').hidden=true;$('end-area').hidden=true;
+  const s=SCENES[state.index];updateStatus();
+  $('chapter-name').textContent=s.chapter;$('place').textContent=s.place;
+  $('moment-count').textContent=`Situazione ${state.index+1} di 20`;
+  $('scene-title').textContent=s.title;$('story').textContent=s.story;$('clue').textContent=s.clue;
+  $('choices').innerHTML=METHODS.map((m,i)=>`<button class="choice" data-choice="${i}" aria-pressed="false" ${m.cost>state.budget?'disabled':''}><span class="choice-number" aria-hidden="true">${i+1}</span><span class="method-copy"><strong>${m.name}</strong><span class="specific-action">${esc(s.actions[i])}</span>${m.cost>state.budget?'<span class="unavailable">Determinazione insufficiente</span>':''}</span><span class="cost">${m.cost}<small>${m.cost===1?'punto':'punti'}</small></span></button>`).join('');
+  $('commit').disabled=true;$('commit').textContent='Scegli una risposta';
+  if(focus)focusHeading('scene-title');
+}
+function select(choice) {
+  if(phase!=='choose'||!METHODS[choice]||METHODS[choice].cost>state.budget)return;
+  selected=choice;
+  document.querySelectorAll('[data-choice]').forEach(el=>el.setAttribute('aria-pressed',Number(el.dataset.choice)===choice));
+  $('commit').disabled=false;
+  $('commit').textContent=`Conferma: ${METHODS[choice].name}, ${METHODS[choice].cost} ${METHODS[choice].cost===1?'punto':'punti'}`;
+}
+function commit() {
+  if(phase!=='choose'||selected===null)return;
+  state=play(state,selected);phase='result';updateStatus();
+  const r=state.history.at(-1),s=SCENES[r.scene],m=METHODS[r.choice],best=METHODS[r.best];
+  $('play-area').hidden=true;$('result-area').hidden=false;
+  const title=r.efficient?'Un piccolo gesto. Una vera differenza.':r.effective?'Hai fatto la differenza.':'Serviva un approccio diverso.';
+  const detail=r.efficient?`<strong>${m.name}: una scelta efficace con il costo minimo.</strong> La tua azione ha raggiunto la soglia nascosta di questa situazione.`:r.effective?`<strong>${m.name}: la tua azione ha funzionato.</strong> Anche «${best.name}» avrebbe raggiunto la soglia, con ${best.cost} punti anziché ${m.cost}. Avresti conservato ${m.cost-best.cost} punti per dopo.`:`<strong>${m.name}: l’azione non ha raggiunto la soglia di questa situazione.</strong> «${best.name}» era più adatto al contesto e costava ${best.cost} punti. È un riscontro sull’azione, non un giudizio sulle tue intenzioni.`;
+  $('result-area').innerHTML=`<p class="eyebrow">Situazione ${r.scene+1}, ${r.effective?'sostegno offerto':'un’occasione per imparare'}</p><h1 id="result-title" tabindex="-1">${title}</h1><p class="result-lead">${esc(s.lesson)}</p><div class="result-detail"><span class="eyebrow">La tua scelta: ${m.name.toLowerCase()}</span><p>${esc(s.actions[r.choice])}</p></div><div class="result-detail"><span class="eyebrow">Il risultato</span><p>${detail}</p>${!r.efficient?`<p><strong>L’azione efficace con il costo minore:</strong> ${esc(s.actions[r.best])}</p>`:''}</div><div class="result-meta"><span><strong>${m.cost}</strong> punti spesi</span><span><strong>${state.budget}</strong> punti rimasti</span><span><strong>${20-state.index}</strong> situazioni rimanenti</span></div><button class="primary" id="next">${isOver(state)?'Guarda il tuo percorso':'Situazione successiva'}</button>`;
+  focusHeading('result-title');
+}
+function renderEnd() {
+  phase='end';$('play-area').hidden=true;$('result-area').hidden=true;$('end-area').hidden=false;
+  const supported=state.history.filter(r=>r.effective).length,efficient=state.history.filter(r=>r.efficient).length,complete=state.index===20;
+  $('chapter-name').textContent='Il tuo percorso';
+  $('end-area').innerHTML=`<p class="eyebrow">${complete?'Dopo venti situazioni':'È il momento di ricaricarsi'}</p><h1 id="end-title" tabindex="-1">${supported===20?'Hai offerto sostegno. Venti volte.':complete?'Ogni situazione insegna qualcosa.':'Hai esaurito la determinazione.'}</h1><p>${complete?'Hai concluso la giornata. Osserva quando un’interruzione discreta, una richiesta di aiuto o un limite chiaro hanno fatto la differenza.':`Hai affrontato ${state.index} situazioni su 20. Nel gioco, scegliere una risposta efficace con un costo contenuto fa durare la determinazione. Nella realtà, anche chiedere aiuto agli altri è un modo di prendersi cura.`}</p><div class="end-stats"><div class="end-stat"><strong>${supported} / 20</strong><span>interventi efficaci</span></div><div class="end-stat"><strong>${efficient}</strong><span>scelte efficaci al costo minimo</span></div><div class="end-stat"><strong>${state.budget}</strong><span>punti rimasti</span></div></div><p>La risposta migliore non è sempre la più energica. È quella adatta alla persona, al momento e alle condizioni di sicurezza.</p><button class="primary" id="play-again">Prova un nuovo approccio</button><details class="recap"><summary>Rivedi le tue ${state.index} scelte</summary>${state.history.map(r=>{const s=SCENES[r.scene];return `<article class="recap-item"><h3>${r.scene+1}. ${esc(s.title)}</h3><p class="${r.effective?'outcome-good':'outcome-miss'}">${METHODS[r.choice].name}, ${r.spent} ${r.spent===1?'punto':'punti'}, ${r.effective?(r.efficient?'Efficace, al costo minimo':'Efficace'):'Non adatto al contesto'}</p><p><strong>Hai scelto:</strong> ${esc(s.actions[r.choice])}</p><p>${esc(s.lesson)}</p>${!r.efficient?`<p>Scelta efficace al costo minimo: <strong>${METHODS[r.best].name}</strong>. ${esc(s.actions[r.best])}</p>`:''}</article>`;}).join('')}</details><p class="small">Continua a imparare con la <a href="https://righttobe.org/guides/bystander-intervention-training/" target="_blank" rel="noopener">guida di Right To Be (in inglese)</a>.</p>`;
+  focusHeading('end-title');
+}
+function reset(){state=freshGame();renderScene(true);}
+$('choices').addEventListener('click',e=>{const b=e.target.closest('[data-choice]');if(b)select(Number(b.dataset.choice));});
+$('commit').addEventListener('click',commit);
+$('guide-open').addEventListener('click',()=>$('guide').showModal());
+$('restart-open').addEventListener('click',()=>$('restart').showModal());
+$('restart-confirm').addEventListener('click',()=>{$('restart').close();reset();});
+document.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click',()=>$(b.dataset.close).close()));
+$('result-area').addEventListener('click',e=>{if(e.target.closest('#next'))isOver(state)?renderEnd():renderScene(true);});
+$('end-area').addEventListener('click',e=>{if(e.target.closest('#play-again'))reset();});
+document.addEventListener('keydown',e=>{
+  if(e.altKey||e.ctrlKey||e.metaKey||e.repeat||document.querySelector('dialog[open]'))return;
+  if(/^[1-5]$/.test(e.key)&&phase==='choose'){e.preventDefault();select(Number(e.key)-1);}
+  if(e.key==='Enter'){
+    if(phase==='choose'&&selected!==null&&(e.target.closest('[data-choice]')||!e.target.closest('button,a,summary,input,textarea,select'))){e.preventDefault();commit();}
+    else if(phase==='result'&&!e.target.closest('button,a,summary')){e.preventDefault();isOver(state)?renderEnd():renderScene(true);}
+  }
+});
+renderScene();
+
+</script>
+<script>
+// Sticky situation card sits under the header
+new ResizeObserver(([e]) => document.documentElement.style.setProperty('--header-h', `${e.target.offsetHeight}px`)).observe(document.querySelector('.site-header'));
+</script>
+<script src="quick-exit.js"></script>
+</body>
+</html>

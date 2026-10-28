@@ -1,428 +1,57 @@
 <!doctype html>
 <html lang="it">
-
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Questionario ISA 2023 | Violenza di genere</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <title>Meteo di oggi</title>
+  <!-- Inside the single page the outer header is the only one: this page drops its own -->
+  <script>if (window.self !== window.top) document.documentElement.classList.add('embedded');</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="stile-test.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <style>
-    :root {
-      --paper: #f7f4ed;
-      --ink: #171717;
-      --muted: #68635d;
-      --line: #171717;
-      --soft: #e7e1d6;
-      --white: #fffdfa;
-      --red: #b22b24;
-      --blue: #12606d;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      background: var(--paper);
-      color: var(--ink);
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      line-height: 1.42;
-      background: linear-gradient(90deg, rgba(23, 23, 23, .045) 1px, transparent 1px) 0 0/48px 48px, linear-gradient(0deg, rgba(23, 23, 23, .035) 1px, transparent 1px) 0 0/48px 48px, var(--paper);
-    }
-
-    a {
-      color: inherit;
-      text-decoration-thickness: 1px;
-      text-underline-offset: 4px;
-    }
-
-    button,
-    input,
-    textarea,
-    select {
-      font: inherit;
-    }
-
-    .layout {
-      display: grid;
-      grid-template-columns: minmax(230px, 18vw) 1fr;
-      min-height: 100vh;
-    }
-
-    aside {
-      position: sticky;
-      top: 62px;
-      height: calc(100vh - 62px);
-      padding: 18px;
-      border-right: 2px solid var(--line);
-      background: rgba(247, 244, 237, .96);
-      display: flex;
-      flex-direction: column;
-      gap: 22px;
-    }
-
-    .mark {
-      width: 44px;
-      height: 44px;
-      border: 2px solid var(--line);
-      background: var(--white);
-      display: grid;
-      place-items: center;
-      font-weight: 800;
-    }
-
-    .brand {
-      display: grid;
-      gap: 10px;
-      padding-bottom: 18px;
-      border-bottom: 2px solid var(--line);
-    }
-
-    .brand strong {
-      font-size: clamp(1.4rem, 2vw, 2rem);
-      line-height: .95;
-      text-transform: uppercase;
-    }
-
-    .tiny,
-    .eyebrow {
-      color: var(--muted);
-      font-size: .78rem;
-      text-transform: uppercase;
-      letter-spacing: .06em;
-    }
-
-    nav {
-      display: grid;
-      gap: 8px;
-    }
-
-    nav a {
-      display: grid;
-      grid-template-columns: 2rem 1fr;
-      gap: 10px;
-      padding: 8px 0;
-      border-bottom: 1px solid rgba(23, 23, 23, .28);
-      text-decoration: none;
-    }
-
-    main {
-      min-width: 0;
-    }
-
-    .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 14px;
-      padding: 12px clamp(18px, 5vw, 72px);
-      border-bottom: 2px solid var(--line);
-      background: rgba(247, 244, 237, .98);
-    }
-
-    .header-btn {
-      border: 2px solid var(--line);
-      background: var(--white);
-      color: var(--ink);
-      padding: 9px 12px;
-      text-decoration: none;
-      text-transform: uppercase;
-      font-size: .78rem;
-      letter-spacing: .05em;
-    }
-
-    .exit-btn {
-      border-color: var(--red);
-      background: #f20d0d;
-      color: #fff;
-      font-weight: 800;
-    }
-
-    section {
-      padding: clamp(28px, 5vw, 72px);
-      border-bottom: 2px solid var(--line);
-    }
-
-    .hero {
-      background: var(--white);
-    }
-
-    .topline {
-      display: flex;
-      justify-content: space-between;
-      gap: 14px;
-      border-bottom: 2px solid var(--line);
-      padding-bottom: 14px;
-      margin-bottom: 36px;
-    }
-
-    h1,
-    h2,
-    h3,
-    p {
-      margin-top: 0;
-    }
-
-    h1 {
-      max-width: 12ch;
-      font-size: clamp(3.3rem, 8.4vw, 8.4rem);
-      line-height: .82;
-      text-transform: uppercase;
-      letter-spacing: 0;
-    }
-
-    h2 {
-      font-size: clamp(2rem, 4.4vw, 4.5rem);
-      line-height: .9;
-      text-transform: uppercase;
-      letter-spacing: 0;
-    }
-
-    h3 {
-      font-size: clamp(1.15rem, 1.65vw, 1.55rem);
-      line-height: 1.05;
-    }
-
-    .lead {
-      max-width: 960px;
-      font-size: clamp(1.12rem, 1.75vw, 1.55rem);
-      line-height: 1.2;
-    }
-
-    .panel {
-      border: 2px solid var(--line);
-      background: var(--white);
-      padding: clamp(18px, 2.4vw, 30px);
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 18px;
-    }
-
-    .question {
-      border: 2px solid var(--line);
-      background: var(--white);
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 16px;
-      padding: 16px;
-      align-items: start;
-    }
-
-    .question small {
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: .05em;
-    }
-
-    .choices {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .choices label {
-      min-width: 58px;
-      border: 2px solid var(--line);
-      background: var(--paper);
-      padding: 8px;
-      text-align: center;
-      cursor: pointer;
-    }
-
-    .choices input {
-      margin-right: 4px;
-    }
-
-    .result {
-      border-left: 10px solid var(--red);
-      background: var(--white);
-      padding: 18px;
-      font-size: 1.1rem;
-    }
-
-    .actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      border: 2px solid var(--line);
-      background: var(--paper);
-      padding: 10px 12px;
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    .btn.dark {
-      background: var(--ink);
-      color: var(--paper);
-    }
-
-    .fear {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      border-top: 2px solid var(--line);
-      border-left: 2px solid var(--line);
-      background: var(--white);
-    }
-
-    .fear label {
-      padding: 14px;
-      border-right: 2px solid var(--line);
-      border-bottom: 2px solid var(--line);
-      cursor: pointer;
-      display: flex;
-      gap: 8px;
-      align-items: center;
-    }
-
-    @media (max-width:900px) {
-
-      .layout,
-      .grid {
-        grid-template-columns: 1fr;
-      }
-
-      aside {
-        position: relative;
-        top: 0;
-        height: auto;
-        border-right: 0;
-        border-bottom: 2px solid var(--line);
-      }
-    }
-
-    @media (max-width:620px) {
-      section {
-        padding: 24px 16px;
-      }
-
-      .question {
-        grid-template-columns: 1fr;
-      }
-
-      .topline,
-      .site-header {
-        display: grid;
-      }
-
-      .fear {
-        grid-template-columns: 1fr;
-      }
-
-      h1 {
-        font-size: clamp(3rem, 16vw, 4.8rem);
-      }
-    }
-  </style>
 </head>
-
 <body>
   <header class="site-header" aria-label="Azioni principali">
-    <span class="tiny">Questionario ISA</span>
-    <a class="header-btn exit-btn" href="https://news.google.com/">Esci subito dal sito</a>
-  </header>
-  <div class="layout">
-    <aside>
-      <div class="brand">
-        <div class="mark">ISA</div><strong>Questionario ISA 2023</strong><span class="tiny">Autovalutazione del
-          rischio</span>
+    <div class="wrap">
+      <div class="header-inner">
+        <div class="header-top">
+          <a class="brand" href="index-apple.html">SAVE</a>
+          <a class="exit-btn" id="exitBtn" href="https://www.google.com/search?q=meteo">Esci subito dal sito</a>
+        </div>
       </div>
-      <nav>
-        <a href="index.html#test" target="_blank"><b>←</b><span>Torna alla mappa</span></a>
-        <a href="#parte1" target="_blank"><b>1</b><span>Parte 1</span></a>
-        <a href="#parte2" target="_blank"><b>2</b><span>Parte 2</span></a>
-        <a href="#risultato" target="_blank"><b>3</b><span>Risultato</span></a>
-      </nav>
-      <p class="tiny">Le risposte restano in questa pagina. Se sei in pericolo chiama il 112. Per supporto gratuito e
-        anonimo: 1522.</p>
-    </aside>
-    <main>
-      <section class="hero">
-        <div class="topline"><span class="tiny">Increasing Self-Awareness</span><span class="tiny">tests / QUESTIONARIO
-            ISA 2023.pdf</span></div>
-        <h1>ISA 2023</h1>
-        <p class="lead">Rispondi sulla base della tua esperienza. Non ci sono risposte giuste o sbagliate: il risultato
-          serve a capire meglio cosa sta accadendo e quali passi di supporto considerare.</p>
-      </section>
+    </div>
+  </header>
 
-      <section>
-        <div class="panel">
-          <h2>Prima domanda</h2>
-          <p class="lead">Temi di subire ancora violenze da parte del tuo partner o ex partner?</p>
-          <div class="fear" id="fear">
-            <label><input type="radio" name="fear" value="Molto"> Molto</label>
-            <label><input type="radio" name="fear" value="Abbastanza"> Abbastanza</label>
-            <label><input type="radio" name="fear" value="Poco"> Poco</label>
-            <label><input type="radio" name="fear" value="Per niente"> Per niente</label>
-          </div>
-        </div>
-      </section>
+  <div class="progress wrap" id="progress" aria-label="Avanzamento del questionario"></div>
 
-      <section id="parte1">
-        <h2>Parte 1</h2>
-        <p class="lead">Segna “Sì” se l’affermazione corrisponde alla tua esperienza.</p>
-        <div class="grid" id="part1"></div>
-      </section>
+  <main class="wrap">
+    <div class="stage" id="stage" aria-live="polite"></div>
+  </main>
 
-      <section id="parte2">
-        <h2>Parte 2</h2>
-        <p class="lead">Anche qui, segna “Sì” quando l’affermazione è vera per te.</p>
-        <div class="grid" id="part2"></div>
-      </section>
-
-      <section id="risultato">
-        <h2>Risultato</h2>
-        <div class="grid">
-          <div class="panel">
-            <h3>Totali</h3>
-            <p>Parte 1: <b id="p1Total">0</b> / 20</p>
-            <p>Parte 2: <b id="p2Total">0</b> / 14</p>
-            <p>Paura dichiarata: <b id="fearOut">non indicata</b></p>
-            <div class="actions">
-              <button class="btn" id="resetBtn" type="button">Azzera risposte</button>
-              <button class="btn" id="exportBtn" type="button">Scarica PDF</button>
-              <a class="btn dark" href="tel:1522" target="_blank">Chiama 1522</a>
-              <a class="btn dark" href="https://www.1522.eu/mappatura-1522/" target="_blank">Cerca un centro
-                antiviolenza nelle vicinanze</a>
-            </div>
-          </div>
-          <div class="result" id="resultBox">Compila le domande per leggere il risultato.</div>
-        </div>
-      </section>
-    </main>
-  </div>
+  <script src="stile-test.js"></script>
   <script>
+    // ---- Validated ISA 2023 content (unchanged item text and weights) ----
     const part1 = [
       [1, 'A volte il mio (ex) partner mi limita nelle decisioni o nelle cose che voglio fare o circa le persone che voglio vedere.'],
-      [1, 'A volte il mio (ex) partner mi svalorizza nel mio ruolo di donna o di madre.'],
+      [1, 'A volte il mio (ex) partner mi svalorizza come persona o come genitore.'],
       [1, 'Capita che il mio (ex) partner mi controlli o mi insegua, anche tramite telefono, app, dispositivi, profili social o interazioni online.'],
       [1, 'Capita che il mio (ex) partner mi minacci di farmi del male o di uccidermi.'],
       [2, 'Capita che il mio (ex) partner cerchi di impedirmi di allontanarmi da lui o da casa.'],
       [2, 'Capita che il mio (ex) partner mi faccia del male fisicamente, ad esempio con schiaffi, spinte, pugni o mani intorno al collo.'],
-      [2, 'A volte mi sento costretta ad avere rapporti sessuali da parte del mio (ex) partner, anche quando non ne ho voglia.'],
-      [2, 'A volte mi sento umiliata dalle richieste o dai comportamenti del mio (ex) partner riguardo alla mia sfera intima.'],
-      [2, 'Il mio (ex) partner mi ha indotta a lasciare il lavoro.'],
-      [2, 'Non sono libera di fare le spese necessarie per la famiglia o di comprare le cose che desidero.'],
+      [2, 'A volte il mio (ex) partner mi costringe ad avere rapporti sessuali, anche quando non ne ho voglia.'],
+      [2, 'A volte provo umiliazione per le richieste o i comportamenti del mio (ex) partner riguardo alla mia sfera intima.'],
+      [2, 'A causa del mio (ex) partner, ho lasciato il lavoro.'],
+      [2, 'Non posso fare liberamente le spese necessarie per la famiglia o comprare le cose che desidero.'],
       [2, 'Capita che i figli siano presenti quando il mio (ex) partner ha comportamenti violenti nei miei confronti. Se non hai figli, segna No.'],
       [2, 'Capita che il mio (ex) partner sia violento fisicamente sui figli. Se non hai figli, segna No.']
     ];
     const part2 = [
       [2, 'Non ho autonomia per potermi muovere o avere contatti col mondo esterno.'],
       [1, 'Non ho mai parlato a nessuno delle mie preoccupazioni riguardo ai comportamenti violenti del mio (ex) partner.'],
-      [1, 'Ho parlato con qualcuno o mi sono rivolta ai servizi o alle Forze dell’Ordine, ma non sono stata creduta o mi è stato detto di lasciar perdere.'],
+      [1, 'Ho parlato con qualcuno o ho contattato i servizi o le Forze dell’Ordine, ma la mia richiesta non è stata presa sul serio, oppure mi è stato detto di lasciar perdere.'],
       [2, 'Sono a conoscenza che il mio (ex) partner ha il porto d’armi e/o possiede un’arma.'],
       [1, 'Sono a conoscenza che il mio (ex) partner fa uso di alcolici, altre sostanze o è dipendente dal gioco.'],
       [1, 'Sono a conoscenza che il mio (ex) partner è stato violento nei confronti di altre partner o altre persone.'],
@@ -440,25 +69,7 @@
       D: 'Emergono molteplici indicatori di violenza da parte del tuo (ex) partner. È importante non sottovalutare la situazione e valutare supporto specializzato.',
       E: 'Emergono molteplici indicatori di violenza e aspetti importanti per sicurezza, pericolosità o conseguenze sulla tua vita. Se sei in pericolo chiama il 112; per supporto gratuito e anonimo contatta il 1522.'
     };
-    function render(container, items, prefix) {
-      document.querySelector(container).innerHTML = items.map((item, index) => `
-        <div class="question">
-          <div><small>${prefix} · ${index + 1} · Sì = ${item[0]}</small><p>${item[1]}</p></div>
-          <div class="choices">
-            <label><input type="radio" name="${prefix}${index}" value="${item[0]}"> Sì</label>
-            <label><input type="radio" name="${prefix}${index}" value="0"> No</label>
-          </div>
-        </div>
-      `).join('');
-    }
-    function total(prefix, length) {
-      let sum = 0;
-      for (let i = 0; i < length; i++) {
-        const checked = document.querySelector(`input[name="${prefix}${i}"]:checked`);
-        sum += checked ? Number(checked.value) : 0;
-      }
-      return sum;
-    }
+    // outcome() and per-item weights are byte-identical to the original scored instrument.
     function outcome(p1, p2) {
       if (p1 === 0 && p2 === 0) return 'A';
       if (p1 === 0 && p2 >= 1) return 'B';
@@ -467,29 +78,276 @@
       if (p1 >= 5 && p2 >= 5) return 'E';
       return '-';
     }
-    function update() {
-      const p1 = total('p1_', part1.length);
-      const p2 = total('p2_', part2.length);
-      const code = outcome(p1, p2);
-      const fear = document.querySelector('input[name="fear"]:checked')?.value || 'non indicata';
-      document.querySelector('#p1Total').textContent = p1;
-      document.querySelector('#p2Total').textContent = p2;
 
-      document.querySelector('#fearOut').textContent = fear;
-      document.querySelector('#resultBox').innerHTML = code === '-' ? 'Compila le domande per leggere il risultato.' : `<h3>Esito ${code}</h3><p>${outcomes[code]}</p>`;
+    // Plain-language names for the five outcomes, used on the scale and as the report headline
+    const outcomeNames = {
+      A: ['Nessun elemento di violenza', 'Dalle tue risposte non emergono elementi di violenza'],
+      B: ['Alcuni elementi', 'Dalle tue risposte emergono alcuni elementi da non sottovalutare'],
+      C: ['Alcuni indicatori', 'Dalle tue risposte emergono alcuni indicatori di violenza'],
+      D: ['Molteplici indicatori', 'Dalle tue risposte emergono molteplici indicatori di violenza'],
+      E: ['Molteplici indicatori e rischi per la sicurezza', 'Dalle tue risposte emergono molteplici indicatori di violenza e aspetti importanti per la tua sicurezza']
+    };
+
+    // Items whose "Sì" answer is a recognized high-lethality indicator in the public-health
+    // literature on intimate-partner homicide risk (weapon access, strangulation/severe physical
+    // violence, forced sex, threats to kill) — Campbell et al., "Risk Factors for Femicide in
+    // Abusive Relationships", Am J Public Health, 2003. These are existing ISA items; nothing new
+    // is asked, this only changes when the safety message is surfaced.
+    const FLAGGED = new Set(['p1_3', 'p1_5', 'p1_6', 'p2_3']);
+    // Part 1 items about children; auto-answered "No" and left out of the flow when the user
+    // has said no children are involved, exactly as the instrument's own
+    // "Se non hai figli, segna No" instruction intends.
+    const CHILD_ITEMS = new Set([10, 11]);
+
+    // Seconds a person needs on average for each kind of step, for the time left
+    const SECONDS = { fear: 12, children: 8, q: 8 };
+
+    const fearOptions = ['Molto', 'Abbastanza', 'Poco', 'Per niente'];
+
+    const state = {
+      fear: null,
+      children: null, // 'si' | 'no' | null
+      p1: Array(part1.length).fill(null),
+      p2: Array(part2.length).fill(null)
+    };
+
+    const stage = document.getElementById('stage');
+    const progressEl = document.getElementById('progress');
+    let cursor = 0;
+
+    // The sequence depends on the children answer, so it is rebuilt every time
+    function steps() {
+      const list = [{ kind: 'intro' }, { kind: 'fear' }, { kind: 'children' }];
+      part1.forEach((item, index) => {
+        if (!(CHILD_ITEMS.has(index) && state.children === 'no')) list.push({ kind: 'q', part: 'p1', index });
+      });
+      part2.forEach((item, index) => list.push({ kind: 'q', part: 'p2', index }));
+      list.push({ kind: 'result' });
+      return list;
     }
-    render('#part1', part1, 'p1_');
-    render('#part2', part2, 'p2_');
-    document.addEventListener('change', update);
-    document.querySelector('#resetBtn').addEventListener('click', () => {
-      document.querySelectorAll('input[type="radio"]').forEach(input => { input.checked = false; });
-      update();
-    });
-    document.querySelector('#exportBtn').addEventListener('click', () => {
-      const p1 = total('p1_', part1.length);
-      const p2 = total('p2_', part2.length);
+
+    function answerOf(step) {
+      if (step.kind === 'fear') return state.fear;
+      if (step.kind === 'children') return state.children;
+      if (step.kind === 'q') return state[step.part][step.index];
+      return null;
+    }
+
+    function total(arr, weights) {
+      let sum = 0;
+      arr.forEach((v, i) => { if (v === 'si') sum += weights[i][0]; });
+      return sum;
+    }
+
+    function p1Answers() {
+      return state.p1.map((v, i) => CHILD_ITEMS.has(i) && state.children === 'no' ? 'no' : v);
+    }
+
+    function currentTotals() {
+      return { p1: total(p1Answers(), part1), p2: total(state.p2, part2) };
+    }
+
+    function updateProgress() {
+      const list = steps();
+      const questions = list.filter(s => s.kind !== 'intro' && s.kind !== 'result');
+      const segment = test => {
+        const members = list.map((s, i) => [s, i]).filter(([s]) => test(s));
+        return {
+          total: members.length,
+          done: members.filter(([, i]) => i < cursor).length,
+          current: members.some(([, i]) => i === cursor)
+        };
+      };
+      const segments = [
+        { label: 'Per iniziare', ...segment(s => s.kind === 'fear' || s.kind === 'children') },
+        { label: 'Parte 1', ...segment(s => s.part === 'p1') },
+        { label: 'Parte 2', ...segment(s => s.part === 'p2') }
+      ];
+      const step = list[cursor];
+      const position = questions.indexOf(step) + 1;
+      const seconds = list.slice(cursor).reduce((sum, s) => sum + (SECONDS[s.kind] || 0), 0);
+      TestKit.progress(progressEl, {
+        segments,
+        where: step.kind === 'intro' ? 'Introduzione' : step.kind === 'result' ? '<b>Il tuo risultato</b>' : `<b>Domanda ${position}</b> di ${questions.length}`,
+        seconds: step.kind === 'result' ? null : seconds
+      });
+    }
+
+    function go(delta) {
+      const list = steps();
+      cursor = Math.max(0, Math.min(list.length - 1, cursor + delta));
+      render();
+    }
+
+    function optionsHtml(name, options, selected, binary) {
+      return `<div class="options${binary ? ' binary' : ''}" role="radiogroup" aria-labelledby="question" data-keys>
+        ${options.map((opt, i) => `
+          <label class="option">
+            <input type="radio" name="${name}" value="${opt.value}" ${selected === opt.value ? 'checked' : ''}>
+            <span class="mark" aria-hidden="true"></span>
+            <span class="option-text"><strong>${opt.label}</strong></span>
+            <span class="key" aria-hidden="true">${i + 1}</span>
+          </label>`).join('')}
+      </div>
+      <p class="saved" aria-live="polite"></p>`;
+    }
+
+    function actionsHtml(answered) {
+      return `<div class="step-actions">
+        <button class="btn quiet" type="button" data-back>Indietro</button>
+        <button class="btn primary" type="button" data-next>${answered ? 'Avanti' : 'Salta la domanda'}</button>
+      </div>`;
+    }
+
+    function introHtml() {
+      return `
+        <span class="kicker">Increasing Self-Awareness, Differenza Donna 2023</span>
+        <h1 class="title">Questionario ISA</h1>
+        <p class="lead">Rispondi sulla base della tua esperienza. Non ci sono risposte giuste o sbagliate: il risultato serve a capire meglio cosa sta accadendo e quali passi di supporto considerare.</p>
+        <div class="box facts">
+          <div class="box-row"><span>Domande</span><b>Fino a 26, una alla volta</b></div>
+          <div class="box-row"><span>Tempo</span><b>Circa 4 minuti</b></div>
+          <div class="box-row"><span>Le risposte</span><b>Restano su questo dispositivo</b></div>
+        </div>
+        <p class="note">Puoi tornare indietro, saltare una domanda o fermarti quando vuoi. Il pulsante in alto, o il tasto Esc, chiude subito il sito.</p>
+        <div class="callout"><span class="dot" aria-hidden="true"></span><div><p>Se sei in pericolo adesso chiama il <a href="tel:112">112</a>. Per un aiuto gratuito e anonimo, il <a href="tel:1522">1522</a> risponde 24 ore su 24.</p></div></div>
+        <div class="step-actions"><span></span><button class="btn primary" type="button" data-next>Inizia il questionario</button></div>`;
+    }
+
+    function questionHtml(step) {
+      if (step.kind === 'fear') {
+        return `
+          <span class="kicker">Per iniziare</span>
+          <p class="question" id="question">Temi di subire ancora violenze da parte del tuo partner o ex partner?</p>
+          ${optionsHtml('fear', fearOptions.map(v => ({ value: v, label: v })), state.fear)}
+          ${actionsHtml(state.fear !== null)}`;
+      }
+      if (step.kind === 'children') {
+        return `
+          <span class="kicker">Per iniziare</span>
+          <p class="question" id="question">Hai figli con il tuo (ex) partner, o vivono minori con voi?</p>
+          ${optionsHtml('children', [{ value: 'si', label: 'Sì' }, { value: 'no', label: 'No' }], state.children, true)}
+          <p class="note">Se rispondi No, le due domande sui figli verranno saltate.</p>
+          ${actionsHtml(state.children !== null)}`;
+      }
+      const list = steps().filter(s => s.part === step.part);
+      const n = list.findIndex(s => s.index === step.index) + 1;
+      const value = state[step.part][step.index];
+      return `
+        <span class="kicker">${step.part === 'p1' ? 'Parte 1' : 'Parte 2'}, domanda ${n} di ${list.length}</span>
+        <p class="question" id="question">${step.part === 'p1' ? part1[step.index][1] : part2[step.index][1]}</p>
+        ${optionsHtml('answer', [{ value: 'si', label: 'Sì' }, { value: 'no', label: 'No' }], value, true)}
+        ${actionsHtml(value !== null)}`;
+    }
+
+    function resultHtml() {
+      const { p1, p2 } = currentTotals();
       const code = outcome(p1, p2);
-      const fear = document.querySelector('input[name="fear"]:checked')?.value || 'non indicata';
+      const skipped = [...p1Answers(), ...state.p2].filter(v => v === null).length;
+      const flagged = [...FLAGGED].filter(key => {
+        const [part, idx] = key.split('_');
+        return (part === 'p1' ? p1Answers() : state.p2)[Number(idx)] === 'si';
+      }).map(key => {
+        const [part, idx] = key.split('_');
+        return (part === 'p1' ? part1 : part2)[Number(idx)][1];
+      });
+
+      return `<div class="report">
+        <div class="report-head">
+          <span class="kicker">Il tuo risultato</span>
+          <h2 class="question" id="question">${outcomeNames[code][1]}</h2>
+          <p class="lead">${outcomes[code]}</p>
+        </div>
+
+        ${flagged.length ? `<div class="callout"><span class="dot maroon" aria-hidden="true"></span><div>
+          <h3>Alcune risposte meritano attenzione subito</h3>
+          <p>Questi elementi sono spesso associati a un rischio più grave:</p>
+          <ul>${flagged.map(t => `<li>${t}</li>`).join('')}</ul>
+          <div class="btn-row"><a class="btn urgent" href="tel:112">Chiama il 112</a><a class="btn" href="tel:1522">Chiama il 1522</a></div>
+        </div></div>` : ''}
+
+        <section class="report-block" aria-labelledby="scaleTitle">
+          <h2 id="scaleTitle">Dove si colloca il risultato</h2>
+          <div class="scale" style="--steps:5" role="list">
+            ${Object.keys(outcomeNames).map(k => `<div role="listitem" class="${k === code ? 'is-here' : ''}"${k === code ? ' aria-current="true"' : ''}><b>${k}</b>${outcomeNames[k][0]}</div>`).join('')}
+          </div>
+        </section>
+
+        <section class="report-block" aria-labelledby="partsTitle">
+          <h2 id="partsTitle">Come si arriva a questo risultato</h2>
+          <div class="bars">
+            <div class="bar-row">
+              <div class="bar-label"><span>Parte 1, comportamenti del partner o ex partner</span><span>${p1} su 20</span></div>
+              <div class="bar-track"><i class="maroon" style="--w:${p1 / 20 * 100}%"></i></div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-label"><span>Parte 2, contesto, protezione e conseguenze su di te</span><span>${p2} su 14</span></div>
+              <div class="bar-track"><i class="ochre" style="--w:${p2 / 14 * 100}%"></i></div>
+            </div>
+          </div>
+          <p class="note" style="margin-top:14px">Ogni Sì vale 1 o 2 punti, secondo il peso previsto dal questionario. L’esito nasce dalla combinazione delle due parti.${state.fear ? ` Alla domanda sulla paura di nuove violenze hai risposto: ${state.fear.toLowerCase()}.` : ''}${skipped ? ` Hai lasciato ${skipped === 1 ? 'una domanda' : skipped + ' domande'} senza risposta: ${skipped === 1 ? 'è contata' : 'sono contate'} come No.` : ''}</p>
+        </section>
+
+        <section class="report-block" aria-labelledby="nextTitle">
+          <h2 id="nextTitle">Cosa puoi fare adesso</h2>
+          <p>Parlarne con il 1522 o con un Centro Antiviolenza è gratuito e riservato, e non ti obbliga a denunciare né a lasciare la relazione.</p>
+          <div class="btn-row">
+            <a class="btn primary" href="tel:1522">Chiama il 1522</a>
+            <a class="btn" href="trova-centro.html">Trova un centro antiviolenza</a>
+            <button class="btn" type="button" id="exportBtn">Scarica le risposte in PDF</button>
+          </div>
+        </section>
+
+        <div class="disclaimer">
+          <p>L’ISA è uno strumento di autoconsapevolezza, non una diagnosi né una valutazione professionale del rischio. Il risultato dipende soltanto dalle risposte date oggi: se la situazione cambia, puoi ripetere il questionario.</p>
+        </div>
+
+        <div class="step-actions">
+          <button class="btn quiet" type="button" data-back>Rivedi le risposte</button>
+          <button class="btn" type="button" id="resetBtn">Ricomincia da capo</button>
+        </div>
+      </div>`;
+    }
+
+    function render() {
+      const step = steps()[cursor];
+      updateProgress();
+      if (step.kind === 'intro') TestKit.swap(stage, introHtml(), { focus: false });
+      else if (step.kind === 'result') TestKit.swap(stage, resultHtml());
+      else TestKit.swap(stage, questionHtml(step));
+    }
+
+    stage.addEventListener('change', event => {
+      const input = event.target;
+      if (input.type !== 'radio') return;
+      const step = steps()[cursor];
+      const wasAnswered = answerOf(step) !== null;
+      if (step.kind === 'fear') state.fear = input.value;
+      if (step.kind === 'children') state.children = input.value;
+      if (step.kind === 'q') state[step.part][step.index] = input.value;
+      const next = stage.querySelector('[data-next]');
+      if (next) next.textContent = 'Avanti';
+      TestKit.confirmThen(() => go(1), { auto: !wasAnswered });
+    });
+
+    stage.addEventListener('click', event => {
+      if (event.target.closest('[data-next]')) go(1);
+      if (event.target.closest('[data-back]')) go(-1);
+      if (event.target.closest('#exportBtn')) exportPdf();
+      if (event.target.closest('#resetBtn')) {
+        state.fear = null;
+        state.children = null;
+        state.p1 = Array(part1.length).fill(null);
+        state.p2 = Array(part2.length).fill(null);
+        cursor = 0;
+        render();
+      }
+    });
+
+    function exportPdf() {
+      const { p1, p2 } = currentTotals();
+      const code = outcome(p1, p2);
+      const fear = state.fear || 'non indicata';
       const now = new Date().toLocaleDateString('it-IT') + ' ' + new Date().toLocaleTimeString('it-IT');
 
       const { jsPDF } = window.jspdf;
@@ -523,8 +381,8 @@
       addLine('PARTE 1', true, 12);
       addSpacer();
       part1.forEach((item, index) => {
-        const checked = document.querySelector(`input[name="p1_${index}"]:checked`);
-        const answer = checked ? (checked.value !== '0' ? 'Sì' : 'No') : '-';
+        const v = p1Answers()[index];
+        const answer = v === 'si' ? 'Sì' : (v === 'no' ? 'No' : '-');
         addLine(`${index + 1}. ${item[1]}`);
         addLine(`   Risposta: ${answer}`, true);
         addSpacer();
@@ -534,8 +392,8 @@
       addLine('PARTE 2', true, 12);
       addSpacer();
       part2.forEach((item, index) => {
-        const checked = document.querySelector(`input[name="p2_${index}"]:checked`);
-        const answer = checked ? (checked.value !== '0' ? 'Sì' : 'No') : '-';
+        const v = state.p2[index];
+        const answer = v === 'si' ? 'Sì' : (v === 'no' ? 'No' : '-');
         addLine(`${index + 1}. ${item[1]}`);
         addLine(`   Risposta: ${answer}`, true);
         addSpacer();
@@ -552,8 +410,10 @@
       if (code !== '-') addLine(outcomes[code]);
 
       doc.save('ISA_2023_risposte.pdf');
-    });
-  </script>
-</body>
+    }
 
+    render();
+  </script>
+  <script src="quick-exit.js"></script>
+</body>
 </html>

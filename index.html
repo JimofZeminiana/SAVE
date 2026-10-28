@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Violenza di genere | mappa operativa</title>
+  <title>Meteo di oggi</title>
   <style>
     :root {
       --paper: #f7f4ed;
@@ -483,6 +483,58 @@
       min-height: 164px;
     }
 
+    .app-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .app-card {
+      border: 2px solid var(--line);
+      background: var(--white);
+      padding: 16px;
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
+
+    .app-card-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .app-icon {
+      width: 44px;
+      height: 44px;
+      flex: none;
+      border: 2px solid var(--line);
+      background: var(--paper);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: .6rem;
+      text-align: center;
+      line-height: 1.05;
+    }
+
+    .app-icon.accent-red { border-color: var(--red); }
+    .app-icon.accent-blue { border-color: var(--blue); }
+    .app-icon.accent-green { border-color: var(--green); }
+    .app-icon.accent-violet { border-color: var(--violet); }
+
+    .app-card-top h3 {
+      margin: 0 0 2px;
+      font-size: 1.08rem;
+    }
+
+    .app-card p {
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.32;
+      font-size: .94rem;
+    }
+
     .catalogue {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -586,6 +638,7 @@
       .forms,
       .resources,
       .source-grid,
+      .app-grid,
       .test-grid { grid-template-columns: 1fr; }
       .map,
       .matrix,
@@ -618,7 +671,7 @@
     <span class="tiny" id="modeLabel">per i cittadini</span>
     <div class="mode-actions">
       <button class="header-btn" id="modeToggle" type="button">Per gli operatori</button>
-      <a class="header-btn exit-btn" href="https://news.google.com/">Esci subito dal sito</a>
+      <a class="header-btn exit-btn" href="https://www.google.com/search?q=meteo">Esci subito dal sito</a>
     </div>
   </header>
   <div class="shell">
@@ -630,13 +683,14 @@
       </div>
       <nav class="nav">
         <a href="#forme" ><b>1</b><span>Forme e dinamiche</span></a>
-        <a href="#test" ><b>2</b><span>Questionario ISA</span></a>
+        <a href="#test" ><b>2</b><span>Orientamento e questionari</span></a>
         <a href="#comunita" ><b>3</b><span>Una comunità che sostiene</span></a>
-        <a data-audience="operator" href="#mappa" ><b>4</b><span>Organizzare il quadro</span></a>
-        <a data-audience="operator" href="#catalogo" ><b>5</b><span>Tool di risk assessment</span></a>
-        <a data-audience="operator" href="#rischio" ><b>6</b><span>Valutare rischio e recidiva</span></a>
-        <a data-audience="operator" href="#strumenti" ><b>7</b><span>Usare strumenti e fonti</span></a>
-        <a data-audience="operator" href="#fonti"><b>8</b><span>Consultare le fonti</span></a>
+        <a href="#app-utili" ><b>4</b><span>App utili</span></a>
+        <a data-audience="operator" href="#mappa" ><b>5</b><span>Organizzare il quadro</span></a>
+        <a data-audience="operator" href="#catalogo" ><b>6</b><span>Tool di risk assessment</span></a>
+        <a data-audience="operator" href="#rischio" ><b>7</b><span>Valutare rischio e recidiva</span></a>
+        <a data-audience="operator" href="#strumenti" ><b>8</b><span>Usare strumenti e fonti</span></a>
+        <a data-audience="operator" href="#fonti"><b>9</b><span>Consultare le fonti</span></a>
       </nav>
     </aside>
 
@@ -807,11 +861,19 @@
         <div class="section-head">
           <div class="eyebrow">Pagine interattive</div>
           <div>
-            <h2>Test</h2>
-            <p class="lead">Puoi valutare lo stato della tua relazione tramite i protocolli presenti di seguito. Le risposte restano nel browser e non vengono inviate a nessun servizio.</p>
+            <h2>Orientamento e test</h2>
+            <p class="lead">Puoi iniziare da un percorso senza punteggio per capire meglio la situazione, oppure usare uno dei questionari disponibili. Le risposte restano nel browser e non vengono inviate a nessun servizio.</p>
           </div>
         </div>
         <div class="test-grid">
+          <a class="test-card" href="orientamento.html">
+            <span class="num accent-blue">?</span>
+            <div>
+              <h3>Capire la situazione</h3>
+              <p>Percorso riservato e non diagnostico per riconoscere segnali, chiarire ciò che conta ora e trovare un primo passo possibile.</p>
+            </div>
+            <span class="pill-link">Inizia il percorso</span>
+          </a>
           <a class="test-card" href="isa.html">
             <span class="num accent-red">ISA</span>
             <div>
@@ -835,6 +897,14 @@
               <p>Formulario professionale con fattori codificabili per ultimo mese e passato, resoconto, scenari e piano di gestione.</p>
             </div>
             <span class="pill-link">Apri il test</span>
+          </a>
+          <a class="test-card" href="trova-centro.html">
+            <span class="num accent-violet">1522</span>
+            <div>
+              <h3>Trova il tuo centro antiviolenza</h3>
+              <p>Mappa interattiva dei centri antiviolenza in Italia, con ricerca per comune, provincia o nome del centro.</p>
+            </div>
+            <span class="pill-link">Apri la mappa</span>
           </a>
         </div>
       </section>
@@ -991,6 +1061,102 @@
         </div>
       </section>
 
+      <section id="app-utili">
+        <div class="section-head">
+          <div class="eyebrow">Strumenti digitali</div>
+          <div>
+            <h2>App utili</h2>
+            <p class="lead">Alcune app ufficiali possono aiutarti a chiedere aiuto in modo rapido, discreto o anonimo, oltre al contatto diretto con un centro antiviolenza.</p>
+          </div>
+        </div>
+        <div class="app-grid">
+          <article class="app-card">
+            <div class="app-card-top">
+              <span class="app-icon accent-red">1522</span>
+              <h3>1522 &ndash; Chat</h3>
+            </div>
+            <p class="tiny">Dipartimento Pari Opportunità</p>
+            <p>Chat anonima e sicura con le operatrici del numero nazionale antiviolenza e antistalking, attiva 24 ore su 24.</p>
+            <div class="link-stack">
+              <a class="pill-link" href="https://apps.apple.com/it/app/1522-chat/id6747118956" target="_blank">iOS</a>
+              <a class="pill-link" href="https://play.google.com/store/apps/details?id=eu.cvpd1522.app.v01" target="_blank">Android</a>
+            </div>
+          </article>
+
+          <article class="app-card">
+            <div class="app-card-top">
+              <span class="app-icon accent-blue">YP</span>
+              <h3>YouPol</h3>
+            </div>
+            <p class="tiny">Polizia di Stato</p>
+            <p>Segnala in forma anonima, con testo, foto, video o audio, episodi di violenza, bullismo o spaccio direttamente alla Polizia di Stato.</p>
+            <div class="link-stack">
+              <a class="pill-link" href="https://youpol.poliziadistato.it/landing" target="_blank">Sito</a>
+              <a class="pill-link" href="https://apps.apple.com/it/app/youpol/id1280831175" target="_blank">iOS</a>
+              <a class="pill-link" href="https://play.google.com/store/apps/details?id=it.poliziadistato.youpol" target="_blank">Android</a>
+            </div>
+          </article>
+
+          <article class="app-card">
+            <div class="app-card-top">
+              <span class="app-icon accent-violet">112</span>
+              <h3>112 Where ARE U</h3>
+            </div>
+            <p class="tiny">Sistema 112 &middot; numero unico emergenze</p>
+            <p>Chiama il 112 condividendo automaticamente la tua posizione GPS esatta con la centrale operativa, anche se non riesci a parlare.</p>
+            <div class="link-stack">
+              <a class="pill-link" href="https://apps.apple.com/us/app/112-where-are-u/id888964800" target="_blank">iOS</a>
+              <a class="pill-link" href="https://play.google.com/store/apps/details?id=it.Beta80Group.whereareu" target="_blank">Android</a>
+            </div>
+          </article>
+
+          <article class="app-card">
+            <div class="app-card-top">
+              <span class="app-icon accent-green">VI</span>
+              <h3>Viola Walk Home</h3>
+            </div>
+            <p class="tiny">Viola Walk Home</p>
+            <p>Ti accompagna in videochiamata con una persona volontaria formata mentre cammini da sola/o, pronta ad allertare le autorità in caso di bisogno.</p>
+            <div class="link-stack">
+              <a class="pill-link" href="https://violawalkhome.com/en/" target="_blank">Sito</a>
+              <a class="pill-link" href="https://apps.apple.com/it/app/violawalkhome/id6449786397" target="_blank">iOS</a>
+              <a class="pill-link" href="https://play.google.com/store/apps/details?id=com.viola.walk.app" target="_blank">Android</a>
+            </div>
+          </article>
+
+          <article class="app-card">
+            <div class="app-card-top">
+              <span class="app-icon accent-red">RC</span>
+              <h3>Recall</h3>
+            </div>
+            <p class="tiny">Recall &ndash; Sicurezza personale</p>
+            <p>Condivide la tua posizione in tempo reale con contatti fidati e può avviare una registrazione audio da usare come prova in caso di pericolo.</p>
+            <div class="link-stack">
+              <a class="pill-link" href="https://www.recallme.it" target="_blank">Sito</a>
+              <a class="pill-link" href="https://apps.apple.com/it/app/recall-sicurezza-personale/id6742329792" target="_blank">iOS</a>
+              <a class="pill-link" href="https://play.google.com/store/apps/details?id=it.recallme.recall" target="_blank">Android</a>
+            </div>
+          </article>
+
+          <article class="app-card">
+            <div class="app-card-top">
+              <span class="app-icon accent-blue">BS</span>
+              <h3>Bright Sky ITA</h3>
+            </div>
+            <p class="tiny">Fondazione Vodafone Italia &middot; CADMI</p>
+            <p>Questionario di autovalutazione del rischio, mappa dei servizi di supporto sul territorio e chiamata rapida al 112.</p>
+            <div class="link-stack">
+              <a class="pill-link" href="https://www.vodafone.it/nw/vodafone-italia/fondazione-vodafone-italia/attivita/progetti/bright-sky.html" target="_blank">Sito</a>
+              <a class="pill-link" href="https://apps.apple.com/it/app/bright-sky-ita/id1521305294" target="_blank">iOS</a>
+              <a class="pill-link" href="https://play.google.com/store/apps/details?id=com.vodafone.brightsky.it" target="_blank">Android</a>
+            </div>
+          </article>
+        </div>
+        <div class="callout" style="margin-top:18px">
+          Se temi che qualcuno controlli il tuo telefono, valuta di chiedere aiuto da un dispositivo che questa persona non può vedere, prima di installare una di queste app.
+        </div>
+      </section>
+
       <section id="fonti" data-audience="operator">
         <div class="section-head">
           <div class="eyebrow">Fonti locali</div>
@@ -1099,5 +1265,6 @@
     setAudience('citizen');
     renderRisks();
   </script>
+  <script src="quick-exit.js"></script>
 </body>
 </html>

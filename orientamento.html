@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="Percorso riservato e non diagnostico per riconoscere segnali di controllo, abuso e violenza e trovare supporto.">
+  <title>Meteo di oggi</title>
+  <!-- Inside the single page the outer header is the only one: this page drops its own -->
+  <script>if (window.self !== window.top) document.documentElement.classList.add('embedded');</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="stile-test.css">
+  <style>
+    .none-option { margin-top: 12px; }
+
+    .validation {
+      display: none;
+      grid-template-columns: auto 1fr;
+      gap: 12px;
+      align-items: baseline;
+      margin-top: 16px;
+      font-size: .9375rem;
+    }
+
+    .validation.show { display: grid; }
+
+    /* Recognised signals: cells divided by hairlines in one rounded box, as on the home page */
+    .cells {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+      border-radius: var(--r-box);
+      overflow: hidden;
+    }
+
+    .cells > * { background: var(--paper); padding: 16px 18px 18px; }
+    .cells > :last-child:nth-child(odd) { grid-column: 1 / -1; }
+    .cells p { margin: 0; font-size: .9375rem; }
+
+    .sources-note {
+      margin-top: clamp(32px, 5vw, 56px);
+      border: 1px solid var(--rule);
+      border-radius: var(--r-box);
+    }
+
+    .sources-note summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      font-size: .9375rem;
+      font-weight: 400;
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .sources-note summary::-webkit-details-marker { display: none; }
+
+    .sources-note summary::after {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-right: 1px solid var(--ink);
+      border-bottom: 1px solid var(--ink);
+      transform: translateY(-3px) rotate(45deg);
+      transition: transform .3s var(--ease);
+    }
+
+    .sources-note[open] summary::after { transform: translateY(1px) rotate(225deg); }
+
+    .sources-body { padding: 0 18px 18px; font-size: .9375rem; max-width: 70ch; }
+    .sources-body li { margin-bottom: 8px; }
+
+    @media (max-width: 620px) { .cells { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header class="site-header" aria-label="Azioni principali">
+    <div class="wrap">
+      <div class="header-inner">
+        <div class="header-top">
+          <a class="brand" href="index-apple.html">SAVE</a>
+          <a class="exit-btn" id="exitBtn" href="https://www.google.com/search?q=meteo">Esci subito dal sito</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="progress wrap" id="progress" aria-label="Avanzamento del percorso"></div>
+
+  <main class="wrap">
+    <section class="stage" id="percorso" aria-live="polite"></section>
+
+    <details class="sources-note" id="fonti">
+      <summary>Metodo, limiti e fonti del percorso</summary>
+      <div class="sources-body">
+        <p>Questo percorso organizza informazioni e opzioni: non stabilisce se un reato è avvenuto, non formula diagnosi e non sostituisce una valutazione professionale.</p>
+        <ul>
+          <li><a href="https://myplanapp.org/en/home" target="_blank" rel="noopener">myPlan</a>: modello di decision aid con segnali, priorità e indicazioni personalizzate.</li>
+          <li><a href="https://pubmed.ncbi.nlm.nih.gov/25547929/" target="_blank" rel="noopener">Eden et al. (2015)</a>: trial randomizzato sul supporto alle decisioni di sicurezza.</li>
+          <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9419475/" target="_blank" rel="noopener">Emezue et al. (2022)</a>: revisione sistematica degli interventi digitali per la violenza nelle relazioni intime.</li>
+          <li><a href="https://www.who.int/publications/i/item/WHO-RHR-14.26" target="_blank" rel="noopener">OMS, approccio LIVES</a>: ascolto, comprensione dei bisogni, validazione, sicurezza e supporto.</li>
+          <li><a href="https://pubmed.ncbi.nlm.nih.gov/18667689/" target="_blank" rel="noopener">Campbell et al. (2009)</a>: indicatori di rischio grave alla base del Danger Assessment.</li>
+        </ul>
+        <p>La ricerca disponibile riguarda soprattutto donne in relazioni intime eterosessuali. Il linguaggio del percorso è inclusivo, ma non implica che gli strumenti originari siano stati validati allo stesso modo per ogni genere, età o contesto.</p>
+      </div>
+    </details>
+
+    <footer class="page-footer" style="margin-top:32px">
+      <span>Le risposte esistono solo in questa pagina: chiudendo o ricaricando, il percorso ricomincia.</span>
+      <span>In pericolo immediato: 112. Supporto: 1522.</span>
+    </footer>
+  </main>
+
+  <script src="stile-test.js"></script>
+  <script>
+    const stage = document.querySelector('#percorso');
+    const progressEl = document.querySelector('#progress');
+
+    const state = {
+      concern: null,
+      context: null,
+      urgent: null,
+      behaviours: [],
+      noneBehaviour: false,
+      pattern: null,
+      priority: null
+    };
+
+    const behaviourInfo = {
+      control: {
+        title: 'Controllo e isolamento',
+        text: 'Limitare spostamenti, amicizie, lavoro, studio, abbigliamento o decisioni può ridurre progressivamente autonomia e libertà.'
+      },
+      psychological: {
+        title: 'Violenza psicologica',
+        text: 'Umiliazioni, insulti, colpevolizzazione, intimidazione o minacce non sono semplici conflitti quando diventano strumenti di paura e controllo.'
+      },
+      digital: {
+        title: 'Controllo digitale o stalking',
+        text: 'Controllare dispositivi, password, posizione e profili, oppure imporre contatti insistenti e indesiderati, può essere una forma di abuso.'
+      },
+      economic: {
+        title: 'Abuso economico',
+        text: 'Impedire di lavorare, controllare ogni spesa, nascondere informazioni o creare debiti può produrre dipendenza e limitare le possibilità di scelta.'
+      },
+      physical: {
+        title: 'Violenza fisica',
+        text: 'Spinte, schiaffi, colpi, immobilizzazione, strangolamento o qualsiasi aggressione fisica sono violenza, anche se accadono una sola volta.'
+      },
+      sexual: {
+        title: 'Violenza o coercizione sessuale',
+        text: 'Pressioni, ricatti o atti sessuali senza un consenso libero e attuale sono violenza. Essere in una relazione non sostituisce il consenso.'
+      },
+      discrimination: {
+        title: 'Svalutazione o discriminazione',
+        text: 'Usare genere, orientamento, identità, disabilità, origine, religione o altre caratteristiche per umiliare, minacciare o controllare aggrava la situazione.'
+      },
+      children: {
+        title: 'Figli, figlie o altre persone coinvolte',
+        text: 'Minacce, violenza assistita o uso di altre persone per controllare qualcuno richiedono attenzione anche alla loro sicurezza e al loro benessere.'
+      }
+    };
+
+    const priorityInfo = {
+      understand: {
+        title: 'Dare un nome a ciò che accade',
+        text: 'Puoi leggere le forme della violenza nella mappa e, se la situazione riguarda un partner o ex partner, proseguire con il questionario ISA.'
+      },
+      talk: {
+        title: 'Parlarne senza essere giudicatə',
+        text: 'Il 1522 offre ascolto gratuito e anonimo. Un Centro Antiviolenza può aiutare a esplorare possibilità senza obbligare a denunciare o lasciare una relazione.'
+      },
+      safety: {
+        title: 'Pensare alla sicurezza',
+        text: 'Valuta un contatto riservato con il 1522 o un Centro Antiviolenza. Se usare questo dispositivo non è sicuro, cerca quando possibile un dispositivo non controllato.'
+      },
+      children: {
+        title: 'Proteggere figli, figlie o altre persone',
+        text: 'Un servizio specializzato può costruire con te un piano che consideri le esigenze di tutte le persone coinvolte, senza soluzioni automatiche.'
+      },
+      practical: {
+        title: 'Casa, denaro, salute o aspetti legali',
+        text: 'I Centri Antiviolenza possono orientare verso supporto psicologico, legale, economico, sanitario e abitativo disponibile sul territorio.'
+      }
+    };
+
+    const steps = ['intro', 'concern', 'context', 'urgent', 'behaviours', 'pattern', 'priority', 'result'];
+    // The four parts of the path, as shown on the progress bar
+    const parts = [
+      ['La situazione', ['concern', 'context']],
+      ['Sicurezza', ['urgent']],
+      ['I segnali', ['behaviours', 'pattern']],
+      ['Ciò che conta ora', ['priority']]
+    ];
+    const SECONDS = { concern: 10, context: 15, urgent: 20, behaviours: 35, pattern: 15, priority: 15 };
+    let cursor = 0;
+
+    function radioChoice(name, value, title, description, selected, n) {
+      return `<label class="option"><input type="radio" name="${name}" value="${value}" ${selected === value ? 'checked' : ''}><span class="mark" aria-hidden="true"></span><span class="option-text"><strong>${title}</strong>${description ? `<small>${description}</small>` : ''}</span><span class="key" aria-hidden="true">${n}</span></label>`;
+    }
+
+    function checkboxChoice(value, title, description) {
+      return `<label class="option"><input type="checkbox" name="behaviour" value="${value}" ${state.behaviours.includes(value) ? 'checked' : ''}><span class="mark" aria-hidden="true"></span><span class="option-text"><strong>${title}</strong><small>${description}</small></span></label>`;
+    }
+
+    function radios(name, list) {
+      return `<div class="options" role="radiogroup" aria-labelledby="question" data-keys>${list.map((c, i) => radioChoice(name, c[0], c[1], c[2], state[name], i + 1)).join('')}</div><p class="saved" aria-live="polite"></p>`;
+    }
+
+    function navigation(showBack = true, nextText = 'Continua') {
+      return `<div class="validation" id="validation" role="alert"><span class="dot ochre" aria-hidden="true"></span><p style="margin:0">Scegli una risposta per continuare. Se non sei sicurə, c’è sempre l’opzione “Non so”.</p></div>
+        <div class="step-actions">
+          ${showBack ? '<button class="btn quiet" type="button" data-action="back">Indietro</button>' : '<span></span>'}
+          <button class="btn primary" type="button" data-action="next" data-next>${nextText}</button>
+        </div>`;
+    }
+
+    function updateProgress() {
+      const step = steps[cursor];
+      const questionSteps = steps.slice(1, -1);
+      TestKit.progress(progressEl, {
+        segments: parts.map(([label, members]) => ({
+          label,
+          total: members.length,
+          done: members.filter(m => steps.indexOf(m) < cursor).length,
+          current: members.includes(step)
+        })),
+        where: step === 'intro' ? 'Introduzione' : step === 'result' ? '<b>Il tuo orientamento</b>' : `<b>Passaggio ${cursor}</b> di ${questionSteps.length}`,
+        seconds: step === 'result' ? null : steps.slice(cursor).reduce((sum, s) => sum + (SECONDS[s] || 0), 0)
+      });
+    }
+
+    function introScreen() {
+      return `
+        <span class="kicker">Orientamento, non diagnosi</span>
+        <h1 class="title">Capire la situazione</h1>
+        <p class="lead">Un breve percorso per riconoscere comportamenti che ti preoccupano e trovare informazioni più adatte a ciò che stai vivendo o osservando.</p>
+        <div class="box facts">
+          <div class="box-row"><span>Passaggi</span><b>6, uno alla volta</b></div>
+          <div class="box-row"><span>Tempo</span><b>Circa 2 minuti</b></div>
+          <div class="box-row"><span>Punteggio</span><b>Nessuno</b></div>
+          <div class="box-row"><span>Le risposte</span><b>Non vengono salvate né inviate</b></div>
+        </div>
+        <p class="note">Non ti chiederemo nomi o contatti. Il risultato non è una diagnosi e non decide al posto tuo.</p>
+        <div class="callout"><span class="dot" aria-hidden="true"></span><div>
+          <h3>Hai bisogno di aiuto adesso?</h3>
+          <p>Se tu o un’altra persona siete in pericolo immediato, chiama il 112. Per ascolto e orientamento gratuito, anonimo e attivo 24 ore su 24, contatta il 1522.</p>
+          <div class="btn-row"><a class="btn urgent" href="tel:112">Chiama il 112</a><a class="btn" href="tel:1522">Chiama il 1522</a></div>
+        </div></div>
+        ${navigation(false, 'Inizia il percorso')}`;
+    }
+
+    function concernScreen() {
+      return `
+        <span class="kicker">La situazione</span>
+        <p class="question" id="question">Per chi stai cercando di capire?</p>
+        <p class="note" style="margin-bottom:20px">La risposta serve solo ad adattare il linguaggio del percorso.</p>
+        ${radios('concern', [
+          ['self', 'Per me', 'Sto pensando a qualcosa che vivo o ho vissuto.'],
+          ['other', 'Per un’altra persona', 'Qualcosa che vedo o che mi è stato raccontato mi preoccupa.']
+        ])}
+        ${navigation()}`;
+    }
+
+    function contextScreen() {
+      return `
+        <span class="kicker">Il contesto</span>
+        <p class="question" id="question">Dove accadono soprattutto questi comportamenti?</p>
+        <p class="note" style="margin-bottom:20px">Puoi scegliere il contesto più vicino, anche se la situazione attraversa più spazi.</p>
+        ${radios('context', [
+          ['partner', 'Partner o ex partner', 'Una relazione attuale, passata o in fase di separazione.'],
+          ['family', 'Famiglia o casa', 'Un familiare, convivente o altra persona vicina.'],
+          ['public', 'Lavoro, scuola o spazio pubblico', 'Comportamenti legati a colleghi, responsabili, compagni o sconosciuti.'],
+          ['online', 'Online o tramite dispositivi', 'Contatti, immagini, account, localizzazione o sorveglianza digitale.'],
+          ['unsure', 'Non so definirlo', 'Il contesto è misto, incerto o non compare qui.']
+        ])}
+        ${navigation()}`;
+    }
+
+    function urgentScreen() {
+      return `
+        <span class="kicker">Sicurezza</span>
+        <p class="question" id="question">C’è un pericolo urgente o un rischio di violenza grave?</p>
+        <p class="note" style="margin-bottom:20px">Pensa a questo momento e alle ultime settimane. Per esempio: minacce di morte o con un’arma, strangolamento, blocchi mentre qualcuno cercava di allontanarsi, oppure il timore che qualcosa di grave possa accadere presto.</p>
+        ${radios('urgent', [
+          ['yes', 'Sì', 'Uno o più di questi segnali sono presenti.'],
+          ['no', 'No', 'Non riconosco questi segnali in questo momento.'],
+          ['unsure', 'Non so', 'Ho dubbi o non conosco abbastanza la situazione.'],
+          ['skip', 'Preferisco non rispondere', 'Posso comunque continuare il percorso.']
+        ])}
+        <div class="callout" id="urgentHelp" ${state.urgent === 'yes' ? '' : 'hidden'}><span class="dot maroon" aria-hidden="true"></span><div>
+          <h3>La sicurezza viene prima</h3>
+          <p>Se il pericolo è immediato, chiama il 112. Il 1522 può aiutare a valutare opzioni e servizi senza obbligare a prendere una decisione specifica.</p>
+          <div class="btn-row"><a class="btn urgent" href="tel:112">Chiama il 112</a><a class="btn" href="tel:1522">Chiama il 1522</a></div>
+        </div></div>
+        ${navigation()}`;
+    }
+
+    function behavioursScreen() {
+      return `
+        <span class="kicker">I segnali</span>
+        <p class="question" id="question">Quali comportamenti riconosci?</p>
+        <p class="note" style="margin-bottom:20px">Seleziona tutte le descrizioni pertinenti. Conta anche un singolo episodio, se ti ha fattə sentire in pericolo o senza possibilità di scelta.</p>
+        <div class="options" aria-labelledby="question">
+          ${checkboxChoice('control', 'Controllo e isolamento', 'Limita persone, luoghi, lavoro, studio, abiti o decisioni.')}
+          ${checkboxChoice('psychological', 'Umiliazioni o minacce', 'Insulta, svaluta, intimorisce, colpevolizza o ricatta.')}
+          ${checkboxChoice('digital', 'Controllo digitale o stalking', 'Controlla dispositivi, posizione o account; insiste con contatti indesiderati.')}
+          ${checkboxChoice('economic', 'Controllo economico', 'Controlla denaro e spese, impedisce di lavorare o crea debiti.')}
+          ${checkboxChoice('physical', 'Aggressione fisica', 'Spinge, colpisce, blocca, ferisce o mette le mani al collo.')}
+          ${checkboxChoice('sexual', 'Pressione o violenza sessuale', 'Ignora un no, insiste, ricatta o compie atti senza consenso.')}
+          ${checkboxChoice('discrimination', 'Svalutazione discriminatoria', 'Usa identità, genere, orientamento, origine, religione o disabilità per colpire.')}
+          ${checkboxChoice('children', 'Coinvolgimento di altre persone', 'Minaccia figli, figlie, familiari, animali o li usa per controllare.')}
+        </div>
+        <div class="options none-option">
+          <label class="option"><input type="checkbox" id="noneBehaviour" ${state.noneBehaviour ? 'checked' : ''}><span class="mark" aria-hidden="true"></span><span class="option-text"><strong>Nessuna di queste, o non so</strong><small>Il disagio può comunque meritare ascolto e approfondimento.</small></span></label>
+        </div>
+        <p class="saved" aria-live="polite" id="selectedCount"></p>
+        ${navigation()}`;
+    }
+
+    function patternScreen() {
+      return `
+        <span class="kicker">L’andamento</span>
+        <p class="question" id="question">Come descriveresti ciò che sta accadendo?</p>
+        <p class="note" style="margin-bottom:20px">Non serve ricordare ogni episodio. Scegli ciò che si avvicina di più alla tua percezione.</p>
+        ${radios('pattern', [
+          ['single', 'Un episodio che preoccupa', 'È successo una volta o non so se sia già accaduto prima.'],
+          ['repeated', 'Un comportamento ripetuto', 'Ritorna nel tempo o in forme diverse.'],
+          ['escalating', 'Sta peggiorando', 'Frequenza, intensità, minacce o controllo stanno aumentando.'],
+          ['fear', 'C’è paura o adattamento', 'Si cambiano abitudini o parole per evitare reazioni.'],
+          ['unsure', 'Non so', 'È difficile ricostruire o definire l’andamento.']
+        ])}
+        ${navigation()}`;
+    }
+
+    function priorityScreen() {
+      return `
+        <span class="kicker">Ciò che conta ora</span>
+        <p class="question" id="question">Qual è il bisogno più importante in questo momento?</p>
+        <p class="note" style="margin-bottom:20px">Non è una scelta definitiva: serve a proporre un primo passo più pertinente.</p>
+        ${radios('priority', [
+          ['understand', 'Capire e dare un nome', 'Vorrei distinguere conflitto, controllo, abuso o violenza.'],
+          ['talk', 'Parlarne con qualcuno', 'Vorrei essere ascoltatə senza giudizio o pressioni.'],
+          ['safety', 'Pensare alla sicurezza', 'Vorrei capire come ridurre un rischio o prepararmi.'],
+          ['children', 'Considerare altre persone', 'Mi preoccupano figli, figlie, familiari o altre persone coinvolte.'],
+          ['practical', 'Affrontare bisogni pratici', 'Casa, denaro, salute, lavoro, documenti o aspetti legali.']
+        ])}
+        ${navigation(true, 'Vedi l’orientamento')}`;
+    }
+
+    function contextMessage() {
+      const messages = {
+        partner: 'La situazione riguarda una relazione intima attuale o passata. Controllo, paura e limitazione dell’autonomia sono elementi importanti da osservare, anche in assenza di aggressioni fisiche.',
+        family: 'La violenza può avvenire anche all’interno della famiglia o della convivenza. Il legame con la persona non rende accettabili minacce, controllo o aggressioni.',
+        public: 'Molestie, discriminazioni, minacce e violenza possono avvenire sul lavoro, a scuola o negli spazi pubblici. Questo percorso offre un primo orientamento, ma potrebbero servire risorse specifiche per quel contesto.',
+        online: 'Ciò che avviene online è reale: sorveglianza, diffusione di immagini, accesso agli account, minacce e contatti insistenti possono causare danno e limitare la libertà.',
+        unsure: 'Non è necessario trovare subito una definizione perfetta. Più comportamenti e contesti possono sovrapporsi, e il disagio è una ragione sufficiente per cercare ascolto.'
+      };
+      return messages[state.context] || messages.unsure;
+    }
+
+    function resultScreen() {
+      const cards = state.behaviours.map(key => {
+        const item = behaviourInfo[key];
+        return `<article><h3>${item.title}</h3><p>${item.text}</p></article>`;
+      }).join('');
+      const noCards = `<article><h3>Il disagio conta</h3><p>Non riconoscere una descrizione non dimostra che la situazione sia sicura. Puoi ripetere il percorso, leggere esempi concreti o parlarne con una persona competente.</p></article>`;
+      const patternText = {
+        single: 'Anche un episodio singolo può essere serio. Conta il comportamento e il suo impatto, non soltanto quante volte è accaduto.',
+        repeated: 'La ripetizione suggerisce un modello, non un episodio isolato. Osservare come i comportamenti si combinano può aiutare a comprendere il controllo esercitato.',
+        escalating: 'Un aumento di frequenza o gravità è un segnale di attenzione. Considera un confronto riservato sulla sicurezza con un servizio specializzato.',
+        fear: 'Cambiare il proprio comportamento per evitare reazioni indica che paura e controllo stanno limitando la libertà di scelta.',
+        unsure: 'È comune avere ricordi frammentari o difficoltà a definire un andamento. Non devi dimostrare nulla per meritare ascolto.'
+      };
+      const priority = priorityInfo[state.priority] || priorityInfo.understand;
+      const urgentBlock = state.urgent === 'yes' ? `<div class="callout"><span class="dot maroon" aria-hidden="true"></span><div><h3>Hai indicato segnali di possibile pericolo grave</h3><p>Se il pericolo è immediato, chiama il 112. Se puoi farlo in sicurezza, il 1522 o un Centro Antiviolenza possono aiutarti a valutare opzioni personalizzate.</p><div class="btn-row"><a class="btn urgent" href="tel:112">Chiama il 112</a><a class="btn" href="tel:1522">Chiama il 1522</a></div></div></div>` : '';
+      const isaLink = state.context === 'partner' ? '<a class="btn" href="isa.html">Questionario ISA</a>' : '';
+      const economicLink = state.behaviours.includes('economic') ? '<a class="btn" href="economic-abuse.html">Approfondisci l’abuso economico</a>' : '';
+      const count = state.behaviours.length;
+
+      return `<div class="report">
+        <div class="report-head">
+          <span class="kicker">Il tuo orientamento</span>
+          <h2 class="question" id="question">${state.urgent === 'yes' ? 'La sicurezza viene prima' : count ? 'Ci sono segnali da non minimizzare' : 'Vale la pena ascoltare il disagio'}</h2>
+          <p class="lead">${contextMessage()}</p>
+        </div>
+        ${urgentBlock}
+        <section class="report-block">
+          <h2>Come leggere il quadro</h2>
+          <p style="max-width:62ch">${patternText[state.pattern] || patternText.unsure}</p>
+        </section>
+        <section class="report-block">
+          <h2>${count ? (count === 1 ? 'Il segnale che hai riconosciuto' : `I ${count} segnali che hai riconosciuto`) : 'Nessun segnale selezionato'}</h2>
+          <div class="cells">${cards || noCards}</div>
+        </section>
+        <section class="report-block">
+          <h2>Un possibile primo passo: ${priority.title.charAt(0).toLowerCase() + priority.title.slice(1)}</h2>
+          <p style="max-width:62ch">${priority.text}</p>
+          <div class="btn-row"><a class="btn primary" href="tel:1522">Contatta il 1522</a><a class="btn" href="trova-centro.html">Trova un Centro Antiviolenza</a>${isaLink}${economicLink}</div>
+        </section>
+        <div class="disclaimer"><p>Questo orientamento non assegna un punteggio e non certifica né esclude una situazione di violenza. Solo tu conosci pienamente il tuo contesto; una persona specializzata può aiutarti a valutarlo senza giudicare o imporre decisioni.</p></div>
+        <div class="step-actions">
+          <button class="btn quiet" type="button" data-action="back">Rivedi le risposte</button>
+          <div class="btn-row"><button class="btn" type="button" data-action="reset">Ricomincia</button><a class="btn" href="index-apple.html#forme">Leggi forme e dinamiche</a></div>
+        </div>
+      </div>`;
+    }
+
+    function render() {
+      const screens = {
+        intro: introScreen,
+        concern: concernScreen,
+        context: contextScreen,
+        urgent: urgentScreen,
+        behaviours: behavioursScreen,
+        pattern: patternScreen,
+        priority: priorityScreen,
+        result: resultScreen
+      };
+      updateProgress();
+      TestKit.swap(stage, screens[steps[cursor]](), { focus: cursor > 0 });
+    }
+
+    function saveCurrent() {
+      const step = steps[cursor];
+      if (step === 'intro') return true;
+      if (step === 'behaviours') {
+        const none = document.querySelector('#noneBehaviour');
+        state.behaviours = [...document.querySelectorAll('input[name="behaviour"]:checked')].map(input => input.value);
+        state.noneBehaviour = Boolean(none && none.checked);
+        return Boolean(state.behaviours.length || state.noneBehaviour);
+      }
+      const input = document.querySelector(`input[name="${step}"]:checked`);
+      if (!input) return false;
+      state[step] = input.value;
+      return true;
+    }
+
+    function showCount() {
+      const count = document.querySelectorAll('input[name="behaviour"]:checked').length;
+      const note = document.querySelector('#selectedCount');
+      if (!note) return;
+      note.textContent = count ? (count === 1 ? '1 comportamento selezionato' : `${count} comportamenti selezionati`) : '';
+      note.classList.toggle('is-visible', count > 0);
+    }
+
+    stage.addEventListener('change', event => {
+      const input = event.target;
+      if (input.name === 'urgent') {
+        const urgentHelp = document.querySelector('#urgentHelp');
+        if (urgentHelp) urgentHelp.hidden = input.value !== 'yes';
+      }
+      if (input.name === 'behaviour') {
+        const none = document.querySelector('#noneBehaviour');
+        if (none) none.checked = false;
+        state.noneBehaviour = false;
+        showCount();
+      }
+      if (input.id === 'noneBehaviour' && input.checked) {
+        document.querySelectorAll('input[name="behaviour"]').forEach(box => { box.checked = false; });
+        state.noneBehaviour = true;
+        showCount();
+      }
+      const validation = document.querySelector('#validation');
+      if (validation) validation.classList.remove('show');
+
+      // Single choices move on by themselves the first time; a danger answer waits, so its help can be read
+      if (input.type === 'radio') {
+        const step = steps[cursor];
+        const wasAnswered = state[step] !== null;
+        state[step] = input.value;
+        if (step === 'urgent' && input.value === 'yes') TestKit.confirmThen(() => {}, { auto: false });
+        else TestKit.confirmThen(() => { cursor += 1; render(); }, { auto: !wasAnswered });
+      }
+    });
+
+    stage.addEventListener('click', event => {
+      const control = event.target.closest('[data-action]');
+      if (!control) return;
+      const action = control.dataset.action;
+      if (action === 'next') {
+        if (!saveCurrent()) {
+          const validation = document.querySelector('#validation');
+          if (validation) validation.classList.add('show');
+          return;
+        }
+        cursor = Math.min(cursor + 1, steps.length - 1);
+        render();
+      }
+      if (action === 'back') {
+        saveCurrent();
+        cursor = Math.max(cursor - 1, 0);
+        render();
+      }
+      if (action === 'reset') {
+        Object.assign(state, { concern: null, context: null, urgent: null, behaviours: [], noneBehaviour: false, pattern: null, priority: null });
+        cursor = 0;
+        render();
+      }
+    });
+
+    document.querySelector('#exitBtn').addEventListener('click', () => {
+      Object.assign(state, { concern: null, context: null, urgent: null, behaviours: [], noneBehaviour: false, pattern: null, priority: null });
+    });
+
+    render();
+  </script>
+  <script src="quick-exit.js"></script>
+</body>
+</html>
