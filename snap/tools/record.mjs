@@ -1,5 +1,6 @@
 // Records short scripted interactions with SAVE pages as JPEG sprite strips.
-// Usage: node record.mjs <outDir> [sceneKey...]
+// Usage: node record.mjs <outDir> [--mp4] [sceneKey...]
+// --mp4 writes one full-size video per scene and theme instead of the card strips
 // Needs the site on http://localhost:8765 and Google Chrome installed.
 import { spawn } from 'node:child_process';
 import { writeFileSync, mkdirSync } from 'node:fs';
@@ -7,7 +8,8 @@ import { setTimeout as sleep } from 'node:timers/promises';
 import { scenes } from './scenes.mjs';
 
 const OUT = process.argv[2];
-const only = process.argv.slice(3);
+const MP4 = process.argv.includes('--mp4');
+const only = process.argv.slice(3).filter(a => a !== '--mp4');
 const BASE = 'http://localhost:8765/';
 const PORT = 9333;
 const W = 1280, H = 800;
@@ -132,7 +134,7 @@ async function record(key, scene, theme) {
     const w = r.width, h = Math.min(innerHeight - r.top, w * 0.625);
     return { x: r.left, y: r.top, width: w, height: h };
   })()`);
-  const scale = SNAP_W / clip.width;
+  const scale = MP4 ? 1 : SNAP_W / clip.width;
   const frames = [];
   const shot = async hold => {
     // Clip coordinates are in document space: follow the page when the document itself scrolls
@@ -179,6 +181,35 @@ async function record(key, scene, theme) {
     }
   }
 
+  if (MP4) {
+    // Play the frames on a canvas with their own timing and record it, in the page itself
+    const video = await evaluate(`(async () => {
+      const srcs = ${JSON.stringify(frames.map(f => f.data))};
+      const holds = ${JSON.stringify(frames.map(f => f.hold))};
+      const imgs = await Promise.all(srcs.map(s => new Promise(r => { const i = new Image(); i.onload = () => r(i); i.src = 'data:image/jpeg;base64,' + s; })));
+      const c = document.createElement('canvas'); c.width = imgs[0].width & ~1; c.height = imgs[0].height & ~1;
+      const g = c.getContext('2d');
+      const mime = ['video/mp4;codecs=avc1.640028', 'video/mp4;codecs=avc1', 'video/mp4'].find(t => MediaRecorder.isTypeSupported(t));
+      if (!mime) throw new Error('MP4 recording not supported');
+      const rec = new MediaRecorder(c.captureStream(30), { mimeType: mime, videoBitsPerSecond: 6e6 });
+      const chunks = []; rec.ondataavailable = e => chunks.push(e.data);
+      const done = new Promise(r => rec.onstop = r);
+      g.drawImage(imgs[0], 0, 0); rec.start();
+      const wait = ms => new Promise(r => setTimeout(r, ms));
+      for (let i = 0; i < imgs.length; i++) {
+        // Repaint through the hold so the stream keeps a steady frame rate
+        const end = performance.now() + holds[i] * 1.4;
+        do { g.drawImage(imgs[i], 0, 0); await wait(33); } while (performance.now() < end);
+      }
+      rec.stop(); await done;
+      const buf = new Uint8Array(await new Blob(chunks).arrayBuffer());
+      let bin = ''; for (let i = 0; i < buf.length; i += 32768) bin += String.fromCharCode(...buf.subarray(i, i + 32768));
+      return btoa(bin);
+    })()`);
+    writeFileSync(`${OUT}/${key}-${theme}.mp4`, Buffer.from(video, 'base64'));
+    return { frames: frames.map(f => f.hold) };
+  }
+
   // Strip the frames into one tall JPEG, drawn in the page itself
   const strip = await evaluate(`(async () => {
     const srcs = ${JSON.stringify(frames.map(f => f.data))};
@@ -206,6 +237,6 @@ for (const [key, scene] of Object.entries(scenes)) {
     console.log(light.frames.length + ' frames');
   } catch (e) { console.log('FAILED ' + e.message); }
 }
-writeFileSync(`${OUT}/manifest-part.json`, JSON.stringify(manifest, null, 1));
+if (!MP4) writeFileSync(`${OUT}/manifest-part.json`, JSON.stringify(manifest, null, 1));
 chrome.kill();
 process.exit(0);

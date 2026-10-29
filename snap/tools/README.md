@@ -9,3 +9,7 @@ Per rifarle dopo aver cambiato una pagina:
 3. Copia il contenuto di `../manifest-part.json` nell'oggetto `snaps` di `index.html` (solo le chiavi rifatte).
 
 Le scene (cosa fa il puntatore in ogni pagina) sono in `scenes.mjs`.
+
+## Video MP4
+
+`node record.mjs <cartella> --mp4 [chiave...]` registra le stesse scene come video MP4 a 1280×800 (chiaro e scuro), con le pause un po' più lunghe. Non servono al sito: sono per presentazioni e documenti. Gli ultimi sono in `snapshot-mp4/`, accanto alla cartella del sito.
