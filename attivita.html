@@ -22,7 +22,8 @@
       --vermilion: #ff5233;
       --ochre: #bd8100;
       --grey: #888888;
-      --exit: #7b002c;
+      --exit: #c8102e;
+      --accent: #8e4185;
       --r-box: 12px;
       --gutter: clamp(16px, 3vw, 40px);
       --ease: cubic-bezier(.32,.72,0,1);
@@ -43,7 +44,8 @@
         --maroon: #d8507a;
         --vermilion: #ff6c52;
         --ochre: #d9a43a;
-        --exit: #a3123f;
+        --exit: #d4202f;
+        --accent: #c27bb8;
       }
     }
 
@@ -57,7 +59,8 @@
       --maroon: #d8507a;
       --vermilion: #ff6c52;
       --ochre: #d9a43a;
-      --exit: #a3123f;
+      --exit: #d4202f;
+      --accent: #c27bb8;
     }
 
     * { box-sizing: border-box; }
@@ -87,7 +90,7 @@
     b, strong { font-weight: 500; }
     h1, h2, h3, p { margin-top: 0; }
 
-    :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
     [hidden] { display: none !important; }
 
     .wrap {
@@ -137,6 +140,45 @@
     }
 
     .exit-btn:active { transform: scale(.96); filter: brightness(.9); transition-duration: 0s; }
+
+
+    /* The exit breathes: a ring of the same red grows and fades behind the button */
+
+    .exit-btn { position: relative; isolation: isolate; }
+
+    .exit-btn::before {
+
+      content: "";
+
+      position: absolute;
+
+      inset: 0;
+
+      z-index: -1;
+
+      border-radius: inherit;
+
+      background: var(--exit);
+
+      pointer-events: none;
+
+      animation: exit-pulse 2.6s cubic-bezier(.32,.72,0,1) infinite;
+
+    }
+
+    @keyframes exit-pulse {
+
+      0% { transform: scale(1); opacity: .5; }
+
+      60%, 100% { transform: scale(1.12, 1.45); opacity: 0; }
+
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      .exit-btn::before { animation: none; opacity: 0; }
+
+    }
 
     .nav {
       display: flex;
@@ -225,7 +267,7 @@
       cursor: text;
     }
 
-    .filter-bar:focus-within { box-shadow: 0 0 0 1px var(--ink); }
+    .filter-bar:focus-within { box-shadow: 0 0 0 1px var(--accent); border-color: var(--accent); }
     .filter-chips { display: contents; }
 
     .chip {
@@ -233,7 +275,7 @@
       align-items: center;
       max-width: 100%;
       border-radius: 999px;
-      background: var(--ink);
+      background: var(--accent);
       color: var(--paper);
       font-size: .875rem;
       font-weight: 400;
@@ -364,7 +406,7 @@
       transition: background-position .25s var(--ease);
     }
 
-    .filter-btn[data-toggle][aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+    .filter-btn[data-toggle][aria-pressed="true"] { background: var(--accent); color: var(--paper); border-color: var(--accent); }
     .filter-btn[data-toggle][aria-pressed="true"]::before { background-position: 10px 0; }
 
     .filter-menu {
@@ -419,7 +461,7 @@
       cursor: pointer;
     }
 
-    .check input { width: 18px; height: 18px; margin: 0; accent-color: var(--ink); }
+    .check input { width: 18px; height: 18px; margin: 0; accent-color: var(--accent); }
     .check .n { font-size: var(--t-small); color: var(--muted); font-weight: 300; font-variant-numeric: tabular-nums; }
 
     .menu-foot {
@@ -443,7 +485,7 @@
     }
 
     .btn:active { transform: scale(.97); transition-duration: 0s; }
-    .btn.dark { background: var(--ink); color: var(--paper); }
+    .btn.dark { background: var(--accent); color: var(--paper); }
 
     .sort-control { display: inline-flex; align-items: center; gap: 10px; font-size: .875rem; color: var(--muted); }
 
@@ -806,10 +848,6 @@
 
     <section class="list" id="list" aria-label="Attività"></section>
 
-    <footer>
-      <span>SAVE, attività per operatori</span>
-      <span>Dati da attivita_new.xlsx</span>
-    </footer>
   </main>
 
   <script src="attivita-data.js"></script>

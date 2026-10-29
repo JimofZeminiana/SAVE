@@ -85,7 +85,7 @@
       --sn-ink: #151515;
       --sn-muted: #6b6b6b;
       --sn-fill: rgba(21,21,21,.05);
-      --sn-exit: #7b002c;
+      --sn-exit: #c8102e;
       --sn-ease: cubic-bezier(.32,.72,0,1);
       width: min(600px, calc(100vw - 32px));
       max-height: calc(100dvh - 32px);
@@ -109,7 +109,7 @@
         --sn-ink: #f1f1ef;
         --sn-muted: #a3a3a0;
         --sn-fill: rgba(241,241,239,.07);
-        --sn-exit: #a3123f;
+        --sn-exit: #d4202f;
       }
     }
     .sn-dialog::backdrop { background: rgba(21,21,21,.5); }

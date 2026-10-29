@@ -22,7 +22,8 @@
       --vermilion: #ff5233;
       --ochre: #bd8100;
       --grey: #888888;
-      --exit: #7b002c;
+      --exit: #c8102e;
+      --accent: #8e4185;
       --r-box: 12px;
       --gutter: clamp(16px, 3vw, 40px);
       --header-h: 112px;
@@ -46,7 +47,8 @@
         --maroon: #d8507a;
         --vermilion: #ff6c52;
         --ochre: #d9a43a;
-        --exit: #a3123f;
+        --exit: #d4202f;
+        --accent: #c27bb8;
       }
     }
 
@@ -60,7 +62,8 @@
       --maroon: #d8507a;
       --vermilion: #ff6c52;
       --ochre: #d9a43a;
-      --exit: #a3123f;
+      --exit: #d4202f;
+      --accent: #c27bb8;
     }
 
     * { box-sizing: border-box; }
@@ -86,7 +89,8 @@
       background: var(--paper);
     }
 
-    a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-color: var(--accent); }
+    ::selection { background: var(--accent); color: var(--paper); }
     button, input, select, textarea { font: inherit; color: inherit; }
     /* No double-tap-zoom wait between finger and response */
     a, button, summary, input { touch-action: manipulation; }
@@ -100,7 +104,7 @@
     b, strong { font-weight: 500; }
     code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: .85em; }
 
-    :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
     body.citizen [data-audience="operator"],
     body.operator [data-audience="citizen"] { display: none !important; }
@@ -164,7 +168,7 @@
       inset: 2px auto 2px 2px;
       width: calc(50% - 2px);
       border-radius: 999px;
-      background: var(--ink);
+      background: var(--accent);
       transition: transform .38s var(--ease);
       view-transition-name: segmented-thumb;
     }
@@ -201,6 +205,45 @@
     }
 
     .exit-btn:active { transform: scale(.96); filter: brightness(.9); }
+
+
+    /* The exit breathes: a ring of the same red grows and fades behind the button */
+
+    .exit-btn { position: relative; isolation: isolate; }
+
+    .exit-btn::before {
+
+      content: "";
+
+      position: absolute;
+
+      inset: 0;
+
+      z-index: -1;
+
+      border-radius: inherit;
+
+      background: var(--exit);
+
+      pointer-events: none;
+
+      animation: exit-pulse 2.6s cubic-bezier(.32,.72,0,1) infinite;
+
+    }
+
+    @keyframes exit-pulse {
+
+      0% { transform: scale(1); opacity: .5; }
+
+      60%, 100% { transform: scale(1.12, 1.45); opacity: 0; }
+
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      .exit-btn::before { animation: none; opacity: 0; }
+
+    }
 
     .nav {
       display: flex;
@@ -475,38 +518,69 @@
 
     .links a { white-space: nowrap; }
 
-    /* Interactive pages as ruled rows */
-    .test-list { border-top: 1px solid var(--rule); }
+    /* Links to other parts of the site: rounded cards, each with a preview of what it opens */
+    .test-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+      gap: 16px;
+    }
+
 
     .test-row {
       display: grid;
-      grid-template-columns: 5fr 7fr;
-      gap: 12px clamp(24px, 4vw, 64px);
-      align-items: baseline;
-      padding: 18px 0 20px;
-      border-bottom: 1px solid var(--rule);
+      grid-template-columns: 1fr auto;
+      grid-template-rows: auto 1fr auto;
+      grid-template-areas: "preview preview" "body body" "num go";
+      border: 1px solid var(--rule);
+      border-radius: var(--r-box);
+      overflow: hidden;
+      background: var(--paper);
       text-decoration: none;
-      transition: background-color .2s var(--ease);
+      transition: border-color .2s var(--ease), transform .2s var(--ease);
     }
 
-    .test-row .num {
-      font-size: clamp(2rem, 3.6vw, 3rem);
-      font-weight: 300;
-      line-height: 1;
-      letter-spacing: -.035em;
+    /* The preview is a recorded strip of the page being used, one frame per step */
+    .test-row > .preview {
+      grid-area: preview;
+      aspect-ratio: 16 / 10;
+      border-bottom: 1px solid var(--rule);
+      background: var(--fill) var(--snap-light) 0 calc(var(--poster) / (var(--n) - 1) * 100%) / 100% calc(var(--n) * 100%) no-repeat;
     }
 
-    .test-row p { margin: 0; color: var(--muted); }
-    .test-row h3 { margin-bottom: 4px; }
+    .test-row > .preview.is-playing { animation: var(--snap-anim) var(--snap-time) step-end infinite; }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) .test-row > .preview { background-image: var(--snap-dark); }
+    }
+    :root[data-theme="dark"] .test-row > .preview { background-image: var(--snap-dark); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .test-row > .preview.is-playing { animation: none; }
+    }
+
+    .test-row > div:not(.preview) { grid-area: body; padding: 16px 16px 4px; }
+    .test-row h3 { margin: 0 0 6px; font-size: 1.1875rem; font-weight: 400; letter-spacing: -.01em; text-wrap: balance; }
+    .test-row p { margin: 0; font-size: .9375rem; line-height: 1.45; color: var(--muted); text-wrap: pretty; }
+
+    .test-row .num { display: none; }
 
     .test-row .go {
-      grid-column: 2;
+      grid-area: go;
+      align-self: end;
+      padding: 12px 16px 16px;
       font-size: .9375rem;
+      color: var(--accent);
       text-decoration: underline;
       white-space: nowrap;
     }
 
-    .test-row:active { background: var(--fill); }
+    .test-row:active { transform: scale(.985); transition-duration: 0s; }
+
+    .test-row.is-danger { background: var(--exit); border-color: var(--exit); color: #fff; }
+    .test-row.is-danger > .preview { border-color: rgba(255,255,255,.4); }
+    .test-row.is-danger p, .test-row.is-danger .go { color: rgba(255,255,255,.88); }
+
+
 
     /* SARA-S: legend box beside the list, like SEI's map */
     .risk-layout {
@@ -558,7 +632,7 @@
     .legend button:first-of-type { border-top: 0; }
     .legend button small { display: block; margin-top: 2px; font-size: var(--t-small); font-weight: 300; color: var(--muted); }
     .legend button[aria-pressed="true"] { background: var(--fill); }
-    .legend button[aria-pressed="true"] .label { text-decoration: underline; text-underline-offset: 3px; }
+    .legend button[aria-pressed="true"] .label { text-decoration: underline; text-underline-offset: 3px; color: var(--accent); }
 
     .toolbox { border-top: 1px solid var(--rule); }
 
@@ -837,8 +911,9 @@
       .nav a:hover { color: var(--ink); }
       .segmented button:hover:not([aria-pressed="true"]) { text-decoration: underline; text-underline-offset: 3px; }
       .emergency a:hover,
-      .test-row:hover,
       .legend button:hover { background: var(--fill); }
+      .test-row:hover { border-color: var(--accent); }
+      .test-row.is-danger:hover { border-color: var(--exit); filter: brightness(1.06); }
       .test-row:hover .go { text-decoration-thickness: 2px; }
       summary:hover strong { text-decoration: underline; text-underline-offset: 3px; }
       a:hover { text-decoration-thickness: 2px; }
@@ -864,8 +939,6 @@
       .map-card + .map-card { padding: 20px 0 12px; border-left: 0; }
       .map-card + .map-card { border-top: 1px solid var(--rule); }
       .map-card .num { margin-bottom: 20px; }
-      .test-row { grid-template-columns: 1fr; gap: 8px; }
-      .test-row .go { grid-column: 1; }
 
       /* Table rows become stacked records */
       table.catalogue, .catalogue tbody, .catalogue tr, .catalogue td, .catalogue th { display: block; }
@@ -964,9 +1037,7 @@
 
     .rail-menu, .bars { flex: 1; display: flex; flex-direction: column; }
 
-    /* Each bar carries a stripe on its right edge: what kind of place it opens */
     .bar {
-      --stripe: var(--ochre);
       position: relative;
       flex: 1 0 auto;
       display: flex;
@@ -974,16 +1045,10 @@
       border-bottom: 1px solid var(--rule);
     }
 
-    .bar[data-kind="tool"] { --stripe: var(--vermilion); }
-    .bar[data-kind="op"] { --stripe: var(--maroon); }
-
-    .bar::after {
-      content: "";
-      position: absolute;
-      inset: 0 0 0 auto;
-      width: 4px;
-      background: var(--stripe);
-    }
+    /* "Ti senti in pericolo?" is the one red bar: it must be found without reading */
+    .bar.is-danger { background: var(--exit); color: #fff; }
+    .bar.is-danger .bar-desc { color: rgba(255,255,255,.86); }
+    .bar.is-danger .bar-head:active { background: rgba(0,0,0,.14); }
 
     .bar-head {
       flex: 1;
@@ -1001,18 +1066,9 @@
       transition: background-color .2s var(--ease);
     }
 
-    /* Where the sections shared by both audiences begin */
-    .bars-label {
-      flex: none;
-      margin: 0;
-      padding: 20px 24px 8px var(--rail-pad);
-      border-bottom: 1px solid var(--rule);
-      font-size: var(--t-small);
-      color: var(--muted);
-      letter-spacing: .01em;
-    }
-
-    .home-index .bars-label { padding-inline: 0; }
+    /* Where the sections shared by both audiences begin: a gap, no label */
+    .bars-gap { flex: none; height: 24px; border-bottom: 1px solid var(--rule); }
+    .test-list > .bars-gap { grid-column: 1 / -1; height: 8px; border: 0; }
 
     .bar.is-open .bar-head { flex: none; font-weight: 400; }
     .bar-head:active { background: var(--fill); transition-duration: 0s; }
@@ -1057,20 +1113,9 @@
     }
 
     .sub li:last-child a { border-bottom: 1px solid var(--soft-rule); }
-    .sub a[aria-current="true"] { text-decoration: underline; }
+    .sub a[aria-current="true"] { text-decoration: underline; color: var(--accent); }
     .sub a:active { background: var(--fill); transition-duration: 0s; }
 
-    .rail-key {
-      display: grid;
-      gap: 6px;
-      padding: 16px var(--rail-pad) max(20px, env(safe-area-inset-bottom));
-      font-size: var(--t-small);
-      color: var(--muted);
-      letter-spacing: .01em;
-    }
-
-    .rail-key span { display: flex; align-items: center; gap: 10px; }
-    .rail-key i { width: 4px; height: 14px; flex: none; }
 
     /* Pane */
     .pane {
@@ -1107,10 +1152,10 @@
     .view-home .hero { padding-bottom: clamp(32px, 4vw, 56px); }
 
     .home-index { padding-top: 0; }
-    .home-index .test-row .num { font-size: clamp(1.5rem, 2.6vw, 2.25rem); }
 
     @media (hover: hover) {
       .bar-head:hover, .sub a:hover { background: var(--fill); }
+      .bar.is-danger .bar-head:hover { background: rgba(0,0,0,.1); }
     }
 
     /* Phone and narrow tablet: the rail becomes a sticky top bar with the sections behind a button */
@@ -1220,11 +1265,6 @@
       </div>
       <div class="rail-menu" id="railMenu">
         <nav class="bars" id="bars" aria-label="Sezioni"></nav>
-        <div class="rail-key" aria-label="Legenda dei colori">
-          <span><i style="background:var(--vermilion)"></i>Strumento da usare</span>
-          <span><i style="background:var(--ochre)"></i>Da leggere</span>
-          <span data-audience="operator"><i style="background:var(--maroon)"></i>Per operatori</span>
-        </div>
       </div>
     </aside>
 
@@ -1245,10 +1285,6 @@
         <section class="home-index" aria-label="Sezioni">
           <div class="test-list" id="homeIndex"></div>
         </section>
-        <footer>
-          <span>SAVE, mappa operativa</span>
-          <span>Le risposte ai questionari restano nel browser e non vengono inviate.</span>
-        </footer>
       </div>
       <div class="view wrap" data-view="pericolo" tabindex="-1" hidden>
     <section id="pericolo">
@@ -1840,47 +1876,46 @@
 
     // Sections of the rail. A group opens its first item.
     // audience: citizen or operator = only in that tab; both = shared, listed after the tab's own sections
-    // kind: tool = something to use, read = something to read, op = for professionals only
     const groups = [
-      { id: 'pericolo', label: 'Ti senti in pericolo?', kind: 'tool', audience: 'citizen',
+      { id: 'pericolo', label: 'Ti senti in pericolo?', audience: 'citizen',
         desc: 'I due numeri da chiamare, la chiamata SOS dal telefono bloccato e il gesto per chiedere aiuto senza parlare.',
         items: [{ view: 'pericolo', label: 'Numeri, SOS e segnale con la mano' }] },
-      { id: 'centri', label: 'Mappa dei centri', kind: 'tool', audience: 'citizen',
+      { id: 'centri', label: 'Mappa dei centri', audience: 'citizen',
         desc: 'Centri antiviolenza e altri enti in Italia, con ricerca per comune, CAP o nome del centro.',
         items: [
           { view: 'centri', anchor: 'trova', label: 'Cerca un centro' },
           { view: 'centri', anchor: 'cosa-fa', label: 'Cosa fa un centro' },
           { view: 'centri', anchor: 'fonti', label: 'Da dove vengono i dati' }
         ] },
-      { id: 'tema', label: 'Introduzione al tema', kind: 'read', audience: 'citizen',
+      { id: 'tema', label: 'Introduzione al tema', audience: 'citizen',
         desc: 'Le forme della violenza, il tratto comune del controllo, i segnali da notare e cosa fare quando li vedi.',
         items: [
           { view: 'forme', label: 'Forme e dinamiche' },
           { view: 'comunita', label: 'Segnali e cosa fare' }
         ] },
-      { id: 'handbook', label: 'Handbook', kind: 'op', audience: 'operator',
+      { id: 'handbook', label: 'Handbook', audience: 'operator',
         desc: 'Linee guida, guide e manuali di formazione per il lavoro nella rete, in PDF.',
         items: [{ view: 'handbook', label: 'Linee guida e manuali' }] },
-      { id: 'framework', label: 'Framework', kind: 'op', audience: 'operator',
+      { id: 'framework', label: 'Framework', audience: 'operator',
         desc: 'Organizzare, comprendere, progettare: il quadro in cui leggere un caso senza ridurlo a episodi isolati.',
         items: [{ view: 'quadro', label: 'Dal quadro all’azione' }] },
-      { id: 'metodologie', label: 'Metodologie', kind: 'op', audience: 'operator',
+      { id: 'metodologie', label: 'Metodologie', audience: 'operator',
         desc: 'Come usare gli strumenti con cautela e come condurre e documentare una valutazione.',
         items: [{ view: 'strumenti', label: 'Uso degli strumenti e valutazione' }] },
-      { id: 'test-operatore', label: 'Test con operatore', kind: 'op', audience: 'operator',
+      { id: 'test-operatore', label: 'Test con operatore', audience: 'operator',
         desc: 'Il formulario SARA-S, i suoi 15 fattori e il catalogo degli strumenti di valutazione del rischio.',
         items: [
           { view: 'sara', label: 'SARA-S, formulario' },
           { view: 'rischio', label: 'SARA-S e recidiva, i fattori' },
           { view: 'catalogo', label: 'Tool di risk assessment' }
         ] },
-      { id: 'attivita-operatore', label: 'Attività con operatore', kind: 'op', audience: 'operator',
+      { id: 'attivita-operatore', label: 'Attività con operatore', audience: 'operator',
         desc: 'Attività da condurre con classi, famiglie, comunità e gruppi di autori di violenza.',
         items: [{ view: 'attivita', label: 'Attività da proporre' }] },
-      { id: 'letteratura', label: 'Letteratura scientifica', kind: 'op', audience: 'operator',
+      { id: 'letteratura', label: 'Letteratura scientifica', audience: 'operator',
         desc: 'Studi sull’accuratezza degli strumenti e documenti su cui si basa il sito.',
         items: [{ view: 'fonti', label: 'Studi e fonti' }] },
-      { id: 'test', label: 'Test', kind: 'tool', audience: 'both',
+      { id: 'test', label: 'Test', audience: 'both',
         desc: 'Un percorso senza punteggio per capire la situazione e due autovalutazioni. Le risposte restano nel browser e non vengono inviate.',
         items: [
           { view: 'questionari', label: 'Tutti i test' },
@@ -1888,7 +1923,7 @@
           { view: 'isa', label: 'ISA 2023, autoconsapevolezza' },
           { view: 'sea', label: 'SEA-12, abuso economico' }
         ] },
-      { id: 'attivita', label: 'Attività', kind: 'tool', audience: 'both',
+      { id: 'attivita', label: 'Attività', audience: 'both',
         desc: 'Storie a bivi per imparare come stare accanto, cosa fare caso per caso e un gioco per allenarsi a intervenire.',
         items: [
           { view: 'percorsi', label: 'Tutte le attività' },
@@ -1896,17 +1931,74 @@
           { view: 'casi', label: 'Cosa fare, caso per caso' },
           { view: 'gioco', label: 'The Small Act, il gioco' }
         ] },
-      { id: 'risorse', label: 'Risorse e media', kind: 'read', audience: 'both',
+      { id: 'risorse', label: 'Risorse e media', audience: 'both',
         desc: 'App ufficiali per chiedere aiuto e l’archivio dei documenti in PDF.',
         items: [
           { view: 'app', label: 'App utili' },
           { view: 'archivio', label: 'Archivio documenti' }
         ] }
     ];
-    const sharedLabel = {
-      citizen: 'In comune con gli operatori',
-      operator: 'In comune con i cittadini'
+
+    // Each card previews the page it opens with a short recording of someone using it:
+    // a strip of frames in snap/ (light and dark), and how long each frame stays on screen.
+    // How to record them again: snap/tools/README.md
+    const snaps = {
+      pericolo: { frames: [900, 110, 110, 110, 800, 380, 120, 1200, 380, 120, 900, 110, 110, 110, 110, 1600] },
+      centri: { frames: [800, 110, 110, 110, 900, 300, 140, 140, 140, 2000, 110, 110, 1800] },
+      forme: { frames: [1000, 110, 110, 110, 1400, 110, 110, 110, 110, 1600] },
+      comunita: { frames: [900, 110, 110, 110, 1600, 110, 110, 110, 1400] },
+      orientamento: { frames: [800, 380, 120, 900, 380, 120, 900, 380, 120, 900, 380, 120, 900, 380, 120, 900] },
+      isa: { frames: [800, 380, 120, 900, 380, 120, 900, 380, 120, 900, 380, 120, 900, 380, 120, 900, 380, 120, 900] },
+      sea: { frames: [800, 380, 120, 900, 380, 120, 900, 380, 120, 900, 380, 120, 900, 380, 120, 900, 380, 120, 900] },
+      sara: { frames: [800, 380, 120, 900, 380, 120, 900, 380, 120, 900, 380, 120, 900] },
+      rischio: { frames: [700, 380, 120, 1000, 380, 120, 1400, 380, 120, 1100, 380, 120, 900] },
+      catalogo: { frames: [900, 110, 110, 110, 1200, 110, 110, 110, 110, 110, 1600] },
+      quadro: { frames: [900, 110, 110, 110, 2200] },
+      strumenti: { frames: [900, 110, 110, 110, 1600, 110, 110, 110, 110, 1600] },
+      fonti: { frames: [900, 110, 110, 110, 1600, 110, 110, 110, 110, 1600] },
+      handbook: { frames: [900, 110, 110, 110, 1200, 110, 110, 110, 110, 110, 1400] },
+      archivio: { frames: [800, 110, 110, 110, 600, 300, 140, 140, 140, 140, 1400, 900] },
+      attivita: { frames: [800, 110, 110, 110, 600, 300, 140, 140, 140, 140, 1600, 900] },
+      accanto: { frames: [800, 380, 120, 900, 380, 120, 900, 380, 120, 900, 380, 120, 900] },
+      casi: { frames: [800, 110, 110, 110, 900, 380, 120, 1600, 110, 110, 110, 1400] },
+      gioco: { frames: [1000, 380, 120, 700, 380, 120, 1600, 380, 120, 1200] },
+      app: { frames: [900, 110, 110, 110, 1600, 110, 110, 110, 110, 1600] }
     };
+    const snapStyle = document.createElement('style');
+    snapStyle.textContent = Object.entries(snaps).map(([key, { frames }]) => {
+      const total = frames.reduce((a, b) => a + b, 0);
+      let at = 0;
+      const steps = frames.map((hold, i) => {
+        const line = `${(at / total * 100).toFixed(2)}% { background-position-y: ${(i / (frames.length - 1) * 100).toFixed(3)}%; }`;
+        at += hold;
+        return line;
+      });
+      return `@keyframes snap-${key} { ${steps.join(' ')} 100% { background-position-y: 100%; } }`;
+    }).join('\n');
+    document.head.appendChild(snapStyle);
+    // A group's card previews its most telling page, otherwise its first one
+    const groupPreview = { tema: 'forme', 'test-operatore': 'sara', test: 'orientamento', attivita: 'accanto', risorse: 'app' };
+    function previewFor(key) {
+      const snap = snaps[key];
+      if (!snap) return '';
+      const time = snap.frames.reduce((a, b) => a + b, 0);
+      // Still frame (before it plays, or with reduced motion): one from the middle of the interaction
+      const poster = Math.floor(snap.frames.length * .6);
+      return `<div class="preview" aria-hidden="true" style="--snap-light:url('snap/${key}-light.jpg');--snap-dark:url('snap/${key}-dark.jpg');--n:${snap.frames.length};--poster:${poster};--snap-anim:snap-${key};--snap-time:${time}ms"></div>`;
+    }
+    // Only the cards on screen play
+    const snapWatch = new IntersectionObserver(entries => entries.forEach(entry => {
+      entry.target.classList.toggle('is-playing', entry.isIntersecting);
+    }), { threshold: .4 });
+    const watchPreviews = root => root.querySelectorAll('.preview').forEach(node => snapWatch.observe(node));
+    // Cards written in the page get theirs once, from the address they open
+    document.querySelectorAll('.view .test-list > a.test-row').forEach(card => {
+      const href = card.getAttribute('href');
+      const key = href.startsWith('#') ? href.slice(1).split('/')[0] : href;
+      card.insertAdjacentHTML('afterbegin', previewFor(key));
+      if (key === 'pericolo') card.classList.add('is-danger');
+    });
+    watchPreviews(document);
 
     // Views that are whole pages of their own, opened inside the pane
     const frames = {
@@ -1958,9 +2050,10 @@
     function renderNav(mode) {
       const own = groups.filter(group => group.audience === mode);
       const shared = groups.filter(group => group.audience === 'both');
-      const label = `<p class="bars-label">${sharedLabel[mode]}</p>`;
+      // The shared sections start after a gap, with no label
+      const label = '<span class="bars-gap" aria-hidden="true"></span>';
       const bar = group => `
-      <div class="bar" data-group="${group.id}" data-kind="${group.kind}">
+      <div class="bar${group.id === 'pericolo' ? ' is-danger' : ''}" data-group="${group.id}">
         <a class="bar-head" href="${hrefFor(group.items[0])}" aria-controls="body-${group.id}">
           <span>${group.label}</span>
         </a>
@@ -1974,12 +2067,14 @@
         </div>
       </div>`;
       const row = group => `
-      <a class="test-row" href="${hrefFor(group.items[0])}">
-        <span class="num">${group.label}</span>
-        <div><p>${group.desc}</p></div>
+      <a class="test-row${group.id === 'pericolo' ? ' is-danger' : ''}" href="${hrefFor(group.items[0])}">
+        ${previewFor(groupPreview[group.id] || group.items[0].view)}
+        <div><h3>${group.label}</h3><p>${group.desc}</p></div>
+        <span class="go">Apri</span>
       </a>`;
       bars.innerHTML = own.map(bar).join('') + label + shared.map(bar).join('');
       homeIndex.innerHTML = own.map(row).join('') + label + shared.map(row).join('');
+      watchPreviews(homeIndex);
     }
 
     function groupOf(view, anchor) {

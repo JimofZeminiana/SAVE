@@ -15,7 +15,8 @@
   --vermilion: #ff5233;
   --ochre: #bd8100;
   --grey: #888888;
-  --exit: #7b002c;
+  --exit: #c8102e;
+  --accent: #8e4185;
   --r-box: 12px;
   --gutter: clamp(16px, 3vw, 40px);
   --header-h: 72px;
@@ -39,7 +40,8 @@
     --maroon: #d8507a;
     --vermilion: #ff6c52;
     --ochre: #d9a43a;
-    --exit: #a3123f;
+    --exit: #d4202f;
+    --accent: #c27bb8;
   }
 }
 
@@ -53,7 +55,8 @@
   --maroon: #d8507a;
   --vermilion: #ff6c52;
   --ochre: #d9a43a;
-  --exit: #a3123f;
+  --exit: #d4202f;
+  --accent: #c27bb8;
 }
 
 * { box-sizing: border-box; }
@@ -82,7 +85,7 @@ button, input, select, textarea { font: inherit; color: inherit; }
 a, button, summary, input, label { touch-action: manipulation; }
 b, strong { font-weight: 500; }
 h1, h2, h3, p { margin-top: 0; }
-:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 h1[tabindex], h2[tabindex] { outline: none; }
 [hidden] { display: none !important; }
 
@@ -135,6 +138,45 @@ h1[tabindex], h2[tabindex] { outline: none; }
 
 .exit-btn:active { transform: scale(.96); filter: brightness(.9); }
 
+
+/* The exit breathes: a ring of the same red grows and fades behind the button */
+
+.exit-btn { position: relative; isolation: isolate; }
+
+.exit-btn::before {
+
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  z-index: -1;
+
+  border-radius: inherit;
+
+  background: var(--exit);
+
+  pointer-events: none;
+
+  animation: exit-pulse 2.6s cubic-bezier(.32,.72,0,1) infinite;
+
+}
+
+@keyframes exit-pulse {
+
+  0% { transform: scale(1); opacity: .5; }
+
+  60%, 100% { transform: scale(1.12, 1.45); opacity: 0; }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .exit-btn::before { animation: none; opacity: 0; }
+
+}
+
 /* Progress: one segment per part of the test, so the shape of the whole is visible */
 .progress {
   position: sticky;
@@ -164,7 +206,7 @@ h1[tabindex], h2[tabindex] { outline: none; }
   display: block;
   height: 100%;
   width: var(--done, 0%);
-  background: var(--ink);
+  background: var(--accent);
   border-radius: inherit;
   transition: width .6s var(--ease);
 }
@@ -314,7 +356,7 @@ h3 {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: var(--ink);
+  background: var(--accent);
   transform: scale(0);
   transition: transform .32s var(--ease);
 }
@@ -322,7 +364,7 @@ h3 {
 .option input[type="checkbox"] + .mark { border-radius: 5px; }
 .option input[type="checkbox"] + .mark::after { border-radius: 2px; }
 .option input:checked + .mark::after { transform: scale(1); }
-.option input:focus-visible + .mark { outline: 2px solid var(--ink); outline-offset: 3px; }
+.option input:focus-visible + .mark { outline: 2px solid var(--accent); outline-offset: 3px; }
 .option:has(input:checked) { background: var(--fill); }
 .option:active { background: var(--fill); transition-duration: 0s; }
 
@@ -376,7 +418,7 @@ h3 {
   transition: transform .15s var(--ease), background-color .2s var(--ease), opacity .2s var(--ease);
 }
 
-.btn.primary { background: var(--ink); color: var(--paper); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--paper); }
 .btn.urgent { background: var(--exit); border-color: var(--exit); color: #fff; }
 .btn.quiet { border-color: transparent; padding-inline: 4px; text-decoration: underline; }
 .btn:disabled { opacity: .35; cursor: not-allowed; }
@@ -476,7 +518,7 @@ h3 {
 
 .scale > div + div { border-left: 1px solid var(--rule); }
 .scale b { font-size: 1.25rem; font-weight: 300; color: var(--ink); }
-.scale > .is-here { background: var(--ink); color: var(--paper); }
+.scale > .is-here { background: var(--accent); color: var(--paper); }
 .scale > .is-here b { color: var(--paper); }
 
 /* Horizontal bars with their numbers written out */
@@ -628,3 +670,12 @@ footer.page-footer {
 /* Inside the single page, its rail is the header: the page's own steps aside */
 .embedded .site-header { display: none; }
 .embedded { --header-h: 0px; }
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
