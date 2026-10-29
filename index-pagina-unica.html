@@ -673,6 +673,14 @@
 
     .callout .dot { background: var(--vermilion); transform: translateY(1px); }
 
+    .list-head {
+      margin: clamp(48px, 6vw, 80px) 0 16px;
+      font-size: var(--t-intro);
+      font-weight: 300;
+      letter-spacing: -.01em;
+      text-wrap: balance;
+    }
+
     /* Apps */
     .app-card { display: grid; gap: 10px; align-content: start; }
 
@@ -1121,6 +1129,7 @@
       }
 
       .rail-top .segmented { justify-self: start; }
+      .rail-top .exit-btn { justify-self: end; }
 
       .menu-btn {
         display: inline-flex;
@@ -1179,6 +1188,12 @@
     @media (prefers-contrast: more) {
       .rail, .rail-top, .bar { border-width: 2px; }
     }
+
+    /* Small phones: audience switch and exit share one row without overlapping */
+    @media (max-width: 420px) {
+      .rail-top .segmented button { padding-inline: 10px; }
+      .rail-top .exit-btn { padding-inline: 12px; }
+    }
   </style>
 </head>
 <body class="citizen">
@@ -1214,7 +1229,7 @@
                   <a href="tel:1522"><span>Antiviolenza e stalking</span><b>1522</b></a>
                   <a href="tel:112"><span>Pericolo immediato</span><b>112</b></a>
                 </div>
-                <p class="intro">Una mappa navigabile per riconoscere le forme della violenza, leggere i fattori di rischio, orientare il lavoro di rete e rendere visibili le risorse di supporto. L’impianto riprende la logica di una toolbox: concetti, evidenze, strumenti, azioni.</p>
+                <p class="intro">Una mappa navigabile per riconoscere le forme della violenza, leggere i fattori di rischio, orientare il lavoro di rete e rendere visibili le risorse di supporto.</p>
               </div>
             </section>
         <section class="home-index" aria-label="Sezioni">
@@ -1222,7 +1237,7 @@
         </section>
         <footer>
           <span>SAVE, mappa operativa</span>
-          <span>Sito statico, contenuti da paper locali</span>
+          <span>Le risposte ai questionari restano nel browser e non vengono inviate.</span>
         </footer>
       </div>
       <div class="view wrap" data-view="pericolo" tabindex="-1" hidden>
@@ -1438,6 +1453,33 @@
               <div class="callout">
                 <span class="dot" aria-hidden="true"></span>
                 <p style="margin:0">A Venezia il Centro Antiviolenza del Comune è indicato nella guida con sede a Mestre, Viale Garibaldi 155/A, sportelli a Venezia e Lido, telefono 041 274 4222, email centro.antiviolenza@comune.venezia.it.</p>
+              </div>
+              <h3 class="list-head">Quando la persona è qualcuno che conosci</h3>
+              <div class="test-list">
+                <a class="test-row" href="#casi">
+                  <span class="num">Caso per caso</span>
+                  <div>
+                    <h3>Cosa fare, a seconda di chi la vive</h3>
+                    <p>Donne, uomini, persone LGBTQIA+, anziane, migranti, con disabilità, minori e molestie in pubblico: per ognuno segnali da riconoscere, cosa fare, cosa evitare e i numeri da chiamare.</p>
+                  </div>
+                  <span class="go">Trova il suo caso</span>
+                </a>
+                <a class="test-row" href="#accanto">
+                  <span class="num">Cinque storie</span>
+                  <div>
+                    <h3>Giulia, Marco, Sami, Rosa e Amira</h3>
+                    <p>Storie a bivi: in ogni scena scegli cosa dire o fare e scopri cosa aiuta, cosa dipende e cosa è meglio evitare.</p>
+                  </div>
+                  <span class="go">Inizia una storia</span>
+                </a>
+                <a class="test-row" href="#gioco">
+                  <span class="num">The Small Act</span>
+                  <div>
+                    <h3>Quando assisti a una molestia</h3>
+                    <p>Venti situazioni e cinque modi di intervenire, per allenarsi prima che serva.</p>
+                  </div>
+                  <span class="go">Gioca</span>
+                </a>
               </div>
             </section>
       </div>
@@ -1751,9 +1793,11 @@
         desc: 'Fisica, sessuale, psicologica, economica, digitale, stalking: il tratto comune è il controllo.',
         items: [{ view: 'forme', label: 'Le forme della violenza' }] },
       { id: 'comunita', label: 'Una comunità che sostiene', kind: 'read',
-        desc: 'Gesti di vicinato per chi vede o sospetta una violenza, e un gioco per allenarsi a intervenire.',
+        desc: 'Gesti di vicinato per chi vede o sospetta una violenza, storie a bivi per imparare come stare accanto, e un gioco per allenarsi a intervenire.',
         items: [
           { view: 'comunita', label: 'Segnali e cosa fare' },
+          { view: 'accanto', label: 'Come stare accanto, cinque storie' },
+          { view: 'casi', label: 'Cosa fare, caso per caso' },
           { view: 'gioco', label: 'The Small Act, il gioco' }
         ] },
       { id: 'app', label: 'App utili', kind: 'read',
@@ -1771,6 +1815,7 @@
         desc: 'Linee guida, strumenti di valutazione, ricerche e materiali di formazione, in PDF.',
         items: [
           { view: 'archivio', label: 'Tutti i documenti' },
+          { view: 'attivita', label: 'Attività da proporre', operator: true },
           { view: 'fonti', label: 'Documenti usati per il sito', operator: true }
         ] }
     ];
@@ -1782,18 +1827,22 @@
       sea: { src: 'economic-abuse.html', title: 'Questionario sull’abuso economico' },
       sara: { src: 'sara.html', title: 'Formulario SARA-S', operator: true },
       centri: { src: 'trova-centro.html', title: 'Trova un centro antiviolenza' },
+      accanto: { src: 'stare-accanto.html', title: 'Come stare accanto' },
+      casi: { src: 'cosa-fare.html', title: 'Cosa fare, caso per caso' },
       gioco: { src: 'The Small Act.html', title: 'The Small Act, gioco' },
-      archivio: { src: 'archivio.html', title: 'Archivio documenti' }
+      archivio: { src: 'archivio.html', title: 'Archivio documenti' },
+      attivita: { src: 'attivita.html', title: 'Attività da proporre', operator: true }
     };
 
-    const operatorViews = new Set(['sara', 'quadro', 'catalogo', 'rischio', 'strumenti', 'fonti']);
+    const operatorViews = new Set(['sara', 'quadro', 'catalogo', 'rischio', 'strumenti', 'fonti', 'attivita']);
 
     // Old addresses and links between pages land on the matching view
     const aliases = { inizio: 'home', test: 'questionari', 'app-utili': 'app', mappa: 'quadro' };
     const pageViews = {
       'orientamento.html': 'orientamento', 'isa.html': 'isa', 'economic-abuse.html': 'sea',
       'sara.html': 'sara', 'trova-centro.html': 'centri', 'The Small Act.html': 'gioco',
-      'archivio.html': 'archivio'
+      'stare-accanto.html': 'accanto', 'cosa-fare.html': 'casi',
+      'archivio.html': 'archivio', 'attivita.html': 'attivita'
     };
     const homePages = new Set(['', 'index.html', 'index-apple.html', 'index-pagina-unica.html']);
 

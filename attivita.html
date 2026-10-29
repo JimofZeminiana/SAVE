@@ -1,0 +1,1258 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Meteo di oggi</title>
+  <!-- Inside the single page the outer header is the only one: this page drops its own -->
+  <script>if (window.self !== window.top) document.documentElement.classList.add('embedded');</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #ffffff;
+      --ink: #151515;
+      --muted: #6b6b6b;
+      --land: #e8e8e8;
+      --fill: rgba(21,21,21,.05);
+      --rule: var(--ink);
+      --soft-rule: rgba(21,21,21,.18);
+      --maroon: #7b002c;
+      --vermilion: #ff5233;
+      --ochre: #bd8100;
+      --grey: #888888;
+      --exit: #7b002c;
+      --r-box: 12px;
+      --gutter: clamp(16px, 3vw, 40px);
+      --ease: cubic-bezier(.32,.72,0,1);
+      --t-body: 1.0625rem;
+      --t-small: .8125rem;
+      --t-intro: clamp(1.25rem, 1.9vw, 1.525rem);
+      --t-hero: clamp(3.25rem, 10.5vw, 9.5rem);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --paper: #151515;
+        --ink: #f1f1ef;
+        --muted: #a3a3a0;
+        --land: #2a2a2a;
+        --fill: rgba(241,241,239,.07);
+        --soft-rule: rgba(241,241,239,.2);
+        --maroon: #d8507a;
+        --vermilion: #ff6c52;
+        --ochre: #d9a43a;
+        --exit: #a3123f;
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --paper: #151515;
+      --ink: #f1f1ef;
+      --muted: #a3a3a0;
+      --land: #2a2a2a;
+      --fill: rgba(241,241,239,.07);
+      --soft-rule: rgba(241,241,239,.2);
+      --maroon: #d8507a;
+      --vermilion: #ff6c52;
+      --ochre: #d9a43a;
+      --exit: #a3123f;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      background: var(--paper);
+      color: var(--ink);
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+      font-size: var(--t-body);
+      font-weight: 300;
+      line-height: 1.5;
+      font-optical-sizing: auto;
+      font-feature-settings: "cv11", "ss01";
+      -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: transparent;
+      background: var(--paper);
+    }
+
+    a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    button { font: inherit; color: inherit; }
+    a, button, summary { touch-action: manipulation; }
+    b, strong { font-weight: 500; }
+    h1, h2, h3, p { margin-top: 0; }
+
+    :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+    [hidden] { display: none !important; }
+
+    .wrap {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding-inline: max(var(--gutter), env(safe-area-inset-left));
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: color-mix(in srgb, var(--paper) 80%, transparent);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      backdrop-filter: blur(20px) saturate(180%);
+    }
+
+    .header-inner { border-bottom: 1px solid var(--rule); }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 0 12px;
+    }
+
+    .brand {
+      font-size: clamp(1.15rem, 1.9vw, 1.525rem);
+      font-weight: 300;
+      letter-spacing: -.01em;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .exit-btn {
+      border-radius: 999px;
+      padding: 8px 16px;
+      background: var(--exit);
+      color: #fff;
+      font-size: var(--t-small);
+      font-weight: 500;
+      letter-spacing: .01em;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: transform .15s var(--ease), filter .15s var(--ease);
+    }
+
+    .exit-btn:active { transform: scale(.96); filter: brightness(.9); transition-duration: 0s; }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px clamp(16px, 2.2vw, 32px);
+      padding: 4px 0 14px;
+    }
+
+    .nav a {
+      font-size: .9375rem;
+      font-weight: 400;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s var(--ease);
+    }
+
+    .nav a[aria-current="page"] { color: var(--ink); text-decoration: underline; }
+
+    /* Hero */
+    .hero {
+      padding-top: clamp(32px, 6vw, 88px);
+      padding-bottom: clamp(48px, 6vw, 88px);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 16px;
+      font-size: var(--t-small);
+      font-weight: 400;
+      letter-spacing: .01em;
+      color: var(--muted);
+    }
+
+    h1 {
+      margin: 0 0 clamp(32px, 5vw, 72px);
+      font-size: var(--t-hero);
+      font-weight: 300;
+      line-height: .95;
+      letter-spacing: -.04em;
+    }
+
+    .hero-bottom {
+      display: grid;
+      grid-template-columns: 5fr 7fr;
+      gap: 32px clamp(24px, 4vw, 64px);
+      align-items: start;
+      padding-top: clamp(20px, 2.4vw, 28px);
+      border-top: 1px solid var(--rule);
+    }
+
+    .hero-note { margin: 0; max-width: 32em; font-size: .9375rem; color: var(--muted); }
+
+    .intro {
+      margin: 0;
+      max-width: 34em;
+      font-size: var(--t-intro);
+      line-height: 1.32;
+      letter-spacing: -.01em;
+      text-wrap: pretty;
+    }
+
+    .dot {
+      display: inline-block;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--dot, var(--grey));
+      flex: none;
+    }
+
+    /* Filters as in the archive: one field with the active filters as chips,
+       a menu per column, sort beside them */
+    .filters { padding: clamp(24px, 3vw, 40px) 0 0; border-top: 1px solid var(--rule); }
+
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      min-height: 52px;
+      padding: 6px 6px 6px 12px;
+      border: 1px solid var(--rule);
+      border-radius: var(--r-box);
+      cursor: text;
+    }
+
+    .filter-bar:focus-within { box-shadow: 0 0 0 1px var(--ink); }
+    .filter-chips { display: contents; }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      max-width: 100%;
+      border-radius: 999px;
+      background: var(--ink);
+      color: var(--paper);
+      font-size: .875rem;
+      font-weight: 400;
+      line-height: 1.2;
+    }
+
+    .chip-label {
+      min-height: 36px;
+      padding: 6px 4px 6px 14px;
+      border: 0;
+      background: none;
+      color: inherit;
+      text-align: left;
+      cursor: pointer;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .chip-label b { font-weight: 300; opacity: .7; }
+
+    .chip-remove {
+      flex: none;
+      width: 28px;
+      height: 28px;
+      margin: 4px 4px 4px 6px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      background: var(--paper);
+      color: var(--ink);
+      cursor: pointer;
+      transition: transform .15s var(--ease);
+    }
+
+    .chip-remove:active { transform: scale(.9); transition-duration: 0s; }
+
+    .x {
+      width: 10px;
+      height: 10px;
+      background:
+        linear-gradient(45deg, transparent calc(50% - .75px), currentColor calc(50% - .75px), currentColor calc(50% + .75px), transparent calc(50% + .75px)),
+        linear-gradient(-45deg, transparent calc(50% - .75px), currentColor calc(50% - .75px), currentColor calc(50% + .75px), transparent calc(50% + .75px));
+    }
+
+    .filter-search {
+      flex: 1 1 220px;
+      min-width: 0;
+      min-height: 40px;
+      border: 0;
+      background: none;
+      padding: 6px 4px;
+      font-size: 1rem; /* 16px keeps iOS from zooming on focus */
+      font-weight: 300;
+    }
+
+    .filter-search::placeholder { color: var(--muted); }
+    .filter-search:focus { outline: none; }
+
+    .filter-clear {
+      flex: none;
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      background: none;
+      cursor: pointer;
+      transition: background-color .2s var(--ease);
+    }
+
+    .filter-clear .x { width: 12px; height: 12px; }
+
+    .filter-tools {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px 24px;
+      margin: 12px 0 20px;
+    }
+
+    .filter-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+    .menu-anchor { position: relative; }
+
+    .filter-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 40px;
+      padding: 8px 14px;
+      border: 1px solid var(--soft-rule);
+      border-radius: 999px;
+      background: none;
+      font-size: .875rem;
+      font-weight: 400;
+      cursor: pointer;
+      transition: border-color .2s var(--ease), background-color .2s var(--ease), transform .15s var(--ease);
+    }
+
+    .filter-btn:active { transform: scale(.97); transition-duration: 0s; }
+    .filter-btn.is-set { border-color: var(--ink); }
+
+    .filter-btn[data-menu]::after {
+      content: "";
+      width: 6px;
+      height: 6px;
+      margin: 0 2px 3px 2px;
+      border-right: 1px solid currentColor;
+      border-bottom: 1px solid currentColor;
+      transform: rotate(45deg);
+      transition: transform .25s var(--ease);
+    }
+
+    .filter-btn[aria-expanded="true"]::after { transform: translateY(3px) rotate(225deg); }
+
+    /* The one on/off filter: a switch drawn inside the pill */
+    .filter-btn[data-toggle]::before {
+      content: "";
+      width: 26px;
+      height: 16px;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      background: radial-gradient(circle at 7px 50%, currentColor 4px, transparent 4.5px);
+      transition: background-position .25s var(--ease);
+    }
+
+    .filter-btn[data-toggle][aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+    .filter-btn[data-toggle][aria-pressed="true"]::before { background-position: 10px 0; }
+
+    .filter-menu {
+      position: absolute;
+      z-index: 20;
+      top: calc(100% + 8px);
+      left: 0;
+      width: min(360px, calc(100vw - 2 * var(--gutter)));
+      border: 1px solid var(--rule);
+      border-radius: var(--r-box);
+      background: var(--paper);
+      box-shadow: 0 12px 32px rgba(0,0,0,.12);
+      transform-origin: top left;
+      animation: menu-in .2s var(--ease);
+    }
+
+    @keyframes menu-in { from { opacity: 0; transform: scale(.97) translateY(-4px); } }
+
+    .menu-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 6px 6px 6px 16px;
+      border-bottom: 1px solid var(--rule);
+      font-size: .9375rem;
+      font-weight: 400;
+    }
+
+    .menu-close {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      background: none;
+      cursor: pointer;
+    }
+
+    .menu-body { padding: 6px 0; max-height: min(52vh, 420px); overflow-y: auto; }
+    .menu-hint { margin: 0; padding: 4px 16px 6px; font-size: var(--t-small); color: var(--muted); }
+
+    .check {
+      display: grid;
+      grid-template-columns: 18px 1fr auto;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 16px;
+      font-size: .9375rem;
+      font-weight: 400;
+      cursor: pointer;
+    }
+
+    .check input { width: 18px; height: 18px; margin: 0; accent-color: var(--ink); }
+    .check .n { font-size: var(--t-small); color: var(--muted); font-weight: 300; font-variant-numeric: tabular-nums; }
+
+    .menu-foot {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      padding: 10px 12px;
+      border-top: 1px solid var(--rule);
+    }
+
+    .btn {
+      min-height: 40px;
+      padding: 8px 16px;
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      background: none;
+      font-size: .875rem;
+      font-weight: 400;
+      cursor: pointer;
+      transition: transform .15s var(--ease), background-color .2s var(--ease);
+    }
+
+    .btn:active { transform: scale(.97); transition-duration: 0s; }
+    .btn.dark { background: var(--ink); color: var(--paper); }
+
+    .sort-control { display: inline-flex; align-items: center; gap: 10px; font-size: .875rem; color: var(--muted); }
+
+    .sort-control select {
+      min-height: 40px;
+      padding: 8px 34px 8px 14px;
+      border: 1px solid var(--soft-rule);
+      border-radius: 999px;
+      background: var(--paper);
+      color: var(--ink);
+      font: inherit;
+      font-size: .875rem;
+      font-weight: 400;
+      appearance: none;
+      background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+      background-position: calc(100% - 18px) 52%, calc(100% - 13px) 52%;
+      background-size: 5px 5px;
+      background-repeat: no-repeat;
+      cursor: pointer;
+    }
+
+    .results-count { margin: 0 0 4px; font-size: .9375rem; font-weight: 400; }
+    .results-count span { color: var(--muted); font-weight: 300; }
+
+    .empty-state { padding: 32px 0; display: grid; gap: 6px; justify-items: start; border-top: 1px solid var(--rule); }
+    .empty-state p { margin: 0; }
+    .empty-state .note { font-size: var(--t-small); color: var(--muted); }
+    .empty-state .btn { margin-top: 10px; }
+
+    /* The list reads as a table: one row per activity, opened in place */
+    .list { padding-bottom: clamp(56px, 7vw, 104px); }
+
+    .row-grid {
+      display: grid;
+      grid-template-columns: 2.75rem 48px minmax(0, 1fr) 12rem 8rem 10rem 20px;
+      gap: 0 20px;
+      align-items: start;
+    }
+
+    .thead {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--rule);
+      font-size: var(--t-small);
+      color: var(--muted);
+      letter-spacing: .01em;
+    }
+
+    .th {
+      justify-self: start;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0;
+      border: 0;
+      background: none;
+      color: inherit;
+      font-size: inherit;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .th::after {
+      content: "";
+      width: 5px;
+      height: 5px;
+      margin-bottom: 3px;
+      border-right: 1px solid currentColor;
+      border-bottom: 1px solid currentColor;
+      transform: rotate(45deg);
+    }
+
+    .th.is-set { color: var(--ink); font-weight: 400; }
+    span.th::after { content: none; }
+
+    .act { border-bottom: 1px solid var(--soft-rule); }
+
+    .act summary {
+      padding: 16px 0;
+      list-style: none;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .act summary::-webkit-details-marker { display: none; }
+
+    .act-num {
+      padding-top: 2px;
+      font-size: var(--t-small);
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .act h3 {
+      margin: 0 0 4px;
+      font-size: 1.0625rem;
+      font-weight: 500;
+      line-height: 1.35;
+      text-wrap: pretty;
+    }
+
+    .act-goal { margin: 0; max-width: 60ch; font-size: .9375rem; line-height: 1.45; color: var(--muted); }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 4px 6px; margin-top: 10px; }
+
+    .tag {
+      padding: 2px 9px;
+      border: 1px solid var(--soft-rule);
+      border-radius: 999px;
+      font-size: .75rem;
+      font-weight: 400;
+      color: var(--muted);
+    }
+
+    .warn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 10px;
+      font-size: var(--t-small);
+      font-weight: 400;
+      color: var(--maroon);
+    }
+
+    .warn .dot { width: 8px; height: 8px; --dot: var(--maroon); }
+
+    .cell { padding-top: 2px; font-size: .9375rem; line-height: 1.4; }
+    .cell.muted { color: var(--muted); }
+    .act-meta { display: none; }
+
+    /* The source PDF's first page, as in the archive: greyscale at rest, its colours when pointed at */
+    .cover {
+      position: relative;
+      display: block;
+      aspect-ratio: 3 / 4;
+      border: 1px solid var(--soft-rule);
+      border-radius: 4px;
+      background: var(--land);
+      overflow: hidden;
+    }
+
+    .cover img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      filter: grayscale(1);
+      transition: filter .3s var(--ease);
+    }
+
+    .cover img.landscape { object-fit: contain; object-position: center; }
+
+    /* Without a PDF in the archive, a plain block names the source */
+    .cover-fallback {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: end start;
+      padding: 4px 5px;
+      font-size: .625rem;
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--muted);
+    }
+
+    .cover img + .cover-fallback { display: none; }
+    .act-cover { margin-top: 2px; }
+
+    .source-card {
+      display: grid;
+      grid-template-columns: 72px minmax(0, 1fr);
+      gap: 14px;
+      align-items: start;
+      text-decoration: none;
+    }
+
+    .source-card .cover-fallback { font-size: var(--t-small); padding: 6px 8px; }
+    .source-card b { display: block; font-weight: 500; }
+    .source-card small { display: block; margin-top: 2px; font-size: var(--t-small); color: var(--muted); }
+    .source-open { display: inline-block; margin-top: 8px; font-size: var(--t-small); font-weight: 400; text-decoration: underline; text-underline-offset: 3px; }
+
+    .chev {
+      width: 8px;
+      height: 8px;
+      margin-top: 8px;
+      border-right: 1px solid currentColor;
+      border-bottom: 1px solid currentColor;
+      transform: rotate(45deg);
+      transition: transform .3s var(--ease);
+    }
+
+    .act[open] .chev { transform: translateY(4px) rotate(225deg); }
+
+    .act-body { padding: 0 0 24px; }
+
+    .act-body-inner {
+      grid-column: 3 / -1;
+      display: grid;
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      gap: 20px clamp(24px, 4vw, 56px);
+      padding-top: 18px;
+      border-top: 1px solid var(--soft-rule);
+    }
+
+    .act-body h4 {
+      margin: 0 0 6px;
+      font-size: var(--t-small);
+      font-weight: 400;
+      letter-spacing: .01em;
+      color: var(--muted);
+    }
+
+    .steps { margin: 0; max-width: 64ch; font-size: 1rem; line-height: 1.55; text-wrap: pretty; }
+
+    .facts { margin: 0; display: grid; align-content: start; gap: 14px; font-size: .9375rem; line-height: 1.45; }
+    .facts dt { font-size: var(--t-small); color: var(--muted); letter-spacing: .01em; }
+    .facts dd { margin: 2px 0 0; }
+
+    .caution {
+      margin: 20px 0 0;
+      padding: 14px 16px;
+      border: 1px solid var(--maroon);
+      border-radius: var(--r-box);
+      font-size: .9375rem;
+      line-height: 1.45;
+    }
+
+    .caution b { color: var(--maroon); }
+
+    footer {
+      padding: 20px 0 max(28px, env(safe-area-inset-bottom));
+      border-top: 1px solid var(--rule);
+      color: var(--muted);
+      font-size: var(--t-small);
+      letter-spacing: .01em;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px 20px;
+      flex-wrap: wrap;
+    }
+
+    @media (hover: hover) {
+      .nav a:hover { color: var(--ink); }
+      .filter-clear:hover, .menu-close:hover, .btn:hover:not(.dark) { background: var(--fill); }
+      .filter-btn:hover { border-color: var(--ink); }
+      .chip-label:hover { text-decoration: underline; text-underline-offset: 3px; }
+      .th:hover { color: var(--ink); }
+      .act summary:hover h3 { text-decoration: underline; text-underline-offset: 3px; }
+      .act summary:hover .cover img, a.source-card:hover .cover img { filter: none; }
+      a.source-card:hover .source-open { text-decoration-thickness: 2px; }
+      a:hover { text-decoration-thickness: 2px; }
+    }
+
+    @media (max-width: 1100px) {
+      .row-grid { grid-template-columns: 2.75rem 44px minmax(0, 1fr) 10rem 7rem 8.5rem 20px; gap: 0 16px; }
+    }
+
+    @media (max-width: 860px) {
+      .hero-bottom { grid-template-columns: 1fr; }
+      .menu-anchor { position: static; }
+      .filter-menu { width: 100%; }
+      .sort-control { width: 100%; justify-content: space-between; }
+
+      /* Rows keep the number, the title block and the chevron; the cells become one line */
+      .thead { display: none; }
+      .row-grid { grid-template-columns: 2rem 40px minmax(0, 1fr) 16px; gap: 0 12px; }
+      .act .cell { display: none; }
+      .act-meta {
+        display: block;
+        margin: 8px 0 0;
+        font-size: var(--t-small);
+        font-weight: 400;
+        letter-spacing: .01em;
+      }
+      .act-body-inner { grid-template-columns: 1fr; grid-column: 3 / -1; }
+      .source-card { grid-template-columns: 56px minmax(0, 1fr); }
+      .list { border-top: 1px solid var(--rule); }
+    }
+
+    @media (max-width: 620px) {
+      .header-top { padding-top: 14px; }
+      footer { display: grid; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition-property: opacity, background-color, color !important; }
+      .exit-btn:active, .btn:active, .filter-btn:active, .chip-remove:active { transform: none; }
+      .filter-menu { animation: none; }
+    }
+
+    @media (prefers-reduced-transparency: reduce) {
+      .site-header { background: var(--paper); -webkit-backdrop-filter: none; backdrop-filter: none; }
+    }
+
+    @media (prefers-contrast: more) {
+      :root { --muted: var(--ink); --fill: color-mix(in srgb, var(--ink) 14%, transparent); --soft-rule: var(--ink); }
+      .site-header { background: var(--paper); -webkit-backdrop-filter: none; backdrop-filter: none; }
+      .header-inner, .filter-bar { border-width: 2px; }
+    }
+
+    /* Printing gives the activities in view, opened, without the controls */
+    @media print {
+      .site-header, .filters, .thead, .chev, footer, .exit-btn { display: none !important; }
+      .act { break-inside: avoid; }
+      .hero { padding: 0 0 16px; }
+      h1 { font-size: 2.5rem; margin-bottom: 16px; }
+    }
+
+    /* Inside the single page, its rail is the header */
+    .embedded .site-header { display: none; }
+  </style>
+</head>
+<body>
+  <header class="site-header" aria-label="Azioni principali">
+    <div class="wrap">
+      <div class="header-inner">
+        <div class="header-top">
+          <a class="brand" href="index-pagina-unica.html">SAVE</a>
+          <a class="exit-btn" href="https://www.google.com/search?q=meteo">Esci subito dal sito</a>
+        </div>
+        <nav class="nav" aria-label="Pagine">
+          <a href="index-pagina-unica.html">Mappa operativa</a>
+          <a href="archivio.html">Archivio</a>
+          <a href="attivita.html" aria-current="page">Attività</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <p class="eyebrow"><span class="dot" style="--dot:var(--maroon)" aria-hidden="true"></span>Per operatori</p>
+      <h1>Attività da proporre</h1>
+      <div class="hero-bottom">
+        <p class="hero-note" id="total"></p>
+        <p class="intro">Esercizi e laboratori raccolti dai manuali del progetto CONSENT, dai toolkit di Pathfinder e dal manuale di giochi e teatro della rete europea WWP per i programmi con autori di violenza. Parti da chi hai davanti: scegli destinatari, contesto e tempo a disposizione, poi apri un’attività per leggere come si svolge.</p>
+      </div>
+    </section>
+
+    <section class="filters" aria-label="Cerca e filtra le attività">
+      <div class="filter-bar" id="filterBar">
+        <div class="filter-chips" id="filterChips"></div>
+        <input class="filter-search" id="searchInput" type="search" placeholder="Nome, obiettivo o parola chiave" aria-label="Cerca per nome, obiettivo o parola chiave" autocomplete="off" spellcheck="false">
+        <button type="button" class="filter-clear" id="clearAll" aria-label="Togli tutti i filtri" title="Togli tutti i filtri" hidden><span class="x" aria-hidden="true"></span></button>
+      </div>
+
+      <div class="filter-tools">
+        <div class="filter-buttons" id="filterButtons"></div>
+        <label class="sort-control">Ordina per
+          <select id="sortSelect">
+            <option value="fonte">Ordine dei manuali</option>
+            <option value="nome">Nome</option>
+            <option value="brevi">Più brevi prima</option>
+            <option value="lunghe">Più lunghe prima</option>
+          </select>
+        </label>
+      </div>
+
+      <p class="results-count" id="resultsCount" aria-live="polite"></p>
+    </section>
+
+    <section class="list" id="list" aria-label="Attività"></section>
+
+    <footer>
+      <span>SAVE, attività per operatori</span>
+      <span>Dati da attivita_new.xlsx</span>
+    </footer>
+  </main>
+
+  <script src="attivita-data.js"></script>
+  <script>
+    const attivita = window.ATTIVITA || [];
+
+    // --- What the filters read from each row ---------------------------------------------------
+    // The spreadsheet's cells are free text: each facet below sorts them into a few fixed values.
+    // An activity can carry more than one value of the same facet (a class split into small groups).
+
+    const facets = {
+      destinatari: {
+        label: 'Con chi',
+        hint: 'Le persone con cui si svolge l’attività.',
+        values: {
+          bambini: 'Bambini, 10-12 anni',
+          adolescenti: 'Adolescenti, 13-16 anni',
+          genitori: 'Genitori e famiglie',
+          insegnanti: 'Insegnanti ed educatori',
+          comunita: 'Adulti di una comunità',
+          donne: 'Donne facilitatrici',
+          autori: 'Uomini autori di violenza'
+        },
+        of(a) {
+          // What comes after "target indiretto" is who benefits later, not who takes part
+          const t = a.target.split(/target indiretto/i)[0];
+          const out = new Set();
+          if (/genitori|tutori/i.test(t)) out.add('genitori');
+          else if (/10-12|bambini/i.test(t)) out.add('bambini');
+          if (/13-16|\badolescenti/i.test(t)) out.add('adolescenti');
+          if (/insegnanti ed educatori/i.test(t)) out.add('insegnanti');
+          if (/adulti della comunit|comunit[aà] local/i.test(t)) out.add('comunita');
+          if (/donne adulte/i.test(t)) out.add('donne');
+          if (/autori di violenza/i.test(t)) out.add('autori');
+          return out;
+        }
+      },
+      contesto: {
+        label: 'Contesto',
+        values: { scuola: 'Scuola', famiglia: 'Famiglia', comunita: 'Comunità e territorio', trattamento: 'Programmi per autori di violenza' },
+        of(a) {
+          const m = a.modulo;
+          if (/^WWP/i.test(m)) return new Set(['trattamento']);
+          if (/famiglie/i.test(m)) return new Set(['famiglia']);
+          if (/scuole|insegnanti/i.test(m)) return new Set(['scuola']);
+          return new Set(['comunita']);
+        }
+      },
+      durata: {
+        label: 'Durata',
+        values: { breve: 'Fino a 30 minuti', ore: 'Da 1 a 4 ore', percorso: 'Più giorni o un percorso', nd: 'Non indicata' },
+        of(a) {
+          const d = a.durata;
+          if (/giorn|mes|variabile/i.test(d)) return new Set(['percorso']);
+          if (/\bor[ae]\b/i.test(d)) return new Set(['ore']);
+          // Minutes only: short when even the longest figure stays within half an hour
+          if (/minut/i.test(d)) return new Set([Math.max(...d.match(/\d+/g).map(Number)) <= 30 ? 'breve' : 'ore']);
+          return new Set(['nd']);
+        }
+      },
+      gruppo: {
+        label: 'Gruppo',
+        values: { uno: 'Una persona o una coppia', piccoli: 'Piccoli gruppi', classe: 'Una classe o un gruppo intero', comunita: 'Un’assemblea di comunità', nd: 'Non indicato' },
+        of(a) {
+          const p = a.partecipanti;
+          const out = new Set();
+          // Pairs inside a class are group work; one to one means a parent with a child
+          if (/individual|coppia genitoriale/i.test(p)) out.add('uno');
+          if (/grupp(?!o intero)|coppie|gruppi di tre/i.test(p)) out.add('piccoli');
+          if (/class|gruppo intero|cerchio/i.test(p)) out.add('classe');
+          if (/comunit|\bCC\b|CBO|alleati/i.test(p)) out.add('comunita');
+          if (!out.size) out.add('nd');
+          return out;
+        }
+      },
+      temi: {
+        label: 'Temi',
+        hint: 'Basta uno dei temi scelti.',
+        values: {},
+        of: a => new Set(a.tag.split(';').map(s => s.trim()).filter(Boolean))
+      },
+      fonte: {
+        label: 'Fonte',
+        values: {
+          primaria: 'CONSENT, kit scuola primaria',
+          secondaria: 'CONSENT, kit scuola secondaria',
+          manuale: 'CONSENT, manuale per famiglie e insegnanti',
+          gta: 'Pathfinder, GTA Toolkit',
+          dialogo: 'Pathfinder, guida ai Dialogue Workshop',
+          wwp: 'WWP EN, giochi e strumenti teatrali'
+        },
+        of(a) {
+          const f = a.fonte + ' ' + a.modulo;
+          if (/WWP|scripting violence/i.test(f)) return new Set(['wwp']);
+          if (/primarie/i.test(f)) return new Set(['primaria']);
+          if (/secondarie/i.test(f)) return new Set(['secondaria']);
+          if (/manuale di formazione/i.test(f)) return new Set(['manuale']);
+          if (/dialogue/i.test(f)) return new Set(['dialogo']);
+          return new Set(['gta']);
+        }
+      }
+    };
+
+    // Themes come from the spreadsheet, most used first
+    const temiCount = {};
+    attivita.forEach(a => facets.temi.of(a).forEach(t => { temiCount[t] = (temiCount[t] || 0) + 1; }));
+    Object.keys(temiCount)
+      .sort((x, y) => temiCount[y] - temiCount[x] || x.localeCompare(y, 'it'))
+      .forEach(t => { facets.temi.values[t] = t.charAt(0).toUpperCase() + t.slice(1); });
+
+    // PDFs in the archive, for the sources that have one
+    const pdf = {
+      primaria: "paper/material/CONSENT - Kit per l'educazione affettiva nelle scuole primarie.pdf",
+      secondaria: "paper/material/CONSENT - Kit per l'educazione affettiva nelle scuole secondarie.pdf",
+      manuale: 'paper/material/CONSENT - Manual di formazione per famiglie e insegnanti.pdf',
+      wwp: 'paper/material/Games_Theatrical_Tools_Manual.pdf'
+    };
+
+    const noMaterials = a => /^nessuno/i.test(a.materiali);
+    const sensitive = a => /attenzione|violenza sessuale/i.test(a.target);
+
+    // Minutes, for sorting; activities without a duration go last
+    function minutes(a) {
+      const d = a.durata;
+      if (/mes/i.test(d)) return 60 * 24 * 180;
+      const days = d.match(/(\d+)\s*giorn/i);
+      if (days) return Number(days[1]) * 60 * 6;
+      if (/variabile/i.test(d)) return 60 * 24;
+      // The first figure with its unit: "5-15 minuti" counts as 5, "15 minuti - 2 ore" as 15
+      const first = d.match(/(\d+)\s*(?:[-–]\s*\d+\s*)?(minut|or[ae]\b)/i);
+      if (first) return Number(first[1]) * (/^or/i.test(first[2]) ? 60 : 1);
+      return Infinity;
+    }
+
+    const rows = attivita.map((a, i) => {
+      const f = {};
+      Object.entries(facets).forEach(([k, c]) => { f[k] = c.of(a); });
+      return { a, i, f, min: minutes(a), senza: noMaterials(a) };
+    });
+
+    // --- Helpers ----------------------------------------------------------------------------------
+
+    const $ = id => document.getElementById(id);
+    const listEl = $('list');
+    const searchInput = $('searchInput');
+    const escape = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+    const normalize = s => String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+    const pad = n => String(n).padStart(2, '0');
+    const names = (k, set) => Object.keys(facets[k].values).filter(v => set.has(v)).map(v => facets[k].values[v]);
+
+    // What is applied. Empty sets mean "all"
+    const blank = () => ({ text: '', senza: false, sort: 'fonte', ...Object.fromEntries(Object.keys(facets).map(k => [k, new Set()])) });
+    const state = blank();
+
+    // --- Filter buttons and menus, built from the facets -------------------------------------------
+
+    $('filterButtons').innerHTML = Object.entries(facets).map(([k, c]) => `
+      <div class="menu-anchor">
+        <button type="button" class="filter-btn" data-menu="${k}" aria-expanded="false" aria-controls="menu-${k}">${c.label}</button>
+        <div class="filter-menu" id="menu-${k}" role="dialog" aria-label="${c.label}" data-column="${k}" data-filter-type="checkbox" hidden>
+          <div class="menu-head">${c.label} <button type="button" class="menu-close" aria-label="Chiudi"><span class="x" aria-hidden="true"></span></button></div>
+          <div class="menu-body">
+            ${c.hint ? `<p class="menu-hint">${c.hint}</p>` : ''}
+            ${Object.entries(c.values).map(([v, name]) => {
+              const n = rows.filter(r => r.f[k].has(v)).length;
+              return n ? `
+              <label class="check">
+                <input type="checkbox" value="${escape(v)}">
+                <span>${escape(name)}</span>
+                <span class="n">${n}</span>
+              </label>` : '';
+            }).join('')}
+          </div>
+          <div class="menu-foot"><button type="button" class="btn" data-reset>Nessuno</button><button type="button" class="btn dark" data-apply>Applica</button></div>
+        </div>
+      </div>`).join('') + `
+      <button type="button" class="filter-btn" data-toggle="senza" aria-pressed="false">Senza materiali da preparare</button>`;
+
+    function matches(r) {
+      for (const k of Object.keys(facets)) {
+        if (state[k].size && ![...state[k]].some(v => r.f[k].has(v))) return false;
+      }
+      if (state.senza && !r.senza) return false;
+      const q = normalize(state.text.trim());
+      if (q) {
+        const a = r.a;
+        const hay = normalize([a.nome, a.obiettivo, a.descrizione, a.materiali, a.tag, a.modulo, a.target].join(' '));
+        if (!q.split(/\s+/).every(w => hay.includes(w))) return false;
+      }
+      return true;
+    }
+
+    const sorters = {
+      fonte: (x, y) => x.i - y.i,
+      nome: (x, y) => x.a.nome.localeCompare(y.a.nome, 'it'),
+      brevi: (x, y) => (x.min - y.min) || x.i - y.i,
+      lunghe: (x, y) => ((y.min === Infinity ? -1 : y.min) - (x.min === Infinity ? -1 : x.min)) || x.i - y.i
+    };
+
+    // --- Rows ---------------------------------------------------------------------------------------
+
+    function cleanTarget(t) {
+      // The spreadsheet's warnings get their own box; here they would repeat it
+      return t.replace(/;?\s*ATTENZIONE:[^;]*/i, '').trim();
+    }
+
+    function rowHTML(r, n) {
+      const a = r.a;
+      const chi = names('destinatari', r.f.destinatari).join(', ') || cleanTarget(a.target) || 'Non indicato';
+      const durata = names('durata', r.f.durata)[0];
+      const gruppo = names('gruppo', r.f.gruppo).join(', ');
+      const fonteKey = [...r.f.fonte][0];
+      const fonteName = facets.fonte.values[fonteKey];
+      // Short durations read as written; long or vague ones as their bracket
+      const durataShort = r.f.durata.has('nd') ? 'Durata non indicata' : a.durata.length <= 18 ? a.durata : durata;
+      const file = pdf[fonteKey];
+      return `
+        <details class="act" data-i="${r.i}">
+          <summary class="row-grid">
+            <span class="act-num">${pad(n)}</span>
+            ${coverHTML(file, 'act-cover')}
+            <span>
+              <h3>${escape(a.nome)}</h3>
+              <p class="act-goal">${escape(a.obiettivo)}</p>
+              <p class="act-meta">${escape([chi, durataShort, gruppo].filter(Boolean).join(' · '))}</p>
+              <span class="tags">${names('temi', r.f.temi).map(t => `<span class="tag">${escape(t)}</span>`).join('')}</span>
+              ${sensitive(r.a) ? `<span class="warn"><span class="dot" aria-hidden="true"></span>Tema delicato</span>` : ''}
+            </span>
+            <span class="cell">${escape(chi)}</span>
+            <span class="cell">${escape(durataShort)}</span>
+            <span class="cell muted">${escape(gruppo)}</span>
+            <span class="chev" aria-hidden="true"></span>
+          </summary>
+          <div class="act-body row-grid">
+            <div class="act-body-inner">
+              <div>
+                <h4>Come si svolge</h4>
+                <p class="steps">${escape(a.descrizione)}</p>
+                ${sensitive(a) ? `<p class="caution"><b>Tema delicato.</b> ${r.f.destinatari.has('autori')
+                  ? 'Le scene toccano la violenza agita: non lasciare che venga minimizzata, giustificata o resa simpatica, e ricorda che tornare su ciò che si è vissuto può riaprire ferite anche in chi la violenza l’ha agita.'
+                  : 'Nel gruppo può esserci chi ha vissuto o vive una violenza. Prima di iniziare tieni a portata di mano il 1522 e il centro antiviolenza più vicino, e lascia sempre la possibilità di non partecipare.'}</p>` : ''}
+              </div>
+              <dl class="facts">
+                <div><dt>Destinatari</dt><dd>${escape(cleanTarget(a.target) || 'Non indicati')}</dd></div>
+                <div><dt>Durata</dt><dd>${escape(a.durata || 'Non indicata')}</dd></div>
+                <div><dt>Partecipanti</dt><dd>${escape(a.partecipanti || 'Non indicato')}</dd></div>
+                <div><dt>Materiali</dt><dd>${escape(a.materiali || 'Non indicati')}</dd></div>
+                <div><dt>Fonte</dt><dd>${file
+                  ? `<a class="source-card" href="${encodeURI(file)}" target="_blank" rel="noopener">
+                      ${coverHTML(file)}
+                      <span><b>${escape(fonteName)}</b>${a.modulo ? `<small>${escape(a.modulo)}</small>` : ''}<span class="source-open">Apri il PDF</span></span>
+                    </a>`
+                  : `<span class="source-card">
+                      ${coverHTML(null)}
+                      <span><b>${escape(fonteName)}</b>${a.modulo ? `<small>${escape(a.modulo)}</small>` : ''}<small>In inglese, non ancora in archivio</small></span>
+                    </span>`}</dd></div>
+              </dl>
+            </div>
+          </div>
+        </details>`;
+    }
+
+    // The archive's covers are archivio-copertine/<PDF name>.jpg
+    const coverOf = file => 'archivio-copertine/' + file.split('/').pop().replace(/\.pdf$/i, '.jpg');
+
+    function coverHTML(file, extra = '') {
+      return `<span class="cover ${extra}" aria-hidden="true">${file ? `<img src="${encodeURI(coverOf(file))}" alt="" loading="lazy">` : ''}<span class="cover-fallback">${file ? 'PDF' : 'Non in archivio'}</span></span>`;
+    }
+
+    const theadHTML = `
+      <div class="thead row-grid">
+        <span></span>
+        <span></span>
+        <button type="button" class="th" data-head="temi">Attività e temi</button>
+        <button type="button" class="th" data-head="destinatari">Con chi</button>
+        <button type="button" class="th" data-head="durata">Durata</button>
+        <button type="button" class="th" data-head="gruppo">Gruppo</button>
+        <span></span>
+      </div>`;
+
+    function renderList() {
+      const shown = rows.filter(matches).sort(sorters[state.sort]);
+      const filtering = shown.length !== rows.length;
+      $('resultsCount').innerHTML = filtering
+        ? `${shown.length === 1 ? '1 attività' : `${shown.length} attività`} <span>su ${rows.length}</span>`
+        : `${rows.length} attività`;
+
+      if (!shown.length) {
+        listEl.innerHTML = `<div class="empty-state">
+          <p>Nessuna attività con questi filtri</p>
+          <p class="note">Prova a togliere un filtro: spesso un’attività per la classe si adatta anche a un piccolo gruppo.</p>
+          <button type="button" class="btn" data-clear-all>Togli tutti i filtri</button>
+        </div>`;
+        return;
+      }
+      listEl.innerHTML = theadHTML + shown.map((r, n) => rowHTML(r, n + 1)).join('');
+      listEl.querySelectorAll('.cover img').forEach(img => {
+        // Pages wider than the 3:4 frame are shown whole instead of cropped
+        const fit = () => img.classList.toggle('landscape', img.naturalWidth / img.naturalHeight > .8);
+        img.complete ? fit() : img.addEventListener('load', fit);
+        // Without its cover the source keeps the plain block
+        img.addEventListener('error', () => img.remove());
+      });
+      listEl.querySelectorAll('.th[data-head]').forEach(th => th.classList.toggle('is-set', state[th.dataset.head].size > 0));
+    }
+
+    // --- Chips ----------------------------------------------------------------------------------------
+
+    function chip(column, label, value) {
+      return `<span class="chip" data-column="${column}"><button type="button" class="chip-label" data-open="${column}"><b>${label}:</b> ${escape(value)}</button><button type="button" class="chip-remove" data-remove="${column}" aria-label="Togli il filtro ${label}"><span class="x" aria-hidden="true"></span></button></span>`;
+    }
+
+    // Two values, then +N
+    const summary = values => values.length > 2 ? `${values.slice(0, 2).join(', ')}, +${values.length - 2}` : values.join(', ');
+
+    function renderChips() {
+      const chips = [];
+      Object.entries(facets).forEach(([k, c]) => {
+        if (state[k].size) chips.push(chip(k, c.label, summary(names(k, state[k]))));
+        buttonOf(k).classList.toggle('is-set', state[k].size > 0);
+      });
+      if (state.senza) chips.push(chip('senza', 'Materiali', 'nessuno da preparare'));
+      $('filterChips').innerHTML = chips.join('');
+      $('clearAll').hidden = !(chips.length || state.text);
+      searchInput.placeholder = chips.length ? 'Cerca ancora…' : 'Nome, obiettivo o parola chiave';
+      const toggle = document.querySelector('[data-toggle="senza"]');
+      toggle.setAttribute('aria-pressed', String(state.senza));
+      $('sortSelect').value = state.sort;
+    }
+
+    function update(changes) {
+      Object.assign(state, changes);
+      renderChips();
+      renderList();
+    }
+
+    function clearFilter(column) {
+      update(column === 'senza' ? { senza: false } : { [column]: new Set() });
+    }
+
+    function clearAll() {
+      searchInput.value = '';
+      closeMenu();
+      update(blank());
+    }
+
+    // --- Menus ----------------------------------------------------------------------------------------
+
+    let openName = null;
+    const menuOf = name => $(`menu-${name}`);
+    const buttonOf = name => document.querySelector(`[data-menu="${name}"]`);
+
+    function openMenu(name) {
+      if (openName === name) return;
+      closeMenu();
+      const menu = menuOf(name);
+      // Menus start from what is applied; unapplied changes are dropped on close
+      menu.querySelectorAll('input').forEach(i => { i.checked = state[name].has(i.value); });
+      menu.hidden = false;
+      buttonOf(name).setAttribute('aria-expanded', 'true');
+      openName = name;
+      (menu.querySelector('input') || menu.querySelector('button')).focus({ preventScroll: true });
+    }
+
+    function closeMenu(returnFocus) {
+      if (!openName) return;
+      menuOf(openName).hidden = true;
+      const btn = buttonOf(openName);
+      btn.setAttribute('aria-expanded', 'false');
+      openName = null;
+      if (returnFocus) btn.focus();
+    }
+
+    // Column headers and chips open the menu of their column, under its button
+    function openFrom(name) {
+      const btn = buttonOf(name);
+      btn.scrollIntoView({ block: 'center', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      openMenu(name);
+    }
+
+    document.querySelectorAll('[data-menu]').forEach(btn => btn.addEventListener('click', () => {
+      if (openName === btn.dataset.menu) closeMenu(); else openMenu(btn.dataset.menu);
+    }));
+
+    document.querySelectorAll('.filter-menu').forEach(menu => {
+      const name = menu.id.replace('menu-', '');
+      menu.querySelector('.menu-close').addEventListener('click', () => closeMenu(true));
+      menu.querySelector('[data-reset]').addEventListener('click', () => {
+        menu.querySelectorAll('input').forEach(i => { i.checked = false; });
+      });
+      menu.querySelector('[data-apply]').addEventListener('click', () => {
+        closeMenu(true);
+        update({ [name]: new Set([...menu.querySelectorAll('input:checked')].map(i => i.value)) });
+      });
+    });
+
+    document.querySelector('[data-toggle="senza"]').addEventListener('click', () => update({ senza: !state.senza }));
+
+    // A click or the focus outside the open menu closes it without applying
+    document.addEventListener('pointerdown', event => {
+      if (openName && !event.target.closest('.menu-anchor') && !event.target.closest('[data-head], [data-open]')) closeMenu();
+    });
+    document.addEventListener('focusin', event => {
+      if (openName && !event.target.closest('.menu-anchor')) closeMenu();
+    });
+
+    $('filterChips').addEventListener('click', event => {
+      const remove = event.target.closest('[data-remove]');
+      const open = event.target.closest('[data-open]');
+      if (remove) { clearFilter(remove.dataset.remove); searchInput.focus(); return; }
+      if (open) {
+        if (open.dataset.open === 'senza') { clearFilter('senza'); return; }
+        openFrom(open.dataset.open);
+      }
+    });
+
+    listEl.addEventListener('click', event => {
+      const head = event.target.closest('[data-head]');
+      if (head) { openFrom(head.dataset.head); return; }
+      if (event.target.closest('[data-clear-all]')) { clearAll(); searchInput.focus(); }
+    });
+
+    searchInput.addEventListener('input', () => update({ text: searchInput.value }));
+    $('filterBar').addEventListener('click', event => {
+      if (event.target === $('filterBar')) searchInput.focus();
+    });
+    $('sortSelect').addEventListener('change', event => update({ sort: event.target.value }));
+    $('clearAll').addEventListener('click', () => { clearAll(); searchInput.focus(); });
+
+    // Printing opens every activity in view, then puts them back as they were
+    let closedForPrint = [];
+    addEventListener('beforeprint', () => {
+      closedForPrint = [...listEl.querySelectorAll('details:not([open])')];
+      closedForPrint.forEach(d => { d.open = true; });
+    });
+    addEventListener('afterprint', () => closedForPrint.forEach(d => { d.open = false; }));
+
+    const fonti = Object.keys(facets.fonte.values).filter(v => rows.some(r => r.f.fonte.has(v))).length;
+    $('total').textContent = `${rows.length} attività da ${fonti} manuali. Le attività per bambini e adolescenti sono pensate per essere condotte da insegnanti; quelle di comunità da facilitatrici formate; quelle per autori di violenza dai facilitatori del programma.`;
+    renderChips();
+    renderList();
+  </script>
+  <script src="quick-exit.js"></script>
+</body>
+</html>

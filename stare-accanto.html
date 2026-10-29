@@ -1,0 +1,848 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="Storie interattive per imparare come comportarsi quando una persona vicina vive violenza di genere.">
+  <title>Meteo di oggi</title>
+  <!-- Inside the single page the outer header is the only one: this page drops its own -->
+  <script>if (window.self !== window.top) document.documentElement.classList.add('embedded');</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="stile-test.css">
+  <style>
+    .dot.ink { background: var(--ink); }
+    .dot.vermilion { background: var(--vermilion); }
+
+    /* Principles: cells divided by hairlines in one rounded box, as on the home page */
+    .cells {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      margin: 0 0 clamp(32px, 5vw, 56px);
+      padding: 0;
+      list-style: none;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+      border-radius: var(--r-box);
+      overflow: hidden;
+    }
+
+    .cells > * { background: var(--paper); padding: 16px 18px 18px; }
+    .cells h3 { margin-bottom: 4px; }
+    .cells p { margin: 0; font-size: .9375rem; color: var(--muted); }
+
+    /* People: one card each, the whole card is the button */
+    .people {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .person {
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      gap: 6px;
+      width: 100%;
+      height: 100%;
+      padding: 18px 18px 16px;
+      border: 1px solid var(--rule);
+      border-radius: var(--r-box);
+      background: none;
+      text-align: left;
+      cursor: pointer;
+      transition: background-color .25s var(--ease), transform .15s var(--ease);
+    }
+
+    .person:active { transform: scale(.985); background: var(--fill); transition-duration: 0s; }
+    .person .tag { font-size: var(--t-small); color: var(--muted); letter-spacing: .01em; }
+    .person strong { font-size: 1.375rem; font-weight: 300; letter-spacing: -.015em; line-height: 1.2; }
+    .person p { margin: 0; font-size: .9375rem; color: var(--muted); }
+    .person .role {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--soft-rule);
+      font-size: var(--t-small);
+    }
+    .person .done-mark { color: var(--muted); }
+
+    /* Profile of the person, before the first scene */
+    .profile { max-width: 640px; margin-bottom: 28px; }
+    .profile .box-row { grid-template-columns: 9rem 1fr; }
+    .profile .box-row span { color: var(--muted); }
+
+    /* Scene */
+    .scene {
+      max-width: 40em;
+      margin: 0 0 20px;
+      font-size: var(--t-intro);
+      font-weight: 300;
+      line-height: 1.38;
+      letter-spacing: -.01em;
+      text-wrap: pretty;
+    }
+
+    .ask { margin: 0 0 14px; font-size: var(--t-small); color: var(--muted); letter-spacing: .01em; }
+
+    /* After a choice the others step back, so the one taken reads as taken */
+    .options.is-answered .option { cursor: default; }
+    .options.is-answered .option:not(:has(input:checked)) { opacity: .45; }
+    .options.is-answered .option:hover { background: none; }
+    .options.is-answered .option:has(input:checked) { background: var(--fill); }
+
+    .feedback {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 12px;
+      align-items: baseline;
+      margin-top: 16px;
+      padding: 16px 18px;
+      border: 1px solid var(--rule);
+      border-radius: var(--r-box);
+      animation: step-in .48s var(--ease) both;
+    }
+
+    .feedback h3 { margin-bottom: 4px; }
+    .feedback p { margin: 0 0 8px; }
+    .feedback .src { margin: 0; font-size: var(--t-small); color: var(--muted); }
+
+    /* The path: each scene a row with every branch, the one taken filled */
+    .path { margin: 0; padding: 0; list-style: none; border: 1px solid var(--rule); border-radius: var(--r-box); overflow: hidden; }
+    .path > li { display: grid; grid-template-columns: 2.25rem 1fr; gap: 12px; padding: 14px 16px; }
+    .path > li + li { border-top: 1px solid var(--rule); }
+    .path .n { font-size: var(--t-small); color: var(--muted); font-variant-numeric: tabular-nums; padding-top: 2px; }
+    .path .scene-short { margin: 0 0 10px; font-size: .9375rem; }
+    .branches { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+    .branches li {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 12px 6px;
+      border: 1px solid var(--soft-rule);
+      border-radius: 999px;
+      font-size: var(--t-small);
+      color: var(--muted);
+    }
+    .branches li.taken { border-color: var(--ink); color: var(--ink); background: var(--fill); }
+    .branches .dot { width: 8px; height: 8px; transform: none; }
+
+    .keep { margin: 0; padding-left: 1.1em; max-width: 62ch; }
+    .keep li { margin-bottom: 8px; }
+
+    .numbers .box-row { grid-template-columns: 7.5rem 1fr; }
+    .numbers .box-row a { font-weight: 400; font-variant-numeric: tabular-nums; }
+
+    .sources-note {
+      margin-top: clamp(32px, 5vw, 56px);
+      border: 1px solid var(--rule);
+      border-radius: var(--r-box);
+    }
+
+    .sources-note summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      font-size: .9375rem;
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .sources-note summary::-webkit-details-marker { display: none; }
+
+    .sources-note summary::after {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-right: 1px solid var(--ink);
+      border-bottom: 1px solid var(--ink);
+      transform: translateY(-3px) rotate(45deg);
+      transition: transform .3s var(--ease);
+    }
+
+    .sources-note[open] summary::after { transform: translateY(1px) rotate(225deg); }
+
+    .sources-body { padding: 0 18px 18px; font-size: .9375rem; max-width: 76ch; }
+    .sources-body h3 { margin-top: 16px; }
+    .sources-body ul { padding-left: 1.1em; }
+    .sources-body li { margin-bottom: 8px; }
+
+    @media (hover: hover) {
+      .person:hover { background: var(--fill); }
+    }
+
+    @media (max-width: 760px) { .cells { grid-template-columns: 1fr; } }
+    @media (max-width: 620px) {
+      .profile .box-row, .numbers .box-row { grid-template-columns: 1fr; gap: 2px; }
+      .path > li { grid-template-columns: 1fr; gap: 4px; }
+    }
+    @media (prefers-reduced-motion: reduce) { .feedback { animation: step-fade .2s ease-out both; } }
+  </style>
+</head>
+<body>
+  <header class="site-header" aria-label="Azioni principali">
+    <div class="wrap">
+      <div class="header-inner">
+        <div class="header-top">
+          <a class="brand" href="index-pagina-unica.html">SAVE</a>
+          <a class="exit-btn" id="exitBtn" href="https://www.google.com/search?q=meteo">Esci subito dal sito</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="progress wrap" id="progress" aria-label="Avanzamento della storia"></div>
+
+  <main class="wrap">
+    <section class="stage wide" id="storia" aria-live="polite"></section>
+
+    <details class="sources-note" id="fonti">
+      <summary>Da dove vengono queste indicazioni</summary>
+      <div class="sources-body">
+        <p>Le persone e le scene sono inventate, ma composte da situazioni ricorrenti nelle guide qui sotto. Le storie insegnano un modo di stare accanto: non sono un protocollo professionale e non valutano il rischio.</p>
+        <h3>Dall’archivio</h3>
+        <ul id="srcArchive"></ul>
+        <h3>Altre guide trovate in rete</h3>
+        <ul id="srcWeb"></ul>
+        <p>Gran parte della ricerca riguarda donne in relazioni eterosessuali. Per uomini, persone LGBTQIA+ e persone anziane le guide sono meno numerose e spesso in inglese: dove un’indicazione è adattata, la fonte lo dice.</p>
+      </div>
+    </details>
+
+    <footer class="page-footer" style="margin-top:32px">
+      <span>Le scelte esistono solo in questa pagina: ricaricando, le storie ricominciano. Promemoria rapido: <a href="cosa-fare.html">Cosa fare, caso per caso</a>.</span>
+      <span>In pericolo immediato: 112. Supporto gratuito e anonimo: 1522.</span>
+    </footer>
+  </main>
+
+  <script src="stile-test.js"></script>
+  <script>
+    const stage = document.querySelector('#storia');
+    const progressEl = document.querySelector('#progress');
+
+    // Sources: archive PDFs first, then the guides found on the web
+    const SOURCES = {
+      vicinato: { archive: true, url: 'paper/material/guida_al_vicinato_CAV-Venezia copy.pdf', label: 'Centro Antiviolenza di Venezia, Una comunità che sostiene le donne (guida al vicinato)' },
+      maschi: { archive: true, url: 'paper/material/ENG_Pocket Guide for GBV actors working with male survivors of sexual violence.pdf', label: 'Pocket guide per chi lavora con uomini sopravvissuti alla violenza sessuale' },
+      lookwide: { archive: true, url: 'paper/material/Look Wide guide_A5.pdf', label: 'Look Wide, Guida per servizi inclusivi (prospettiva LGBTQIA+)' },
+      unicef: { archive: true, url: 'paper/material/UNICEF - Guidelines GBV in mobility contexts.pdf.pdf', label: 'UNICEF, adolescenti LGBTQI+ sopravvissuti a violenza di genere' },
+      marvow: { archive: true, url: 'paper/material/MARVOW2_TrainMan_IT_241106_low.pdf', label: 'MARVOW 2.0, manuale sulla violenza contro le donne anziane' },
+      aor: { archive: true, url: 'paper/material/GBV AoR 2022 Bystander Intervention Approaches.pdf', label: 'GBV Area of Responsibility, approcci di bystander intervention (le 5 D)' },
+      future: { archive: true, url: 'paper/material/FuTuRE_D2.3_Guidelines_ITA-2.pdf', label: 'Progetto FuTuRE, linee guida D2.3 sul rischio' },
+      oms: { url: 'https://www.who.int/publications/i/item/WHO-RHR-14.26', label: 'OMS, supporto di prima linea LIVES: ascoltare, chiedere dei bisogni, validare, rafforzare la sicurezza, sostenere' },
+      violeta: { url: 'https://violenciagenero.igualdad.gob.es/wp-content/uploads/Guia_Punto_Violeta_IT.pdf', label: 'Ministero per l’Uguaglianza (Spagna), Guida Punto Violeta, in italiano' },
+      tirolo: { url: 'https://www.tirol.gv.at/fileadmin/themen/gesellschaft-soziales/gewaltfrei/downloads/Tipps_fuer_Angehoerige_-_Italienisch.pdf', label: 'Land Tirol, consigli per familiari e amici, in italiano' },
+      cycle: { url: 'https://breakthecycle.sa.gov.au/downloads/folder1/italian/Italian-Factsheet-02-Helping-Someone-Break-the-Cycle.pdf', label: 'Governo dell’Australia Meridionale, Aiutare qualcuno a spezzare il ciclo, in italiano' },
+      lesbiche: { url: 'https://lesbiangenius.org/wp-content/uploads/Lesbiche-Bologna-ESEC_LLA_PIEGHEVOLE_6ANTE_TOOLKIT_12FACC-0711.pdf', label: 'Lesbiche Bologna, piccola guida sulla violenza nelle relazioni tra donne' },
+      viss: { url: 'https://site.unibo.it/viss/it', label: 'Università di Bologna, ricerca ViSS sulla violenza nelle relazioni LGBT' },
+      forge: { url: 'https://forge-forward.org/resource/trans-non-binary-individuals-and-intimate-partner-violence-a-brief-overview/', label: 'FORGE, persone trans e non binarie e violenza nelle relazioni' },
+      disabilita: { url: 'https://osservatoriodisabilita.gov.it/media/labc4jcp/documento-finale-gdl-questione-violenza-contro-donne-con-disabilità.pdf', label: 'Osservatorio nazionale sulla disabilità, linee guida sulla violenza contro le donne con disabilità' },
+      prefettura: { url: 'https://prefettura.interno.gov.it/sites/default/files/52/2024-03/all1violenzadigenere-guidatascabile.pdf', label: 'Prefettura, guida tascabile per chi accoglie persone sopravvissute' },
+      fived: { url: 'https://seattle.gov/Documents/Departments/Neighborhoods/PPatch/Tips/Bystander%20Intervention.pdf', label: 'Seattle, le 5 D dell’intervento di chi assiste' }
+    };
+
+    const NUMBERS = {
+      n112: ['112', 'tel:112', 'Pericolo immediato, per chiunque.'],
+      n1522: ['1522', 'tel:1522', 'Antiviolenza e stalking: gratuito, anonimo, 24 ore su 24, anche in chat su 1522.eu.'],
+      gay: ['800 713 713', 'tel:800713713', 'Gay Help Line, contro omofobia e transfobia; c’è anche la chat Speakly.'],
+      amico: ['02 2327 2327', 'tel:0223272327', 'Telefono Amico Italia, per chi si sente sopraffatto o pensa di farsi del male.']
+    };
+
+    const VERDICT = {
+      si: { dot: 'ink', label: 'Aiuta' },
+      forse: { dot: 'ochre', label: 'Dipende' },
+      no: { dot: 'vermilion', label: 'Meglio evitare' }
+    };
+
+    // Each person: a profile, scenes with branches, what to keep. Scenes name the next one;
+    // a branch with no next ends the story.
+    const PEOPLE = [
+      {
+        id: 'giulia', name: 'Giulia', tag: 'Donna, 34 anni', role: 'Tu: abiti nell’appartamento accanto',
+        summary: 'Vive con il compagno. Da qualche mese esce poco e sembra sempre di corsa.',
+        profile: [
+          ['Chi è', 'Giulia lavora part time in un negozio. Il compagno, Paolo, è gentile con i vicini.'],
+          ['Cosa noti', 'Urla la sera, una volta un tonfo. Lei ti saluta in fretta e non si ferma più a parlare.'],
+          ['Perché conta', 'In 9 casi su 10 chi agisce violenza è il partner o l’ex partner. Chi vive accanto è spesso il primo a notare i segnali.']
+        ],
+        start: 'g1',
+        scenes: {
+          g1: {
+            text: 'Sulle scale incroci Giulia. Ha un livido sul polso e, quando se ne accorge, tira giù la manica.',
+            short: 'Il livido sulle scale',
+            options: [
+              { label: 'Le chiedi subito: «È stato lui? Devi denunciarlo.»', v: 'no', next: 'g2b',
+                why: 'Una domanda diretta, fatta sulle scale e con un consiglio già pronto, la mette con le spalle al muro. Molte donne negano per paura o per vergogna.', src: ['vicinato'] },
+              { label: 'Le sorridi, due parole sul palazzo, e le proponi un caffè uno di questi giorni.', v: 'si', next: 'g2',
+                why: 'La fiducia si costruisce per gradi. Un gesto piccolo e quotidiano dice «ci sono» senza chiederle nulla in cambio.', src: ['vicinato'] },
+              { label: 'Fai finta di niente: sono affari loro.', v: 'no', next: 'g2b',
+                why: 'È una reazione comprensibile, ma la violenza si nutre di isolamento. Puoi restare presente senza intrometterti.', src: ['vicinato', 'cycle'] }
+            ]
+          },
+          g2b: {
+            text: 'Nei giorni dopo Giulia sembra evitarti. Una mattina la vedi uscire con gli occhiali da sole anche se è nuvoloso.',
+            short: 'Giulia si chiude',
+            options: [
+              { label: 'Le fai scivolare sotto la porta un volantino del centro antiviolenza.', v: 'no', next: 'g3',
+                why: 'Potrebbe trovarlo Paolo, e per lei il pericolo crescerebbe. Le informazioni vanno date di persona, quando è sola, in una forma che può tenere nascosta.', src: ['vicinato', 'violeta'] },
+              { label: 'Torni a salutarla come sempre, senza riparlarne, e un giorno le offri un passaggio per la spesa.', v: 'si', next: 'g2',
+                why: 'Non devi recuperare un errore con una mossa forte: basta esserci di nuovo, con costanza. Spesso è lei a scegliere il momento.', src: ['vicinato', 'tirolo'] },
+              { label: 'Ne parli con gli altri vicini, così tutti stanno attenti.', v: 'forse', next: 'g2',
+                why: 'Una rete di vicinato può proteggere, ma i pettegolezzi arrivano anche a lui. Se ne parli, fallo con poche persone fidate e senza dettagli della sua vita.', src: ['vicinato'] }
+            ]
+          },
+          g2: {
+            text: 'Al caffè Giulia racconta che Paolo le controlla il telefono e lo stipendio. «Ma è stressato, non è cattivo.»',
+            short: 'Il caffè',
+            options: [
+              { label: 'Ascolti senza interrompere, poi le dici: «Quello che mi racconti non è normale, e non è colpa tua.»', v: 'si', next: 'g3',
+                why: 'Ascoltare e validare sono i primi passi del supporto di prima linea dell’OMS. Non serve convincerla: serve che si senta creduta.', src: ['oms', 'vicinato'] },
+              { label: '«Ma come fai ad accettarlo? Io me ne sarei già andata.»', v: 'no', next: 'g3',
+                why: 'Frasi come questa suonano come un giudizio e la fanno sentire in colpa. Lasciare una relazione violenta è difficile e spesso pericoloso.', src: ['vicinato', 'tirolo'] },
+              { label: 'Le dici che la prossima volta che incontri Paolo gli parli tu.', v: 'no', next: 'g3',
+                why: 'Affrontare chi agisce violenza può farla pagare a lei, una volta chiusa la porta. Non prendere iniziative senza il suo consenso.', src: ['violeta'] }
+            ]
+          },
+          g3: {
+            text: 'Qualche settimana dopo Giulia ti chiede, a bassa voce: «Secondo te cosa dovrei fare?»',
+            short: 'La domanda di Giulia',
+            options: [
+              { label: 'Le dici che può chiamare il 1522, gratuito e anonimo, e che puoi accompagnarla al centro antiviolenza, se vuole.', v: 'si', next: 'g4',
+                why: 'Offri strade, non decisioni. Il centro aiuta a valutare il rischio e a costruire un piano: tu puoi accompagnarla lungo il percorso.', src: ['vicinato', 'oms'] },
+              { label: '«Lascialo, stasera stessa.»', v: 'forse', next: 'g4',
+                why: 'Il desiderio è giusto, ma il momento della separazione è spesso il più pericoloso. Va preparato, meglio con un centro antiviolenza.', src: ['future', 'violeta'] },
+              { label: 'Concordate una parola in codice: se te la scrive, tu chiami il 112.', v: 'si', next: 'g4',
+                why: 'Un segnale concordato è uno strumento semplice di un piano di sicurezza: lei sceglie quando usarlo, tu sai cosa fare.', src: ['vicinato', 'oms'] }
+            ]
+          },
+          g4: {
+            text: 'Una notte senti colpi contro il muro e Giulia che grida «basta».',
+            short: 'La notte',
+            options: [
+              { label: 'Chiami il 112: indirizzo, piano, cosa senti. Resti al telefono finché serve.', v: 'si',
+                why: 'Con un pericolo immediato non serve il suo permesso. Chiamare il 112 è il modo più sicuro di aiutarla, anche per te.', src: ['violeta', 'vicinato'] },
+              { label: 'Suoni alla porta per interrompere, poi chiami il 112.', v: 'forse',
+                why: 'A volte un’interruzione ferma la scena, ma ti espone e può far salire la rabbia. Prima chiama il 112, poi valuta se è sicuro farti sentire.', src: ['aor'] },
+              { label: 'Aspetti domattina per chiederle come sta.', v: 'no',
+                why: 'Grida e colpi sono un pericolo in corso. Domani potrà servire la tua presenza, stanotte serve il 112.', src: ['violeta'] }
+            ]
+          }
+        },
+        keep: [
+          'Avvicinati per gradi: un saluto, un caffè, una presenza costante.',
+          'Ascolta senza domande dirette e senza «perché»: lascia che sia lei a scegliere cosa dire.',
+          'Dille che non è colpa sua e che non è normale. Non giudicare le sue scelte.',
+          'Non affrontare il partner e non lasciare tracce che lui possa trovare.',
+          'Offri strade (1522, centro antiviolenza, un segnale concordato) e rispetta i suoi tempi.',
+          'Con un pericolo in corso, chiama il 112.'
+        ],
+        numbers: ['n112', 'n1522']
+      },
+      {
+        id: 'marco', name: 'Marco', tag: 'Uomo, 41 anni', role: 'Tu: lavori nel suo stesso ufficio',
+        summary: 'Fa sempre battute, ma da un po’ arriva tardi e stanco.',
+        profile: [
+          ['Chi è', 'Marco ha due figli e vive con la compagna. In ufficio è quello che sdrammatizza.'],
+          ['Cosa noti', 'Graffi sul collo, telefonate a cui risponde uscendo dalla stanza, scuse frequenti.'],
+          ['Perché conta', 'Le donne sono colpite in modo sproporzionato, ma anche gli uomini possono subire violenza. Vergogna, derisione e paura di non essere creduti li tengono lontani dai servizi.']
+        ],
+        start: 'm1',
+        scenes: {
+          m1: {
+            text: 'Alla macchinetta un collega ride: «Che hai fatto al collo, ti picchia la moglie?». Marco ride anche lui, poi si allontana.',
+            short: 'La battuta',
+            options: [
+              { label: 'Ridi anche tu: è solo una battuta.', v: 'no', next: 'm2',
+                why: 'La derisione è una delle barriere principali per gli uomini che subiscono violenza. Ridere conferma che parlarne sarebbe ridicolo.', src: ['maschi'] },
+              { label: 'Più tardi, da solo, gli dici: «Quella battuta mi è sembrata pesante. Se ti va di parlare, ci sono.»', v: 'si', next: 'm2',
+                why: 'Lo cerchi in privato, nomini quello che hai visto senza interpretarlo e lasci a lui la scelta. È un invito, non un interrogatorio.', src: ['cycle', 'oms'] },
+              { label: 'Rimproveri il collega davanti a tutti, citando i graffi di Marco.', v: 'forse', next: 'm2',
+                why: 'Fermare una battuta è giusto, ma citare i graffi espone Marco davanti a tutti. Basta un «dai, non fa ridere», senza parlare di lui.', src: ['aor'] }
+            ]
+          },
+          m2: {
+            text: 'Una sera Marco ti racconta che la compagna lo insulta, gli rompe le cose e qualche volta lo colpisce. «Ma sono un uomo, cosa vuoi che mi faccia.»',
+            short: 'Il racconto',
+            options: [
+              { label: '«Dai, sei grande e grosso, puoi difenderti.»', v: 'no', next: 'm3',
+                why: 'Minimizza. La violenza nelle relazioni non dipende dalla forza fisica ma dal controllo, dalla paura e dalla vergogna.', src: ['maschi'] },
+              { label: '«Ti credo. Può capitare a chiunque, e non ti rende meno uomo.»', v: 'si', next: 'm3',
+                why: 'Essere creduto è ciò che molti uomini temono di non ottenere. Validare toglie la vergogna che li tiene in silenzio.', src: ['maschi', 'oms'] },
+              { label: '«Sei sicuro? Magari stai esagerando.»', v: 'no', next: 'm3',
+                why: 'Mettere in dubbio il racconto conferma la paura di non essere creduto e chiude la conversazione, forse per sempre.', src: ['maschi', 'cycle'] }
+            ]
+          },
+          m3: {
+            text: 'Marco teme che, se ne parla, nessuno gli crederà e perderà i figli.',
+            short: 'La paura per i figli',
+            options: [
+              { label: 'Gli dici che il 1522 risponde a chiunque subisca violenza, e che un avvocato può spiegargli i suoi diritti sui figli.', v: 'si', next: 'm4',
+                why: 'Informazioni concrete riducono la paura. Per gli uomini i servizi sono meno visibili: aiutarlo a trovarli è già molto.', src: ['maschi', 'oms'] },
+              { label: '«Rispondi come fa lei, così capisce.»', v: 'no', next: 'm4',
+                why: 'Reagire con violenza mette a rischio lui, i figli e la sua posizione davanti a un giudice. Non è mai una strategia di sicurezza.', src: ['maschi'] },
+              { label: 'Gli suggerisci di annotare date ed episodi e di conservare i messaggi dove lei non può vederli.', v: 'si', next: 'm4',
+                why: 'Documentare aiuta a essere creduti e a tutelare i figli. Deve restare al sicuro: un account o un luogo che lei non controlla.', src: ['aor', 'prefettura'] }
+            ]
+          },
+          m4: {
+            text: 'Qualche settimana dopo Marco è irriconoscibile. A un certo punto dice: «Tanto non ne vale più la pena.»',
+            short: '«Non ne vale la pena»',
+            options: [
+              { label: 'Gli chiedi in modo diretto se sta pensando di farsi del male, e resti con lui mentre chiamate un aiuto.', v: 'si',
+                why: 'Chiedere apertamente non mette idee in testa: apre una porta. Ansia, depressione e pensieri suicidi sono conseguenze frequenti. Se il rischio è immediato, chiama il 112.', src: ['maschi'] },
+              { label: 'Cambi discorso per non appesantire la serata.', v: 'no',
+                why: 'Lasciar cadere una frase così può farlo sentire ancora più solo. Meglio una domanda scomoda che un silenzio.', src: ['maschi'] },
+              { label: 'Ne parli con il vostro responsabile, così interviene l’azienda.', v: 'forse',
+                why: 'Condividere senza il suo consenso può fargli perdere fiducia. Fa eccezione il pericolo per la vita: lì la sicurezza viene prima della riservatezza.', src: ['oms'] }
+            ]
+          }
+        },
+        keep: [
+          'Non ridere delle battute: per molti uomini la derisione è il primo ostacolo a chiedere aiuto.',
+          'Cercalo in privato e nomina quello che vedi, senza interpretarlo.',
+          'Credigli. La violenza riguarda il controllo, non la forza fisica.',
+          'Aiutalo a trovare servizi e informazioni concrete: 1522, un avvocato, un centro di ascolto.',
+          'Se parla di farla finita, chiediglielo in modo diretto e non lasciarlo solo.'
+        ],
+        numbers: ['n112', 'n1522', 'amico']
+      },
+      {
+        id: 'sami', name: 'Sami', tag: 'Persona non binaria, 22 anni', role: 'Tu: siete amici dall’università',
+        summary: 'Vive con il partner. La famiglia non sa né della relazione né della sua identità.',
+        profile: [
+          ['Chi è', 'Sami studia grafica. Usa il nome scelto e non si riconosce né nel maschile né nel femminile.'],
+          ['Cosa noti', 'Annulla spesso all’ultimo, controlla il telefono con ansia, dice che «Luca si arrabbia».'],
+          ['Perché conta', 'Nelle relazioni LGBTQIA+ la violenza è spesso letta come «lite». Minacciare di fare coming out al posto dell’altra persona è una forma di controllo.']
+        ],
+        start: 's1',
+        scenes: {
+          s1: {
+            text: 'Sami ti scrive a mezzanotte: «Luca ha detto che, se esco ancora con voi, racconta tutto ai miei.»',
+            short: 'La minaccia di outing',
+            options: [
+              { label: '«Allora diglielo tu ai tuoi, così non ha più niente in mano.»', v: 'no', next: 's2',
+                why: 'Fare coming out è una decisione solo sua, con tempi e rischi che conosce Sami. In alcune famiglie può costare la casa o la sicurezza.', src: ['unicef', 'lookwide'] },
+              { label: '«Usare chi sei per controllarti è violenza. Mi dispiace che tu ci stia passando.»', v: 'si', next: 's2',
+                why: 'Dare un nome alla minaccia aiuta a vederla per quello che è. Molte persone LGBTQIA+ non riconoscono la violenza che vivono perché nessuno la nomina.', src: ['forge', 'viss'] },
+              { label: '«Sarà una lite di coppia, capita a tutti.»', v: 'no', next: 's2',
+                why: 'Leggere la violenza come conflitto è l’errore più comune, anche tra gli operatori. Il controllo non è una lite alla pari.', src: ['viss', 'lesbiche'] }
+            ]
+          },
+          s2: {
+            text: 'Sami non vuole andare al centro antiviolenza: «Lì è tutto pensato per donne etero. Mi chiameranno col nome sbagliato.»',
+            short: 'La paura dei servizi',
+            options: [
+              { label: 'Insisti: è l’unico posto davvero competente.', v: 'forse', next: 's3',
+                why: 'Molti centri accolgono anche persone LGBTQIA+, ma la paura di non essere riconosciuti è fondata e va presa sul serio. Insistere rischia di chiudere il discorso.', src: ['lookwide'] },
+              { label: 'Cercate insieme un servizio LGBTQIA+ friendly e chiamate prima per chiedere come accolgono le persone trans e non binarie.', v: 'si', next: 's3',
+                why: 'Telefonare insieme, prima, toglie a Sami il peso di doversi spiegare da sola. La Gay Help Line 800 713 713 può orientare verso servizi sul territorio.', src: ['lookwide', 'unicef'] },
+              { label: '«Lascia stare i servizi, ci pensiamo noi amici.»', v: 'no', next: 's3',
+                why: 'La rete di amici è preziosa ma non basta: i servizi aiutano a valutare il rischio e a proteggersi in modi che un gruppo di amici non può garantire.', src: ['aor'] }
+            ]
+          },
+          s3: {
+            text: 'Sami ha paura di restare senza casa se lascia Luca. L’affitto è intestato a lui.',
+            short: 'La casa',
+            options: [
+              { label: 'Pensate insieme a un piano: dove dormire in caso di bisogno, documenti, farmaci o terapia ormonale, un telefono carico.', v: 'si', next: 's4',
+                why: 'Un piano di sicurezza concreto restituisce controllo. Per una persona trans può includere cose che altri non considerano, come terapie e documenti con il nome scelto.', src: ['forge', 'oms'] },
+              { label: '«Vieni a stare da me, per tutto il tempo che vuoi.»', v: 'forse', next: 's4',
+                why: 'È generoso, ma prometti solo quello che puoi mantenere davvero. Un’offerta che poi crolla lascia Sami più in difficoltà di prima.', src: ['aor'] },
+              { label: 'Organizzi con gli altri amici una visita a Luca per «fargli capire».', v: 'no', next: 's4',
+                why: 'Uno scontro può aumentare il pericolo per Sami e per voi. Le decisioni sul partner spettano a lei, non al gruppo.', src: ['aor', 'violeta'] }
+            ]
+          },
+          s4: {
+            text: 'Prima di salutarvi Sami ti chiede: «Non dirlo a nessuno, ti prego.»',
+            short: 'La riservatezza',
+            options: [
+              { label: 'Prometti riservatezza, e vi accordate: se un giorno ci fosse un pericolo immediato, chiameresti il 112.', v: 'si',
+                why: 'La riservatezza costruisce fiducia. Dire prima qual è l’unico limite, il pericolo per la vita, evita che Sami si senta tradita dopo.', src: ['oms', 'unicef'] },
+              { label: 'Lo racconti comunque alla sua famiglia, per proteggerla.', v: 'no',
+                why: 'Sarebbe un outing fatto da te: proprio quello che Luca minacciava. Può esporre Sami a nuovi rischi e rompere la fiducia nell’unica persona che sa.', src: ['unicef', 'lookwide'] },
+              { label: 'Ne parli solo con una persona del gruppo, perché ti aiuti a sostenerla.', v: 'forse',
+                why: 'Anche tu hai bisogno di sostegno, ma chiedilo senza fare il suo nome oppure con il suo permesso. Un centro antiviolenza o il 1522 possono consigliarti senza esporre Sami.', src: ['tirolo'] }
+            ]
+          }
+        },
+        keep: [
+          'Dai un nome alla violenza: minacciare di fare outing è controllo, non una lite.',
+          'Il coming out è una decisione solo di Sami.',
+          'Prendi sul serio la paura dei servizi e cercate insieme quelli che accolgono davvero.',
+          'Fate un piano concreto: un posto sicuro, documenti, terapie, un telefono carico.',
+          'Proteggi la sua riservatezza e chiarisci prima l’unico limite: il pericolo immediato.'
+        ],
+        numbers: ['n112', 'n1522', 'gay']
+      },
+      {
+        id: 'rosa', name: 'Rosa', tag: 'Donna, 79 anni', role: 'Tu: lavori nella farmacia sotto casa sua',
+        summary: 'Vedova, vive con il figlio. Da mesi viene sempre accompagnata.',
+        profile: [
+          ['Chi è', 'Rosa ha insegnato alle elementari per trent’anni. Ora cammina con il bastone.'],
+          ['Cosa noti', 'Il figlio risponde al posto suo, lei sembra dimagrita e non ha più soldi per le medicine.'],
+          ['Perché conta', 'La violenza contro le donne anziane è poco riconosciuta. Dipendenza, isolamento e controllo economico ne sono segnali tipici.']
+        ],
+        start: 'r1',
+        scenes: {
+          r1: {
+            text: 'Oggi Rosa entra da sola. Ti chiede di rimandare una ricetta: «Mio figlio tiene lui la pensione, per comodità.»',
+            short: 'In farmacia',
+            options: [
+              { label: 'La inviti in un angolo tranquillo e le chiedi con calma come va a casa e se si sente al sicuro.', v: 'si', next: 'r2',
+                why: 'Uno spazio riservato e una domanda aperta permettono di parlare. Essere da sola, senza il figlio, è un’occasione rara.', src: ['marvow', 'oms'] },
+              { label: '«Beata lei, che ha un figlio che si occupa di tutto!»', v: 'no', next: 'r2',
+                why: 'Scambiare il controllo per premura rende la violenza invisibile. Il controllo dei soldi è una forma di violenza economica.', src: ['marvow'] },
+              { label: 'Chiami il figlio per chiedergli spiegazioni.', v: 'no', next: 'r2',
+                why: 'Avvisare chi la controlla può farle correre un rischio maggiore e chiudere l’unico canale che ha con te.', src: ['marvow', 'violeta'] }
+            ]
+          },
+          r2: {
+            text: 'Rosa racconta che il figlio a volte la chiude in casa e le urla contro. «Ma è mio figlio, non voglio che finisca nei guai.»',
+            short: '«È mio figlio»',
+            options: [
+              { label: 'Le dici che non è colpa sua e che esistono aiuti che non partono per forza da una denuncia.', v: 'si', next: 'r3',
+                why: 'Il legame con un figlio rende molte donne restie a chiedere aiuto. Sapere che ci sono passi intermedi permette di fare il primo.', src: ['marvow', 'oms'] },
+              { label: '«Deve denunciarlo, non ci sono alternative.»', v: 'forse', next: 'r3',
+                why: 'La denuncia è un diritto, ma imporla la mette davanti a una scelta che non si sente di fare. Rischi che non torni più.', src: ['marvow'] },
+              { label: '«Alla sua età è normale che decidano i figli.»', v: 'no', next: 'r3',
+                why: 'L’età non toglie il diritto di decidere della propria vita e dei propri soldi. Frasi così confermano l’isolamento.', src: ['marvow', 'disabilita'] }
+            ]
+          },
+          r3: {
+            text: 'Rosa dipende dal figlio per la spesa, le medicine e le visite. Non usa il cellulare.',
+            short: 'La dipendenza',
+            options: [
+              { label: 'Con il suo permesso, coinvolgi il medico di famiglia o i servizi sociali del Comune, che possono attivare un’assistenza.', v: 'si', next: 'r4',
+                why: 'Con le donne anziane serve una risposta tra più servizi: sanitari, sociali, antiviolenza. Riduce la dipendenza da chi la maltratta.', src: ['marvow'] },
+              { label: 'Le dici che la farmacia è un posto dove può tornare quando vuole, anche solo per parlare.', v: 'si', next: 'r4',
+                why: 'Un punto di riferimento abituale e insospettabile è prezioso per chi esce poco. Puoi anche tenere tu i numeri utili, se a casa non è al sicuro.', src: ['marvow', 'vicinato'] },
+              { label: 'Non fai altro: è una questione di famiglia.', v: 'no', next: 'r4',
+                why: 'La violenza in famiglia non è un fatto privato. Il silenzio intorno è ciò che la lascia continuare.', src: ['marvow'] }
+            ]
+          },
+          r4: {
+            text: 'Per una settimana Rosa non si vede. Le persiane sono chiuse e il telefono di casa squilla a vuoto.',
+            short: 'Una settimana di silenzio',
+            options: [
+              { label: 'Chiedi ai vicini se l’hanno vista; se nessuno sa nulla, chiami il 112 per un controllo.', v: 'si',
+                why: 'Per una persona anziana e isolata, un’assenza improvvisa può essere un’emergenza. Un controllo delle forze dell’ordine è la scelta prudente.', src: ['marvow'] },
+              { label: 'Aspetti: magari è andata da qualche parente.', v: 'no',
+                why: 'Forse sì, ma con i segnali che conosci aspettare è un rischio. Verificare non costa nulla.', src: ['marvow'] },
+              { label: 'Suoni e chiedi al figlio di vederla.', v: 'forse',
+                why: 'Può rassicurarti, ma se lui la sta isolando lo metti in allarme. Se la risposta non ti convince, chiama il 112.', src: ['marvow'] }
+            ]
+          }
+        },
+        keep: [
+          'Controllo dei soldi, isolamento e un familiare che parla al posto suo sono segnali da non scambiare per premura.',
+          'Cerca un momento in cui è sola e uno spazio riservato.',
+          'Rispetta il legame con il figlio e spiega che ci sono passi prima della denuncia.',
+          'Coinvolgi, con il suo consenso, medico di famiglia e servizi sociali.',
+          'Un’assenza improvvisa di una persona isolata è un motivo per chiamare il 112.'
+        ],
+        numbers: ['n112', 'n1522']
+      },
+      {
+        id: 'amira', name: 'Amira', tag: 'Ragazza, 19 anni', role: 'Tu: sei sullo stesso autobus',
+        summary: 'Torna dal lavoro la sera. Un uomo le si avvicina sempre di più.',
+        profile: [
+          ['Chi è', 'Amira lavora in un bar del centro e prende l’ultimo autobus.'],
+          ['Cosa noti', 'Un uomo le blocca il passaggio e le fa commenti pesanti. Lei fissa il telefono, rigida.'],
+          ['Perché conta', 'Davanti alle molestie in pubblico molte persone non intervengono perché non sanno come. Esistono modi sicuri, riassunti in cinque D.']
+        ],
+        start: 'a1',
+        scenes: {
+          a1: {
+            text: 'L’autobus è pieno. L’uomo si avvicina ancora e le dice qualcosa all’orecchio. Amira si irrigidisce.',
+            short: 'Sull’autobus',
+            options: [
+              { label: 'Ti avvicini e le chiedi a voce alta un’informazione sulla fermata, mettendoti tra lei e lui.', v: 'si', next: 'a2',
+                why: 'Distrarre interrompe la scena senza scontro. Sposta l’attenzione e le dà una via d’uscita.', src: ['aor', 'fived'] },
+              { label: 'Dici all’uomo, breve e calmo: «Lasciala in pace.»', v: 'forse', next: 'a2',
+                why: 'Intervenire in modo diretto funziona se è breve e senza discussione, e solo se ti senti al sicuro. Può far salire la tensione.', src: ['aor', 'fived'] },
+              { label: 'Riprendi tutto con il telefono per postarlo.', v: 'no', next: 'a2',
+                why: 'Documentare ha senso solo se qualcun altro sta già aiutando, e il video non va mai condiviso senza il consenso di chi subisce.', src: ['aor'] }
+            ]
+          },
+          a2: {
+            text: 'L’uomo si gira verso di te e alza la voce.',
+            short: 'Lui alza la voce',
+            options: [
+              { label: 'Avvisi l’autista e chiedi a chi è vicino di avvicinarsi.', v: 'si', next: 'a3',
+                why: 'Delegare coinvolge chi ha un ruolo o la forza del numero. Non devi farcela da sola o da solo.', src: ['aor', 'fived'] },
+              { label: 'Lo spingi via.', v: 'no', next: 'a3',
+                why: 'Lo scontro fisico mette in pericolo te, Amira e gli altri passeggeri. La tua sicurezza conta quanto la sua.', src: ['aor'] },
+              { label: 'Chiami il 112.', v: 'forse', next: 'a3',
+                why: 'Con minacce o contatto fisico è la scelta giusta. In casi meno gravi, prima chiedi ad Amira se lo vuole: non tutte le persone si sentono al sicuro con la polizia.', src: ['aor'] }
+            ]
+          },
+          a3: {
+            text: 'Alla fermata Amira scende di corsa. Scendi anche tu: lei è scossa.',
+            short: 'Alla fermata',
+            options: [
+              { label: 'Le chiedi se sta bene, le dici che ti dispiace e le offri compagnia fino a casa o aiuto per segnalare, se vuole.', v: 'si',
+                why: 'È la D di «dopo»: anche quando non puoi fermare la scena, puoi sostenere chi l’ha subita. Lascia a lei la scelta.', src: ['aor', 'fived'] },
+              { label: '«Dovevi reagire, io gli avrei dato uno schiaffo.»', v: 'no',
+                why: 'Sposta la responsabilità su di lei. Restare immobili è una reazione comune alla paura, non una colpa.', src: ['aor', 'cycle'] },
+              { label: '«La prossima volta prendi un taxi, a quest’ora.»', v: 'no',
+                why: 'Il problema non è l’orario né il mezzo: è chi molesta. Consigli così le dicono che doveva evitarlo lei.', src: ['violeta'] }
+            ]
+          }
+        },
+        keep: [
+          'Distrai: interrompi con una domanda banale e mettiti tra le due persone.',
+          'Delega: autista, personale, altri passeggeri, il 112 se serve.',
+          'Diretto solo se sei al sicuro: una frase breve, senza discutere.',
+          'Documenta solo se qualcuno sta già aiutando, e non condividere senza consenso.',
+          'Dopo: chiedi come sta e offri aiuto. Non commentare cosa avrebbe dovuto fare.'
+        ],
+        numbers: ['n112', 'n1522']
+      }
+    ];
+
+    // Story state ------------------------------------------------------------
+
+    let person = null;
+    let sceneId = null;
+    let path = [];          // [{ scene, choice }]
+    const finished = new Set();
+
+    const esc = text => text.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+
+    // The longest run of scenes still ahead, for the progress bar
+    function depthFrom(id) {
+      if (!id) return 0;
+      const nexts = person.scenes[id].options.map(o => o.next).filter(Boolean);
+      return 1 + (nexts.length ? Math.max(...nexts.map(depthFrom)) : 0);
+    }
+
+    function showProgress(stageName) {
+      if (!person) {
+        TestKit.progress(progressEl, {
+          segments: [{ label: 'Scegli una persona', total: 1, done: 0, current: true }, { label: 'Scheda', total: 1, done: 0 }, { label: 'Scelte', total: 4, done: 0 }, { label: 'Cosa ricordare', total: 1, done: 0 }],
+          where: `<b>Cinque storie</b> · ${finished.size ? `${finished.size} di 5 completate` : 'nessuna ancora completata'}`,
+          seconds: null
+        });
+        return;
+      }
+      const ahead = stageName === 'scene' ? depthFrom(sceneId) : stageName === 'profile' ? depthFrom(person.start) : 0;
+      const total = path.length + ahead;
+      const done = stageName === 'scene' ? path.length : stageName === 'end' ? total : 0;
+      TestKit.progress(progressEl, {
+        segments: [
+          { label: 'Persona', total: 1, done: 1 },
+          { label: 'Scheda', total: 1, done: stageName === 'profile' ? 0 : 1, current: stageName === 'profile' },
+          { label: 'Scelte', total: Math.max(total, 1), done, current: stageName === 'scene' },
+          { label: 'Cosa ricordare', total: 1, done: stageName === 'end' ? 1 : 0, current: stageName === 'end' }
+        ],
+        where: `<b>${esc(person.name)}</b> · ${stageName === 'scene' ? `scena ${path.length + 1} di ${total}` : stageName === 'end' ? 'storia conclusa' : 'prima di iniziare'}`,
+        // About 40 seconds a scene: reading, choosing, reading why
+        seconds: stageName === 'end' ? 0 : ahead * 40
+      });
+    }
+
+    function sourceLinks(keys) {
+      return keys.map(k => `<a href="${encodeURI(SOURCES[k].url)}" target="_blank" rel="noopener">${esc(SOURCES[k].label)}</a>`).join(' · ');
+    }
+
+    // Views ------------------------------------------------------------------
+
+    function renderHome() {
+      person = null;
+      showProgress();
+      TestKit.swap(stage, `
+        <h1 class="title">Come stare accanto</h1>
+        <p class="lead">Cinque persone, cinque situazioni. In ogni scena scegli cosa fare: vedrai cosa aiuta, cosa dipende e cosa è meglio evitare, e perché.</p>
+        <ul class="cells" aria-label="Principi comuni a tutte le storie">
+          <li><h3>Ascolta e credi</h3><p>Senza interrompere, senza «perché», senza mettere in dubbio.</p></li>
+          <li><h3>Non decidere al suo posto</h3><p>Offri strade e informazioni, poi rispetta tempi e scelte.</p></li>
+          <li><h3>Sicurezza prima di tutto</h3><p>La sua e la tua. Con un pericolo in corso, chiama il 112.</p></li>
+        </ul>
+        <h2 style="margin-bottom:14px">Scegli una persona</h2>
+        <ul class="people">
+          ${PEOPLE.map(p => `<li><button type="button" class="person" data-person="${p.id}">
+            <span class="tag">${esc(p.tag)}${finished.has(p.id) ? ' · <span class="done-mark">completata</span>' : ''}</span>
+            <strong>${esc(p.name)}</strong>
+            <p>${esc(p.summary)}</p>
+            <span class="role">${esc(p.role)}</span>
+          </button></li>`).join('')}
+        </ul>
+      `);
+    }
+
+    function renderProfile() {
+      path = [];
+      sceneId = null;
+      showProgress('profile');
+      TestKit.swap(stage, `
+        <span class="kicker">${esc(person.tag)}</span>
+        <h1 class="question">${esc(person.name)}</h1>
+        <div class="box profile">
+          <div class="box-title">${esc(person.role)}</div>
+          ${person.profile.map(([k, v]) => `<div class="box-row"><span>${esc(k)}</span><div>${esc(v)}</div></div>`).join('')}
+        </div>
+        <p class="note">Non esiste una risposta perfetta: anche le scelte meno felici portano avanti la storia, e da ognuna si impara qualcosa.</p>
+        <div class="step-actions">
+          <button type="button" class="btn quiet" data-home>Torna alle persone</button>
+          <button type="button" class="btn primary" data-next data-start>Inizia la storia</button>
+        </div>
+      `);
+    }
+
+    function renderScene(id) {
+      sceneId = id;
+      const scene = person.scenes[id];
+      showProgress('scene');
+      TestKit.swap(stage, `
+        <span class="kicker">${esc(person.name)} · ${esc(person.role.replace(/^Tu: /, ''))}</span>
+        <h1 class="scene">${esc(scene.text)}</h1>
+        <p class="ask">Cosa fai?</p>
+        <div class="options" data-keys role="radiogroup" aria-label="Cosa fai?">
+          ${scene.options.map((o, i) => `<label class="option">
+            <input type="radio" name="choice" value="${i}">
+            <span class="mark" aria-hidden="true"></span>
+            <span class="option-text"><strong>${esc(o.label)}</strong></span>
+            <span class="key" aria-hidden="true">${i + 1}</span>
+          </label>`).join('')}
+        </div>
+        <div id="feedback"></div>
+        <div class="step-actions">
+          <button type="button" class="btn quiet" data-back>${path.length ? 'Scena precedente' : 'Torna alla scheda'}</button>
+          <button type="button" class="btn primary" data-next data-continue disabled>Continua</button>
+        </div>
+      `);
+    }
+
+    // A choice is final for the scene: the reason shows, the others step back
+    function choose(index) {
+      const options = stage.querySelector('.options');
+      if (!options || options.classList.contains('is-answered')) return;
+      const choice = person.scenes[sceneId].options[index];
+      const verdict = VERDICT[choice.v];
+      options.classList.add('is-answered');
+      options.querySelectorAll('input').forEach(input => { input.disabled = true; });
+      stage.querySelector('#feedback').innerHTML = `
+        <div class="feedback" role="status">
+          <span class="dot ${verdict.dot}" aria-hidden="true"></span>
+          <div>
+            <h3>${verdict.label}</h3>
+            <p>${esc(choice.why)}</p>
+            <p class="src">Fonti: ${sourceLinks(choice.src)}</p>
+          </div>
+        </div>`;
+      const next = stage.querySelector('[data-continue]');
+      next.disabled = false;
+      next.textContent = choice.next ? 'Scena successiva' : 'Vedi cosa ricordare';
+      next.focus({ preventScroll: true });
+      path.push({ scene: sceneId, choice: index });
+    }
+
+    function renderEnd() {
+      finished.add(person.id);
+      showProgress('end');
+      const counts = { si: 0, forse: 0, no: 0 };
+      path.forEach(({ scene, choice }) => { counts[person.scenes[scene].options[choice].v]++; });
+      TestKit.swap(stage, `
+        <div class="report">
+          <div class="report-head">
+            <span class="kicker">${esc(person.name)} · storia conclusa</span>
+            <h1 class="question">Il percorso che hai scelto</h1>
+            <p class="lead">${counts.si === path.length
+              ? 'Ogni tua scelta ha aiutato. Qui sotto trovi anche le strade che non hai preso.'
+              : 'Nella vita reale si sbaglia, si torna indietro, si riprova. Conta restare presenti: qui sotto vedi ogni bivio e le alternative.'}</p>
+          </div>
+
+          <div class="report-block">
+            <h2>Le tue scelte, in sintesi</h2>
+            <div class="stack" role="img" aria-label="${counts.si} scelte che aiutano, ${counts.forse} che dipendono, ${counts.no} da evitare">
+              ${['si', 'forse', 'no'].filter(k => counts[k]).map(k => `<i style="--n:${counts[k]};background:var(--${VERDICT[k].dot})"></i>`).join('')}
+            </div>
+            <div class="legend-inline">
+              ${['si', 'forse', 'no'].map(k => `<span><i class="dot ${VERDICT[k].dot}"></i>${VERDICT[k].label}: ${counts[k]}</span>`).join('')}
+            </div>
+          </div>
+
+          <div class="report-block">
+            <h2>L’albero delle scelte</h2>
+            <ol class="path">
+              ${path.map(({ scene, choice }, i) => {
+                const s = person.scenes[scene];
+                return `<li><span class="n">${i + 1}</span><div>
+                  <p class="scene-short">${esc(s.short)}</p>
+                  <ul class="branches">
+                    ${s.options.map((o, j) => `<li class="${j === choice ? 'taken' : ''}" title="${esc(VERDICT[o.v].label)}">
+                      <i class="dot ${VERDICT[o.v].dot}" aria-hidden="true"></i>${esc(o.label)}${j === choice ? '<span class="visually-hidden"> (la tua scelta)</span>' : ''}
+                    </li>`).join('')}
+                  </ul>
+                </div></li>`;
+              }).join('')}
+            </ol>
+          </div>
+
+          <div class="report-block">
+            <h2>Da ricordare con ${esc(person.name)}</h2>
+            <ul class="keep">${person.keep.map(k => `<li>${esc(k)}</li>`).join('')}</ul>
+          </div>
+
+          <div class="report-block">
+            <h2>Numeri utili</h2>
+            <div class="box numbers">
+              ${person.numbers.map(k => { const [n, href, text] = NUMBERS[k]; return `<div class="box-row"><a href="${href}">${n}</a><span>${esc(text)}</span></div>`; }).join('')}
+            </div>
+          </div>
+
+          <div class="disclaimer">
+            <p>Le storie sono inventate e semplificate: ogni situazione reale è diversa. Per capire come aiutare una persona concreta puoi chiamare anche tu il 1522 o un centro antiviolenza, che danno consigli a chi sta accanto. E prenditi cura di te: sostenere qualcuno pesa.</p>
+          </div>
+
+          <div class="step-actions">
+            <button type="button" class="btn" data-replay>Rifai la storia</button>
+            <button type="button" class="btn primary" data-next data-home>Scegli un’altra persona</button>
+          </div>
+        </div>
+      `);
+    }
+
+    // Events -----------------------------------------------------------------
+
+    stage.addEventListener('click', event => {
+      const target = event.target.closest('button');
+      if (!target) return;
+      if (target.dataset.person) { person = PEOPLE.find(p => p.id === target.dataset.person); renderProfile(); }
+      else if ('start' in target.dataset) renderScene(person.start);
+      else if ('home' in target.dataset) renderHome();
+      else if ('replay' in target.dataset) renderProfile();
+      else if ('continue' in target.dataset) {
+        const last = path[path.length - 1];
+        const next = person.scenes[last.scene].options[last.choice].next;
+        next ? renderScene(next) : renderEnd();
+      } else if ('back' in target.dataset) {
+        // Going back undoes the choice of the scene left and the one before
+        const answered = stage.querySelector('.options.is-answered');
+        if (answered) path.pop();
+        const prev = path.pop();
+        prev ? renderScene(prev.scene) : renderProfile();
+      }
+    });
+
+    stage.addEventListener('change', event => {
+      if (event.target.name === 'choice') choose(Number(event.target.value));
+    });
+
+    // Sources list at the foot of the page
+    const used = Object.entries(SOURCES);
+    document.querySelector('#srcArchive').innerHTML = used.filter(([, s]) => s.archive).map(([, s]) => `<li><a href="${encodeURI(s.url)}" target="_blank" rel="noopener">${esc(s.label)}</a></li>`).join('');
+    document.querySelector('#srcWeb').innerHTML = used.filter(([, s]) => !s.archive).map(([, s]) => `<li><a href="${s.url}" target="_blank" rel="noopener">${esc(s.label)}</a></li>`).join('');
+
+    // A deep link can open one person directly: stare-accanto.html#marco
+    const linked = PEOPLE.find(p => `#${p.id}` === location.hash);
+    if (linked) { person = linked; renderProfile(); } else renderHome();
+  </script>
+  <script src="quick-exit.js"></script>
+</body>
+</html>

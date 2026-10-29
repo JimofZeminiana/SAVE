@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="Cosa fare, caso per caso: indicazioni rapide per stare accanto a chi vive violenza di genere.">
+  <title>Meteo di oggi</title>
+  <!-- Inside the single page the outer header is the only one: this page drops its own -->
+  <script>if (window.self !== window.top) document.documentElement.classList.add('embedded');</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="stile-test.css">
+  <style>
+    .page { padding-block: clamp(32px, 6vw, 72px) clamp(48px, 6vw, 80px); }
+    .page > .lead { margin-bottom: clamp(28px, 4vw, 44px); }
+
+    /* Emergency first: the one thing to do before reading on */
+    .urgent {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 12px 16px;
+      align-items: center;
+      max-width: 1040px;
+      margin: 0 0 clamp(28px, 4vw, 44px);
+      padding: 14px 18px;
+      border: 1px solid var(--exit);
+      border-radius: var(--r-box);
+    }
+    .urgent p { margin: 0; }
+    .urgent .btn-row { justify-content: flex-end; }
+
+    .cells {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      max-width: 1040px;
+      margin: 14px 0 clamp(32px, 5vw, 56px);
+      padding: 0;
+      list-style: none;
+      background: var(--rule);
+      border: 1px solid var(--rule);
+      border-radius: var(--r-box);
+      overflow: hidden;
+    }
+    .cells > * { background: var(--paper); padding: 16px 18px 18px; }
+    .cells h3 { margin-bottom: 4px; }
+    .cells p { margin: 0; font-size: .9375rem; color: var(--muted); }
+
+    /* Jump list: one pill per case, sticky under the header so any case is one tap away */
+    .jump-nav {
+      position: sticky;
+      top: var(--header-h);
+      z-index: 8;
+    }
+    .jump {
+      display: flex;
+      gap: 6px;
+      margin: 0 calc(-1 * var(--gutter)) 24px;
+      padding: 12px var(--gutter);
+      overflow-x: auto;
+      scrollbar-width: none;
+      list-style: none;
+      background: color-mix(in srgb, var(--paper) 88%, transparent);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--soft-rule);
+    }
+    .jump::-webkit-scrollbar { display: none; }
+    .jump a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      padding: 6px 14px;
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      font-size: var(--t-small);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background-color .2s var(--ease);
+    }
+    .jump a[aria-current="true"] { background: var(--ink); color: var(--paper); }
+
+    /* A case: title row, then three ruled columns, then numbers and links */
+    .case {
+      max-width: 1040px;
+      margin: 0 0 20px;
+      border: 1px solid var(--rule);
+      border-radius: var(--r-box);
+      overflow: hidden;
+      scroll-margin-top: calc(var(--header-h) + 72px);
+    }
+    .case-head {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 6px 16px;
+      align-items: baseline;
+      padding: 16px 18px 14px;
+      border-bottom: 1px solid var(--rule);
+    }
+    .case-head h2 { font-size: clamp(1.375rem, 2.2vw, 1.75rem); font-weight: 300; letter-spacing: -.015em; }
+    .case-head p { grid-column: 1 / -1; margin: 0; color: var(--muted); font-size: .9375rem; max-width: 70ch; }
+    .case-head .tag { font-size: var(--t-small); color: var(--muted); }
+
+    .cols { display: grid; grid-template-columns: 1fr 1.3fr 1fr; }
+    .cols > div { padding: 14px 18px 16px; }
+    .cols > div + div { border-left: 1px solid var(--rule); }
+    .cols h3 { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: .9375rem; }
+    .cols ul { margin: 0; padding-left: 1.1em; font-size: .9375rem; }
+    .cols li { margin-bottom: 6px; }
+    .cols li::marker { color: var(--muted); }
+
+    .case-foot {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8px 20px;
+      padding: 12px 18px 14px;
+      border-top: 1px solid var(--rule);
+      font-size: var(--t-small);
+    }
+    .case-foot .nums { display: flex; flex-wrap: wrap; gap: 4px 16px; }
+    .case-foot .nums a { font-weight: 500; font-variant-numeric: tabular-nums; }
+    .case-foot .nums span { color: var(--muted); }
+    .case-foot .more { color: var(--muted); }
+
+    .sources-note {
+      max-width: 1040px;
+      margin-top: clamp(32px, 5vw, 56px);
+      border: 1px solid var(--rule);
+      border-radius: var(--r-box);
+    }
+    .sources-note summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      font-size: .9375rem;
+      cursor: pointer;
+      list-style: none;
+    }
+    .sources-note summary::-webkit-details-marker { display: none; }
+    .sources-note summary::after {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-right: 1px solid var(--ink);
+      border-bottom: 1px solid var(--ink);
+      transform: translateY(-3px) rotate(45deg);
+      transition: transform .3s var(--ease);
+    }
+    .sources-note[open] summary::after { transform: translateY(1px) rotate(225deg); }
+    .sources-body { padding: 0 18px 18px; font-size: .9375rem; max-width: 76ch; }
+    .sources-body ul { padding-left: 1.1em; }
+    .sources-body li { margin-bottom: 8px; }
+
+    .dot.ink { background: var(--ink); }
+    .dot.vermilion { background: var(--vermilion); }
+
+    @media (hover: hover) { .jump a:hover:not([aria-current="true"]) { background: var(--fill); } }
+
+    @media (max-width: 860px) {
+      .cols { grid-template-columns: 1fr; }
+      .cols > div + div { border-left: 0; border-top: 1px solid var(--rule); }
+      .cells { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 620px) {
+      .case-head { grid-template-columns: 1fr; }
+      .case-head .tag { order: -1; }
+      .urgent { grid-template-columns: auto 1fr; }
+      .urgent .btn-row { grid-column: 1 / -1; justify-content: stretch; display: grid; grid-template-columns: 1fr 1fr; }
+    }
+
+    /* On paper: every case whole, no sticky bars, links written out */
+    @media print {
+      .site-header, .jump-nav, .urgent .btn-row, .sources-note summary::after { display: none; }
+      .case { break-inside: avoid; }
+      .sources-note { display: block; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header" aria-label="Azioni principali">
+    <div class="wrap">
+      <div class="header-inner">
+        <div class="header-top">
+          <a class="brand" href="index-pagina-unica.html">SAVE</a>
+          <a class="exit-btn" id="exitBtn" href="https://www.google.com/search?q=meteo">Esci subito dal sito</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap page">
+    <h1 class="title">Cosa fare, caso per caso</h1>
+    <p class="lead">Una persona vicina a te vive violenza? Trova il suo caso qui sotto: segnali da riconoscere, cosa fare, cosa evitare e chi chiamare.</p>
+
+    <div class="urgent" role="note">
+      <span class="dot maroon" aria-hidden="true"></span>
+      <p><b>Se c’è un pericolo adesso</b>, non serve il permesso di nessuno: chiama il 112 e dai indirizzo e cosa succede.</p>
+      <div class="btn-row">
+        <a class="btn urgent" href="tel:112">Chiama il 112</a>
+        <a class="btn" href="tel:1522">1522</a>
+      </div>
+    </div>
+
+    <h2>Vale in ogni caso</h2>
+    <ul class="cells">
+      <li><h3>Ascolta e credi</h3><p>Senza interrompere, senza «perché», senza mettere in dubbio il racconto. Dille o digli che non è colpa sua.</p></li>
+      <li><h3>Non decidere al suo posto</h3><p>Offri informazioni e strade, poi rispetta tempi e scelte. Non affrontare chi agisce violenza.</p></li>
+      <li><h3>Sicurezza e riservatezza</h3><p>Non lasciare tracce che possano essere trovate, non raccontare ad altri. Unica eccezione: un pericolo per la vita.</p></li>
+    </ul>
+
+    <nav class="jump-nav" aria-label="Casi">
+      <ul class="jump" id="jump"></ul>
+    </nav>
+
+    <div id="cases"></div>
+
+    <details class="sources-note" id="fonti">
+      <summary>Da dove vengono queste indicazioni</summary>
+      <div class="sources-body">
+        <p>Questa pagina riassume le guide dell’archivio e altre guide pubbliche, soprattutto italiane. È un promemoria per chi non lavora nel settore: non sostituisce il consiglio di un centro antiviolenza, che puoi chiamare anche tu per sapere come aiutare.</p>
+        <ul id="srcList"></ul>
+        <p>Gran parte della ricerca riguarda donne in relazioni eterosessuali. Per uomini, persone LGBTQIA+, anziane e migranti le guide italiane sono poche: alcune indicazioni vengono da guide in inglese.</p>
+      </div>
+    </details>
+
+    <footer class="page-footer" style="margin-top:32px">
+      <span>Esercitati con le storie a bivi: <a href="stare-accanto.html">Come stare accanto</a>.</span>
+      <span>In pericolo immediato: 112. Supporto gratuito e anonimo: 1522.</span>
+    </footer>
+  </main>
+
+  <script>
+    const SOURCES = {
+      vicinato: ['paper/material/guida_al_vicinato_CAV-Venezia copy.pdf', 'Centro Antiviolenza di Venezia, guida al vicinato'],
+      maschi: ['paper/material/ENG_Pocket Guide for GBV actors working with male survivors of sexual violence.pdf', 'Pocket guide sugli uomini sopravvissuti alla violenza sessuale'],
+      lookwide: ['paper/material/Look Wide guide_A5.pdf', 'Look Wide, guida per servizi inclusivi LGBTQIA+'],
+      unicef: ['paper/material/UNICEF - Guidelines GBV in mobility contexts.pdf.pdf', 'UNICEF, adolescenti LGBTQI+ in contesti di mobilità'],
+      marvow: ['paper/material/MARVOW2_TrainMan_IT_241106_low.pdf', 'MARVOW 2.0, violenza contro le donne anziane'],
+      aor: ['paper/material/GBV AoR 2022 Bystander Intervention Approaches.pdf', 'GBV AoR, approcci di bystander intervention'],
+      sentir: ['paper/material/guiasentir_ca_acc_2_0.pdf', 'Ajuntament de Barcelona, prevenzione dell’abuso sessuale infantile'],
+      consent: ['paper/material/CONSENT - Manual di formazione per famiglie e insegnanti.pdf', 'Progetto CONSENT, formazione per famiglie e insegnanti'],
+      oms: ['https://www.who.int/publications/i/item/WHO-RHR-14.26', 'OMS, supporto di prima linea LIVES'],
+      violeta: ['https://violenciagenero.igualdad.gob.es/wp-content/uploads/Guia_Punto_Violeta_IT.pdf', 'Guida Punto Violeta, in italiano'],
+      tirolo: ['https://www.tirol.gv.at/fileadmin/themen/gesellschaft-soziales/gewaltfrei/downloads/Tipps_fuer_Angehoerige_-_Italienisch.pdf', 'Land Tirol, consigli per familiari e amici'],
+      forge: ['https://forge-forward.org/resource/trans-non-binary-individuals-and-intimate-partner-violence-a-brief-overview/', 'FORGE, persone trans e non binarie e violenza nelle relazioni'],
+      viss: ['https://site.unibo.it/viss/it', 'Università di Bologna, ricerca ViSS'],
+      disabilita: ['https://osservatoriodisabilita.gov.it/media/labc4jcp/documento-finale-gdl-questione-violenza-contro-donne-con-disabilità.pdf', 'Osservatorio nazionale sulla disabilità, violenza contro le donne con disabilità'],
+      prefettura: ['https://prefettura.interno.gov.it/sites/default/files/52/2024-03/all1violenzadigenere-guidatascabile.pdf', 'Prefettura, guida tascabile per chi accoglie'],
+      fived: ['https://seattle.gov/Documents/Departments/Neighborhoods/PPatch/Tips/Bystander%20Intervention.pdf', 'Seattle, le 5 D di chi assiste']
+    };
+
+    const NUMBERS = {
+      n112: ['112', 'emergenze'],
+      n1522: ['1522', 'antiviolenza e stalking, 24 ore su 24, anche chat'],
+      gay: ['800 713 713', 'Gay Help Line'],
+      amico: ['02 2327 2327', 'Telefono Amico'],
+      tratta: ['800 290 290', 'Numero verde antitratta'],
+      n114: ['114', 'Emergenza infanzia'],
+      azzurro: ['19696', 'Telefono Azzurro']
+    };
+
+    // One entry per case: signals, do, avoid, numbers, a story to practise with, sources
+    const CASES = [
+      {
+        id: 'donne', short: 'Donne', title: 'Una donna, violenza dal partner o dall’ex', tag: 'Il caso più frequente',
+        intro: 'In 9 casi su 10 chi agisce violenza contro una donna è il partner o l’ex partner.',
+        signs: ['Urla, litigi, tonfi; lei sembra impaurita, ansiosa, triste.', 'Lividi, dolore, scuse poco credibili.', 'Il partner controlla telefono, soldi, uscite; lei non lavora più o non vede più nessuno.', 'Un ex che si aggira sotto casa, chiamate e messaggi insistenti.'],
+        doList: ['Avvicinati per gradi: un saluto, un caffè, una presenza costante.', 'Ascolta e dille: «Non è normale, e non è colpa tua».', 'Parla dei centri antiviolenza: gratuiti, riservati, senza obbligo di denuncia. Offriti di accompagnarla.', 'Se vuole, concordate una parola in codice per chiamare il 112.'],
+        avoid: ['Domande dirette o «perché non lo lasci?».', 'Affrontare il partner o parlargli.', 'Volantini e biglietti che lui potrebbe trovare.', 'Spingerla a separarsi subito: il momento della separazione è spesso il più pericoloso.'],
+        numbers: ['n112', 'n1522'], story: 'giulia', src: ['vicinato', 'oms', 'violeta', 'tirolo']
+      },
+      {
+        id: 'uomini', short: 'Uomini', title: 'Un uomo che subisce violenza', tag: 'Spesso non viene creduto',
+        intro: 'Le donne sono colpite in modo sproporzionato, ma anche gli uomini possono subire violenza. Vergogna e derisione li tengono lontani dai servizi.',
+        signs: ['Graffi o ferite minimizzati con una battuta.', 'Paura di rientrare a casa, telefonate che lo agitano.', 'Ritiro, irritabilità, uso di alcol, frasi come «non ne vale la pena».', 'Paura di perdere i figli se ne parla.'],
+        doList: ['Cercalo in privato e nomina quello che hai visto, senza interpretarlo.', 'Digli: «Ti credo, può capitare a chiunque, non ti rende meno uomo».', 'Aiutalo a trovare servizi: il 1522 risponde a chiunque subisca violenza; un avvocato può spiegargli i diritti sui figli.', 'Suggerisci di annotare episodi e conservare messaggi in un posto sicuro.', 'Se parla di farla finita, chiediglielo in modo diretto e non lasciarlo solo.'],
+        avoid: ['Ridere delle battute o farne.', '«Sei grande e grosso, difenditi»: la violenza è controllo, non forza fisica.', 'Mettere in dubbio il racconto.', 'Consigliare di reagire allo stesso modo.'],
+        numbers: ['n112', 'n1522', 'amico'], story: 'marco', src: ['maschi', 'oms']
+      },
+      {
+        id: 'lgbtqia', short: 'LGBTQIA+', title: 'Una persona LGBTQIA+', tag: 'Lesbiche, gay, bisessuali, trans, non binarie',
+        intro: 'Nelle coppie LGBTQIA+ la violenza viene spesso scambiata per una lite alla pari. Ha anche forme proprie, come la minaccia di fare outing.',
+        signs: ['Minacce di rivelare orientamento o identità a famiglia, lavoro, scuola.', 'Il partner nega il nome scelto o ostacola la transizione e le terapie.', '«Tanto nessuno ti crederà, i servizi sono per le donne etero».', 'Isolamento dalla comunità e dagli amici.'],
+        doList: ['Dai un nome alla violenza: il controllo non è una lite.', 'Usa il nome e i pronomi che la persona usa.', 'Cercate insieme servizi che accolgono davvero e telefonate prima per chiedere come lavorano.', 'In un piano di sicurezza pensa anche a documenti, terapie ormonali, un posto dove dormire.'],
+        avoid: ['Fare coming out al suo posto, con chiunque.', 'Dire «tra voi è diverso» o «sarà una lite di coppia».', 'Organizzare spedizioni del gruppo di amici contro il partner.', 'Promettere ospitalità o aiuti che non puoi mantenere.'],
+        numbers: ['n112', 'n1522', 'gay'], story: 'sami', src: ['lookwide', 'unicef', 'forge', 'viss']
+      },
+      {
+        id: 'anziane', short: 'Anziane', title: 'Una persona anziana', tag: 'Spesso da un figlio o da chi la assiste',
+        intro: 'La violenza contro le donne anziane è poco riconosciuta: può venire dal partner, dai figli o da chi le assiste, e passa spesso per soldi, isolamento e trascuratezza.',
+        signs: ['Un familiare parla sempre al posto suo e non la lascia mai sola.', 'Non ha più accesso alla pensione, mancano soldi per medicine o cibo.', 'Dimagrimento, igiene trascurata, lividi, paura.', 'Chiusa in casa, persiane sempre abbassate, telefono che non risponde.'],
+        doList: ['Cerca un momento in cui è sola e un posto riservato.', 'Rispetta il legame con il familiare: spiega che ci sono aiuti che non partono per forza da una denuncia.', 'Con il suo consenso coinvolgi medico di famiglia e servizi sociali del Comune.', 'Diventa un punto di riferimento abituale: la farmacia, il negozio, il pianerottolo.', 'Se sparisce all’improvviso, chiama il 112 per un controllo.'],
+        avoid: ['Scambiare il controllo per premura: «beata lei che ha chi ci pensa».', '«Alla sua età è normale che decidano i figli».', 'Chiedere spiegazioni al familiare.', 'Imporre la denuncia come unica strada.'],
+        numbers: ['n112', 'n1522'], story: 'rosa', src: ['marvow', 'oms']
+      },
+      {
+        id: 'migranti', short: 'Migranti', title: 'Una persona migrante', tag: 'Lingua, documenti, isolamento',
+        intro: 'Chi è arrivato da poco può non conoscere i propri diritti, non parlare bene l’italiano e temere di perdere il permesso di soggiorno o i figli.',
+        signs: ['Documenti trattenuti dal partner, dal datore di lavoro o da chi l’ha fatta arrivare.', 'Il permesso di soggiorno dipende dal partner, che lo usa come minaccia.', 'Non esce mai da sola, nessuna rete fuori dalla famiglia.', 'Lavoro senza paga, debiti da ripagare, alloggio controllato: possibili segni di tratta.'],
+        doList: ['Parla in modo semplice, verifica di essere capito, chiedi quale lingua preferisce.', 'Spiega che la violenza è reato in Italia per chiunque, con o senza documenti, e che esiste un permesso di soggiorno per chi subisce violenza domestica.', 'Il 1522 risponde anche in diverse lingue; i centri antiviolenza possono chiamare una mediatrice culturale.', 'Se ci sono segni di sfruttamento, il numero verde antitratta è anonimo e gratuito.'],
+        avoid: ['Usare figli, partner o parenti come interpreti.', 'Spiegare la violenza con la «cultura» di provenienza.', 'Minacciare, anche per sbaglio, conseguenze sui documenti.', 'Promettere esiti legali che non conosci.'],
+        numbers: ['n112', 'n1522', 'tratta'], src: ['unicef', 'prefettura', 'oms']
+      },
+      {
+        id: 'disabilita', short: 'Disabilità', title: 'Una persona con disabilità', tag: 'Discriminazione multipla',
+        intro: 'Le donne con disabilità subiscono violenza più spesso, anche da chi le assiste, e trovano servizi poco accessibili.',
+        signs: ['Chi assiste nega ausili, farmaci, cibo o la possibilità di uscire.', 'Controllo su soldi, telefono, contatti.', 'Paura o agitazione con una persona in particolare.', 'Ferite che non si spiegano con la disabilità.'],
+        doList: ['Parla direttamente con lei, non con l’accompagnatore.', 'Chiedi quale modo di comunicare preferisce e adatta tempi e forme.', 'Cerca un momento senza la persona che assiste.', 'Verifica che il servizio sia accessibile prima di proporlo: il 1522 ha anche una chat.'],
+        avoid: ['Rivolgerti all’accompagnatore come se lei non ci fosse.', 'Dubitare del racconto a causa della disabilità.', 'Proporre soluzioni che la lasciano senza assistenza.'],
+        numbers: ['n112', 'n1522'], src: ['disabilita', 'oms']
+      },
+      {
+        id: 'minori', short: 'Minori', title: 'Un bambino, una bambina, un adolescente', tag: 'Anche chi assiste alla violenza in casa',
+        intro: 'Bambini e ragazzi subiscono violenza o la vedono subire in casa. Anche assistere alla violenza è una forma di violenza.',
+        signs: ['Cambiamenti improvvisi: paura, chiusura, aggressività, regressioni.', 'Comportamenti o parole sessuali non adatte all’età.', 'Paura di tornare a casa o di una persona precisa.', 'Negli adolescenti: un partner che controlla telefono, vestiti, amicizie.'],
+        doList: ['Resta calmo e ascolta con le sue parole, senza fare domande che suggeriscono la risposta.', 'Digli che ha fatto bene a parlarne e che non è colpa sua.', 'Non promettere di mantenere il segreto: spiega che chiederai aiuto a chi può proteggerlo.', 'Chiama il 114 o Telefono Azzurro per sapere come procedere; a scuola, segui le procedure interne.'],
+        avoid: ['Interrogarlo più volte o chiedergli di ripetere il racconto.', 'Affrontare il presunto autore.', 'Promettere segretezza assoluta.'],
+        numbers: ['n112', 'n114', 'azzurro'], src: ['sentir', 'consent', 'unicef']
+      },
+      {
+        id: 'pubblico', short: 'In pubblico', title: 'Molestie in pubblico', tag: 'Per strada, sui mezzi, nei locali',
+        intro: 'Davanti alle molestie molte persone non intervengono perché non sanno come. Esistono modi sicuri, riassunti in cinque D.',
+        signs: ['Una persona che si avvicina, tocca, blocca il passaggio o segue.', 'Commenti pesanti e insistenti.', 'Chi subisce si irrigidisce, guarda altrove, cerca una via d’uscita.'],
+        doList: ['Distrai: una domanda banale, mettiti in mezzo.', 'Delega: autista, personale, altri presenti; il 112 se serve.', 'Diretto solo se sei al sicuro: una frase breve, senza discutere.', 'Dopo: chiedi come sta, offri compagnia o aiuto per segnalare.', 'Documenta solo se qualcuno sta già aiutando.'],
+        avoid: ['Lo scontro fisico.', 'Postare video senza il consenso di chi subisce.', 'Commenti su cosa avrebbe dovuto fare, indossare o evitare.'],
+        numbers: ['n112', 'n1522'], story: 'amira', src: ['aor', 'fived', 'violeta']
+      }
+    ];
+
+    const esc = text => text.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+    const list = items => `<ul>${items.map(i => `<li>${esc(i)}</li>`).join('')}</ul>`;
+    const srcLink = k => `<a href="${encodeURI(SOURCES[k][0])}" target="_blank" rel="noopener">${esc(SOURCES[k][1])}</a>`;
+
+    document.querySelector('#jump').innerHTML = CASES.map(c => `<li><a href="#${c.id}">${esc(c.short)}</a></li>`).join('');
+
+    document.querySelector('#cases').innerHTML = CASES.map(c => `
+      <section class="case" id="${c.id}" aria-labelledby="${c.id}-t">
+        <div class="case-head">
+          <h2 id="${c.id}-t">${esc(c.title)}</h2>
+          <span class="tag">${esc(c.tag)}</span>
+          <p>${esc(c.intro)}</p>
+        </div>
+        <div class="cols">
+          <div><h3><span class="dot grey" aria-hidden="true"></span>Segnali</h3>${list(c.signs)}</div>
+          <div><h3><span class="dot ink" aria-hidden="true"></span>Cosa fare</h3>${list(c.doList)}</div>
+          <div><h3><span class="dot vermilion" aria-hidden="true"></span>Cosa evitare</h3>${list(c.avoid)}</div>
+        </div>
+        <div class="case-foot">
+          <span class="nums">${c.numbers.map(k => `<span><a href="tel:${NUMBERS[k][0].replace(/\s/g, '')}">${NUMBERS[k][0]}</a> ${esc(NUMBERS[k][1])}</span>`).join('')}</span>
+          <span class="more">${c.story ? `<a href="stare-accanto.html#${c.story}">Esercitati con una storia</a> · ` : ''}Fonti: ${c.src.map(srcLink).join(', ')}</span>
+        </div>
+      </section>`).join('');
+
+    document.querySelector('#srcList').innerHTML = Object.keys(SOURCES).map(k => `<li>${srcLink(k)}</li>`).join('');
+
+    // The pill of the case in view is marked, and kept visible in the scrolling row
+    const pills = new Map([...document.querySelectorAll('#jump a')].map(a => [a.hash.slice(1), a]));
+    const seen = new Map();
+    const spy = new IntersectionObserver(entries => {
+      entries.forEach(e => seen.set(e.target.id, e.isIntersecting));
+      const current = CASES.find(c => seen.get(c.id));
+      pills.forEach((a, id) => {
+        const on = Boolean(current) && id === current.id;
+        if (on && a.getAttribute('aria-current') !== 'true') {
+          const row = a.parentElement.parentElement;
+          row.scrollTo({ left: a.offsetLeft - row.clientWidth / 2 + a.offsetWidth / 2, behavior: 'smooth' });
+        }
+        on ? a.setAttribute('aria-current', 'true') : a.removeAttribute('aria-current');
+      });
+    }, { rootMargin: '-35% 0px -55% 0px' });
+    document.querySelectorAll('.case').forEach(el => spy.observe(el));
+
+    // The sticky row sits under the header, whatever height the header wraps to
+    const header = document.querySelector('.site-header');
+    new ResizeObserver(() => {
+      if (!document.documentElement.classList.contains('embedded')) document.documentElement.style.setProperty('--header-h', `${header.offsetHeight}px`);
+    }).observe(header);
+  </script>
+  <script src="quick-exit.js"></script>
+</body>
+</html>

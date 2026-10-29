@@ -830,16 +830,11 @@
     }
 
     .tile {
-      display: flex;
-      flex-direction: column;
-      gap: 28px;
-      min-height: 200px;
-      padding: 16px;
+      padding: 16px 18px 18px;
       background: var(--paper);
     }
 
-    .tile .tag { font-size: var(--t-small); color: var(--muted); }
-    .tile h3 { margin-top: auto; }
+    .tile h3 { margin-bottom: 6px; }
     .tile p { margin: 0; font-size: .9375rem; }
 
     .traits {
@@ -919,7 +914,6 @@
       .nav .back { margin-left: 0; }
       .header-top { padding-top: 14px; }
       .cells { grid-template-columns: 1fr; }
-      .tile { min-height: 0; gap: 16px; }
       /* Menus open full width under the filter buttons */
       .menu-anchor { position: static; }
       .filter-menu { width: 100%; }
@@ -953,14 +947,14 @@
     <div class="wrap">
       <div class="header-inner">
         <div class="header-top">
-          <a class="brand" href="index.html">SAVE</a>
+          <a class="brand" href="index-pagina-unica.html">SAVE</a>
           <a class="exit-btn" href="https://www.google.com/search?q=meteo">Esci subito dal sito</a>
         </div>
         <nav class="nav" aria-label="Sezioni">
           <a href="#trova">Cerca un centro</a>
           <a href="#cosa-fa">Cosa fa un centro</a>
           <a href="#fonti">Fonti</a>
-          <a class="back" href="index.html#test">&larr; Pagina principale</a>
+          <a class="back" href="index-pagina-unica.html#test">&larr; Pagina principale</a>
         </nav>
       </div>
     </div>
@@ -1080,12 +1074,12 @@
         <li>Aperto a chiunque subisca violenza di genere</li>
       </ul>
       <div class="cells">
-        <article class="tile"><span class="tag">01</span><div><h3>Ascolto e accoglienza</h3><p>Un primo colloquio telefonico o di persona, gratuito e anonimo, per raccontare la propria situazione e valutare insieme i passi possibili, senza fretta e senza giudizio.</p></div></article>
-        <article class="tile"><span class="tag">02</span><div><h3>Consulenza legale</h3><p>Informazioni sui propri diritti, sulla denuncia, sugli ordini di protezione e sui procedimenti giudiziari, con operatrici e operatori legali dedicati.</p></div></article>
-        <article class="tile"><span class="tag">03</span><div><h3>Supporto psicologico</h3><p>Percorsi individuali o di gruppo, spesso gratuiti, per elaborare l'esperienza vissuta e ricostruire fiducia e sicurezza in sé.</p></div></article>
-        <article class="tile"><span class="tag">04</span><div><h3>Messa in sicurezza</h3><p>Valutazione del rischio insieme a un'operatrice e, quando necessario, accesso a una casa rifugio a indirizzo protetto.</p></div></article>
-        <article class="tile"><span class="tag">05</span><div><h3>Autonomia economica e abitativa</h3><p>Orientamento alla ricerca di lavoro e di una casa, per allentare la dipendenza economica da chi agisce la violenza.</p></div></article>
-        <article class="tile"><span class="tag">06</span><div><h3>Supporto per figlie e figli</h3><p>Percorsi dedicati a bambine, bambini e adolescenti che hanno assistito alla violenza in famiglia.</p></div></article>
+        <article class="tile"><div><h3>Ascolto e accoglienza</h3><p>Un primo colloquio telefonico o di persona, gratuito e anonimo, per raccontare la propria situazione e valutare insieme i passi possibili, senza fretta e senza giudizio.</p></div></article>
+        <article class="tile"><div><h3>Consulenza legale</h3><p>Informazioni sui propri diritti, sulla denuncia, sugli ordini di protezione e sui procedimenti giudiziari, con operatrici e operatori legali dedicati.</p></div></article>
+        <article class="tile"><div><h3>Supporto psicologico</h3><p>Percorsi individuali o di gruppo, spesso gratuiti, per elaborare l'esperienza vissuta e ricostruire fiducia e sicurezza in sé.</p></div></article>
+        <article class="tile"><div><h3>Messa in sicurezza</h3><p>Valutazione del rischio insieme a un'operatrice e, quando necessario, accesso a una casa rifugio a indirizzo protetto.</p></div></article>
+        <article class="tile"><div><h3>Autonomia economica e abitativa</h3><p>Orientamento alla ricerca di lavoro e di una casa, per allentare la dipendenza economica da chi agisce la violenza.</p></div></article>
+        <article class="tile"><div><h3>Supporto per figlie e figli</h3><p>Percorsi dedicati a bambine, bambini e adolescenti che hanno assistito alla violenza in famiglia.</p></div></article>
       </div>
       <p class="after-note">Puoi contattare direttamente il centro più vicino a te, oppure chiamare il <a href="tel:1522">1522</a>: gratuito, anonimo e attivo 24 ore su 24, ti mette in contatto con il centro più adatto alla tua situazione.</p>
     </section>
