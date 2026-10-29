@@ -181,7 +181,6 @@
     function questionHtml(index) {
       const value = answers[index];
       return `
-        <span class="kicker">Domanda ${index + 1} di ${items.length}</span>
         <p class="question" id="question">Quanto spesso il tuo partner ${items[index]}?</p>
         <div class="options" role="radiogroup" aria-labelledby="question" data-keys>
           ${options.map(([label, v], i) => `
@@ -206,7 +205,6 @@
         const first = answers.findIndex(v => v === null);
         return `<div class="report">
           <div class="report-head">
-            <span class="kicker">Il tuo risultato</span>
             <h2 class="question" id="question">Mancano ${items.length - answered} risposte</h2>
             <p class="lead">${result.text}</p>
           </div>
@@ -225,7 +223,6 @@
 
       return `<div class="report">
         <div class="report-head">
-          <span class="kicker">Il tuo risultato</span>
           <h2 class="question" id="question">${headline}</h2>
           <p class="lead">${result.text}</p>
         </div>

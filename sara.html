@@ -135,7 +135,6 @@
       </section>
 
       <section class="screen" data-screen="info" id="info" hidden>
-        <span class="kicker">Sezione 1 di 7</span>
         <h2 class="question">Informazioni e fonti</h2>
         <div class="meta">
           <label class="field"><span>Nome vittima o numero di identificazione</span><input type="text"></label>
@@ -156,7 +155,6 @@
       <div id="factorScreens"></div>
 
       <section class="screen" data-screen="valutazione" id="valutazione" hidden>
-        <span class="kicker">Sezione 6 di 7</span>
         <h2 class="question">Valutazione del rischio</h2>
         <div class="risk-grid">
           <label class="field"><span>Rischio immediato, nei 2 mesi successivi</span><select><option>Non indicato</option><option>Basso</option><option>Medio</option><option>Elevato</option></select></label>
@@ -169,7 +167,6 @@
       </section>
 
       <section class="screen" data-screen="piano" id="piano" hidden>
-        <span class="kicker">Sezione 7 di 7</span>
         <h2 class="question">Piano e scenari</h2>
         <div class="plan-grid">
           <label class="field"><span>Piano di gestione e di intervento</span><textarea placeholder="Misure preventive e cautelari, percorsi di supporto e protezione per la vittima, azioni di monitoraggio."></textarea></label>
@@ -180,7 +177,6 @@
 
       <section class="screen report" data-screen="riepilogo" hidden>
         <div class="report-head">
-          <span class="kicker">Riepilogo</span>
           <h2 class="question" id="summaryTitle"></h2>
           <p class="lead">Il SARA-S non produce un punteggio. Questo riepilogo mostra come sono stati codificati i fattori, per aiutare a rileggere il quadro prima del giudizio professionale.</p>
         </div>
@@ -255,7 +251,6 @@
 
     document.querySelector('#factorScreens').innerHTML = groups.map((g, gi) => `
       <section class="screen" data-screen="g${gi}" hidden>
-        <span class="kicker">Sezione ${gi + 2} di 7</span>
         <h2 class="question">${g.title}</h2>
         <div class="code-key" aria-label="Codici">${CODES.map(([v, t]) => `<span><b>${v === '-' ? '–' : v}</b>${t}</span>`).join('')}</div>
         ${factors.map((f, i) => f[0] !== g.key ? '' : `

@@ -217,14 +217,12 @@
     function questionHtml(step) {
       if (step.kind === 'fear') {
         return `
-          <span class="kicker">Per iniziare</span>
           <p class="question" id="question">Temi di subire ancora violenze da parte del tuo partner o ex partner?</p>
           ${optionsHtml('fear', fearOptions.map(v => ({ value: v, label: v })), state.fear)}
           ${actionsHtml(state.fear !== null)}`;
       }
       if (step.kind === 'children') {
         return `
-          <span class="kicker">Per iniziare</span>
           <p class="question" id="question">Hai figli con il tuo (ex) partner, o vivono minori con voi?</p>
           ${optionsHtml('children', [{ value: 'si', label: 'Sì' }, { value: 'no', label: 'No' }], state.children, true)}
           <p class="note">Se rispondi No, le due domande sui figli verranno saltate.</p>
@@ -234,7 +232,6 @@
       const n = list.findIndex(s => s.index === step.index) + 1;
       const value = state[step.part][step.index];
       return `
-        <span class="kicker">${step.part === 'p1' ? 'Parte 1' : 'Parte 2'}, domanda ${n} di ${list.length}</span>
         <p class="question" id="question">${step.part === 'p1' ? part1[step.index][1] : part2[step.index][1]}</p>
         ${optionsHtml('answer', [{ value: 'si', label: 'Sì' }, { value: 'no', label: 'No' }], value, true)}
         ${actionsHtml(value !== null)}`;
@@ -254,7 +251,6 @@
 
       return `<div class="report">
         <div class="report-head">
-          <span class="kicker">Il tuo risultato</span>
           <h2 class="question" id="question">${outcomeNames[code][1]}</h2>
           <p class="lead">${outcomes[code]}</p>
         </div>

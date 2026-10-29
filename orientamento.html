@@ -257,7 +257,6 @@
 
     function concernScreen() {
       return `
-        <span class="kicker">La situazione</span>
         <p class="question" id="question">Per chi stai cercando di capire?</p>
         <p class="note" style="margin-bottom:20px">La risposta serve solo ad adattare il linguaggio del percorso.</p>
         ${radios('concern', [
@@ -269,7 +268,6 @@
 
     function contextScreen() {
       return `
-        <span class="kicker">Il contesto</span>
         <p class="question" id="question">Dove accadono soprattutto questi comportamenti?</p>
         <p class="note" style="margin-bottom:20px">Puoi scegliere il contesto più vicino, anche se la situazione attraversa più spazi.</p>
         ${radios('context', [
@@ -284,7 +282,6 @@
 
     function urgentScreen() {
       return `
-        <span class="kicker">Sicurezza</span>
         <p class="question" id="question">C’è un pericolo urgente o un rischio di violenza grave?</p>
         <p class="note" style="margin-bottom:20px">Pensa a questo momento e alle ultime settimane. Per esempio: minacce di morte o con un’arma, strangolamento, blocchi mentre qualcuno cercava di allontanarsi, oppure il timore che qualcosa di grave possa accadere presto.</p>
         ${radios('urgent', [
@@ -303,7 +300,6 @@
 
     function behavioursScreen() {
       return `
-        <span class="kicker">I segnali</span>
         <p class="question" id="question">Quali comportamenti riconosci?</p>
         <p class="note" style="margin-bottom:20px">Seleziona tutte le descrizioni pertinenti. Conta anche un singolo episodio, se ti ha fattə sentire in pericolo o senza possibilità di scelta.</p>
         <div class="options" aria-labelledby="question">
@@ -325,7 +321,6 @@
 
     function patternScreen() {
       return `
-        <span class="kicker">L’andamento</span>
         <p class="question" id="question">Come descriveresti ciò che sta accadendo?</p>
         <p class="note" style="margin-bottom:20px">Non serve ricordare ogni episodio. Scegli ciò che si avvicina di più alla tua percezione.</p>
         ${radios('pattern', [
@@ -340,7 +335,6 @@
 
     function priorityScreen() {
       return `
-        <span class="kicker">Ciò che conta ora</span>
         <p class="question" id="question">Qual è il bisogno più importante in questo momento?</p>
         <p class="note" style="margin-bottom:20px">Non è una scelta definitiva: serve a proporre un primo passo più pertinente.</p>
         ${radios('priority', [
@@ -385,7 +379,6 @@
 
       return `<div class="report">
         <div class="report-head">
-          <span class="kicker">Il tuo orientamento</span>
           <h2 class="question" id="question">${state.urgent === 'yes' ? 'La sicurezza viene prima' : count ? 'Ci sono segnali da non minimizzare' : 'Vale la pena ascoltare il disagio'}</h2>
           <p class="lead">${contextMessage()}</p>
         </div>

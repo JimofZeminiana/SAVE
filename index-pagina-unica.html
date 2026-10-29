@@ -425,12 +425,7 @@
     .matrix { grid-template-columns: repeat(4, 1fr); }
     .app-grid, .source-grid { grid-template-columns: repeat(3, 1fr); }
 
-    .tile {
-      display: flex;
-      flex-direction: column;
-      gap: 28px;
-      min-height: 220px;
-    }
+    .tile { display: grid; align-content: start; }
 
     .tile p, .source p, .app-card p { margin: 0; font-size: .9375rem; line-height: 1.5; }
 
@@ -439,7 +434,7 @@
       color: var(--muted);
     }
 
-    .tile h3 { margin-top: auto; }
+    .tile h3 { margin-bottom: 6px; }
 
     .source { display: grid; gap: 6px; align-content: start; }
     .source h3 { margin: 0; }
@@ -1389,35 +1384,27 @@
               </div>
               <div class="cells matrix" aria-label="Principali forme di violenza">
                 <article class="tile">
-                  <span class="tag">Corpo</span>
                   <div><h3>Fisica</h3><p>Graffi, spinte, schiaffi, pugni, costrizioni, lesioni o uso di oggetti e armi. Conta anche il tentativo, non solo l’esito visibile.</p></div>
                 </article>
                 <article class="tile">
-                  <span class="tag">Intimità</span>
                   <div><h3>Sessuale</h3><p>Atti sessuali imposti, coercizione, umiliazione della sfera intima, pressioni, materiale intimo non consensuale o violenza mediata da tecnologie.</p></div>
                 </article>
                 <article class="tile">
-                  <span class="tag">Relazione</span>
                   <div><h3>Psicologica</h3><p>Svalutazione, minacce, isolamento, intimidazione, colpevolizzazione, umiliazione pubblica o privata, manipolazione e paura continua.</p></div>
                 </article>
                 <article class="tile">
-                  <span class="tag">Autonomia</span>
                   <div><h3>Economica</h3><p>Controllo del denaro, obbligo a lasciare il lavoro, impedimento all’indipendenza, debiti o documenti firmati contro volontà.</p></div>
                 </article>
                 <article class="tile">
-                  <span class="tag">Tecnologia</span>
                   <div><h3>Digitale</h3><p>Controllo di telefono, profili social, tracciamento della posizione, sorveglianza, messaggi pressanti o diffusione non consensuale di contenuti.</p></div>
                 </article>
                 <article class="tile">
-                  <span class="tag">Persecuzione</span>
                   <div><h3>Stalking</h3><p>Pedinamenti, appostamenti, chiamate ripetute, contatti indesiderati o presenza dell’ex partner nelle vicinanze di casa e lavoro.</p></div>
                 </article>
                 <article class="tile">
-                  <span class="tag">Ciclo</span>
                   <div><h3>Escalation</h3><p>Il passaggio da segnali meno visibili a violenze più esplicite può alternarsi a fasi di falsa calma o pentimento apparente.</p></div>
                 </article>
                 <article class="tile">
-                  <span class="tag">Intersezioni</span>
                   <div><h3>Discriminazioni</h3><p>Povertà, razzismo, disabilità, migrazione, omofobia, transfobia e dipendenza amministrativa o economica possono intrecciarsi con la violenza.</p></div>
                 </article>
               </div>
@@ -1678,12 +1665,12 @@
                 <p class="lead">La pagina sintetizza e riorganizza contenuti dai PDF presenti nella cartella <code>paper</code>, integrando l’idea di toolbox concettuale e filtrabile vista nel riferimento MPIB.</p>
               </div>
               <div class="cells source-grid">
-                <article class="source"><span class="source-tag">Linee guida</span><h3>FuTuRE D2.3</h3><p>Valutazione e autovalutazione del rischio di recidiva, SARA-S aggiornato, ISA 2023, intersezionalità.</p></article>
-                <article class="source"><span class="source-tag">Formulario</span><h3>SARA-S</h3><p>Schema a 15 fattori per violenze verso partner/ex partner, adattamento psicosociale e vulnerabilità della vittima.</p></article>
-                <article class="source"><span class="source-tag">Comunità</span><h3>Guida al vicinato</h3><p>Segnali d’allarme, primo approccio, ascolto, frasi utili e contatti del Centro Antiviolenza Venezia.</p></article>
-                <article class="source"><span class="source-tag">Inclusione</span><h3>Look Wide</h3><p>Prospettiva LGBTQIA+, servizi inclusivi, competenze professionali e approccio intersezionale.</p></article>
-                <article class="source"><span class="source-tag">Ricerca</span><h3>van der Put et al.</h3><p>Meta-analisi sull’accuratezza predittiva degli strumenti di valutazione del rischio nella violenza domestica.</p></article>
-                <article class="source"><span class="source-tag">Ricerca</span><h3>Hilton et al.</h3><p>Studio su SARA, SARA-V3, B-SAFER e ODARA in casi IPV segnalati a servizi di threat assessment.</p></article>
+                <article class="source"><h3>FuTuRE D2.3</h3><p>Valutazione e autovalutazione del rischio di recidiva, SARA-S aggiornato, ISA 2023, intersezionalità.</p></article>
+                <article class="source"><h3>SARA-S</h3><p>Schema a 15 fattori per violenze verso partner/ex partner, adattamento psicosociale e vulnerabilità della vittima.</p></article>
+                <article class="source"><h3>Guida al vicinato</h3><p>Segnali d’allarme, primo approccio, ascolto, frasi utili e contatti del Centro Antiviolenza Venezia.</p></article>
+                <article class="source"><h3>Look Wide</h3><p>Prospettiva LGBTQIA+, servizi inclusivi, competenze professionali e approccio intersezionale.</p></article>
+                <article class="source"><h3>van der Put et al.</h3><p>Meta-analisi sull’accuratezza predittiva degli strumenti di valutazione del rischio nella violenza domestica.</p></article>
+                <article class="source"><h3>Hilton et al.</h3><p>Studio su SARA, SARA-V3, B-SAFER e ODARA in casi IPV segnalati a servizi di threat assessment.</p></article>
               </div>
             </section>
       </div>

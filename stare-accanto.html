@@ -60,7 +60,6 @@
     }
 
     .person:active { transform: scale(.985); background: var(--fill); transition-duration: 0s; }
-    .person .tag { font-size: var(--t-small); color: var(--muted); letter-spacing: .01em; }
     .person strong { font-size: 1.375rem; font-weight: 300; letter-spacing: -.015em; line-height: 1.2; }
     .person p { margin: 0; font-size: .9375rem; color: var(--muted); }
     .person .role {
@@ -666,10 +665,9 @@
         <h2 style="margin-bottom:14px">Scegli una persona</h2>
         <ul class="people">
           ${PEOPLE.map(p => `<li><button type="button" class="person" data-person="${p.id}">
-            <span class="tag">${esc(p.tag)}${finished.has(p.id) ? ' · <span class="done-mark">completata</span>' : ''}</span>
             <strong>${esc(p.name)}</strong>
             <p>${esc(p.summary)}</p>
-            <span class="role">${esc(p.role)}</span>
+            <span class="role">${esc(p.role)}${finished.has(p.id) ? ' · <span class="done-mark">completata</span>' : ''}</span>
           </button></li>`).join('')}
         </ul>
       `);
@@ -680,10 +678,10 @@
       sceneId = null;
       showProgress('profile');
       TestKit.swap(stage, `
-        <span class="kicker">${esc(person.tag)}</span>
         <h1 class="question">${esc(person.name)}</h1>
         <div class="box profile">
           <div class="box-title">${esc(person.role)}</div>
+          <div class="box-row"><span>Chi è</span><div>${esc(person.tag)}</div></div>
           ${person.profile.map(([k, v]) => `<div class="box-row"><span>${esc(k)}</span><div>${esc(v)}</div></div>`).join('')}
         </div>
         <p class="note">Non esiste una risposta perfetta: anche le scelte meno felici portano avanti la storia, e da ognuna si impara qualcosa.</p>
@@ -699,7 +697,6 @@
       const scene = person.scenes[id];
       showProgress('scene');
       TestKit.swap(stage, `
-        <span class="kicker">${esc(person.name)} · ${esc(person.role.replace(/^Tu: /, ''))}</span>
         <h1 class="scene">${esc(scene.text)}</h1>
         <p class="ask">Cosa fai?</p>
         <div class="options" data-keys role="radiogroup" aria-label="Cosa fai?">
@@ -750,7 +747,6 @@
       TestKit.swap(stage, `
         <div class="report">
           <div class="report-head">
-            <span class="kicker">${esc(person.name)} · storia conclusa</span>
             <h1 class="question">Il percorso che hai scelto</h1>
             <p class="lead">${counts.si === path.length
               ? 'Ogni tua scelta ha aiutato. Qui sotto trovi anche le strade che non hai preso.'
