@@ -1,6 +1,6 @@
 # DESIGN.md — SAVE
 
-> Read order: tokens in `stile-test.css` and in the `<style>` of `index-pagina-unica.html` → this file.
+> Read order: tokens in `stile-test.css` and in the `<style>` of `index.html` → this file.
 
 ## 1. Product truth
 - **Users:** people who live or see gender-based violence (often on a phone, sometimes on a device someone else may check), and professionals in the network (operatori).
@@ -13,7 +13,7 @@ Reading this as: a resource map for citizens and operatori, with a quiet ruled-p
 
 | Surface | Type | V | M | D |
 |---|---|---|---|---|
-| `index-pagina-unica.html` (shell + rail) | read / operate | 3 | 2 | 6 |
+| `index.html` (shell + rail) | read / operate | 3 | 2 | 6 |
 | questionnaires, orientamento, SARA-S | operate | 2 | 3 | 5 |
 | cosa-fare, stare-accanto, The Small Act | read | 3 | 3 | 5 |
 | trova-centro, archivio, attività | operate | 3 | 2 | 7 |
@@ -59,3 +59,5 @@ radii: 0, 2px, 4px, 5px, 12px, 999px, 50%, inherit
 
 ## 11. Decision log
 - 2026-10-29 · Removed decorative kickers above page titles; source names moved to the facts box. Removed 01–06 numbers on "Cosa fa un centro". Comunità view now links to Cosa fare caso per caso, Come stare accanto and The Small Act. Subpage home links point to `index-pagina-unica.html`.
+- 2026-10-29 · Rail split by audience following the "SAVE Repository" scheme (see `ARCHITETTURA.md`): each tab lists its own sections, then "In comune con…" and the shared Test, Attività, Risorse e media. Groups carry `audience` (citizen / operator / both); a link into the other tab switches tab. New views: `#percorsi` (Attività hub), `#handbook` (archivio filtered by `?tipo=`). "Evidenze operative" became Metodologie, "Documenti usati" became Letteratura scientifica.
+- 2026-10-29 · `index-pagina-unica.html` is now `index.html`; the previous `index.html` is kept as `index-old.html`. Subpage links updated.

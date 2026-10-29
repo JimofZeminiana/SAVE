@@ -633,11 +633,11 @@
     <div class="wrap">
       <div class="header-inner">
         <div class="header-top">
-          <a class="brand" href="index-pagina-unica.html">SAVE</a>
+          <a class="brand" href="index.html">SAVE</a>
           <a class="exit-btn" id="exitBtn" href="https://www.google.com/search?q=meteo">Esci subito dal sito</a>
         </div>
         <nav class="nav" aria-label="Pagine">
-          <a href="index-pagina-unica.html">Mappa operativa</a>
+          <a href="index.html">Mappa operativa</a>
           <a href="archivio.html" aria-current="page">Archivio</a>
         </nav>
       </div>
@@ -774,6 +774,12 @@
 
     // What is applied. Empty sets mean "all"
     const state = { text: '', tipo: new Set(), fonte: new Set(), lingua: new Set(), pagine: { min: null, max: null }, sort: 'archivio' };
+
+    // archivio.html?tipo=linee-guida,guide opens with those types already chosen (the Handbook view)
+    new URLSearchParams(location.search).get('tipo')?.split(',')
+      .filter(k => tipi[k]).forEach(k => state.tipo.add(k));
+    const titolo = new URLSearchParams(location.search).get('titolo');
+    if (titolo) document.querySelector('.hero h1').textContent = titolo;
 
     // A fixed rhythm of indents, so each document keeps its place in the stagger
     const ritmo = [0, 0, 0, 1, 1, 2, 1, 0, 1, 2, 2, 1, 0];

@@ -1,0 +1,1052 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Meteo di oggi</title>
+  <!-- Inside the single page the outer header is the only one: this page drops its own -->
+  <script>if (window.self !== window.top) document.documentElement.classList.add('embedded');</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #ffffff;
+      --ink: #151515;
+      --muted: #6b6b6b;
+      --land: #e8e8e8;
+      --fill: rgba(21,21,21,.05);
+      --rule: var(--ink);
+      --soft-rule: rgba(21,21,21,.18);
+      /* SEI's readiness dots, reused as a category key */
+      --maroon: #7b002c;
+      --vermilion: #ff5233;
+      --ochre: #bd8100;
+      --grey: #888888;
+      --exit: #7b002c;
+      --r-box: 12px;
+      --gutter: clamp(16px, 3vw, 40px);
+      --ease: cubic-bezier(.32,.72,0,1);
+      --t-body: 1.0625rem;
+      --t-small: .8125rem;
+      --t-intro: clamp(1.25rem, 1.9vw, 1.525rem);
+      --t-hero: clamp(3.25rem, 10.5vw, 9.5rem);
+      --step: clamp(0px, 4vw, 64px);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --paper: #151515;
+        --ink: #f1f1ef;
+        --muted: #a3a3a0;
+        --land: #2a2a2a;
+        --fill: rgba(241,241,239,.07);
+        --soft-rule: rgba(241,241,239,.2);
+        --maroon: #d8507a;
+        --vermilion: #ff6c52;
+        --ochre: #d9a43a;
+        --exit: #a3123f;
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --paper: #151515;
+      --ink: #f1f1ef;
+      --muted: #a3a3a0;
+      --land: #2a2a2a;
+      --fill: rgba(241,241,239,.07);
+      --soft-rule: rgba(241,241,239,.2);
+      --maroon: #d8507a;
+      --vermilion: #ff6c52;
+      --ochre: #d9a43a;
+      --exit: #a3123f;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      background: var(--paper);
+      color: var(--ink);
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+      font-size: var(--t-body);
+      font-weight: 300;
+      line-height: 1.5;
+      font-optical-sizing: auto;
+      font-feature-settings: "cv11", "ss01";
+      -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: transparent;
+      background: var(--paper);
+    }
+
+    a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    button { font: inherit; color: inherit; }
+    a, button { touch-action: manipulation; }
+    b, strong { font-weight: 500; }
+    h1, h2, h3, p { margin-top: 0; }
+
+    :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+    [hidden] { display: none !important; }
+
+    .wrap {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding-inline: max(var(--gutter), env(safe-area-inset-left));
+    }
+
+    /* Header as on the map page: brand and exit, then the page index, closed by a solid rule */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: color-mix(in srgb, var(--paper) 80%, transparent);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      backdrop-filter: blur(20px) saturate(180%);
+    }
+
+    .header-inner { border-bottom: 1px solid var(--rule); }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 0 12px;
+    }
+
+    .brand {
+      font-size: clamp(1.15rem, 1.9vw, 1.525rem);
+      font-weight: 300;
+      letter-spacing: -.01em;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .exit-btn {
+      border-radius: 999px;
+      padding: 8px 16px;
+      background: var(--exit);
+      color: #fff;
+      font-size: var(--t-small);
+      font-weight: 500;
+      letter-spacing: .01em;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: transform .15s var(--ease), filter .15s var(--ease);
+    }
+
+    .exit-btn:active { transform: scale(.96); filter: brightness(.9); transition-duration: 0s; }
+
+    .nav {
+      display: flex;
+      gap: 6px clamp(16px, 2.2vw, 32px);
+      padding: 4px 0 14px;
+    }
+
+    .nav a {
+      font-size: .9375rem;
+      font-weight: 400;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s var(--ease);
+    }
+
+    .nav a[aria-current="page"] { color: var(--ink); text-decoration: underline; }
+
+    /* Hero */
+    .hero {
+      padding-top: clamp(32px, 6vw, 88px);
+      padding-bottom: clamp(48px, 6vw, 88px);
+    }
+
+    h1 {
+      margin: 0 0 clamp(32px, 5vw, 72px);
+      font-size: var(--t-hero);
+      font-weight: 300;
+      line-height: .95;
+      letter-spacing: -.04em;
+    }
+
+    .hero-bottom {
+      display: grid;
+      grid-template-columns: 5fr 7fr;
+      gap: 32px clamp(24px, 4vw, 64px);
+      align-items: start;
+      padding-top: clamp(20px, 2.4vw, 28px);
+      border-top: 1px solid var(--rule);
+    }
+
+    .intro {
+      margin: 0;
+      max-width: 34em;
+      font-size: var(--t-intro);
+      line-height: 1.32;
+      letter-spacing: -.01em;
+      text-wrap: pretty;
+    }
+
+    /* Filters as on the map page: one field with the active filters as chips,
+       a menu per field, sort beside them */
+    .filters { padding: clamp(24px, 3vw, 40px) 0 0; border-top: 1px solid var(--rule); }
+
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      min-height: 52px;
+      padding: 6px 6px 6px 12px;
+      border: 1px solid var(--rule);
+      border-radius: var(--r-box);
+      cursor: text;
+    }
+
+    .filter-bar:focus-within { box-shadow: 0 0 0 1px var(--ink); }
+    .filter-chips { display: contents; }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      max-width: 100%;
+      border-radius: 999px;
+      background: var(--ink);
+      color: var(--paper);
+      font-size: .875rem;
+      font-weight: 400;
+      line-height: 1.2;
+    }
+
+    .chip-label {
+      min-height: 36px;
+      padding: 6px 4px 6px 14px;
+      border: 0;
+      background: none;
+      color: inherit;
+      text-align: left;
+      cursor: pointer;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .chip-label b { font-weight: 300; opacity: .7; }
+
+    .chip-remove {
+      flex: none;
+      width: 28px;
+      height: 28px;
+      margin: 4px 4px 4px 6px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      background: var(--paper);
+      color: var(--ink);
+      cursor: pointer;
+      transition: transform .15s var(--ease);
+    }
+
+    .chip-remove:active { transform: scale(.9); transition-duration: 0s; }
+
+    .x {
+      width: 10px;
+      height: 10px;
+      background:
+        linear-gradient(45deg, transparent calc(50% - .75px), currentColor calc(50% - .75px), currentColor calc(50% + .75px), transparent calc(50% + .75px)),
+        linear-gradient(-45deg, transparent calc(50% - .75px), currentColor calc(50% - .75px), currentColor calc(50% + .75px), transparent calc(50% + .75px));
+    }
+
+    .filter-search {
+      flex: 1 1 220px;
+      min-width: 0;
+      min-height: 40px;
+      border: 0;
+      background: none;
+      padding: 6px 4px;
+      font-size: 1rem; /* 16px keeps iOS from zooming on focus */
+      font-weight: 300;
+    }
+
+    .filter-search::placeholder { color: var(--muted); }
+    .filter-search:focus { outline: none; }
+
+    .filter-clear {
+      flex: none;
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      background: none;
+      cursor: pointer;
+      transition: background-color .2s var(--ease);
+    }
+
+    .filter-clear .x { width: 12px; height: 12px; }
+
+    .filter-tools {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px 24px;
+      margin: 12px 0 20px;
+    }
+
+    .filter-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+    .menu-anchor { position: relative; }
+
+    .filter-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 40px;
+      padding: 8px 14px;
+      border: 1px solid var(--soft-rule);
+      border-radius: 999px;
+      background: none;
+      font-size: .875rem;
+      font-weight: 400;
+      cursor: pointer;
+      transition: border-color .2s var(--ease), background-color .2s var(--ease), transform .15s var(--ease);
+    }
+
+    .filter-btn:active { transform: scale(.97); transition-duration: 0s; }
+    .filter-btn.is-set { border-color: var(--ink); }
+
+    .filter-btn::after {
+      content: "";
+      width: 6px;
+      height: 6px;
+      margin: 0 2px 3px 2px;
+      border-right: 1px solid currentColor;
+      border-bottom: 1px solid currentColor;
+      transform: rotate(45deg);
+      transition: transform .25s var(--ease);
+    }
+
+    .filter-btn[aria-expanded="true"]::after { transform: translateY(3px) rotate(225deg); }
+
+    .filter-menu {
+      position: absolute;
+      z-index: 20;
+      top: calc(100% + 8px);
+      left: 0;
+      width: min(360px, calc(100vw - 2 * var(--gutter)));
+      border: 1px solid var(--rule);
+      border-radius: var(--r-box);
+      background: var(--paper);
+      box-shadow: 0 12px 32px rgba(0,0,0,.12);
+      transform-origin: top left;
+      animation: menu-in .2s var(--ease);
+    }
+
+    @keyframes menu-in { from { opacity: 0; transform: scale(.97) translateY(-4px); } }
+
+    .menu-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 6px 6px 6px 16px;
+      border-bottom: 1px solid var(--rule);
+      font-size: .9375rem;
+      font-weight: 400;
+    }
+
+    .menu-close {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 50%;
+      background: none;
+      cursor: pointer;
+    }
+
+    .menu-body { padding: 6px 0; max-height: min(52vh, 420px); overflow-y: auto; }
+
+    .check {
+      display: grid;
+      grid-template-columns: 18px auto 1fr auto;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 16px;
+      font-size: .9375rem;
+      font-weight: 400;
+      cursor: pointer;
+    }
+
+    .check.no-dot { grid-template-columns: 18px 1fr auto; }
+    .check input { width: 18px; height: 18px; margin: 0; accent-color: var(--ink); }
+    .check .n { font-size: var(--t-small); color: var(--muted); font-weight: 300; font-variant-numeric: tabular-nums; }
+    .menu-error { padding: 0 16px 8px; margin: 0; font-size: var(--t-small); color: var(--maroon); }
+
+    .menu-foot {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      padding: 10px 12px;
+      border-top: 1px solid var(--rule);
+    }
+
+    /* Pages: a range, min and max */
+    .range { display: grid; grid-template-columns: 1fr auto 1fr; align-items: end; gap: 10px; padding: 12px 16px 10px; }
+    .range label { display: grid; gap: 4px; font-size: var(--t-small); color: var(--muted); }
+    .range span.dash { padding-bottom: 12px; color: var(--muted); }
+
+    .range input {
+      width: 100%;
+      min-height: 44px;
+      border: 1px solid var(--rule);
+      border-radius: var(--r-box);
+      background: var(--paper);
+      padding: 10px 14px;
+      font: inherit;
+      font-size: 1rem;
+      font-weight: 300;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .range input:focus { outline: none; box-shadow: 0 0 0 1px var(--ink); }
+    .range-presets { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 16px 12px; }
+
+    .btn {
+      min-height: 40px;
+      padding: 8px 16px;
+      border: 1px solid var(--rule);
+      border-radius: 999px;
+      background: none;
+      font-size: .875rem;
+      font-weight: 400;
+      cursor: pointer;
+      transition: transform .15s var(--ease), background-color .2s var(--ease);
+    }
+
+    .btn:active { transform: scale(.97); transition-duration: 0s; }
+    .btn.dark { background: var(--ink); color: var(--paper); }
+    .btn.small { min-height: 32px; padding: 4px 12px; border-color: var(--soft-rule); font-size: var(--t-small); }
+
+    .sort-control { display: inline-flex; align-items: center; gap: 10px; font-size: .875rem; color: var(--muted); }
+
+    .sort-control select {
+      min-height: 40px;
+      padding: 8px 34px 8px 14px;
+      border: 1px solid var(--soft-rule);
+      border-radius: 999px;
+      background: var(--paper);
+      color: var(--ink);
+      font: inherit;
+      font-size: .875rem;
+      font-weight: 400;
+      appearance: none;
+      background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+      background-position: calc(100% - 18px) 52%, calc(100% - 13px) 52%;
+      background-size: 5px 5px;
+      background-repeat: no-repeat;
+      cursor: pointer;
+    }
+
+    .results-count { margin: 0 0 4px; font-size: .9375rem; font-weight: 400; }
+    .results-count span { color: var(--muted); font-weight: 300; }
+
+    .empty-state { grid-column: 1 / -1; padding: 32px 0; display: grid; gap: 6px; justify-items: start; }
+    .empty-state p { margin: 0; }
+    .empty-state .note { font-size: var(--t-small); color: var(--muted); }
+    .empty-state .btn { margin-top: 10px; }
+
+    .dot {
+      display: inline-block;
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--dot, var(--grey));
+      flex: none;
+    }
+
+    .dot.all { background: none; border: 1px solid var(--ink); }
+
+    /* The index: two staggered columns, reading down the left one first */
+    .index {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 clamp(24px, 4vw, 64px);
+      padding: 8px 0 clamp(56px, 7vw, 104px);
+    }
+
+    .column { display: grid; align-content: start; }
+
+    .doc {
+      display: grid;
+      grid-template-columns: 2.75rem 104px minmax(0, 1fr);
+      gap: 0 18px;
+      align-items: start;
+      padding: 12px 0;
+      padding-left: calc(var(--shift, 0) * var(--step));
+      text-decoration: none;
+      border-radius: var(--r-box);
+    }
+
+    .doc-num {
+      padding-top: 1px;
+      font-size: var(--t-small);
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: .01em;
+    }
+
+    .cover {
+      position: relative;
+      aspect-ratio: 3 / 4;
+      border: 1px solid var(--soft-rule);
+      border-radius: 6px;
+      background: var(--land);
+      overflow: hidden;
+    }
+
+    /* First page in greyscale at rest; its own colours come back when pointed at */
+    .cover img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      filter: grayscale(1);
+      transition: filter .3s var(--ease);
+    }
+
+    .cover img.landscape { object-fit: contain; object-position: center; }
+
+    .cover-fallback {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: end start;
+      padding: 10px;
+      font-size: var(--t-small);
+      font-weight: 400;
+      color: var(--muted);
+    }
+
+    .cover img + .cover-fallback { display: none; }
+
+    .doc-source {
+      display: block;
+      font-size: var(--t-small);
+      color: var(--muted);
+      letter-spacing: .01em;
+      margin-bottom: 2px;
+    }
+
+    .doc h3 {
+      margin: 0 0 6px;
+      font-size: 1rem;
+      font-weight: 500;
+      line-height: 1.35;
+      max-width: 30ch;
+    }
+
+    .doc p {
+      margin: 0 0 10px;
+      max-width: 40ch;
+      font-size: .9375rem;
+      line-height: 1.45;
+    }
+
+    .doc-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: var(--t-small);
+      color: var(--muted);
+      letter-spacing: .01em;
+    }
+
+    footer {
+      padding: 20px 0 max(28px, env(safe-area-inset-bottom));
+      border-top: 1px solid var(--rule);
+      color: var(--muted);
+      font-size: var(--t-small);
+      letter-spacing: .01em;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px 20px;
+      flex-wrap: wrap;
+    }
+
+    @media (hover: hover) {
+      .nav a:hover { color: var(--ink); }
+      .filter-clear:hover, .menu-close:hover, .btn:hover:not(.dark) { background: var(--fill); }
+      .filter-btn:hover { border-color: var(--ink); }
+      .chip-label:hover { text-decoration: underline; text-underline-offset: 3px; }
+      .doc:hover h3 { text-decoration: underline; text-underline-offset: 3px; }
+      .doc:hover .cover img { filter: none; }
+      a:hover { text-decoration-thickness: 2px; }
+    }
+
+    .doc:focus-visible .cover img { filter: none; }
+
+    @media (max-width: 860px) {
+      .hero-bottom { grid-template-columns: 1fr; }
+      .index { grid-template-columns: 1fr; }
+      /* Menus open full width under the filter buttons */
+      .menu-anchor { position: static; }
+      .filter-menu { width: 100%; }
+      .sort-control { width: 100%; justify-content: space-between; }
+    }
+
+    @media (max-width: 620px) {
+      .header-top { padding-top: 14px; }
+      .doc { grid-template-columns: 2rem 80px minmax(0, 1fr); gap: 0 14px; padding-left: 0; }
+      footer { display: grid; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition-property: opacity, background-color, color !important; }
+      .exit-btn:active, .btn:active, .filter-btn:active, .chip-remove:active { transform: none; }
+      .filter-menu { animation: none; }
+    }
+
+    @media (prefers-reduced-transparency: reduce) {
+      .site-header { background: var(--paper); -webkit-backdrop-filter: none; backdrop-filter: none; }
+    }
+
+    @media (prefers-contrast: more) {
+      :root { --muted: var(--ink); --fill: color-mix(in srgb, var(--ink) 14%, transparent); --soft-rule: var(--ink); }
+      .site-header { background: var(--paper); -webkit-backdrop-filter: none; backdrop-filter: none; }
+      .header-inner, .index, .filter-bar { border-width: 2px; }
+    }
+
+    /* Inside the single page, its rail is the header */
+    .embedded .site-header { display: none; }
+  </style>
+</head>
+<body>
+  <header class="site-header" aria-label="Azioni principali">
+    <div class="wrap">
+      <div class="header-inner">
+        <div class="header-top">
+          <a class="brand" href="index-pagina-unica.html">SAVE</a>
+          <a class="exit-btn" id="exitBtn" href="https://www.google.com/search?q=meteo">Esci subito dal sito</a>
+        </div>
+        <nav class="nav" aria-label="Pagine">
+          <a href="index-pagina-unica.html">Mappa operativa</a>
+          <a href="archivio.html" aria-current="page">Archivio</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <h1>Archivio</h1>
+      <div class="hero-bottom">
+        <p class="note" id="total"></p>
+        <p class="intro">Linee guida, guide, ricerche e materiali di formazione raccolti durante il progetto. Ogni documento si apre in PDF in una nuova scheda.</p>
+      </div>
+    </section>
+
+    <section class="filters" aria-label="Cerca e filtra i documenti">
+      <div class="filter-bar" id="filterBar">
+        <div class="filter-chips" id="filterChips"></div>
+        <input class="filter-search" id="searchInput" type="search" placeholder="Titolo, fonte o argomento" aria-label="Cerca per titolo, fonte o argomento" autocomplete="off" spellcheck="false">
+        <button type="button" class="filter-clear" id="clearAll" aria-label="Togli tutti i filtri" title="Togli tutti i filtri" hidden><span class="x" aria-hidden="true"></span></button>
+      </div>
+
+      <div class="filter-tools">
+        <div class="filter-buttons">
+          <div class="menu-anchor">
+            <button type="button" class="filter-btn" data-menu="tipo" aria-expanded="false" aria-controls="menu-tipo">Tipo</button>
+            <div class="filter-menu" id="menu-tipo" role="dialog" aria-label="Tipo di documento" data-column="tipo" data-filter-type="checkbox" hidden>
+              <div class="menu-head">Tipo di documento <button type="button" class="menu-close" aria-label="Chiudi"><span class="x" aria-hidden="true"></span></button></div>
+              <div class="menu-body" data-checks="tipo"></div>
+              <div class="menu-foot"><button type="button" class="btn" data-reset>Tutti</button><button type="button" class="btn dark" data-apply>Applica</button></div>
+            </div>
+          </div>
+
+          <div class="menu-anchor">
+            <button type="button" class="filter-btn" data-menu="fonte" aria-expanded="false" aria-controls="menu-fonte">Fonte</button>
+            <div class="filter-menu" id="menu-fonte" role="dialog" aria-label="Fonte" data-column="fonte" data-filter-type="checkbox" hidden>
+              <div class="menu-head">Fonte <button type="button" class="menu-close" aria-label="Chiudi"><span class="x" aria-hidden="true"></span></button></div>
+              <div class="menu-body" data-checks="fonte"></div>
+              <div class="menu-foot"><button type="button" class="btn" data-reset>Tutte</button><button type="button" class="btn dark" data-apply>Applica</button></div>
+            </div>
+          </div>
+
+          <div class="menu-anchor">
+            <button type="button" class="filter-btn" data-menu="lingua" aria-expanded="false" aria-controls="menu-lingua">Lingua</button>
+            <div class="filter-menu" id="menu-lingua" role="dialog" aria-label="Lingua" data-column="lingua" data-filter-type="checkbox" hidden>
+              <div class="menu-head">Lingua <button type="button" class="menu-close" aria-label="Chiudi"><span class="x" aria-hidden="true"></span></button></div>
+              <div class="menu-body" data-checks="lingua"></div>
+              <div class="menu-foot"><button type="button" class="btn" data-reset>Tutte</button><button type="button" class="btn dark" data-apply>Applica</button></div>
+            </div>
+          </div>
+
+          <div class="menu-anchor">
+            <button type="button" class="filter-btn" data-menu="pagine" aria-expanded="false" aria-controls="menu-pagine">Pagine</button>
+            <div class="filter-menu" id="menu-pagine" role="dialog" aria-label="Numero di pagine" data-column="pagine" data-filter-type="range" hidden>
+              <div class="menu-head">Numero di pagine <button type="button" class="menu-close" aria-label="Chiudi"><span class="x" aria-hidden="true"></span></button></div>
+              <div class="range">
+                <label>Da<input type="number" inputmode="numeric" min="1" id="pagesMin"></label>
+                <span class="dash" aria-hidden="true">–</span>
+                <label>A<input type="number" inputmode="numeric" min="1" id="pagesMax"></label>
+              </div>
+              <div class="range-presets">
+                <button type="button" class="btn small" data-preset="1-20">Brevi, fino a 20</button>
+                <button type="button" class="btn small" data-preset="21-60">Da 21 a 60</button>
+                <button type="button" class="btn small" data-preset="61-">Oltre 60</button>
+              </div>
+              <p class="menu-error" hidden></p>
+              <div class="menu-foot"><button type="button" class="btn" data-reset>Qualsiasi</button><button type="button" class="btn dark" data-apply>Applica</button></div>
+            </div>
+          </div>
+        </div>
+
+        <label class="sort-control">Ordina per
+          <select id="sortSelect">
+            <option value="archivio">Ordine d’archivio</option>
+            <option value="titolo">Titolo</option>
+            <option value="recenti">Più recenti</option>
+            <option value="brevi">Più brevi</option>
+            <option value="lunghi">Più lunghi</option>
+          </select>
+        </label>
+      </div>
+
+      <p class="results-count" id="resultsCount" aria-live="polite"></p>
+    </section>
+
+    <section class="index" id="index"></section>
+
+    <footer>
+      <span>SAVE, archivio documenti</span>
+    </footer>
+  </main>
+
+  <script>
+    /*
+      Per aggiungere un documento: copia il PDF in paper/material
+      e aggiungi una riga qui sotto. L'ordine dell'elenco è l'ordine d'archivio.
+      tipo deve corrispondere a una delle chiavi di "tipi".
+      La copertina è archivio-copertine/<nome del PDF>.jpg; per crearla dal Terminale:
+      sips -s format jpeg -Z 520 "file.pdf" --out "archivio-copertine/file.jpg"
+    */
+    const documenti = [
+      { file: 'paper/material/FuTuRE_D2.3_Guidelines_ITA-2.pdf', pagine: 84, fonte: 'Progetto FuTuRE', titolo: 'Linee guida D2.3', anno: '', lingua: 'italiano', tipo: 'linee-guida', descrizione: 'Valutazione e autovalutazione del rischio di recidiva, SARA-S aggiornato, ISA 2023, intersezionalità.' },
+      { file: 'paper/material/guida_al_vicinato_CAV-Venezia copy.pdf', pagine: 11, fonte: 'Centro Antiviolenza di Venezia', titolo: 'Guida al vicinato', anno: '', lingua: 'italiano', tipo: 'guide', descrizione: 'Segnali d’allarme, primo approccio, ascolto e frasi utili per chi vive accanto.' },
+      { file: 'paper/material/Look Wide guide_A5.pdf', pagine: 96, fonte: 'Look Wide', titolo: 'Guida per servizi inclusivi', anno: '', lingua: 'italiano', tipo: 'guide', descrizione: 'Prospettiva LGBTQIA+, competenze professionali e approccio intersezionale.' },
+      { file: 'paper/material/PREMS 080924 GBR 2574 GUIDANCE FOR SAFE AND EFFECTIVE PERPETRATOR TXT Web.pdf', pagine: 49, fonte: 'Consiglio d’Europa', titolo: 'Programmi sicuri ed efficaci per autori di violenza', anno: '2024', lingua: 'inglese', tipo: 'linee-guida', descrizione: 'Articolo 16 della Convenzione di Istanbul: studio comparativo e raccomandazioni sui programmi per autori di violenza domestica e sessuale.' },
+      { file: 'paper/material/UNICEF - Guidelines GBV in mobility contexts.pdf.pdf', pagine: 54, fonte: 'UNICEF', titolo: 'Adolescenti LGBTQI+ in contesti di mobilità', anno: '', lingua: 'inglese', tipo: 'linee-guida', descrizione: 'Linee guida per la cura e il supporto ad adolescenti LGBTQI+ che hanno subito violenza di genere durante la migrazione.' },
+      { file: 'paper/material/CONSENT - RACCOMANDAZIONI ISTITUZIONALI.pdf', pagine: 26, fonte: 'Progetto CONSENT', titolo: 'Raccomandazioni istituzionali', anno: '', lingua: 'italiano', tipo: 'linee-guida', descrizione: 'Indicazioni per progettare, valutare e finanziare l’educazione affettiva nelle scuole, con reti e collaborazione tra istituzioni.' },
+      { file: 'paper/material/ENG_Pocket Guide for GBV actors working with male survivors of sexual violence.pdf', pagine: 6, fonte: 'Guida tascabile', titolo: 'Lavorare con uomini sopravvissuti alla violenza sessuale', anno: '', lingua: 'inglese', tipo: 'guide', descrizione: 'Bisogni specifici, barriere nell’accesso ai servizi e messaggi chiave per chi opera nella violenza di genere.' },
+      { file: 'paper/material/GBV AoR 2022 Bystander Intervention Approaches.pdf', pagine: 19, fonte: 'GBV Area of Responsibility', titolo: 'Interventi di chi assiste', anno: '2022', lingua: 'inglese', tipo: 'guide', descrizione: 'Concetti chiave, rischi per la sicurezza e indicazioni per progettare e valutare programmi di bystander intervention.' },
+      { file: 'paper/material/TransformingGender_A4_Final_01.pdf', pagine: 17, fonte: 'Safe and Equal', titolo: 'Trasformare il genere', anno: '', lingua: 'inglese', tipo: 'guide', descrizione: 'Indicazioni per la prevenzione primaria della violenza di genere.' },
+      { file: 'paper/material/R41_Shift_2020_Practitioners_Framework_Engaging_Male-Oriented_Settings.pdf', pagine: 180, fonte: 'Shift, University of Calgary', titolo: 'Coinvolgere uomini e contesti maschili', anno: '2020', lingua: 'inglese', tipo: 'guide', descrizione: 'Quadro operativo per chi lavora nella prevenzione con uomini in contesti a prevalenza maschile.' },
+      { file: 'paper/material/guiasentir_ca_acc_2_0.pdf', pagine: 48, fonte: 'Ajuntament de Barcelona', titolo: 'Sentir que sì, sentir que no', anno: '', lingua: 'catalano', tipo: 'guide', descrizione: 'Guida pedagogica sulla prevenzione dell’abuso sessuale infantile, per famiglie, insegnanti ed educatori.' },
+      { file: 'paper/material/CARE_2017_Applying-Social-Norms-Theory-to-Practice-CARE_s-Journey.pdf', pagine: 24, fonte: 'CARE', titolo: 'Dalla teoria delle norme sociali alla pratica', anno: '2017', lingua: 'inglese', tipo: 'ricerca', descrizione: 'Esperienza pilota di misurazione delle norme sociali nei programmi di genere.' },
+      { file: 'paper/material/CONSENT - Kit per l\'educazione affettiva nelle scuole primarie.pdf', pagine: 40, fonte: 'Progetto CONSENT', titolo: 'Educazione affettiva nella scuola primaria', anno: '', lingua: 'italiano', tipo: 'formazione', descrizione: 'Manuale per insegnanti con attività per la classe.' },
+      { file: 'paper/material/CONSENT - Kit per l\'educazione affettiva nelle scuole secondarie.pdf', pagine: 54, fonte: 'Progetto CONSENT', titolo: 'Educazione affettiva nella scuola secondaria', anno: '', lingua: 'italiano', tipo: 'formazione', descrizione: 'Manuale per insegnanti con attività per la classe.' },
+      { file: 'paper/material/CONSENT - Manual di formazione per famiglie e insegnanti.pdf', pagine: 110, fonte: 'Progetto CONSENT', titolo: 'Formazione per famiglie e insegnanti', anno: '', lingua: 'italiano', tipo: 'formazione', descrizione: 'Manuale di formazione per accompagnare l’educazione affettiva a scuola e a casa.' },
+      { file: 'paper/material/MARVOW2_TrainMan_IT_241106_low.pdf', pagine: 46, fonte: 'MARVOW 2.0', titolo: 'Manuale per la formazione degli operatori', anno: '2024', lingua: 'italiano', tipo: 'formazione', descrizione: 'Competenze dei servizi chiave nella risposta multi-agenzia alla violenza contro le donne anziane.' },
+      { file: 'paper/material/Games_Theatrical_Tools_Manual.pdf', pagine: 80, fonte: 'WWP European Network', titolo: 'Giochi e strumenti teatrali con autori di violenza', anno: '', lingua: 'inglese', tipo: 'formazione', descrizione: 'Esercizi informali e creativi per i programmi di lavoro con gli autori di violenza di genere.' }
+    ];
+
+    const tipi = {
+      'linee-guida': { nome: 'Linee guida', colore: 'var(--maroon)' },
+      'strumenti': { nome: 'Strumenti di valutazione', colore: 'var(--vermilion)' },
+      'guide': { nome: 'Guide', colore: 'var(--ochre)' },
+      'ricerca': { nome: 'Ricerca', colore: 'var(--grey)' },
+      'formazione': { nome: 'Formazione', colore: 'var(--ink)' }
+    };
+
+    const lingue = { italiano: 'Italiano', inglese: 'Inglese', catalano: 'Catalano' };
+
+    const $ = id => document.getElementById(id);
+    const indexEl = $('index');
+    const searchInput = $('searchInput');
+
+    // What is applied. Empty sets mean "all"
+    const state = { text: '', tipo: new Set(), fonte: new Set(), lingua: new Set(), pagine: { min: null, max: null }, sort: 'archivio' };
+
+    // A fixed rhythm of indents, so each document keeps its place in the stagger
+    const ritmo = [0, 0, 0, 1, 1, 2, 1, 0, 1, 2, 2, 1, 0];
+
+    const pad = n => String(n).padStart(3, '0');
+    const escape = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+    // Accents and case do not matter when searching
+    const normalize = s => String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+
+    // The values each checkbox menu offers, with how many documents carry them
+    const columns = {
+      tipo: { label: 'Tipo', values: () => Object.keys(tipi).filter(k => documenti.some(d => d.tipo === k)), name: k => tipi[k].nome, dot: k => tipi[k].colore },
+      fonte: { label: 'Fonte', values: () => [...new Set(documenti.map(d => d.fonte))].sort((x, y) => x.localeCompare(y, 'it')), name: v => v },
+      lingua: { label: 'Lingua', values: () => Object.keys(lingue).filter(k => documenti.some(d => d.lingua === k)), name: k => lingue[k] }
+    };
+
+    Object.entries(columns).forEach(([col, c]) => {
+      document.querySelector(`[data-checks="${col}"]`).innerHTML = c.values().map(v => `
+        <label class="check${c.dot ? '' : ' no-dot'}">
+          <input type="checkbox" value="${escape(v)}">
+          ${c.dot ? `<span class="dot" style="--dot:${c.dot(v)}" aria-hidden="true"></span>` : ''}
+          <span>${escape(c.name(v))}</span>
+          <span class="n">${documenti.filter(d => d[col] === v).length}</span>
+        </label>`).join('');
+    });
+
+    function matches(d) {
+      if (state.tipo.size && !state.tipo.has(d.tipo)) return false;
+      if (state.fonte.size && !state.fonte.has(d.fonte)) return false;
+      if (state.lingua.size && !state.lingua.has(d.lingua)) return false;
+      if (state.pagine.min != null && d.pagine < state.pagine.min) return false;
+      if (state.pagine.max != null && d.pagine > state.pagine.max) return false;
+      const q = normalize(state.text.trim());
+      if (q && !normalize([d.titolo, d.fonte, d.descrizione, tipi[d.tipo]?.nome, lingue[d.lingua]].join(' ')).includes(q)) return false;
+      return true;
+    }
+
+    const sorters = {
+      archivio: (a, b) => a.i - b.i,
+      titolo: (a, b) => a.d.titolo.localeCompare(b.d.titolo, 'it'),
+      // Undated documents go last, in archive order
+      recenti: (a, b) => (Number(b.d.anno) || 0) - (Number(a.d.anno) || 0) || a.i - b.i,
+      brevi: (a, b) => a.d.pagine - b.d.pagine,
+      lunghi: (a, b) => b.d.pagine - a.d.pagine
+    };
+
+    const copertina = file => 'archivio-copertine/' + file.split('/').pop().replace(/\.pdf$/i, '.jpg');
+
+    function docHTML(d, i) {
+      const t = tipi[d.tipo] || { nome: 'Documento', colore: 'var(--grey)' };
+      const lingua = d.lingua && d.lingua !== 'italiano' ? `in ${d.lingua}` : '';
+      return `
+        <a class="doc" href="${encodeURI(d.file)}" target="_blank" rel="noopener"
+           style="--shift:${ritmo[i % ritmo.length]}">
+          <span class="doc-num">${pad(i + 1)}</span>
+          <span class="cover">
+            <img src="${encodeURI(copertina(d.file))}" alt="" loading="lazy">
+            <span class="cover-fallback">PDF</span>
+          </span>
+          <span>
+            <span class="doc-source">${escape(d.fonte)}</span>
+            <h3>${escape(d.titolo)}</h3>
+            ${d.descrizione ? `<p>${escape(d.descrizione)}</p>` : ''}
+            <span class="doc-meta">
+              <span class="dot" style="--dot:${t.colore}" aria-hidden="true"></span>
+              <span>${[t.nome, d.anno, d.pagine && `${d.pagine} ${d.pagine === 1 ? 'pagina' : 'pagine'}`, lingua].filter(Boolean).join(', ')}</span>
+            </span>
+          </span>
+        </a>`;
+    }
+
+    function renderIndex() {
+      const elenco = documenti
+        .map((d, i) => ({ d, i }))
+        .filter(({ d }) => matches(d))
+        .sort(sorters[state.sort]);
+
+      const filtering = elenco.length !== documenti.length;
+      $('resultsCount').innerHTML = filtering
+        ? `${elenco.length === 1 ? '1 documento' : `${elenco.length} documenti`} <span>su ${documenti.length}</span>`
+        : `${documenti.length} documenti`;
+
+      if (!elenco.length) {
+        indexEl.innerHTML = `<div class="empty-state">
+          <p>Nessun documento trovato</p>
+          <p class="note">Prova a togliere un filtro o a cercare un’altra parola.</p>
+          <button type="button" class="btn" data-clear-all>Togli tutti i filtri</button>
+        </div>`;
+        return;
+      }
+
+      // Two columns, reading down the left one first
+      const meta = Math.ceil(elenco.length / 2);
+      const colonne = [elenco.slice(0, meta), elenco.slice(meta)];
+      indexEl.innerHTML = colonne
+        .map(col => `<div class="column">${col.map(({ d, i }) => docHTML(d, i)).join('')}</div>`)
+        .join('');
+      indexEl.querySelectorAll('.cover img').forEach(img => {
+        // Pages wider than the 3:4 frame (square covers, slides) are shown whole instead of cropped
+        const fit = () => img.classList.toggle('landscape', img.naturalWidth / img.naturalHeight > .8);
+        img.complete ? fit() : img.addEventListener('load', fit);
+        // Without its cover the document keeps the plain PDF block
+        img.addEventListener('error', () => img.remove());
+      });
+    }
+
+    // --- Chips ------------------------------------------------------------------------------
+
+    function chip(column, label, value) {
+      return `<span class="chip" data-column="${column}"><button type="button" class="chip-label" data-open="${column}"><b>${label}:</b> ${escape(value)}</button><button type="button" class="chip-remove" data-remove="${column}" aria-label="Togli il filtro ${label}"><span class="x" aria-hidden="true"></span></button></span>`;
+    }
+
+    // Two values, then +N
+    function summary(values) {
+      return values.length > 2 ? `${values.slice(0, 2).join(', ')}, +${values.length - 2}` : values.join(', ');
+    }
+
+    function pagesLabel({ min, max }) {
+      if (min != null && max != null) return min === max ? `${min}` : `da ${min} a ${max}`;
+      return min != null ? `almeno ${min}` : `fino a ${max}`;
+    }
+
+    function renderChips() {
+      const chips = [];
+      Object.entries(columns).forEach(([col, c]) => {
+        if (state[col].size) chips.push(chip(col, c.label, summary(c.values().filter(v => state[col].has(v)).map(c.name))));
+      });
+      const pagesSet = state.pagine.min != null || state.pagine.max != null;
+      if (pagesSet) chips.push(chip('pagine', 'Pagine', pagesLabel(state.pagine)));
+      $('filterChips').innerHTML = chips.join('');
+
+      $('clearAll').hidden = !(chips.length || state.text);
+      searchInput.placeholder = chips.length ? 'Cerca ancora…' : 'Titolo, fonte o argomento';
+      Object.keys(columns).forEach(col => buttonOf(col).classList.toggle('is-set', state[col].size > 0));
+      buttonOf('pagine').classList.toggle('is-set', pagesSet);
+      $('sortSelect').value = state.sort;
+    }
+
+    function update(changes) {
+      Object.assign(state, changes);
+      renderChips();
+      renderIndex();
+    }
+
+    function clearFilter(column) {
+      if (column === 'pagine') update({ pagine: { min: null, max: null } });
+      else update({ [column]: new Set() });
+    }
+
+    function clearAll() {
+      searchInput.value = '';
+      closeMenu();
+      update({ text: '', tipo: new Set(), fonte: new Set(), lingua: new Set(), pagine: { min: null, max: null }, sort: 'archivio' });
+    }
+
+    // --- Filter menus -------------------------------------------------------------------------
+
+    let openName = null;
+
+    function menuOf(name) { return $(`menu-${name}`); }
+    function buttonOf(name) { return document.querySelector(`[data-menu="${name}"]`); }
+
+    function openMenu(name) {
+      if (openName === name) return;
+      closeMenu();
+      const menu = menuOf(name);
+      // Menus start from what is applied; unapplied changes are dropped on close
+      if (columns[name]) menu.querySelectorAll('input').forEach(i => { i.checked = state[name].has(i.value); });
+      if (name === 'pagine') {
+        $('pagesMin').value = state.pagine.min ?? '';
+        $('pagesMax').value = state.pagine.max ?? '';
+      }
+      menu.querySelectorAll('.menu-error').forEach(e => { e.hidden = true; });
+      menu.hidden = false;
+      buttonOf(name).setAttribute('aria-expanded', 'true');
+      openName = name;
+      (menu.querySelector('input') || menu.querySelector('button')).focus({ preventScroll: true });
+    }
+
+    function closeMenu(returnFocus) {
+      if (!openName) return;
+      menuOf(openName).hidden = true;
+      const btn = buttonOf(openName);
+      btn.setAttribute('aria-expanded', 'false');
+      openName = null;
+      if (returnFocus) btn.focus();
+    }
+
+    document.querySelectorAll('[data-menu]').forEach(btn => btn.addEventListener('click', () => {
+      if (openName === btn.dataset.menu) closeMenu(); else openMenu(btn.dataset.menu);
+    }));
+
+    function readPages(menu) {
+      const read = id => { const v = $(id).value.trim(); return v === '' ? null : Math.max(1, Math.round(Number(v))); };
+      const min = read('pagesMin'), max = read('pagesMax');
+      const error = menu.querySelector('.menu-error');
+      if ((min != null && !Number.isFinite(min)) || (max != null && !Number.isFinite(max))) {
+        error.textContent = 'Scrivi un numero di pagine.';
+        error.hidden = false;
+        return null;
+      }
+      if (min != null && max != null && min > max) {
+        error.textContent = 'Il numero “Da” deve essere minore o uguale ad “A”.';
+        error.hidden = false;
+        return null;
+      }
+      return { min, max };
+    }
+
+    document.querySelectorAll('.filter-menu').forEach(menu => {
+      const name = menu.id.replace('menu-', '');
+      menu.querySelector('.menu-close').addEventListener('click', () => closeMenu(true));
+      menu.querySelector('[data-reset]').addEventListener('click', () => {
+        menu.querySelectorAll('input[type="checkbox"]').forEach(i => { i.checked = false; });
+        menu.querySelectorAll('input[type="number"]').forEach(i => { i.value = ''; });
+      });
+      menu.querySelector('[data-apply]').addEventListener('click', () => {
+        if (name === 'pagine') {
+          const pagine = readPages(menu);
+          if (!pagine) return;
+          closeMenu(true);
+          update({ pagine });
+          return;
+        }
+        closeMenu(true);
+        update({ [name]: new Set([...menu.querySelectorAll('input:checked')].map(i => i.value)) });
+      });
+      // Enter in a page field applies, as the button does
+      menu.querySelectorAll('input[type="number"]').forEach(input => input.addEventListener('keydown', event => {
+        if (event.key === 'Enter') { event.preventDefault(); menu.querySelector('[data-apply]').click(); }
+      }));
+    });
+
+    document.querySelectorAll('[data-preset]').forEach(btn => btn.addEventListener('click', () => {
+      const [min, max] = btn.dataset.preset.split('-');
+      $('pagesMin').value = min;
+      $('pagesMax').value = max;
+    }));
+
+    // A click outside the open menu closes it without applying
+    document.addEventListener('pointerdown', event => {
+      if (openName && !event.target.closest('.menu-anchor')) closeMenu();
+    });
+    // So does moving the keyboard focus out of it
+    document.addEventListener('focusin', event => {
+      if (openName && !event.target.closest('.menu-anchor')) closeMenu();
+    });
+
+    $('filterChips').addEventListener('click', event => {
+      const remove = event.target.closest('[data-remove]');
+      const open = event.target.closest('[data-open]');
+      if (remove) { clearFilter(remove.dataset.remove); searchInput.focus(); return; }
+      if (open) {
+        buttonOf(open.dataset.open).scrollIntoView({ block: 'nearest' });
+        openMenu(open.dataset.open);
+      }
+    });
+
+    searchInput.addEventListener('input', () => update({ text: searchInput.value }));
+    $('filterBar').addEventListener('click', event => {
+      if (event.target === $('filterBar')) searchInput.focus();
+    });
+    $('sortSelect').addEventListener('change', event => update({ sort: event.target.value }));
+    $('clearAll').addEventListener('click', () => { clearAll(); searchInput.focus(); });
+    indexEl.addEventListener('click', event => {
+      if (event.target.closest('[data-clear-all]')) { clearAll(); searchInput.focus(); }
+    });
+
+    const tipiUsati = columns.tipo.values().length;
+    $('total').textContent = `${documenti.length} documenti, ${tipiUsati} tipi, ${columns.fonte.values().length} fonti`;
+    renderChips();
+    renderIndex();
+  </script>
+  <script src="quick-exit.js"></script>
+</body>
+</html>

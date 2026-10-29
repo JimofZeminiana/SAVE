@@ -1,0 +1,1270 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meteo di oggi</title>
+  <style>
+    :root {
+      --paper: #f7f4ed;
+      --ink: #171717;
+      --muted: #68635d;
+      --line: #171717;
+      --soft: #e7e1d6;
+      --white: #fffdfa;
+      --red: #b22b24;
+      --blue: #12606d;
+      --green: #506d2f;
+      --violet: #60436f;
+      --yellow: #d49b24;
+      --radius: 6px;
+      --title-hero: clamp(3.6rem, 7vw, 7.2rem);
+      --title-section: clamp(2.1rem, 4.6vw, 4.9rem);
+      --title-card: clamp(1.15rem, 1.65vw, 1.7rem);
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 16px;
+      line-height: 1.42;
+      letter-spacing: 0;
+      background:
+        linear-gradient(90deg, rgba(23,23,23,.045) 1px, transparent 1px) 0 0 / 48px 48px,
+        linear-gradient(0deg, rgba(23,23,23,.035) 1px, transparent 1px) 0 0 / 48px 48px,
+        var(--paper);
+    }
+
+    a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+    button, input, select, textarea { font: inherit; }
+
+    body.citizen [data-audience="operator"] {
+      display: none !important;
+    }
+
+    .shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: minmax(230px, 18vw) 1fr;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 62px;
+      height: calc(100vh - 62px);
+      padding: 18px;
+      border-right: 2px solid var(--line);
+      background: rgba(247,244,237,.96);
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .brand {
+      display: grid;
+      gap: 10px;
+      border-bottom: 2px solid var(--line);
+      padding-bottom: 18px;
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      border: 2px solid var(--line);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      background: var(--white);
+    }
+
+    .brand strong {
+      font-size: clamp(0.5rem, 1vw, 1rem);
+      line-height: .96;
+      text-transform: uppercase;
+    }
+
+    .brand span,
+    .tiny {
+      color: var(--muted);
+      font-size: .78rem;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    .nav {
+      display: grid;
+      gap: 8px;
+    }
+
+    .nav a {
+      display: grid;
+      grid-template-columns: 2.2rem 1fr;
+      align-items: start;
+      gap: 10px;
+      padding: 8px 0;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(23,23,23,.28);
+    }
+
+    .nav b {
+      font-size: 1.25rem;
+      line-height: 1;
+    }
+
+    .nav span {
+      font-size: .95rem;
+      line-height: 1.18;
+    }
+
+    main { min-width: 0; }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      padding: 12px clamp(18px, 5vw, 72px);
+      border-bottom: 2px solid var(--line);
+      background: rgba(247,244,237,.98);
+    }
+
+    .mode-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .header-btn {
+      border: 2px solid var(--line);
+      background: var(--white);
+      color: var(--ink);
+      padding: 9px 12px;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: .78rem;
+      letter-spacing: .05em;
+      cursor: pointer;
+    }
+
+    .exit-btn {
+      border-color: var(--red);
+      background: #f20d0d;
+      color: #fff;
+      font-weight: 800;
+    }
+
+    section {
+      border-bottom: 2px solid var(--line);
+      padding: clamp(28px, 5vw, 72px);
+    }
+
+    .hero {
+      min-height: 92vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 28px;
+      padding-top: 28px;
+      background: var(--white);
+    }
+
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      border-bottom: 2px solid var(--line);
+      padding-bottom: 14px;
+      color: var(--muted);
+      text-transform: uppercase;
+      font-size: .78rem;
+      letter-spacing: .06em;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      max-width: 13ch;
+      align-self: center;
+      font-size: var(--title-hero);
+      line-height: .82;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .hero-bottom {
+      display: grid;
+      grid-template-columns: minmax(220px, .8fr) 1.3fr;
+      gap: clamp(18px, 5vw, 80px);
+      align-items: end;
+    }
+
+    .intro {
+      font-size: clamp(1.2rem, 2.3vw, 2.15rem);
+      line-height: 1.1;
+      max-width: 920px;
+    }
+
+    .emergency {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      border: 2px solid var(--line);
+      background: var(--paper);
+    }
+
+    .emergency a {
+      min-height: 104px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-decoration: none;
+      border-right: 2px solid var(--line);
+    }
+
+    .emergency a:last-child { border-right: 0; }
+    .emergency b { font-size: clamp(2.2rem, 5vw, 4rem); line-height: .9; }
+    .emergency span { color: var(--muted); max-width: 16ch; }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(120px, 18vw) minmax(0, 1fr);
+      gap: clamp(18px, 4vw, 64px);
+      align-items: start;
+      margin-bottom: clamp(24px, 4vw, 48px);
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      color: var(--muted);
+      font-size: .82rem;
+      letter-spacing: .06em;
+      border-top: 2px solid var(--line);
+      padding-top: 10px;
+    }
+
+    h2 {
+      font-size: var(--title-section);
+      line-height: .9;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    h3 {
+      font-size: var(--title-card);
+      line-height: 1.05;
+      margin-bottom: 12px;
+    }
+
+    .lead {
+      max-width: 980px;
+      font-size: clamp(1.12rem, 1.75vw, 1.55rem);
+      line-height: 1.2;
+    }
+
+    .map {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 2px solid var(--line);
+      border-left: 2px solid var(--line);
+      background: var(--white);
+    }
+
+    .map-card {
+      min-height: 420px;
+      padding: clamp(18px, 2.6vw, 32px);
+      border-right: 2px solid var(--line);
+      border-bottom: 2px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .map-card .num {
+      font-size: clamp(4rem, 8vw, 8rem);
+      line-height: .8;
+    }
+
+    .map-card ul,
+    .plain-list {
+      padding-left: 1.1em;
+      margin: 0;
+    }
+
+    .map-card li,
+    .plain-list li {
+      margin-bottom: 8px;
+    }
+
+    .matrix {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 2px solid var(--line);
+      border-left: 2px solid var(--line);
+      background: var(--white);
+    }
+
+    .tile {
+      min-height: 280px;
+      padding: 18px;
+      border-right: 2px solid var(--line);
+      border-bottom: 2px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .tile .tag,
+    .source-tag {
+      width: fit-content;
+      border: 1px solid var(--line);
+      padding: 3px 7px;
+      font-size: .72rem;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      background: var(--paper);
+    }
+
+    .forms {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .panel {
+      border: 2px solid var(--line);
+      background: var(--white);
+      padding: clamp(18px, 2vw, 26px);
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .filters input,
+    .filters select {
+      min-height: 44px;
+      border: 2px solid var(--line);
+      background: var(--white);
+      padding: 8px 10px;
+      border-radius: 0;
+    }
+
+    .filters input {
+      flex: 1 1 260px;
+    }
+
+    .toolbox {
+      display: grid;
+      gap: 10px;
+    }
+
+    details {
+      border: 2px solid var(--line);
+      background: var(--white);
+    }
+
+    details[hidden] { display: none; }
+
+    summary {
+      cursor: pointer;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 14px;
+      align-items: center;
+      padding: 14px 16px;
+      list-style: none;
+    }
+
+    summary::-webkit-details-marker { display: none; }
+
+    .risk-num {
+      min-width: 38px;
+      height: 38px;
+      border: 2px solid var(--line);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      background: var(--paper);
+    }
+
+    .category {
+      color: var(--muted);
+      font-size: .82rem;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    .detail-body {
+      padding: 0 16px 16px 68px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .rating {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+
+    .rating span {
+      padding: 8px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      font-size: .86rem;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 10px;
+      margin: 16px 0;
+    }
+
+    .checklist label {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 10px;
+      align-items: start;
+      padding: 10px;
+      border: 1px solid rgba(23,23,23,.35);
+      background: var(--paper);
+    }
+
+    .result {
+      min-height: 88px;
+      border: 2px solid var(--line);
+      padding: 14px;
+      background: #fdf8ef;
+    }
+
+    .callout {
+      border-left: 10px solid var(--red);
+      background: var(--white);
+      padding: clamp(18px, 2.4vw, 28px);
+      max-width: 980px;
+      font-size: clamp(1.1rem, 1.6vw, 1.45rem);
+      line-height: 1.2;
+    }
+
+    .resources {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .source-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .source {
+      border: 2px solid var(--line);
+      background: var(--white);
+      padding: 14px;
+      display: grid;
+      gap: 12px;
+      min-height: 164px;
+    }
+
+    .app-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .app-card {
+      border: 2px solid var(--line);
+      background: var(--white);
+      padding: 16px;
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
+
+    .app-card-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .app-icon {
+      width: 44px;
+      height: 44px;
+      flex: none;
+      border: 2px solid var(--line);
+      background: var(--paper);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: .6rem;
+      text-align: center;
+      line-height: 1.05;
+    }
+
+    .app-icon.accent-red { border-color: var(--red); }
+    .app-icon.accent-blue { border-color: var(--blue); }
+    .app-icon.accent-green { border-color: var(--green); }
+    .app-icon.accent-violet { border-color: var(--violet); }
+
+    .app-card-top h3 {
+      margin: 0 0 2px;
+      font-size: 1.08rem;
+    }
+
+    .app-card p {
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.32;
+      font-size: .94rem;
+    }
+
+    .catalogue {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 2px solid var(--line);
+      border-left: 2px solid var(--line);
+      background: var(--white);
+    }
+
+    .catalogue-card {
+      min-height: 310px;
+      padding: 18px;
+      border-right: 2px solid var(--line);
+      border-bottom: 2px solid var(--line);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 18px;
+    }
+
+    .catalogue-card h3,
+    .test-card h3 {
+      overflow-wrap: anywhere;
+    }
+
+    .link-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: end;
+    }
+
+    .pill-link {
+      border: 2px solid var(--line);
+      background: var(--paper);
+      color: var(--ink);
+      padding: 8px 10px;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: .76rem;
+      letter-spacing: .04em;
+    }
+
+    .pill-link:hover,
+    .test-card:hover {
+      background: var(--soft);
+    }
+
+    .test-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      border-top: 2px solid var(--line);
+      border-left: 2px solid var(--line);
+      background: var(--white);
+    }
+
+    .test-card {
+      min-height: 360px;
+      padding: clamp(20px, 3vw, 36px);
+      border-right: 2px solid var(--line);
+      border-bottom: 2px solid var(--line);
+      color: inherit;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 22px;
+    }
+
+    .test-card .num {
+      font-size: clamp(5rem, 10vw, 10rem);
+      line-height: .8;
+      font-weight: 800;
+    }
+
+    footer {
+      padding: 24px clamp(28px, 5vw, 72px);
+      background: var(--ink);
+      color: var(--paper);
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .accent-red { color: var(--red); }
+    .accent-blue { color: var(--blue); }
+    .accent-green { color: var(--green); }
+    .accent-violet { color: var(--violet); }
+
+    @media (max-width: 980px) {
+      .shell { grid-template-columns: 1fr; }
+      .sidebar {
+        position: relative;
+        height: auto;
+        border-right: 0;
+        border-bottom: 2px solid var(--line);
+      }
+      .nav { grid-template-columns: repeat(2, 1fr); }
+      .hero { min-height: auto; }
+      .hero-bottom,
+      .section-head,
+      .forms,
+      .resources,
+      .source-grid,
+      .app-grid,
+      .test-grid { grid-template-columns: 1fr; }
+      .map,
+      .matrix,
+      .catalogue { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 620px) {
+      section { padding: 24px 16px; }
+      h1 { font-size: clamp(3rem, 16vw, 4.8rem); }
+      .topline,
+      .site-header,
+      footer { display: grid; }
+      .nav,
+      .map,
+      .matrix,
+      .catalogue,
+      .emergency { grid-template-columns: 1fr; }
+      .emergency a { border-right: 0; border-bottom: 2px solid var(--line); }
+      .emergency a:last-child { border-bottom: 0; }
+      .map-card { min-height: 300px; }
+      summary { grid-template-columns: auto 1fr; }
+      summary .category { grid-column: 2; }
+      .detail-body { padding-left: 16px; }
+      .rating { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body class="citizen">
+  <header class="site-header" aria-label="Azioni principali">
+    <span class="tiny" id="modeLabel">per i cittadini</span>
+    <div class="mode-actions">
+      <button class="header-btn" id="modeToggle" type="button">Per gli operatori</button>
+      <a class="header-btn exit-btn" href="https://www.google.com/search?q=meteo">Esci subito dal sito</a>
+    </div>
+  </header>
+  <div class="shell">
+    <aside class="sidebar" aria-label="Navigazione principale">
+      <div class="brand">
+        <div class="brand-mark">VG</div>
+        <strong>Violenza di genere</strong>
+        <span>Mappa operativa in italiano</span>
+      </div>
+      <nav class="nav">
+        <a href="#forme" ><b>1</b><span>Forme e dinamiche</span></a>
+        <a href="#test" ><b>2</b><span>Orientamento e questionari</span></a>
+        <a href="#comunita" ><b>3</b><span>Una comunità che sostiene</span></a>
+        <a href="#app-utili" ><b>4</b><span>App utili</span></a>
+        <a data-audience="operator" href="#mappa" ><b>5</b><span>Organizzare il quadro</span></a>
+        <a data-audience="operator" href="#catalogo" ><b>6</b><span>Tool di risk assessment</span></a>
+        <a data-audience="operator" href="#rischio" ><b>7</b><span>Valutare rischio e recidiva</span></a>
+        <a data-audience="operator" href="#strumenti" ><b>8</b><span>Usare strumenti e fonti</span></a>
+        <a data-audience="operator" href="#fonti"><b>9</b><span>Consultare le fonti</span></a>
+      </nav>
+    </aside>
+
+    <main>
+      <section class="hero" id="inizio">
+        <div class="topline">
+          <span>Toolkit / prevenzione / supporto</span>
+          <span>Italia · 2026</span>
+        </div>
+        <h1>Violenza di genere</h1>
+        <div class="hero-bottom">
+          <div class="emergency" aria-label="Contatti urgenti">
+            <a href="tel:1522" ><span>Antiviolenza e stalking</span><b>1522</b></a>
+            <a href="tel:112" ><span>Pericolo immediato</span><b>112</b></a>
+          </div>
+          <p class="intro">Una mappa navigabile per riconoscere le forme della violenza, leggere i fattori di rischio, orientare il lavoro di rete e rendere visibili le risorse di supporto. L’impianto riprende la logica di una toolbox: concetti, evidenze, strumenti, azioni.</p>
+        </div>
+      </section>
+
+      <section id="mappa" data-audience="operator">
+        <div class="section-head">
+          <div class="eyebrow">Webmap</div>
+          <div>
+            <h2>Dal quadro all’azione</h2>
+            <p class="lead">Il percorso è organizzato in tre movimenti: ordinare le informazioni, comprendere il fenomeno, progettare risposte proporzionate. La sequenza aiuta a non ridurre la violenza a singoli episodi isolati.</p>
+          </div>
+        </div>
+        <div class="map">
+          <article class="map-card">
+            <div class="num accent-red">1</div>
+            <div>
+              <h3>Organizzare</h3>
+              <ul>
+                <li>Identificare soggetti, contesto e fonti disponibili.</li>
+                <li>Raccogliere narrazioni, documenti, segnalazioni, precedenti e segnali osservabili.</li>
+                <li>Separare urgenza, bisogno di protezione e lavoro di medio periodo.</li>
+              </ul>
+            </div>
+          </article>
+          <article class="map-card">
+            <div class="num accent-blue">2</div>
+            <div>
+              <h3>Comprendere</h3>
+              <ul>
+                <li>Leggere la relazione tra controllo, isolamento, minaccia, escalation e false riappacificazioni.</li>
+                <li>Riconoscere discriminazioni multiple, violenza digitale e vulnerabilità specifiche.</li>
+                <li>Considerare bambini e bambine come soggetti coinvolti nella sicurezza.</li>
+              </ul>
+            </div>
+          </article>
+          <article class="map-card">
+            <div class="num accent-green">3</div>
+            <div>
+              <h3>Progettare</h3>
+              <ul>
+                <li>Definire priorità e piano di gestione del rischio.</li>
+                <li>Attivare centri antiviolenza, servizi, forze dell’ordine e rete informale.</li>
+                <li>Documentare decisioni, limiti informativi e passaggi successivi.</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="catalogo" data-audience="operator">
+        <div class="section-head">
+          <div class="eyebrow">CSV / Toolbox</div>
+          <div>
+            <h2>Tool di risk assessment</h2>
+            <p class="lead">Il catalogo replica e rende navigabile il CSV locale <code>Tool di risk assessment.csv</code>. I link aprono i materiali disponibili in locale o le pagine esterne individuate per gli strumenti indicati.</p>
+          </div>
+        </div>
+        <div class="catalogue" aria-label="Catalogo dei tool di risk assessment">
+          <article class="catalogue-card">
+            <span class="source-tag">SPJ</span>
+            <div><h3>SARA</h3><p>Spousal Assault Risk Assessment, famiglia di strumenti per la valutazione strutturata del rischio di intimate partner violence.</p></div>
+            <div class="link-stack"><a class="pill-link" href="paper/HiltonPhamJungEnnisNunes2020PPRAdvancedonlinepub.pdf" target="_blank">Paper locale</a></div>
+          </article>
+          <article class="catalogue-card">
+            <span class="source-tag">Screening</span>
+            <div><h3>SARA-S</h3><p>Versione screening italiana presente tra i materiali locali e riproposta anche come pagina interattiva.</p></div>
+            <div class="link-stack"><a class="pill-link" href="paper/10_SARA-formulario_versione%2015%20item.pdf" target="_blank">Formulario</a><a class="pill-link" href="sara.html" target="_blank">Test web</a></div>
+          </article>
+          <article class="catalogue-card">
+            <span class="source-tag">SPJ</span>
+            <div><h3>SARA v3</h3><p>Terza versione della guida SARA per assessment e management del rischio di violenza nelle relazioni intime.</p></div>
+            <div class="link-stack"><a class="pill-link" href="https://www.rma.scot/wp-content/uploads/2023/01/Spousal-Assault-Risk-Assessment-Guide-Version-3-SARAv3.pdf" target="_blank">Scheda RATED</a><a class="pill-link" href="https://protect-international.com/product/spousal-assault-risk-assessment-guide-version-3-sara-v3/" target="_blank">Manuale</a></div>
+          </article>
+          <article class="catalogue-card">
+            <span class="source-tag">Criminal justice</span>
+            <div><h3>B-SAFER</h3><p>Brief Spousal Assault Form for the Evaluation of Risk, versione breve collegata alla famiglia SARA.</p></div>
+            <div class="link-stack"><a class="pill-link" href="https://www.justice.gc.ca/eng/rp-pr/fl-lf/famil/rr05_fv1-rr05_vf1/toc-tdm.html" target="_blank">Manuale</a><a class="pill-link" href="paper/HiltonPhamJungEnnisNunes2020PPRAdvancedonlinepub.pdf" target="_blank">Paper locale</a></div>
+          </article>
+          <article class="catalogue-card">
+            <span class="source-tag">Attuariale</span>
+            <div><h3>ODARA</h3><p>Ontario Domestic Assault Risk Assessment, strumento attuariale per stimare il rischio di nuova aggressione domestica.</p></div>
+            <div class="link-stack"><a class="pill-link" href="https://odara.waypointcentre.ca/" target="_blank">Link principale</a><a class="pill-link" href="paper/HiltonPhamJungEnnisNunes2020PPRAdvancedonlinepub.pdf" target="_blank">Paper locale</a></div>
+          </article>
+          <article class="catalogue-card">
+            <span class="source-tag">Autovalutazione</span>
+            <div><h3>ISA</h3><p>Increasing Self Awareness, questionario di autovalutazione del rischio aggiornato da Differenza Donna nel 2023.</p></div>
+            <div class="link-stack"><a class="pill-link" href="https://www.differenzadonna.org/manuale-isa-2023/" target="_blank">Manuale</a><a class="pill-link" href="isa.html" target="_blank">Test web</a></div>
+          </article>
+          <article class="catalogue-card">
+            <span class="source-tag">Economica</span>
+            <div><h3>SEA-12</h3><p>Scale of Economic Abuse-12, misura breve dell’esperienza di abuso economico nelle relazioni.</p></div>
+            <div class="link-stack"><a class="pill-link" href="https://emerge.ucsd.edu/r_1oingxcbnmuvyox/" target="_blank">EMERGE</a></div>
+          </article>
+          <article class="catalogue-card">
+            <span class="source-tag">Donne anziane</span>
+            <div><h3>MARVOW 2.0</h3><p>Metodologia e tool per risk assessment e risposta multi-agenzia alla violenza contro donne anziane.</p></div>
+            <div class="link-stack"><a class="pill-link" href="https://marvow.eu/risk-assessment-methodology-and-risk-assessment-development-tool/" target="_blank">Approfondimenti</a></div>
+          </article>
+          <article class="catalogue-card">
+            <span class="source-tag">Pericolo immediato</span>
+            <div><h3>DA</h3><p>Danger Assessment, strumento per valutare il rischio immediato di femminicidio e violenza grave nelle relazioni intime.</p></div>
+            <div class="link-stack"><a class="pill-link" href="paper/DA_NewScoring_2019.pdf" target="_blank">Scoring</a><a class="pill-link" href="https://www.dangerassessment.org/DA.aspx" target="_blank">Calculator</a></div>
+          </article>
+          <article class="catalogue-card">
+            <span class="source-tag">Ricerca</span>
+            <div><h3>ECS-36</h3><p>Economic Coercion Scale-36, scala per misurare la coercizione economica nelle relazioni intime.</p></div>
+            <div class="link-stack"><a class="pill-link" href="paper/Development and Validation of the Economic Coercion Scale 36 (ECS-36) in Rural Bangladesh.pdf" target="_blank">Paper</a></div>
+          </article>
+          <article class="catalogue-card">
+            <span class="source-tag">Autovalutazione</span>
+            <div><h3>EAPA-P</h3><p>Esperienza dell'abuso psicologico, strumento per autovalutare il livello di abuso psicologico nei confronti del partner.</p></div>
+            <div class="link-stack"><a class="pill-link" href="paper/EAPA - P.pdf" target="_blank">Strumento</a></div>
+          </article>
+          <article class="catalogue-card">
+            <span class="source-tag">Impatto</span>
+            <div><h3>WWP EN - Impact</h3><p>Impact Toolkit per gli autori di violenza, focalizzato su consapevolezza e cambiamento comportamentale.</p></div>
+            <div class="link-stack"><a class="pill-link" href="paper/WWP_ImpactToolkit_A5_publication_web (1).pdf" target="_blank">Toolkit</a></div>
+          </article>
+          <article class="catalogue-card">
+            <span class="source-tag">Ricerca</span>
+            <div><h3>PMWI</h3><p>Psychological Maltreatment of Women Inventory, strumento di ricerca per misurare l'abuso psicologico verso le donne.</p></div>
+            <div class="link-stack"><a class="pill-link" href="paper/Psychological Maltreatment of Women Inventory (PMWI)_ Tolman_combined with instrument.pdf" target="_blank">Paper</a></div>
+          </article>
+          <article class="catalogue-card">
+            <span class="source-tag">Ricerca</span>
+            <div><h3>PPPAS</h3><p>Perception of Partner Psychological Abuse Scale, scala di ricerca per la percezione dell'abuso psicologico del partner.</p></div>
+            <div class="link-stack"><a class="pill-link" href="paper/PPPAS.pdf" target="_blank">Paper</a></div>
+          </article>
+          <article class="catalogue-card">
+            <span class="source-tag">Ricerca</span>
+            <div><h3>WHO VAW</h3><p>World Health Organization's Violence Against Women study instrument, strumento standardizzato internazionale per ricerca su violenza di genere.</p></div>
+            <div class="link-stack"><a class="pill-link" href="paper/WHO VAW.pdf" target="_blank">Paper</a></div>
+          </article>
+          <article class="catalogue-card">
+            <span class="source-tag">Ricerca</span>
+            <div><h3>WEB Scale</h3><p>Women's Experience with Battering Scale, strumento di ricerca per misurare l'esperienza di battesimo e violenza.</p></div>
+            <div class="link-stack"><a class="pill-link" href="https://emerge.ucsd.edu/resource/women-experience-battering-web-scale/" target="_blank">EMERGE</a></div>
+          </article>
+          <article class="catalogue-card">
+            <span class="source-tag">Ricerca</span>
+            <div><h3>SAS</h3><p>Sexual Assertiveness Scale, scala di ricerca per misurare l'assertività sessuale e il consenso nelle relazioni.</p></div>
+            <div class="link-stack"><a class="pill-link" href="https://emerge.ucsd.edu/resource/sexual-assertiveness-scale-sas/" target="_blank">EMERGE</a></div>
+          </article>
+          <article class="catalogue-card">
+            <span class="source-tag">Ricerca</span>
+            <div><h3>IPVAS-R</h3><p>Intimate Partner Violence Attitude Scale-Revised, strumento per misurare atteggiamenti verso la violenza nelle relazioni intime.</p></div>
+            <div class="link-stack"><a class="pill-link" href="https://emerge.ucsd.edu/resource/intimate-partner-violence-attitude-scale-ipvas-revised/" target="_blank">EMERGE</a></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="test">
+        <div class="section-head">
+          <div class="eyebrow">Pagine interattive</div>
+          <div>
+            <h2>Orientamento e test</h2>
+            <p class="lead">Puoi iniziare da un percorso senza punteggio per capire meglio la situazione, oppure usare uno dei questionari disponibili. Le risposte restano nel browser e non vengono inviate a nessun servizio.</p>
+          </div>
+        </div>
+        <div class="test-grid">
+          <a class="test-card" href="orientamento.html">
+            <span class="num accent-blue">?</span>
+            <div>
+              <h3>Capire la situazione</h3>
+              <p>Percorso riservato e non diagnostico per riconoscere segnali, chiarire ciò che conta ora e trovare un primo passo possibile.</p>
+            </div>
+            <span class="pill-link">Inizia il percorso</span>
+          </a>
+          <a class="test-card" href="isa.html">
+            <span class="num accent-red">ISA</span>
+            <div>
+              <h3>Questionario sull'autoconsapevolezza 2023</h3>
+              <p>Autovalutazione con due parti, calcolo automatico dei totali e lettura del risultato A-E.</p>
+            </div>
+            <span class="pill-link">Apri il test</span>
+          </a>
+          <a class="test-card" href="economic-abuse.html">
+            <span class="num accent-green">SEA-12</span>
+            <div>
+              <h3>Questionario sull'abuso economico</h3>
+              <p>Questionario interattivo sui comportamenti di controllo finanziario e abuso economico.</p>
+            </div>
+            <span class="pill-link">Apri il test</span>
+          </a>
+          <a class="test-card" data-audience="operator" href="sara.html">
+            <span class="num accent-blue">SARA</span>
+            <div>
+              <h3>SARA-S aggiornato</h3>
+              <p>Formulario professionale con fattori codificabili per ultimo mese e passato, resoconto, scenari e piano di gestione.</p>
+            </div>
+            <span class="pill-link">Apri il test</span>
+          </a>
+          <a class="test-card" href="trova-centro.html">
+            <span class="num accent-violet">1522</span>
+            <div>
+              <h3>Trova il tuo centro antiviolenza</h3>
+              <p>Mappa interattiva dei centri antiviolenza in Italia, con ricerca per comune, provincia o nome del centro.</p>
+            </div>
+            <span class="pill-link">Apri la mappa</span>
+          </a>
+        </div>
+      </section>
+
+      <section id="forme">
+        <div class="section-head">
+          <div class="eyebrow">Comprendere</div>
+          <div>
+            <h2>Forme e dinamiche</h2>
+            <p class="lead">Nelle relazioni di intimità la violenza può combinare aggressione fisica, sessuale, psicologica, economica, digitale e stalking. Il tratto comune è il controllo: limitare autonomia, relazioni, libertà, sicurezza e capacità di scelta.</p>
+          </div>
+        </div>
+        <div class="matrix" aria-label="Principali forme di violenza">
+          <article class="tile">
+            <span class="tag">Corpo</span>
+            <div>
+              <h3>Fisica</h3>
+              <p>Graffi, spinte, schiaffi, pugni, costrizioni, lesioni o uso di oggetti e armi. Conta anche il tentativo, non solo l’esito visibile.</p>
+            </div>
+          </article>
+          <article class="tile">
+            <span class="tag">Intimità</span>
+            <div>
+              <h3>Sessuale</h3>
+              <p>Atti sessuali imposti, coercizione, umiliazione della sfera intima, pressioni, materiale intimo non consensuale o violenza mediata da tecnologie.</p>
+            </div>
+          </article>
+          <article class="tile">
+            <span class="tag">Relazione</span>
+            <div>
+              <h3>Psicologica</h3>
+              <p>Svalutazione, minacce, isolamento, intimidazione, colpevolizzazione, umiliazione pubblica o privata, manipolazione e paura continua.</p>
+            </div>
+          </article>
+          <article class="tile">
+            <span class="tag">Autonomia</span>
+            <div>
+              <h3>Economica</h3>
+              <p>Controllo del denaro, obbligo a lasciare il lavoro, impedimento all’indipendenza, debiti o documenti firmati contro volontà.</p>
+            </div>
+          </article>
+          <article class="tile">
+            <span class="tag">Tecnologia</span>
+            <div>
+              <h3>Digitale</h3>
+              <p>Controllo di telefono, profili social, tracciamento della posizione, sorveglianza, messaggi pressanti o diffusione non consensuale di contenuti.</p>
+            </div>
+          </article>
+          <article class="tile">
+            <span class="tag">Persecuzione</span>
+            <div>
+              <h3>Stalking</h3>
+              <p>Pedinamenti, appostamenti, chiamate ripetute, contatti indesiderati o presenza dell’ex partner nelle vicinanze di casa e lavoro.</p>
+            </div>
+          </article>
+          <article class="tile">
+            <span class="tag">Ciclo</span>
+            <div>
+              <h3>Escalation</h3>
+              <p>Il passaggio da segnali meno visibili a violenze più esplicite può alternarsi a fasi di falsa calma o pentimento apparente.</p>
+            </div>
+          </article>
+          <article class="tile">
+            <span class="tag">Intersezioni</span>
+            <div>
+              <h3>Discriminazioni</h3>
+              <p>Povertà, razzismo, disabilità, migrazione, omofobia, transfobia e dipendenza amministrativa o economica possono intrecciarsi con la violenza.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="rischio" data-audience="operator">
+        <div class="section-head">
+          <div class="eyebrow">Valutare</div>
+          <div>
+            <h2>SARA-S e recidiva</h2>
+            <p class="lead">Il SARA-S organizza 15 fattori collegati alla recidiva. La compilazione richiede formazione specifica: qui la struttura è proposta come mappa concettuale, non come diagnosi automatica.</p>
+          </div>
+        </div>
+        <div class="filters">
+          <input id="riskSearch" type="search" placeholder="Cerca nei fattori SARA-S" aria-label="Cerca nei fattori SARA-S">
+          <select id="riskFilter" aria-label="Filtra per categoria">
+            <option value="tutte">Tutte le categorie</option>
+            <option value="violenza">Violenze verso partner o ex partner</option>
+            <option value="psicosociale">Adattamento psicosociale</option>
+            <option value="vittima">Vulnerabilità della vittima</option>
+          </select>
+        </div>
+        <div class="toolbox" id="riskList"></div>
+      </section>
+
+      <section id="strumenti" data-audience="operator">
+        <div class="section-head">
+          <div class="eyebrow">Toolbox</div>
+          <div>
+            <h2>Evidenze operative</h2>
+            <p class="lead">Le fonti distinguono strumenti professionali, autovalutazione e lavoro di prossimità. Insieme formano una cassetta degli attrezzi da usare con cautela, competenza e rete.</p>
+          </div>
+        </div>
+        <div class="forms">
+          <article class="panel">
+            <h3>Uso prudente degli strumenti</h3>
+            <ul class="plain-list">
+              <li>I test web sono pagine di lavoro locali: non inviano dati e non sostituiscono una presa in carico.</li>
+              <li>L’ISA è pensato per sostenere autoconsapevolezza e orientamento al supporto.</li>
+              <li>Il SARA-S è professionale: richiede formazione specifica e va integrato con fonti multiple.</li>
+              <li>In emergenza la priorità resta la sicurezza immediata: 112; per supporto gratuito e anonimo: 1522.</li>
+            </ul>
+          </article>
+          <article class="panel">
+            <h3>Evidenze sulla valutazione</h3>
+            <ul class="plain-list">
+              <li>Le valutazioni strutturate aiutano a raccogliere informazioni in modo sistematico e a motivare le decisioni.</li>
+              <li>La letteratura segnala accuratezza predittiva moderata: gli strumenti non sono oracoli, ma supporti a giudizio professionale e gestione del rischio.</li>
+              <li>La valutazione deve includere fattori statici e dinamici, contesto, fonti multiple, sicurezza della vittima e monitoraggio nel tempo.</li>
+              <li>Il resoconto conclusivo dovrebbe esplicitare fattori presenti, interazioni, livello di rischio, priorità e misure protettive.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="comunita">
+        <div class="section-head">
+          <div class="eyebrow">Rete</div>
+          <div>
+            <h2>Una comunità che sostiene</h2>
+            <p class="lead">La guida del Centro Antiviolenza del Comune di Venezia traduce il supporto in gesti di vicinato: osservare senza invadere, avvicinarsi gradualmente, ascoltare, non giudicare, indicare risorse.</p>
+          </div>
+        </div>
+        <div class="resources">
+          <article class="panel">
+            <h3>Campanelli d’allarme</h3>
+            <ul class="plain-list">
+              <li>Urla, litigi ripetuti, paura o tristezza osservabile.</li>
+              <li>Segni fisici, dolore, agitazione o controllo da parte del partner.</li>
+              <li>Dipendenza economica forzata, isolamento, divieto di lavorare.</li>
+              <li>Ex partner che si aggira vicino a casa, chiamate o messaggi insistenti e indesiderati.</li>
+            </ul>
+          </article>
+          <article class="panel">
+            <h3>Cosa fare</h3>
+            <ul class="plain-list">
+              <li>Stabilire un rapporto graduale e rispettare i tempi della donna.</li>
+              <li>Dire che la violenza non è colpa sua e che non è sola.</li>
+              <li>Evitare frasi giudicanti o domande invasive.</li>
+              <li>Parlare dei Centri Antiviolenza come luoghi gratuiti, riservati, non obbliganti.</li>
+              <li>In emergenza, chiamare le Forze dell’Ordine al 112.</li>
+            </ul>
+          </article>
+        </div>
+        <div class="callout" style="margin-top:18px">
+          A Venezia il Centro Antiviolenza del Comune è indicato nella guida con sede a Mestre, Viale Garibaldi 155/A, sportelli a Venezia e Lido, telefono 041 274 4222, email centro.antiviolenza@comune.venezia.it.
+        </div>
+      </section>
+
+      <section id="app-utili">
+        <div class="section-head">
+          <div class="eyebrow">Strumenti digitali</div>
+          <div>
+            <h2>App utili</h2>
+            <p class="lead">Alcune app ufficiali possono aiutarti a chiedere aiuto in modo rapido, discreto o anonimo, oltre al contatto diretto con un centro antiviolenza.</p>
+          </div>
+        </div>
+        <div class="app-grid">
+          <article class="app-card">
+            <div class="app-card-top">
+              <span class="app-icon accent-red">1522</span>
+              <h3>1522 &ndash; Chat</h3>
+            </div>
+            <p class="tiny">Dipartimento Pari Opportunità</p>
+            <p>Chat anonima e sicura con le operatrici del numero nazionale antiviolenza e antistalking, attiva 24 ore su 24.</p>
+            <div class="link-stack">
+              <a class="pill-link" href="https://apps.apple.com/it/app/1522-chat/id6747118956" target="_blank">iOS</a>
+              <a class="pill-link" href="https://play.google.com/store/apps/details?id=eu.cvpd1522.app.v01" target="_blank">Android</a>
+            </div>
+          </article>
+
+          <article class="app-card">
+            <div class="app-card-top">
+              <span class="app-icon accent-blue">YP</span>
+              <h3>YouPol</h3>
+            </div>
+            <p class="tiny">Polizia di Stato</p>
+            <p>Segnala in forma anonima, con testo, foto, video o audio, episodi di violenza, bullismo o spaccio direttamente alla Polizia di Stato.</p>
+            <div class="link-stack">
+              <a class="pill-link" href="https://youpol.poliziadistato.it/landing" target="_blank">Sito</a>
+              <a class="pill-link" href="https://apps.apple.com/it/app/youpol/id1280831175" target="_blank">iOS</a>
+              <a class="pill-link" href="https://play.google.com/store/apps/details?id=it.poliziadistato.youpol" target="_blank">Android</a>
+            </div>
+          </article>
+
+          <article class="app-card">
+            <div class="app-card-top">
+              <span class="app-icon accent-violet">112</span>
+              <h3>112 Where ARE U</h3>
+            </div>
+            <p class="tiny">Sistema 112 &middot; numero unico emergenze</p>
+            <p>Chiama il 112 condividendo automaticamente la tua posizione GPS esatta con la centrale operativa, anche se non riesci a parlare.</p>
+            <div class="link-stack">
+              <a class="pill-link" href="https://apps.apple.com/us/app/112-where-are-u/id888964800" target="_blank">iOS</a>
+              <a class="pill-link" href="https://play.google.com/store/apps/details?id=it.Beta80Group.whereareu" target="_blank">Android</a>
+            </div>
+          </article>
+
+          <article class="app-card">
+            <div class="app-card-top">
+              <span class="app-icon accent-green">VI</span>
+              <h3>Viola Walk Home</h3>
+            </div>
+            <p class="tiny">Viola Walk Home</p>
+            <p>Ti accompagna in videochiamata con una persona volontaria formata mentre cammini da sola/o, pronta ad allertare le autorità in caso di bisogno.</p>
+            <div class="link-stack">
+              <a class="pill-link" href="https://violawalkhome.com/en/" target="_blank">Sito</a>
+              <a class="pill-link" href="https://apps.apple.com/it/app/violawalkhome/id6449786397" target="_blank">iOS</a>
+              <a class="pill-link" href="https://play.google.com/store/apps/details?id=com.viola.walk.app" target="_blank">Android</a>
+            </div>
+          </article>
+
+          <article class="app-card">
+            <div class="app-card-top">
+              <span class="app-icon accent-red">RC</span>
+              <h3>Recall</h3>
+            </div>
+            <p class="tiny">Recall &ndash; Sicurezza personale</p>
+            <p>Condivide la tua posizione in tempo reale con contatti fidati e può avviare una registrazione audio da usare come prova in caso di pericolo.</p>
+            <div class="link-stack">
+              <a class="pill-link" href="https://www.recallme.it" target="_blank">Sito</a>
+              <a class="pill-link" href="https://apps.apple.com/it/app/recall-sicurezza-personale/id6742329792" target="_blank">iOS</a>
+              <a class="pill-link" href="https://play.google.com/store/apps/details?id=it.recallme.recall" target="_blank">Android</a>
+            </div>
+          </article>
+
+          <article class="app-card">
+            <div class="app-card-top">
+              <span class="app-icon accent-blue">BS</span>
+              <h3>Bright Sky ITA</h3>
+            </div>
+            <p class="tiny">Fondazione Vodafone Italia &middot; CADMI</p>
+            <p>Questionario di autovalutazione del rischio, mappa dei servizi di supporto sul territorio e chiamata rapida al 112.</p>
+            <div class="link-stack">
+              <a class="pill-link" href="https://www.vodafone.it/nw/vodafone-italia/fondazione-vodafone-italia/attivita/progetti/bright-sky.html" target="_blank">Sito</a>
+              <a class="pill-link" href="https://apps.apple.com/it/app/bright-sky-ita/id1521305294" target="_blank">iOS</a>
+              <a class="pill-link" href="https://play.google.com/store/apps/details?id=com.vodafone.brightsky.it" target="_blank">Android</a>
+            </div>
+          </article>
+        </div>
+        <div class="callout" style="margin-top:18px">
+          Se temi che qualcuno controlli il tuo telefono, valuta di chiedere aiuto da un dispositivo che questa persona non può vedere, prima di installare una di queste app.
+        </div>
+      </section>
+
+      <section id="fonti" data-audience="operator">
+        <div class="section-head">
+          <div class="eyebrow">Fonti locali</div>
+          <div>
+            <h2>Documenti usati</h2>
+            <p class="lead">La pagina sintetizza e riorganizza contenuti dai PDF presenti nella cartella <code>paper</code>, integrando l’idea di toolbox concettuale e filtrabile vista nel riferimento MPIB.</p>
+          </div>
+        </div>
+        <div class="source-grid">
+          <article class="source"><span class="source-tag">Linee guida</span><h3>FuTuRE D2.3</h3><p>Valutazione e autovalutazione del rischio di recidiva, SARA-S aggiornato, ISA 2023, intersezionalità.</p></article>
+          <article class="source"><span class="source-tag">Formulario</span><h3>SARA-S</h3><p>Schema a 15 fattori per violenze verso partner/ex partner, adattamento psicosociale e vulnerabilità della vittima.</p></article>
+          <article class="source"><span class="source-tag">Comunità</span><h3>Guida al vicinato</h3><p>Segnali d’allarme, primo approccio, ascolto, frasi utili e contatti del Centro Antiviolenza Venezia.</p></article>
+          <article class="source"><span class="source-tag">Inclusione</span><h3>Look Wide</h3><p>Prospettiva LGBTQIA+, servizi inclusivi, competenze professionali e approccio intersezionale.</p></article>
+          <article class="source"><span class="source-tag">Ricerca</span><h3>van der Put et al.</h3><p>Meta-analisi sull’accuratezza predittiva degli strumenti di valutazione del rischio nella violenza domestica.</p></article>
+          <article class="source"><span class="source-tag">Ricerca</span><h3>Hilton et al.</h3><p>Studio su SARA, SARA-V3, B-SAFER e ODARA in casi IPV segnalati a servizi di threat assessment.</p></article>
+        </div>
+      </section>
+
+      <footer>
+        <span>Violenza di genere · mappa operativa</span>
+        <span>Static site · contenuti da paper locali</span>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    const saraFactors = [
+      { n: 1, c: 'violenza', title: 'Violenze fisiche o sessuali', body: 'Qualsiasi forma di violenza fisica consumata o tentata, inclusa violenza sessuale e uso di armi.' },
+      { n: 2, c: 'violenza', title: 'Gravi minacce, ideazione o intenzione', body: 'Frasi, atteggiamenti intimidatori, stalking, minacce di usare armi, pensieri o piani per fare del male.' },
+      { n: 3, c: 'violenza', title: 'Escalation', body: 'Incremento nel tempo della frequenza o gravità di violenze fisiche, sessuali, minacce o intenzioni.' },
+      { n: 4, c: 'violenza', title: 'Violazione di misure cautelari o interdittive', body: 'Violazioni di divieti, obblighi, allontanamento, ordini di protezione o altre misure penali/civili.' },
+      { n: 5, c: 'violenza', title: 'Atteggiamenti negativi verso le violenze', body: 'Giustificazione, minimizzazione, credenze che scagionano l’abuso, gelosia, possesso, negazione di responsabilità.' },
+      { n: 6, c: 'psicosociale', title: 'Precedenti penali o condotte antisociali', body: 'Comportamenti antisociali persistenti, reati contro persona, patrimonio, ordine pubblico o connessi a sostanze.' },
+      { n: 7, c: 'psicosociale', title: 'Problemi relazionali', body: 'Separazione in corso o passata, elevata conflittualità nella relazione attuale o precedente.' },
+      { n: 8, c: 'psicosociale', title: 'Problemi di lavoro o finanziari', body: 'Disoccupazione cronica, instabilità lavorativa, gravi problemi economici o cambi frequenti di lavoro.' },
+      { n: 9, c: 'psicosociale', title: 'Abuso di sostanze', body: 'Uso di alcol, droghe o medicinali con compromissione di salute, relazioni, lavoro o problemi con la giustizia.' },
+      { n: 10, c: 'psicosociale', title: 'Disturbi mentali o rischio suicidario', body: 'Segnali di grave sofferenza mentale, disturbi di personalità, minacce o ideazione suicidaria/autolesiva.' },
+      { n: 11, c: 'vittima', title: 'Condotta incoerente verso il reo', body: 'Contatti mantenuti dopo separazione, sensi di colpa, ritorni nella relazione o ritiro di querela.' },
+      { n: 12, c: 'vittima', title: 'Estremo terrore', body: 'Paura intensa della vittima rispetto a possibili nuove violenze, minacce o conseguenze.' },
+      { n: 13, c: 'vittima', title: 'Sostegno inadeguato', body: 'Isolamento, rete familiare o sociale fragile, accesso insufficiente a servizi e protezioni.' },
+      { n: 14, c: 'vittima', title: 'Scarsa sicurezza', body: 'Esposizione continua al contatto con il reo, dipendenze pratiche, abitative, economiche o organizzative.' },
+      { n: 15, c: 'vittima', title: 'Problemi di salute psicofisica', body: 'Stress, conseguenze psicofisiche, dipendenze o condizioni che possono incidere sulla protezione.' }
+    ];
+
+    const labels = {
+      violenza: 'Violenze verso partner o ex partner',
+      psicosociale: 'Adattamento psicosociale',
+      vittima: 'Vulnerabilità della vittima'
+    };
+
+    const riskList = document.querySelector('#riskList');
+    const riskSearch = document.querySelector('#riskSearch');
+    const riskFilter = document.querySelector('#riskFilter');
+    const modeToggle = document.querySelector('#modeToggle');
+    const modeLabel = document.querySelector('#modeLabel');
+
+    function setAudience(mode) {
+      const isOperator = mode === 'operator';
+      document.body.classList.toggle('citizen', !isOperator);
+      document.body.classList.toggle('operator', isOperator);
+      modeToggle.textContent = isOperator ? 'Per i cittadini' : 'Per gli operatori';
+      modeLabel.textContent = isOperator ? 'per gli operatori' : ' per i cittadini';
+      modeToggle.setAttribute('aria-pressed', String(isOperator));
+      window.scrollTo(0, 0);
+    }
+
+    modeToggle.addEventListener('click', () => {
+      setAudience(document.body.classList.contains('citizen') ? 'operator' : 'citizen');
+    });
+
+    function renderRisks() {
+      const query = riskSearch.value.trim().toLowerCase();
+      const filter = riskFilter.value;
+      riskList.innerHTML = '';
+      saraFactors
+        .filter(item => filter === 'tutte' || item.c === filter)
+        .filter(item => `${item.title} ${item.body} ${labels[item.c]}`.toLowerCase().includes(query))
+        .forEach(item => {
+          const node = document.createElement('details');
+          node.innerHTML = `
+            <summary>
+              <span class="risk-num">${item.n}</span>
+              <strong>${item.title}</strong>
+              <span class="category">${labels[item.c]}</span>
+            </summary>
+            <div class="detail-body">
+              <p>${item.body}</p>
+              <div class="rating" aria-label="Scala di codifica">
+                <span><b>S</b> presente</span>
+                <span><b>?</b> probabilmente/parzialmente presente</span>
+                <span><b>N</b> non presente</span>
+                <span><b>-</b> informazioni insufficienti</span>
+              </div>
+            </div>
+          `;
+          riskList.appendChild(node);
+        });
+
+      if (!riskList.children.length) {
+        riskList.innerHTML = '<p class="panel">Nessun fattore corrisponde alla ricerca.</p>';
+      }
+    }
+
+    riskSearch.addEventListener('input', renderRisks);
+    riskFilter.addEventListener('change', renderRisks);
+    setAudience('citizen');
+    renderRisks();
+  </script>
+  <script src="quick-exit.js"></script>
+</body>
+</html>
